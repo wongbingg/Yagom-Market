@@ -10,7 +10,6 @@
 		AF5BB777292210E20013BFC1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB776292210E20013BFC1 /* AppDelegate.swift */; };
 		AF5BB779292210E20013BFC1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB778292210E20013BFC1 /* SceneDelegate.swift */; };
 		AF5BB77B292210E20013BFC1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB77A292210E20013BFC1 /* ViewController.swift */; };
-		AF5BB77E292210E20013BFC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF5BB77C292210E20013BFC1 /* Main.storyboard */; };
 		AF5BB780292210E30013BFC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF5BB77F292210E30013BFC1 /* Assets.xcassets */; };
 		AF5BB783292210E30013BFC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF5BB781292210E30013BFC1 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -20,7 +19,6 @@
 		AF5BB776292210E20013BFC1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF5BB778292210E20013BFC1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		AF5BB77A292210E20013BFC1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AF5BB77D292210E20013BFC1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AF5BB77F292210E30013BFC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF5BB782292210E30013BFC1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AF5BB784292210E30013BFC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,15 +54,30 @@
 		AF5BB775292210E20013BFC1 /* YagomMarket */ = {
 			isa = PBXGroup;
 			children = (
+				AF5BB78A292214220013BFC1 /* Entries */,
+				AF5BB77A292210E20013BFC1 /* ViewController.swift */,
+				AF5BB78B2922142F0013BFC1 /* Supporting Files */,
+			);
+			path = YagomMarket;
+			sourceTree = "<group>";
+		};
+		AF5BB78A292214220013BFC1 /* Entries */ = {
+			isa = PBXGroup;
+			children = (
 				AF5BB776292210E20013BFC1 /* AppDelegate.swift */,
 				AF5BB778292210E20013BFC1 /* SceneDelegate.swift */,
-				AF5BB77A292210E20013BFC1 /* ViewController.swift */,
-				AF5BB77C292210E20013BFC1 /* Main.storyboard */,
+			);
+			path = Entries;
+			sourceTree = "<group>";
+		};
+		AF5BB78B2922142F0013BFC1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
 				AF5BB77F292210E30013BFC1 /* Assets.xcassets */,
 				AF5BB781292210E30013BFC1 /* LaunchScreen.storyboard */,
 				AF5BB784292210E30013BFC1 /* Info.plist */,
 			);
-			path = YagomMarket;
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +140,6 @@
 			files = (
 				AF5BB783292210E30013BFC1 /* LaunchScreen.storyboard in Resources */,
 				AF5BB780292210E30013BFC1 /* Assets.xcassets in Resources */,
-				AF5BB77E292210E20013BFC1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,14 +159,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		AF5BB77C292210E20013BFC1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AF5BB77D292210E20013BFC1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		AF5BB781292210E30013BFC1 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -289,10 +293,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SWPBG3YXG5;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = YagomMarket/Info.plist;
+				INFOPLIST_FILE = "YagomMarket/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -317,10 +320,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SWPBG3YXG5;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = YagomMarket/Info.plist;
+				INFOPLIST_FILE = "YagomMarket/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
