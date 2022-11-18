@@ -7,14 +7,54 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF0796992924A8E7002E876C /* SearchDeleteURIAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796982924A8E7002E876C /* SearchDeleteURIAPI.swift */; };
+		AF07969D2924AE73002E876C /* SearchDeleteURIAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF07969C2924AE73002E876C /* SearchDeleteURIAPITest.swift */; };
+		AF07969F2924B6A4002E876C /* DeleteKeyRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF07969E2924B6A4002E876C /* DeleteKeyRequestModel.swift */; };
+		AF0796A12924BE62002E876C /* DeleteProductAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796A02924BE62002E876C /* DeleteProductAPI.swift */; };
+		AF0796A32924BED2002E876C /* DeleteProductAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796A22924BED2002E876C /* DeleteProductAPITest.swift */; };
+		AF1520DB2926035F004957E7 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1520DA2926035F004957E7 /* Data+Extension.swift */; };
 		AF5BB777292210E20013BFC1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB776292210E20013BFC1 /* AppDelegate.swift */; };
 		AF5BB779292210E20013BFC1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB778292210E20013BFC1 /* SceneDelegate.swift */; };
 		AF5BB77B292210E20013BFC1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB77A292210E20013BFC1 /* ViewController.swift */; };
 		AF5BB780292210E30013BFC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF5BB77F292210E30013BFC1 /* Assets.xcassets */; };
 		AF5BB783292210E30013BFC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF5BB781292210E30013BFC1 /* LaunchScreen.storyboard */; };
+		AF71745F29222EF90004FC02 /* ServerCheckAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF71745E29222EF90004FC02 /* ServerCheckAPI.swift */; };
+		AF717462292236EB0004FC02 /* APIConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF717461292236EB0004FC02 /* APIConfiguration.swift */; };
+		AF7174642922375B0004FC02 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7174632922375B0004FC02 /* APIClient.swift */; };
+		AF7174662922383A0004FC02 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7174652922383A0004FC02 /* APIError.swift */; };
+		AF71746829224A010004FC02 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF71746729224A010004FC02 /* API.swift */; };
+		AF71746D292251510004FC02 /* SearchProductListAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF71746C292251510004FC02 /* SearchProductListAPI.swift */; };
+		AF717471292252000004FC02 /* SearchProductListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF717470292252000004FC02 /* SearchProductListResponse.swift */; };
+		AF71748029227BCB0004FC02 /* SearchProductListAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF71747F29227BCB0004FC02 /* SearchProductListAPITest.swift */; };
+		AF71748229227BE40004FC02 /* ServerCheckAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF71748129227BE40004FC02 /* ServerCheckAPITest.swift */; };
+		AFD9AB4A29231000009A67AB /* SearchProductDetailAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD9AB4929231000009A67AB /* SearchProductDetailAPI.swift */; };
+		AFD9AB4C2923101F009A67AB /* SearchProductDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD9AB4B2923101F009A67AB /* SearchProductDetailResponse.swift */; };
+		AFD9AB4E29231238009A67AB /* SearchProductDetailAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD9AB4D29231238009A67AB /* SearchProductDetailAPITest.swift */; };
+		AFD9AB50292313BA009A67AB /* APIConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD9AB4F292313BA009A67AB /* APIConfigurationTest.swift */; };
+		AFD9AB5229231C60009A67AB /* RegisterProductAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD9AB5129231C60009A67AB /* RegisterProductAPI.swift */; };
+		AFD9AB56292325DB009A67AB /* RegisterProductAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD9AB55292325DB009A67AB /* RegisterProductAPITest.swift */; };
+		AFD9AB582923818D009A67AB /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD9AB572923818D009A67AB /* ProductModel.swift */; };
+		AFEE294D292613FD008028C2 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE294C292613FD008028C2 /* UIImage+Extension.swift */; };
+		AFEE2951292652CA008028C2 /* Informable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE2950292652CA008028C2 /* Informable.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		AF71747A29227B9C0004FC02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF5BB76B292210E20013BFC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AF5BB772292210E20013BFC1;
+			remoteInfo = YagomMarket;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		AF0796982924A8E7002E876C /* SearchDeleteURIAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDeleteURIAPI.swift; sourceTree = "<group>"; };
+		AF07969C2924AE73002E876C /* SearchDeleteURIAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDeleteURIAPITest.swift; sourceTree = "<group>"; };
+		AF07969E2924B6A4002E876C /* DeleteKeyRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteKeyRequestModel.swift; sourceTree = "<group>"; };
+		AF0796A02924BE62002E876C /* DeleteProductAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductAPI.swift; sourceTree = "<group>"; };
+		AF0796A22924BED2002E876C /* DeleteProductAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductAPITest.swift; sourceTree = "<group>"; };
+		AF1520DA2926035F004957E7 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		AF5BB773292210E20013BFC1 /* YagomMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YagomMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF5BB776292210E20013BFC1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF5BB778292210E20013BFC1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -22,6 +62,25 @@
 		AF5BB77F292210E30013BFC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF5BB782292210E30013BFC1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AF5BB784292210E30013BFC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AF71745E29222EF90004FC02 /* ServerCheckAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCheckAPI.swift; sourceTree = "<group>"; };
+		AF717461292236EB0004FC02 /* APIConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfiguration.swift; sourceTree = "<group>"; };
+		AF7174632922375B0004FC02 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		AF7174652922383A0004FC02 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		AF71746729224A010004FC02 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		AF71746C292251510004FC02 /* SearchProductListAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductListAPI.swift; sourceTree = "<group>"; };
+		AF717470292252000004FC02 /* SearchProductListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductListResponse.swift; sourceTree = "<group>"; };
+		AF71747629227B9C0004FC02 /* YagomMarketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YagomMarketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF71747F29227BCB0004FC02 /* SearchProductListAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductListAPITest.swift; sourceTree = "<group>"; };
+		AF71748129227BE40004FC02 /* ServerCheckAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCheckAPITest.swift; sourceTree = "<group>"; };
+		AFD9AB4929231000009A67AB /* SearchProductDetailAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductDetailAPI.swift; sourceTree = "<group>"; };
+		AFD9AB4B2923101F009A67AB /* SearchProductDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductDetailResponse.swift; sourceTree = "<group>"; };
+		AFD9AB4D29231238009A67AB /* SearchProductDetailAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductDetailAPITest.swift; sourceTree = "<group>"; };
+		AFD9AB4F292313BA009A67AB /* APIConfigurationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfigurationTest.swift; sourceTree = "<group>"; };
+		AFD9AB5129231C60009A67AB /* RegisterProductAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterProductAPI.swift; sourceTree = "<group>"; };
+		AFD9AB55292325DB009A67AB /* RegisterProductAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterProductAPITest.swift; sourceTree = "<group>"; };
+		AFD9AB572923818D009A67AB /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
+		AFEE294C292613FD008028C2 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		AFEE2950292652CA008028C2 /* Informable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Informable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,13 +91,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AF71747329227B9C0004FC02 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF1520D92926033F004957E7 /* Extesions */ = {
+			isa = PBXGroup;
+			children = (
+				AF1520DA2926035F004957E7 /* Data+Extension.swift */,
+				AFEE294C292613FD008028C2 /* UIImage+Extension.swift */,
+			);
+			path = Extesions;
+			sourceTree = "<group>";
+		};
 		AF5BB76A292210E20013BFC1 = {
 			isa = PBXGroup;
 			children = (
 				AF5BB775292210E20013BFC1 /* YagomMarket */,
+				AF717460292236BB0004FC02 /* Networking */,
+				AF71747729227B9C0004FC02 /* YagomMarketTests */,
 				AF5BB774292210E20013BFC1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				AF5BB773292210E20013BFC1 /* YagomMarket.app */,
+				AF71747629227B9C0004FC02 /* YagomMarketTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -54,8 +132,11 @@
 		AF5BB775292210E20013BFC1 /* YagomMarket */ = {
 			isa = PBXGroup;
 			children = (
+				AF1520D92926033F004957E7 /* Extesions */,
 				AF5BB78A292214220013BFC1 /* Entries */,
-				AF5BB77A292210E20013BFC1 /* ViewController.swift */,
+				AF71746B2922512F0004FC02 /* API */,
+				AF71746E292251CF0004FC02 /* Model */,
+				AF71746F292251DA0004FC02 /* Controller */,
 				AF5BB78B2922142F0013BFC1 /* Supporting Files */,
 			);
 			path = YagomMarket;
@@ -80,6 +161,64 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		AF717460292236BB0004FC02 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				AF717461292236EB0004FC02 /* APIConfiguration.swift */,
+				AF7174632922375B0004FC02 /* APIClient.swift */,
+				AF7174652922383A0004FC02 /* APIError.swift */,
+				AF71746729224A010004FC02 /* API.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		AF71746B2922512F0004FC02 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				AF71745E29222EF90004FC02 /* ServerCheckAPI.swift */,
+				AF71746C292251510004FC02 /* SearchProductListAPI.swift */,
+				AFD9AB4929231000009A67AB /* SearchProductDetailAPI.swift */,
+				AFD9AB5129231C60009A67AB /* RegisterProductAPI.swift */,
+				AF0796982924A8E7002E876C /* SearchDeleteURIAPI.swift */,
+				AF0796A02924BE62002E876C /* DeleteProductAPI.swift */,
+				AFEE2950292652CA008028C2 /* Informable.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		AF71746E292251CF0004FC02 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AF717470292252000004FC02 /* SearchProductListResponse.swift */,
+				AFD9AB4B2923101F009A67AB /* SearchProductDetailResponse.swift */,
+				AFD9AB572923818D009A67AB /* ProductModel.swift */,
+				AF07969E2924B6A4002E876C /* DeleteKeyRequestModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AF71746F292251DA0004FC02 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AF5BB77A292210E20013BFC1 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		AF71747729227B9C0004FC02 /* YagomMarketTests */ = {
+			isa = PBXGroup;
+			children = (
+				AFD9AB4F292313BA009A67AB /* APIConfigurationTest.swift */,
+				AF71748129227BE40004FC02 /* ServerCheckAPITest.swift */,
+				AF71747F29227BCB0004FC02 /* SearchProductListAPITest.swift */,
+				AFD9AB4D29231238009A67AB /* SearchProductDetailAPITest.swift */,
+				AFD9AB55292325DB009A67AB /* RegisterProductAPITest.swift */,
+				AF07969C2924AE73002E876C /* SearchDeleteURIAPITest.swift */,
+				AF0796A22924BED2002E876C /* DeleteProductAPITest.swift */,
+			);
+			path = YagomMarketTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -100,6 +239,24 @@
 			productReference = AF5BB773292210E20013BFC1 /* YagomMarket.app */;
 			productType = "com.apple.product-type.application";
 		};
+		AF71747529227B9C0004FC02 /* YagomMarketTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF71747C29227B9C0004FC02 /* Build configuration list for PBXNativeTarget "YagomMarketTests" */;
+			buildPhases = (
+				AF71747229227B9C0004FC02 /* Sources */,
+				AF71747329227B9C0004FC02 /* Frameworks */,
+				AF71747429227B9C0004FC02 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AF71747B29227B9C0004FC02 /* PBXTargetDependency */,
+			);
+			name = YagomMarketTests;
+			productName = YagomMarketTests;
+			productReference = AF71747629227B9C0004FC02 /* YagomMarketTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -112,6 +269,10 @@
 				TargetAttributes = {
 					AF5BB772292210E20013BFC1 = {
 						CreatedOnToolsVersion = 14.0.1;
+					};
+					AF71747529227B9C0004FC02 = {
+						CreatedOnToolsVersion = 14.0.1;
+						TestTargetID = AF5BB772292210E20013BFC1;
 					};
 				};
 			};
@@ -129,6 +290,7 @@
 			projectRoot = "";
 			targets = (
 				AF5BB772292210E20013BFC1 /* YagomMarket */,
+				AF71747529227B9C0004FC02 /* YagomMarketTests */,
 			);
 		};
 /* End PBXProject section */
@@ -143,6 +305,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AF71747429227B9C0004FC02 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -150,13 +319,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFD9AB4A29231000009A67AB /* SearchProductDetailAPI.swift in Sources */,
+				AF0796992924A8E7002E876C /* SearchDeleteURIAPI.swift in Sources */,
 				AF5BB77B292210E20013BFC1 /* ViewController.swift in Sources */,
+				AF1520DB2926035F004957E7 /* Data+Extension.swift in Sources */,
+				AFD9AB582923818D009A67AB /* ProductModel.swift in Sources */,
+				AF71745F29222EF90004FC02 /* ServerCheckAPI.swift in Sources */,
+				AF717462292236EB0004FC02 /* APIConfiguration.swift in Sources */,
+				AFD9AB5229231C60009A67AB /* RegisterProductAPI.swift in Sources */,
 				AF5BB777292210E20013BFC1 /* AppDelegate.swift in Sources */,
 				AF5BB779292210E20013BFC1 /* SceneDelegate.swift in Sources */,
+				AFEE2951292652CA008028C2 /* Informable.swift in Sources */,
+				AF7174642922375B0004FC02 /* APIClient.swift in Sources */,
+				AF0796A12924BE62002E876C /* DeleteProductAPI.swift in Sources */,
+				AF717471292252000004FC02 /* SearchProductListResponse.swift in Sources */,
+				AF71746829224A010004FC02 /* API.swift in Sources */,
+				AF07969F2924B6A4002E876C /* DeleteKeyRequestModel.swift in Sources */,
+				AF7174662922383A0004FC02 /* APIError.swift in Sources */,
+				AFEE294D292613FD008028C2 /* UIImage+Extension.swift in Sources */,
+				AF71746D292251510004FC02 /* SearchProductListAPI.swift in Sources */,
+				AFD9AB4C2923101F009A67AB /* SearchProductDetailResponse.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF71747229227B9C0004FC02 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF71748229227BE40004FC02 /* ServerCheckAPITest.swift in Sources */,
+				AFD9AB56292325DB009A67AB /* RegisterProductAPITest.swift in Sources */,
+				AF71748029227BCB0004FC02 /* SearchProductListAPITest.swift in Sources */,
+				AF07969D2924AE73002E876C /* SearchDeleteURIAPITest.swift in Sources */,
+				AFD9AB4E29231238009A67AB /* SearchProductDetailAPITest.swift in Sources */,
+				AFD9AB50292313BA009A67AB /* APIConfigurationTest.swift in Sources */,
+				AF0796A32924BED2002E876C /* DeleteProductAPITest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AF71747B29227B9C0004FC02 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AF5BB772292210E20013BFC1 /* YagomMarket */;
+			targetProxy = AF71747A29227B9C0004FC02 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		AF5BB781292210E30013BFC1 /* LaunchScreen.storyboard */ = {
@@ -338,6 +546,50 @@
 			};
 			name = Release;
 		};
+		AF71747D29227B9C0004FC02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SWPBG3YXG5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wonbeen.YagomMarketTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YagomMarket.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YagomMarket";
+			};
+			name = Debug;
+		};
+		AF71747E29227B9C0004FC02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SWPBG3YXG5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wonbeen.YagomMarketTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YagomMarket.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YagomMarket";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -355,6 +607,15 @@
 			buildConfigurations = (
 				AF5BB788292210E30013BFC1 /* Debug */,
 				AF5BB789292210E30013BFC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AF71747C29227B9C0004FC02 /* Build configuration list for PBXNativeTarget "YagomMarketTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF71747D29227B9C0004FC02 /* Debug */,
+				AF71747E29227B9C0004FC02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
