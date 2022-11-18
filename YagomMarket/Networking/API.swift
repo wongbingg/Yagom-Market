@@ -15,9 +15,8 @@ protocol API {
 extension API {
     func execute(using client: APIClient = APIClient.shared,
                  _ completionHandler: @escaping (Result<ResponseType, Error>) -> Void) {
-        guard let url = configuration.url else { return }
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = configuration.method.rawValue
+        guard var urlRequest = configuration.makeURLRequest() else { return }
+        urlRequest.setValue(URLCommand.identifier, forHTTPHeaderField: "identifier") // 테스트용
         client.requestData(with: urlRequest) { (result) in
             switch result {
             case .success(let data):
