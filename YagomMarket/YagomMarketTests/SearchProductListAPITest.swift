@@ -13,7 +13,7 @@ final class SearchProductListAPITest: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        let param = ["page_no": "1", "items_per_page": "15"]
+        let param = ["page_no": 1, "items_per_page": 3]
         let apiCon = APIConfiguration(method: .get,
                                       base: URLCommand.host,
                                       path: URLCommand.products,
@@ -34,16 +34,16 @@ final class SearchProductListAPITest: XCTestCase {
         // when
         sut.execute { result in
             switch result {
-            case .success(let result):
-                response = result
-                print(result)
+            case .success(let fetchedData):
+                print(fetchedData)
+                response = fetchedData
                 expectation.fulfill()
             case .failure(let error):
                 print(error)
             }
         }
         
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectation], timeout: 3.0)
         
         // then
         XCTAssertNotNil(response)
