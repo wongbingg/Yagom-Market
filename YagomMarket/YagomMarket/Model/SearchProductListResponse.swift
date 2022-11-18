@@ -55,7 +55,7 @@ struct Page: Decodable {
     }
 }
 
-enum Currency: String, Decodable {
+enum Currency: String, Codable {
     case KRW = "KRW"
     case USD = "USD"
 }
