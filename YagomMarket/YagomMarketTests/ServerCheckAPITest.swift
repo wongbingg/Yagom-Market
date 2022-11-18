@@ -12,11 +12,14 @@ final class ServerCheckAPITest: XCTestCase {
     
     func test_서버가_활성화되었는지() {
         // given
-        let expectation = "OK"
+        let response = "OK"
+        let expectation = XCTestExpectation(description: "HealthCheckTest")
         // when
         ServerCheckAPI.execute { result in
             // then
-            XCTAssertEqual(expectation, result)
+            XCTAssertEqual(response, result)
+            expectation.fulfill()
         }
+        wait(for: [expectation], timeout: 3.0)
     }
 }
