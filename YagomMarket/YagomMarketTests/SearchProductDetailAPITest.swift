@@ -12,15 +12,17 @@ final class SearchProductDetailAPITest: XCTestCase {
     var sut: SearchProductDetailAPI!
     
     override func setUpWithError() throws {
-        let productId = 179
+        try super.setUpWithError()
         let apiConfig = APIConfiguration(method: .get,
                                          base: URLCommand.host,
-                                         path: URLCommand.products + "/\(productId)",
+                                         path: URLCommand.products +
+                                         URLCommand.productId(search: 180),
                                          parameters: nil)
         sut = SearchProductDetailAPI(configuration: apiConfig)
     }
 
     override func tearDownWithError() throws {
+        try super.tearDownWithError()
         sut = nil
     }
     
@@ -32,8 +34,9 @@ final class SearchProductDetailAPITest: XCTestCase {
         // when
         sut.execute { result in
             switch result {
-            case .success(let result):
-                print(result)
+            case .success(let fetchedData):
+                print(fetchedData)
+                response = fetchedData
                 expectation.fulfill()
             case .failure(let error):
                 print(error)
@@ -42,6 +45,6 @@ final class SearchProductDetailAPITest: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         
         // then
-        XCTAssertNotNil(expectation)
+        XCTAssertNotNil(response)
     }
 }
