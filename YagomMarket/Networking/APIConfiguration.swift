@@ -16,10 +16,22 @@ enum HTTPMethod: String {
 
 enum URLCommand {
     static let host = "https://openmarket.yagom-academy.kr"
-    static let healthChecker = "healthChecker"
+    static let healthChecker = "/healthChecker"
     static let products = "/api/products"
     static let identifier = "c08f22e6-5f28-11ed-a917-e3ffa43330f7"
     static let secretKey = "nvjb13rd8y76lkzv2"
+    
+    static func productId(search id: Int) -> String {
+        return "/\(id)"
+    }
+    
+    static func productId(delete id: Int) -> String {
+        return "/\(id)/archived"
+    }
+    
+    static func multiPartFormData(using boundary: String) -> String {
+        return "multipart/form-data; boundary=\(boundary)"
+    }
 }
 
 struct APIConfiguration {
@@ -41,7 +53,9 @@ struct APIConfiguration {
         self.parameters = parameters
         self.body = body
         self.images = images
-        self.url = makeURL(base: base, path: path, parameters: parameters)
+        self.url = makeURL(base: base,
+                           path: path,
+                           parameters: parameters)
     }
     
     init() {
@@ -51,8 +65,9 @@ struct APIConfiguration {
     private func makeURL(base: String,
                          path: String,
                          parameters: [String: Any]?) -> URL? {
-        var urlComponent = URLComponents(string: base)!
-        urlComponent.path = path
+        guard var urlComponent = URLComponents(string: base + path) else {
+            return nil
+        }
         urlComponent.queryItems = makeQuery(with: parameters)
         return urlComponent.url
     }
@@ -85,42 +100,48 @@ struct APIConfiguration {
             forHTTPHeaderField: "identifier"
         )
         urlRequest.setValue(
-            "multipart/form-data; boundary=\(boundary)",
+            URLCommand.multiPartFormData(using: boundary),
             forHTTPHeaderField: "Content-Type"
         )
         return urlRequest
     }
     
-    func createPostBody(with body: ProductModel, at boundary: String) -> Data? {
+    func createPostBody(with body: ProductModel,
+                        at boundary: String) -> Data? {
         var data = Data()
         guard let paramData = try? JSONEncoder().encode(body),
               let images = images else { return nil }
-        let startBoundaryData = "\r\n--\(boundary)\r\n"
-        data.appendString(startBoundaryData)
-        data.appendString("Content-Disposition: form-data; name=\"params\"\r\n\r\n")
+        data.appendBoundary(boundary)
+        data.appendContentDisposition(fieldName: "params")
         data.append(paramData)
         data.append(convertImages(images, using: boundary))
-        data.appendString("\r\n--\(boundary)--\r\n")
+        data.appendBoundary(boundary+"--")
         return data
     }
     
-    private func convertImages(_ images: [UIImage?], using boundary: String) -> Data {
+    private func convertImages(_ images: [UIImage?],
+                               using boundary: String) -> Data {
         var data = Data()
         for image in images {
             guard let image = image else { break }
             let imageData = image.convertToData()
-            data.append(convertFileData(fieldName: "images", fileName: "abc",
-                                        mimeType: "image/jpeg", fileData: imageData, using: boundary))
+            data.append(convertFileData(
+                fieldName: "images", fileName: "abc",
+                mimeType: "image/jpeg", fileData: imageData,
+                using: boundary
+            ))
         }
         return data
     }
     
     private func convertFileData(fieldName: String, fileName: String,
-                                 mimeType: String, fileData: Data,using boundary: String) -> Data {
+                                 mimeType: String, fileData: Data,
+                                 using boundary: String) -> Data {
         var data = Data()
-        data.appendString("\r\n--\(boundary)\r\n")
-        data.appendString("Content-Disposition: form-data; name=\"\(fieldName)\"; filename=\"\(fileName).png\"\r\n")
-        data.appendString("Content-Type: \(mimeType)\r\n\r\n")
+        data.appendBoundary(boundary)
+        data.appendContentDisposition(fieldName: fieldName,
+                                      fileName: fileName)
+        data.appendContentType(mimeType: mimeType)
         data.append(fileData)
         data.appendString("\r\n")
         return data
