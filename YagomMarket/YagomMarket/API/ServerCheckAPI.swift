@@ -15,7 +15,6 @@ struct ServerCheckAPI: API {
         self.configuration = configuration
     }
     
-    
     static func execute(_ completion: @escaping (String) -> Void) {
         let apiConfig = APIConfiguration(method: .get,
                                          base: URLCommand.host,
