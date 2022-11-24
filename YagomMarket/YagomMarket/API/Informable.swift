@@ -7,6 +7,7 @@
 
 protocol Informable {
     associatedtype Results
+    
     func completeFetch(
         _ deleteURI: String,
         _ completionHandler: @escaping (Results) -> Void

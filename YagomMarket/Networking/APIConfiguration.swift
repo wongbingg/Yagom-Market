@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - HTTP Method
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
@@ -14,6 +15,7 @@ enum HTTPMethod: String {
     case delete = "DELETE"
 }
 
+// MARK: - URLCommand
 enum URLCommand {
     static let host = "https://openmarket.yagom-academy.kr"
     static let healthChecker = "/healthChecker"
@@ -34,10 +36,12 @@ enum URLCommand {
     }
 }
 
+//MARK: - APIConfiguration
+
 struct APIConfiguration {
     let method: HTTPMethod
     var parameters: [String: Any]?
-    var body: ProductModel?
+    var body: BodyType?
     var images: [UIImage?]?
     var url: URL?
     
@@ -45,7 +49,7 @@ struct APIConfiguration {
         method: HTTPMethod,
         base: String,
         path: String,
-        body: ProductModel? = nil,
+        body: BodyType? = nil,
         parameters: [String : Any]?,
         images: [UIImage?]? = nil
     ) {
@@ -91,7 +95,22 @@ struct APIConfiguration {
         guard let url = url else { return nil }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
-        guard let body = body else { return urlRequest }
+        
+        switch body {
+        case is ProductModel:
+            return addPOSTBody(in: urlRequest)
+        case is EditProductModel:
+            return addPATCHBody(in: urlRequest)
+        case is DeleteKeyRequestModel:
+            return addSearchDeleteKeyBody(in: urlRequest)
+        default:
+            return urlRequest
+        }
+    }
+    
+    private func addPOSTBody(in request: URLRequest) -> URLRequest {
+        var urlRequest = request
+        guard let body = body as? ProductModel else { return urlRequest }
         let boundary = UUID().uuidString
         let postBody = createPostBody(with: body, at: boundary)
         urlRequest.httpBody = postBody
@@ -103,6 +122,32 @@ struct APIConfiguration {
             URLCommand.multiPartFormData(using: boundary),
             forHTTPHeaderField: "Content-Type"
         )
+        return urlRequest
+    }
+    
+    private func addPATCHBody(in request: URLRequest) -> URLRequest? {
+        var urlRequest = request
+        guard let body = body as? EditProductModel,
+              let paramData = try? JSONEncoder().encode(body) else { return nil }
+        urlRequest.httpBody = paramData
+        urlRequest.setValue(
+            URLCommand.identifier,
+            forHTTPHeaderField: "identifier"
+        )
+        urlRequest.setValue( // 이게 없어서 오류가 났었음
+            "application/json",
+            forHTTPHeaderField: "Content-Type"
+        )
+        return urlRequest
+    }
+    
+    private func addSearchDeleteKeyBody(in request: URLRequest) -> URLRequest? {
+        var urlRequest = request
+        guard let body = body as? DeleteKeyRequestModel,
+              let paramData = try? JSONEncoder().encode(body) else { return nil }
+        urlRequest.setValue(URLCommand.identifier, forHTTPHeaderField: "identifier")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpBody = paramData
         return urlRequest
     }
     
@@ -125,11 +170,13 @@ struct APIConfiguration {
         for image in images {
             guard let image = image else { break }
             let imageData = image.convertToData()
-            data.append(convertFileData(
-                fieldName: "images", fileName: "abc",
-                mimeType: "image/jpeg", fileData: imageData,
-                using: boundary
-            ))
+            data.append(
+                convertFileData(
+                    fieldName: "images", fileName: "abc",
+                    mimeType: "image/jpeg", fileData: imageData,
+                    using: boundary
+                )
+            )
         }
         return data
     }

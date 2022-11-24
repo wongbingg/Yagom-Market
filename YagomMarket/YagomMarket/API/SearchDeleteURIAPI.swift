@@ -5,8 +5,6 @@
 //  Created by 이원빈 on 2022/11/16.
 //
 
-import Foundation
-
 struct SearchDeleteURIAPI<T: Informable>: API where T.Results == Result<SearchProductDetailResponse, Error> {
     typealias ResponseType = String
     
@@ -39,30 +37,5 @@ struct SearchDeleteURIAPI<T: Informable>: API where T.Results == Result<SearchPr
                 print(String(describing: failure))
             }
         })
-    }
-    
-    private func execute(using client: APIClient = APIClient.shared,
-                 _ completionHandler: @escaping (Result<ResponseType, Error>) -> Void) {
-        guard let url = configuration.url else { return }
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = configuration.method.rawValue
-        
-        let rowData = DeleteKeyRequestModel(secret: URLCommand.secretKey)
-        guard let encodedData = try? JSONEncoder().encode(rowData) else { return }
-        urlRequest.setValue(URLCommand.identifier, forHTTPHeaderField: "identifier")
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.httpBody = encodedData
-        
-        client.requestData(with: urlRequest) { (result) in
-            switch result {
-            case .success(let data):
-                let result = String(data: data, encoding: .utf8)!
-                DispatchQueue.main.async {
-                    completionHandler(.success(result))
-                }
-            case .failure(let error):
-                completionHandler(.failure(error))
-            }
-        }
     }
 }
