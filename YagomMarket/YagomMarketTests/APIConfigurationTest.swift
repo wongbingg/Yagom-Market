@@ -66,7 +66,7 @@ final class APIConfigurationTest: XCTestCase {
         XCTAssertEqual(expectationMethod, resultMethod)
     }
     
-    func test_APIConfiguration의_createPostBody메서드_테스트() {
+    func test_APIConfiguration의_createPostBody메서드로_multipartFormdata가_만들어지는지() {
         let model = ProductModel(name: "유닛테스트",
                                  description: "테스트용 모델",
                                  price: 100,

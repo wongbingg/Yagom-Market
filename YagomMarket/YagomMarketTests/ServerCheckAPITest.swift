@@ -10,16 +10,41 @@ import XCTest
 
 final class ServerCheckAPITest: XCTestCase {
     
+    var sut: ServerCheckAPI!
+    
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        let apiConfig = APIConfiguration(
+            method: .get,
+            base: URLCommand.host,
+            path: URLCommand.healthChecker,
+            parameters: nil
+        )
+        sut = ServerCheckAPI(configuration: apiConfig)
+    }
+    
+    override func tearDownWithError() throws {
+        try super.tearDownWithError()
+        sut = nil
+    }
+    
     func test_서버가_활성화되었는지() {
         // given
-        let response = "OK"
+        var response: String?
         let expectation = XCTestExpectation(description: "HealthCheckTest")
         // when
-        ServerCheckAPI.execute { result in
+        sut.execute { result in
             // then
-            XCTAssertEqual(response, result)
-            expectation.fulfill()
+            switch result {
+            case .success(let success):
+                response = success
+                expectation.fulfill()
+            case .failure(let error):
+                print(String(describing: error))
+            }
         }
         wait(for: [expectation], timeout: 3.0)
+        XCTAssertNotNil(response)
+        XCTAssertEqual(response, "\"OK\"")
     }
 }
