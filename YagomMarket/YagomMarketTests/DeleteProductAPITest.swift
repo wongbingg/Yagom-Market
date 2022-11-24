@@ -15,7 +15,7 @@ final class DeleteProductAPITest: XCTestCase {
         try super.setUpWithError()
         sut = makeAPI() as? SearchDeleteURIAPI
     }
-
+    
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         sut = nil
@@ -43,11 +43,13 @@ final class DeleteProductAPITest: XCTestCase {
     
     func makeAPI() -> any API {
         let deleteProductAPI = DeleteProductAPI()
-        let apiConfig = APIConfiguration(method: .post,
-                                         base: URLCommand.host,
-                                         path: URLCommand.products +
-                                         URLCommand.productId(delete: 207),
-                                         parameters: nil)
+        let apiConfig = APIConfiguration(
+            method: .post,
+            base: URLCommand.host,
+            path: URLCommand.products +
+            URLCommand.productId(delete: 207),
+            parameters: nil
+        )
         return SearchDeleteURIAPI(configuration: apiConfig, delegate: deleteProductAPI)
     }
 }

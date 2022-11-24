@@ -13,19 +13,23 @@ final class RegisterProductAPITest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        let model = ProductModel(name: "테스트",
-                                 description: "Post테스트용",
-                                 price: 1200,
-                                 currency: .KRW,
-                                 discountedPrice: nil,
-                                 stock: 3,
-                                 secret: URLCommand.secretKey)
-        let apiConfig = APIConfiguration(method: .post,
-                                         base: URLCommand.host,
-                                         path: URLCommand.products,
-                                         body: model,
-                                         parameters: nil,
-                                         images: [UIImage(named: "Photo")])
+        let model = ProductModel(
+            name: "테스트",
+            description: "Post테스트용",
+            price: 1200,
+            currency: .KRW,
+            discountedPrice: nil,
+            stock: 3,
+            secret: URLCommand.secretKey
+        )
+        let apiConfig = APIConfiguration(
+            method: .post,
+            base: URLCommand.host,
+            path: URLCommand.products,
+            body: model,
+            parameters: nil,
+            images: [UIImage(named: "Photo")]
+        )
         sut = RegisterProductAPI(configuration: apiConfig)
     }
     
@@ -38,7 +42,7 @@ final class RegisterProductAPITest: XCTestCase {
         // given
         var response: SearchProductDetailResponse?
         let expectation = XCTestExpectation(description: "API response Test")
-
+        
         // when
         sut.execute { result in
             switch result {
@@ -51,7 +55,7 @@ final class RegisterProductAPITest: XCTestCase {
             }
         }
         wait(for: [expectation], timeout: 5.0)
-
+        
         // then
         XCTAssertNotNil(response)
     }
