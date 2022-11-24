@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct DeleteKeyRequestModel: Codable {
+struct DeleteKeyRequestModel: Codable, BodyType {
     let secret: String
 }
