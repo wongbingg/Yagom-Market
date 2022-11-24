@@ -21,6 +21,13 @@ extension API {
             switch result {
             case .success(let data):
                 do {
+//                    debugPrint(data.prettyPrintedJSONString!) // 테스트용
+                    if ResponseType.self == String.self { // String인코딩이 되어야 할 경우만 예외적으로 처리해준 부분
+                        let result = String(data: data, encoding: .utf8)!
+                        completionHandler(.success(result as! Self.ResponseType))
+                        return
+                    }
+                    
                     let result = try JSONDecoder().decode(ResponseType.self, from: data)
                     DispatchQueue.main.async {
                         completionHandler(.success(result))
