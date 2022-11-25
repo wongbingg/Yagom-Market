@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductModel: Codable, BodyType {
+struct ProductModel: BodyType {
     let name: String
     let description: String
     let price: Double

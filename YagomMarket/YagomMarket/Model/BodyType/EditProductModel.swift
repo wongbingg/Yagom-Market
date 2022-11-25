@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EditProductModel: Codable, BodyType {
+struct EditProductModel: BodyType {
     let name: String?
     let description: String?
     let thumbnailId: Int?
