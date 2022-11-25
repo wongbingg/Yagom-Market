@@ -7,18 +7,20 @@
 
 import Foundation
 
-class DeleteProductAPI: API, Informable {
+class DeleteProductAPI: API, DeleteURITransferable {
     typealias ResponseType = SearchProductDetailResponse
     typealias Results = Result<ResponseType, Error>
     
     var configuration: APIConfiguration = APIConfiguration()
-
+    
     func completeFetch(_ deleteURI: String,
                        _ completionHandler: @escaping (Results) -> Void) {
-        let apiConfig = APIConfiguration(method: .delete,
-                                         base: URLCommand.host,
-                                         path: deleteURI,
-                                         parameters: nil)
+        let apiConfig = APIConfiguration(
+            method: .delete,
+            base: URLCommand.host,
+            path: deleteURI,
+            parameters: nil
+        )
         configuration = apiConfig
         execute { result in
             switch result {

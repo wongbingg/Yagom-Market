@@ -5,7 +5,9 @@
 //  Created by 이원빈 on 2022/11/16.
 //
 
-struct SearchDeleteURIAPI<T: Informable>: API where T.Results == Result<SearchProductDetailResponse, Error> {
+struct SearchDeleteURIAPI<T: DeleteURITransferable>:
+    API where T.Results == Result<SearchProductDetailResponse, Error> {
+    
     typealias ResponseType = String
     
     var configuration: APIConfiguration
