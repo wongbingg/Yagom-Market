@@ -17,7 +17,7 @@ final class SearchDeleteURIAPITest: XCTestCase {
             method: .post,
             base: URLCommand.host,
             path: URLCommand.products +
-            URLCommand.productId(delete: 192),
+            URLCommand.productId(delete: 278),
             body: DeleteKeyRequestModel(secret: URLCommand.secretKey),
             parameters: nil
         )

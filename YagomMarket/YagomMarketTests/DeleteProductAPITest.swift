@@ -36,9 +36,10 @@ final class DeleteProductAPITest: XCTestCase {
                 print("test fail")
             }
         }
+        
+        // then
         wait(for: [expectation], timeout: 3.0)
         XCTAssertNotNil(flag)
-        // then
     }
     
     func makeAPI() -> any API {

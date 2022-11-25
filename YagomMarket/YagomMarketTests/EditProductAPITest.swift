@@ -44,12 +44,11 @@ final class EditProductAPITest: XCTestCase {
         // given
         let expectation = XCTestExpectation(description: "PATCH TEST")
         var response: SearchProductDetailResponse?
+        
         // when
-        // then
         sut.execute { result in
             switch result {
             case .success(let success):
-                print("성공")
                 response = success
                 expectation.fulfill()
             case .failure(let failure):
@@ -57,6 +56,7 @@ final class EditProductAPITest: XCTestCase {
             }
         }
         
+        // then
         wait(for: [expectation], timeout: 3.0)
         XCTAssertNotNil(response)
     }
