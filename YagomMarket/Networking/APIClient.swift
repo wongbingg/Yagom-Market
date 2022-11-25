@@ -26,7 +26,6 @@ struct APIClient {
                 }
                 return
             }
-            
             DispatchQueue.main.async {
                 completionHandler(.success(data))
             }
