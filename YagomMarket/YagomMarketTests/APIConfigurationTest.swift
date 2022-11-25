@@ -65,24 +65,4 @@ final class APIConfigurationTest: XCTestCase {
         XCTAssertEqual(expectationURL, resultURL)
         XCTAssertEqual(expectationMethod, resultMethod)
     }
-    
-//    func test_APIConfiguration의_createPostBody메서드로_multipartFormdata가_만들어지는지() {
-//        let model = ProductModel(name: "유닛테스트",
-//                                 description: "테스트용 모델",
-//                                 price: 100,
-//                                 currency: .USD,
-//                                 discountedPrice: nil,
-//                                 stock: 4,
-//                                 secret: URLCommand.secretKey)
-//        let images = [UIImage(named: "Photo")]
-//        let apiConfig = APIConfiguration(method: .get,
-//                                         base: URLCommand.host,
-//                                         path: URLCommand.products,
-//                                         body: model,
-//                                         parameters: nil,
-//                                         images: images)
-//        let boundary = UUID().uuidString
-//        guard let data = apiConfig.createPostBody(with: model, at: boundary) else { return }
-//        print(String(decoding: data, as: UTF8.self))
-//    }
 }
