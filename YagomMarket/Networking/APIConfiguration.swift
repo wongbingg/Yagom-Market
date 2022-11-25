@@ -22,6 +22,7 @@ enum URLCommand {
     static let products = "/api/products"
     static let identifier = "c08f22e6-5f28-11ed-a917-e3ffa43330f7"
     static let secretKey = "nvjb13rd8y76lkzv2"
+    static let json = "application/json"
     
     static func productId(search id: Int) -> String {
         return "/\(id)"
@@ -57,13 +58,32 @@ struct APIConfiguration {
         self.parameters = parameters
         self.body = body
         self.images = images
-        self.url = makeURL(base: base,
-                           path: path,
-                           parameters: parameters)
+        self.url = makeURL(
+            base: base,
+            path: path,
+            parameters: parameters
+        )
     }
     
     init() {
         self.method = .get
+    }
+    
+    func makeURLRequest() -> URLRequest? {
+        guard let url = url else { return nil }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = method.rawValue
+        
+        switch body {
+        case is ProductModel:
+            return addPOSTBody(in: urlRequest)
+        case is EditProductModel:
+            return addPATCHBody(in: urlRequest)
+        case is DeleteKeyRequestModel:
+            return addSearchDeleteKeyBody(in: urlRequest)
+        default:
+            return urlRequest
+        }
     }
     
     private func makeURL(base: String,
@@ -91,68 +111,44 @@ struct APIConfiguration {
         return list
     }
     
-    func makeURLRequest() -> URLRequest? {
-        guard let url = url else { return nil }
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = method.rawValue
-        
-        switch body {
-        case is ProductModel:
-            return addPOSTBody(in: urlRequest)
-        case is EditProductModel:
-            return addPATCHBody(in: urlRequest)
-        case is DeleteKeyRequestModel:
-            return addSearchDeleteKeyBody(in: urlRequest)
-        default:
-            return urlRequest
-        }
-    }
-    
     private func addPOSTBody(in request: URLRequest) -> URLRequest {
         var urlRequest = request
         guard let body = body as? ProductModel else { return urlRequest }
         let boundary = UUID().uuidString
         let postBody = createPostBody(with: body, at: boundary)
         urlRequest.httpBody = postBody
-        urlRequest.setValue(
-            URLCommand.identifier,
-            forHTTPHeaderField: "identifier"
-        )
-        urlRequest.setValue(
-            URLCommand.multiPartFormData(using: boundary),
-            forHTTPHeaderField: "Content-Type"
+        urlRequest.setValues(
+            identifier: URLCommand.identifier,
+            contentType: URLCommand.multiPartFormData(using: boundary)
         )
         return urlRequest
     }
     
     private func addPATCHBody(in request: URLRequest) -> URLRequest? {
         var urlRequest = request
-        guard let body = body as? EditProductModel,
-              let paramData = try? JSONEncoder().encode(body) else { return nil }
-        urlRequest.httpBody = paramData
-        urlRequest.setValue(
-            URLCommand.identifier,
-            forHTTPHeaderField: "identifier"
-        )
-        urlRequest.setValue( // 이게 없어서 오류가 났었음
-            "application/json",
-            forHTTPHeaderField: "Content-Type"
+        guard let body = body as? EditProductModel else { return nil }
+        urlRequest.httpBody = body.encodeToData()
+        urlRequest.setValues(
+            identifier: URLCommand.identifier,
+            contentType: URLCommand.json
         )
         return urlRequest
     }
     
     private func addSearchDeleteKeyBody(in request: URLRequest) -> URLRequest? {
         var urlRequest = request
-        guard let body = body as? DeleteKeyRequestModel,
-              let paramData = try? JSONEncoder().encode(body) else { return nil }
-        urlRequest.setValue(URLCommand.identifier, forHTTPHeaderField: "identifier")
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.httpBody = paramData
+        guard let body = body as? DeleteKeyRequestModel else { return nil }
+        urlRequest.httpBody = body.encodeToData()
+        urlRequest.setValues(
+            identifier: URLCommand.identifier,
+            contentType: URLCommand.json
+        )
         return urlRequest
     }
     
-    func createPostBody(with body: ProductModel,
-                        at boundary: String) -> Data? {
+    // MARK: - multipart/form-data
+    private func createPostBody(with body: ProductModel,
+                                at boundary: String) -> Data? {
         var data = Data()
         guard let paramData = try? JSONEncoder().encode(body),
               let images = images else { return nil }
