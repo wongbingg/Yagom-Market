@@ -14,8 +14,7 @@ final class ViewController: UIViewController {
         setupInitialView()
     }
     
-    func setupInitialView() {
+    private func setupInitialView() {
         view.backgroundColor = .systemBackground
     }
-    
 }
