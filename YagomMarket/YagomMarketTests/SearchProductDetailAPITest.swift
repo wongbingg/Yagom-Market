@@ -31,7 +31,7 @@ final class SearchProductDetailAPITest: XCTestCase {
     func test_productDetail이_response로_받아와지는지() {
         // given
         var response: SearchProductDetailResponse?
-        let expectation = XCTestExpectation(description: "API Response Test")
+        let expectation = XCTestExpectation(description: "Search Product Detail Test")
         
         // when
         sut.execute { result in

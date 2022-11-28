@@ -41,7 +41,7 @@ final class RegisterProductAPITest: XCTestCase {
     func test_원하는상품을_POST를통해_등록할수있는지() {
         // given
         var response: SearchProductDetailResponse?
-        let expectation = XCTestExpectation(description: "API response Test")
+        let expectation = XCTestExpectation(description: "Register Product Test")
         
         // when
         sut.execute { result in

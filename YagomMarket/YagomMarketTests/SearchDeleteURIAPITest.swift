@@ -31,7 +31,7 @@ final class SearchDeleteURIAPITest: XCTestCase {
     
     func test_secretKey와rowData를이용해서_삭제uri를요청하면_잘받아와지는지() {
         // given
-        let expectation = XCTestExpectation(description: "FindDeleteKey")
+        let expectation = XCTestExpectation(description: "Search DeleteURI Test")
         
         // when
         var response: String?

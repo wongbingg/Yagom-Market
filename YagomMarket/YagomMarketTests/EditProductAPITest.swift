@@ -42,7 +42,7 @@ final class EditProductAPITest: XCTestCase {
     
     func test_상품수정이_잘이루어지는지() {
         // given
-        let expectation = XCTestExpectation(description: "PATCH TEST")
+        let expectation = XCTestExpectation(description: "Edit Product TEST")
         var response: SearchProductDetailResponse?
         
         // when

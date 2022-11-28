@@ -23,7 +23,7 @@ final class DeleteProductAPITest: XCTestCase {
     
     func test_id에_해당하는상품이_삭제가_되는지() {
         // given
-        let expectation = XCTestExpectation(description: "DeleteTest")
+        let expectation = XCTestExpectation(description: "Delete Product Test")
         var flag: Int?
         
         // when
@@ -34,12 +34,15 @@ final class DeleteProductAPITest: XCTestCase {
                 expectation.fulfill()
             case .failure(_):
                 print("test fail")
+                flag = 0
+                expectation.fulfill()
             }
         }
         
         // then
         wait(for: [expectation], timeout: 3.0)
-        XCTAssertNotNil(flag)
+//        XCTAssertNotNil(flag)
+        XCTAssertEqual(flag, 1)
     }
     
     func makeAPI() -> any API {
@@ -48,7 +51,8 @@ final class DeleteProductAPITest: XCTestCase {
             method: .post,
             base: URLCommand.host,
             path: URLCommand.products +
-            URLCommand.productId(delete: 207),
+            URLCommand.productId(delete: 285),
+            body: DeleteKeyRequestModel(secret: URLCommand.secretKey),
             parameters: nil
         )
         return SearchDeleteURIAPI(configuration: apiConfig, delegate: deleteProductAPI)
