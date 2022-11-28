@@ -73,7 +73,8 @@ struct APIConfiguration {
         guard let url = url else { return nil }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
-        
+        urlRequest.setValue(URLCommand.identifier,
+                            forHTTPHeaderField: "identifier")
         switch body {
         case is ProductModel:
             return addPOSTBody(in: urlRequest)
@@ -117,10 +118,7 @@ struct APIConfiguration {
         let boundary = UUID().uuidString
         let postBody = createPostBody(with: body, at: boundary)
         urlRequest.httpBody = postBody
-        urlRequest.setValues(
-            identifier: URLCommand.identifier,
-            contentType: URLCommand.multiPartFormData(using: boundary)
-        )
+        urlRequest.setContentType(URLCommand.multiPartFormData(using: boundary))
         return urlRequest
     }
     
@@ -128,10 +126,7 @@ struct APIConfiguration {
         var urlRequest = request
         guard let body = body as? EditProductModel else { return nil }
         urlRequest.httpBody = body.encodeToData()
-        urlRequest.setValues(
-            identifier: URLCommand.identifier,
-            contentType: URLCommand.json
-        )
+        urlRequest.setContentType(URLCommand.json)
         return urlRequest
     }
     
@@ -139,10 +134,7 @@ struct APIConfiguration {
         var urlRequest = request
         guard let body = body as? DeleteKeyRequestModel else { return nil }
         urlRequest.httpBody = body.encodeToData()
-        urlRequest.setValues(
-            identifier: URLCommand.identifier,
-            contentType: URLCommand.json
-        )
+        urlRequest.setContentType(URLCommand.json)
         return urlRequest
     }
     
