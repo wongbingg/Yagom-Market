@@ -19,22 +19,17 @@ extension API {
         client.requestData(with: urlRequest) { (result) in
             switch result {
             case .success(let data):
+                if ResponseType.self == String.self {
+                    let result = String(data: data, encoding: .utf8)!
+                    completionHandler(.success(result as! Self.ResponseType))
+                    return
+                }
                 do {
-                    if ResponseType.self == String.self { // String인코딩이 되어야 할 경우만 예외적으로 처리해준 부분
-                        let result = String(data: data, encoding: .utf8)!
-                        completionHandler(.success(result as! Self.ResponseType))
-                        return
-                    }
-                    
-                    debugPrint(data.prettyPrintedJSONString!) // 테스트용
+                    debugPrint(data.prettyPrintedJSONString!)
                     let result = try JSONDecoder().decode(ResponseType.self, from: data)
-                    DispatchQueue.main.async {
-                        completionHandler(.success(result))
-                    }
+                    completionHandler(.success(result))
                 } catch {
-                    DispatchQueue.main.async {
-                        completionHandler(.failure(error))
-                    }
+                    completionHandler(.failure(error))
                 }
             case .failure(let error):
                 completionHandler(.failure(error))

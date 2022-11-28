@@ -21,14 +21,10 @@ struct APIClient {
                 return
             }
             guard let data = data else {
-                DispatchQueue.main.async {
-                    completionHandler(.failure(error ?? APIError.unknown))
-                }
+                completionHandler(.failure(error ?? APIError.unknown))
                 return
             }
-            DispatchQueue.main.async {
-                completionHandler(.success(data))
-            }
+            completionHandler(.success(data))
         }.resume()
     }
     
