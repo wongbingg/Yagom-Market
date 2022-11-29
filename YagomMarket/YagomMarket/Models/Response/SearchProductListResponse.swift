@@ -34,6 +34,7 @@ struct SearchProductListResponse: Decodable {
 struct Page: Decodable {
     let id: Int
     let vendorId: Int
+    let vendorName: String
     let name: String
     let description: String
     let thumbnail: String
@@ -46,7 +47,7 @@ struct Page: Decodable {
     let issuedAt: String
 
     enum CodingKeys: String, CodingKey {
-        case id, name, description, thumbnail, currency, price, stock
+        case id, name, description, thumbnail, currency, price, stock, vendorName
         case vendorId = "vendor_id"
         case bargainPrice = "bargain_price"
         case discountedPrice = "discounted_price"
