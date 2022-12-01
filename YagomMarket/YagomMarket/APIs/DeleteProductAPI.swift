@@ -9,12 +9,12 @@ import Foundation
 
 class DeleteProductAPI: API, DeleteURITransferable {
     typealias ResponseType = SearchProductDetailResponse
-    typealias Results = Result<ResponseType, Error>
+    typealias Results = (Result<ResponseType, Error>) -> Void
     
     var configuration: APIConfiguration = APIConfiguration()
     
     func completeFetch(_ deleteURI: String,
-                       _ completionHandler: @escaping (Results) -> Void) {
+                       _ completionHandler: @escaping Results) {
         let apiConfig = APIConfiguration(
             method: .delete,
             base: URLCommand.host,

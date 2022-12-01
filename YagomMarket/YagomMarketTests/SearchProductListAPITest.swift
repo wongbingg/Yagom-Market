@@ -13,7 +13,7 @@ final class SearchProductListAPITest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        let param = ["page_no": 1, "items_per_page": 3, "search_value": "borysarang"] as [String : Any]
+        let param = ["page_no": 1, "items_per_page": 3, "search_value": "wongbing"] as [String : Any]
         let apiCon = APIConfiguration(
             method: .get,
             base: URLCommand.host,
