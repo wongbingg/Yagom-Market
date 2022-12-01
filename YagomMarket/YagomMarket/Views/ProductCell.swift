@@ -13,7 +13,7 @@ class ProductCell: UICollectionViewCell {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 8
+//        stackView.spacing = 8
         return stackView
     }()
     
@@ -59,7 +59,7 @@ class ProductCell: UICollectionViewCell {
     private let vendorNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.preferredFont(forTextStyle: .caption1)
+        label.font = UIFont.preferredFont(forTextStyle: .subheadline)
         label.textColor = .systemGray
         return label
     }()
@@ -69,6 +69,14 @@ class ProductCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemGray5
         return label
+    }()
+    
+    private let fakeView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+//        view.backgroundColor = .systemGray
+        return view
     }()
     
     // MARK: Initializers
@@ -95,6 +103,7 @@ class ProductCell: UICollectionViewCell {
         mainStackView.addArrangedSubview(productImageView)
         mainStackView.addArrangedSubview(labelStackView)
         mainStackView.addArrangedSubview(lowerStackView)
+        mainStackView.addArrangedSubview(fakeView)
         
         labelStackView.addArrangedSubview(priceLabel)
         labelStackView.addArrangedSubview(titleLabel)
@@ -110,7 +119,10 @@ class ProductCell: UICollectionViewCell {
             mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            productImageView.heightAnchor.constraint(equalTo: mainStackView.heightAnchor, multiplier: 0.7)
+            productImageView.heightAnchor.constraint(equalTo: mainStackView.heightAnchor, multiplier: 0.7),
+            productImageView.bottomAnchor.constraint(equalTo: priceLabel.topAnchor, constant: -9),
+            titleLabel.bottomAnchor.constraint(equalTo: vendorNameLabel.topAnchor, constant: -9),
+            fakeView.heightAnchor.constraint(lessThanOrEqualToConstant: 100)
         ])
     }
     

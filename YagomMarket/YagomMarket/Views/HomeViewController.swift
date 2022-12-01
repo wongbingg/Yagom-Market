@@ -26,7 +26,7 @@ final class HomeViewController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
-        viewModel.requestProductList(pageNumber: 1, ItemPerPages: 10)
+        viewModel.requestProductList(pageNumber: 1, ItemPerPages: 100)
     }
     
     // MARK: Methods
@@ -103,7 +103,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         
         return CGSize(
             width: CGFloat(UIScreen.main.bounds.width / 2.0 - 25),
-            height: CGFloat(UIScreen.main.bounds.height / 3.0)
+            height: CGFloat(UIScreen.main.bounds.height / 2.7)
         )
     }
 }
