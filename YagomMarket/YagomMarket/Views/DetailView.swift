@@ -21,48 +21,61 @@ final class DetailView: UIView {
     private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
         stackView.axis = .vertical
+        stackView.spacing = 5
         return stackView
     }()
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.boldSystemFont(ofSize: 28)
         return label
     }()
     
     private let lowerStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
+        stackView.spacing = 8
         return stackView
     }()
     
     private let vendorNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        label.textColor = .systemGray
         return label
     }()
     
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .systemGray
         return label
     }()
     
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
     
     private let descriptionTextView: UITextView = {
         let textView = UITextView()
+        textView.isScrollEnabled = false
+        textView.font = UIFont.preferredFont(forTextStyle: .body)
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -81,9 +94,11 @@ final class DetailView: UIView {
     
     private func addSubViews() {
         addSubview(mainScrollView)
+        
+        mainScrollView.addSubview(imageView) //
         mainScrollView.addSubview(mainStackView)
         
-        mainStackView.addArrangedSubview(imageView)
+//        mainStackView.addArrangedSubview(imageView)
         mainStackView.addArrangedSubview(priceLabel)
         mainStackView.addArrangedSubview(nameLabel)
         mainStackView.addArrangedSubview(lowerStackView)
@@ -100,8 +115,11 @@ final class DetailView: UIView {
             mainScrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             mainScrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            mainStackView.topAnchor.constraint(
+            imageView.topAnchor.constraint(
                 equalTo: mainScrollView.contentLayoutGuide.topAnchor
+            ),
+            mainStackView.topAnchor.constraint(
+                equalTo: imageView.bottomAnchor
             ),
             mainStackView.bottomAnchor.constraint(
                 equalTo: mainScrollView.contentLayoutGuide.bottomAnchor
@@ -114,14 +132,18 @@ final class DetailView: UIView {
             ),
             mainStackView.widthAnchor.constraint(
                 equalTo: mainScrollView.widthAnchor
-            )
+            ),
+            imageView.heightAnchor.constraint(
+                equalToConstant: UIScreen.main.bounds.height * 0.5
+            ),
+            imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
         ])
     }
     
     func setupData(with viewModel: DetailViewModel) {
         nameLabel.text = viewModel.name
         descriptionTextView.text = viewModel.description
-        vendorNameLabel.text = viewModel.vendorName
+        vendorNameLabel.text = viewModel.vendorName?.appending(" •")
         priceLabel.text = viewModel.price
         timeLabel.text = viewModel.time
         imageView.setImage(with: (viewModel.images?[0].url)!)

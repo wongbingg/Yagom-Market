@@ -26,7 +26,7 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInitialView()
-        viewModel.didFetchedData = { [self] in
+        viewModel.completeDataFetching = { [self] in
             DispatchQueue.main.async { [self] in
                 detailView.setupData(with: viewModel)
             }

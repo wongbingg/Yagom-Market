@@ -29,7 +29,7 @@ final class DefaultDetailViewModel: DetailViewModel {
     var time: String?
     var description: String?
     var name: String?
-    var didFetchedData: (() -> Void)?
+    var completeDataFetching: (() -> Void)?
     
     func search(productID: Int) {
         let apiConfig = APIConfiguration(
@@ -52,12 +52,15 @@ final class DefaultDetailViewModel: DetailViewModel {
     
     private func parse(data: SearchProductDetailAPI.ResponseType) {
         self.images = data.images
-        self.price = String(data.price ?? 0)
+        if data.currency == .KRW {
+            self.price = String(Int(data.price ?? 0)).appending("원") // Int.max 를 넘어가는 일 발생
+        } else {
+            self.price = String(data.price ?? 0.0).appending("달러")
+        }
         self.vendorName = data.vendors.name
-        self.time = data.createdAt
+        self.time = DateCalculator.shared.calculatePostedDay(with: data.createdAt)
         self.description = data.description ?? ""
         self.name = data.name ?? ""
-        didFetchedData?()
+        completeDataFetching?()
     }
-    
 }
