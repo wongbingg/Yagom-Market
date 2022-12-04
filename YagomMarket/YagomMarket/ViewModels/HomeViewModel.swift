@@ -12,18 +12,13 @@ protocol HomeViewModelInput {
 }
 
 protocol HomeViewModelOutput {
-    var productList: [Page]? { get set }
+    var productList: Observable<[Page]> { get set }
 }
 
 protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {}
 
 final class DefaultHomeViewModel: HomeViewModel {
-    var didUpdatedList: (() -> Void)?
-    var productList: [Page]? {
-        didSet {
-            didUpdatedList?()
-        }
-    }
+    var productList: Observable<[Page]> = Observable([])
     
     func requestProductList(pageNumber: Int,
                             ItemPerPages: Int,
@@ -49,7 +44,7 @@ final class DefaultHomeViewModel: HomeViewModel {
         searchProductListAPI.execute { result in
             switch result {
             case .success(let data):
-                self.productList = data.pages
+                self.productList.value = data.pages
             case .failure(let error):
                 print(String(describing: error))
             }

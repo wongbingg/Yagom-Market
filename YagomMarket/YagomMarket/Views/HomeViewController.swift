@@ -21,12 +21,12 @@ final class HomeViewController: UIViewController {
         setupInitialView()
         adoptDataSource()
         registerCell()
-        viewModel.didUpdatedList = {
+        viewModel.productList.bind { _ in
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
-        viewModel.requestProductList(pageNumber: 1, ItemPerPages: 100)
+        viewModel.requestProductList(pageNumber: 5, ItemPerPages: 50)
     }
     
     // MARK: Methods
@@ -56,7 +56,7 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-        let id = (viewModel.productList?[indexPath.row].id)!
+        let id = viewModel.productList.value[indexPath.row].id
         let detailVC = DetailViewController(productId: id)
         navigationController?.pushViewController(detailVC, animated: true)
     }
@@ -70,7 +70,7 @@ extension HomeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return viewModel.productList?.count ?? 0
+        return viewModel.productList.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -81,7 +81,7 @@ extension HomeViewController: UICollectionViewDataSource {
         ) as? ProductCell else {
             return UICollectionViewCell()
         }
-        cell.setup(with: viewModel.productList?[indexPath.row])
+        cell.setup(with: viewModel.productList.value[indexPath.row])
         return cell
     }
 }
