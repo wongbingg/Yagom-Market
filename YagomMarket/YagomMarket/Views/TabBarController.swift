@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,12 +18,12 @@ class TabBarController: UITabBarController {
         let homeVC = HomeViewController()
         let registerVC = RegisterViewController()
         let searchVC = SearchViewController()
-        
+
         homeVC.title = "Home"
         homeVC.tabBarItem.image = UIImage(systemName: "house")
         let navHome = UINavigationController(rootViewController: homeVC)
         
-        registerVC.title = "Register"
+        registerVC.title = "Register" // 등록하는게 의미가 없는 상태, 왜냐면 modal로 따로 띄워주는 중 
         registerVC.tabBarItem.image = UIImage(systemName: "plus.circle")
         let navRegister = UINavigationController(rootViewController: registerVC)
         

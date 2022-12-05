@@ -14,10 +14,11 @@ final class HomeViewController: UIViewController {
         collectionViewLayout: UICollectionViewFlowLayout()
     )
     let viewModel = DefaultHomeViewModel()
-
+    
     // MARK: View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        tabBarController?.delegate = self
         setupInitialView()
         adoptDataSource()
         registerCell()
@@ -26,7 +27,12 @@ final class HomeViewController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
-        viewModel.requestProductList(pageNumber: 5, ItemPerPages: 50)
+        viewModel.requestProductList(pageNumber: 1, ItemPerPages: 50)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: Methods
@@ -105,5 +111,19 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             width: CGFloat(UIScreen.main.bounds.width / 2.0 - 25),
             height: CGFloat(UIScreen.main.bounds.height / 2.7)
         )
+    }
+}
+
+extension HomeViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if let navCon = viewController as? UINavigationController {
+            if navCon.viewControllers.first is RegisterViewController {
+                let vc = RegisterViewController()
+                vc.modalPresentationStyle = .overFullScreen
+                present(vc, animated: true)
+                return false
+            }
+        }
+        return true
     }
 }
