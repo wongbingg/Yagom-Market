@@ -13,7 +13,6 @@ class ProductCell: UICollectionViewCell {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-//        stackView.spacing = 8
         return stackView
     }()
     
@@ -32,6 +31,7 @@ class ProductCell: UICollectionViewCell {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        stackView.spacing = 0
         return stackView
     }()
     
@@ -52,7 +52,7 @@ class ProductCell: UICollectionViewCell {
     private let lowerStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
+        stackView.axis = .vertical
         return stackView
     }()
     
@@ -64,18 +64,10 @@ class ProductCell: UICollectionViewCell {
         return label
     }()
     
-    private let timeLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .systemGray5
-        return label
-    }()
-    
     private let fakeView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-//        view.backgroundColor = .systemGray
         return view
     }()
     
@@ -92,59 +84,63 @@ class ProductCell: UICollectionViewCell {
     }
     
     // MARK: Methods
-    private func setupInitialView() {
-        backgroundColor = .systemBackground
-        
-    }
-    
-    private func addSubViews() {
-        addSubview(mainStackView)
-        
-        mainStackView.addArrangedSubview(productImageView)
-        mainStackView.addArrangedSubview(labelStackView)
-        mainStackView.addArrangedSubview(lowerStackView)
-        mainStackView.addArrangedSubview(fakeView)
-        
-        labelStackView.addArrangedSubview(priceLabel)
-        labelStackView.addArrangedSubview(titleLabel)
-        
-        lowerStackView.addArrangedSubview(vendorNameLabel)
-        lowerStackView.addArrangedSubview(timeLabel)
-    }
-    
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: topAnchor),
-            mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            productImageView.heightAnchor.constraint(equalTo: mainStackView.heightAnchor, multiplier: 0.7),
-            productImageView.bottomAnchor.constraint(equalTo: priceLabel.topAnchor, constant: -9),
-            titleLabel.bottomAnchor.constraint(equalTo: vendorNameLabel.topAnchor, constant: -9),
-            fakeView.heightAnchor.constraint(lessThanOrEqualToConstant: 100)
-        ])
-    }
-    
     func setup(with data: Page?) {
         guard let data = data else { return }
         productImageView.setImage(with: data.thumbnail)
-        priceLabel.text = String(data.price) + "원"
+        if data.currency == .KRW {
+            priceLabel.text = String(Int(data.price)).appending("원")
+        } else {
+            priceLabel.text = String(data.price).appending("달러")
+        }
         titleLabel.text = data.name
-        vendorNameLabel.text = data.vendorName
-        timeLabel.text = generateTimeLabel(with: data.issuedAt)
+        vendorNameLabel.text = data.vendorName + "   •" + DateCalculator.shared.calculatePostedDay(with: data.createdAt)
     }
     
-    private func generateTimeLabel(with time: String) -> String {
-        return ""
+    private func setupInitialView() {
+        backgroundColor = .systemBackground
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         productImageView.image = nil
         priceLabel.text = nil
         titleLabel.text = nil
         vendorNameLabel.text = nil
-        timeLabel.text = nil
+    }
+}
+
+// MARK: - Layout Setup
+private extension ProductCell {
+    func addSubViews() {
+        addSubview(productImageView)
+        addSubview(labelStackView)
+        addSubview(lowerStackView)
+        
+        labelStackView.addArrangedSubview(priceLabel)
+        labelStackView.addArrangedSubview(titleLabel)
+        
+        lowerStackView.addArrangedSubview(vendorNameLabel)
+        lowerStackView.addArrangedSubview(fakeView)
+    }
+    
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            productImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
+            productImageView.topAnchor.constraint(equalTo: topAnchor),
+            productImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            productImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            productImageView.bottomAnchor.constraint(equalTo: labelStackView.topAnchor, constant: -9),
+        ])
+        NSLayoutConstraint.activate([
+            labelStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            labelStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            labelStackView.bottomAnchor.constraint(equalTo: lowerStackView.topAnchor, constant: -9),
+        ])
+        NSLayoutConstraint.activate([
+            lowerStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            lowerStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            lowerStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            fakeView.heightAnchor.constraint(lessThanOrEqualToConstant: 100)
+        ])
     }
 }
