@@ -26,6 +26,7 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInitialView()
+        setupTabBarController()
         viewModel.completeDataFetching = { [self] in
             DispatchQueue.main.async { [self] in
                 detailView.setupData(with: viewModel)
@@ -35,6 +36,10 @@ final class DetailViewController: UIViewController {
     }
     
     // MARK: Methods
+    private func setupTabBarController() {
+        tabBarController?.tabBar.isHidden = true
+    }
+    
     private func setupInitialView() {
         view.backgroundColor = .systemBackground
         view.addSubview(detailView)
