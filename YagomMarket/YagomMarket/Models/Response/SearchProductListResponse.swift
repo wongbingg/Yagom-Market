@@ -8,32 +8,21 @@
 import Foundation
 
 struct SearchProductListResponse: Decodable {
-    let pageNo: Int?
-    let itemsPerPage: Int?
-    let totalCount: Int?
+    let pageNo: Int
+    let itemsPerPage: Int
+    let totalCount: Int
     let offset: Int
     let limit: Int
-    let lastPage: Int?
-    let hasNext: Bool?
-    let hasPrev: Bool?
+    let lastPage: Int
+    let hasNext: Bool
+    let hasPrev: Bool
     let pages: [Page]
-
-    enum CodingKeys: String, CodingKey {
-        case pageNo = "page_no"
-        case itemsPerPage = "items_per_page"
-        case totalCount = "total_count"
-        case offset
-        case limit
-        case lastPage = "last_page"
-        case hasNext = "has_next"
-        case hasPrev = "has_prev"
-        case pages
-    }
 }
 
 struct Page: Decodable {
     let id: Int
     let vendorId: Int
+    let vendorName: String
     let name: String
     let description: String
     let thumbnail: String
@@ -46,7 +35,7 @@ struct Page: Decodable {
     let issuedAt: String
 
     enum CodingKeys: String, CodingKey {
-        case id, name, description, thumbnail, currency, price, stock
+        case id, name, description, thumbnail, currency, price, stock, vendorName
         case vendorId = "vendor_id"
         case bargainPrice = "bargain_price"
         case discountedPrice = "discounted_price"
