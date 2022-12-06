@@ -155,16 +155,18 @@ struct APIConfiguration {
     private func convertImages(_ images: [UIImage?],
                                using boundary: String) -> Data {
         var data = Data()
+        var number = 1
         for image in images {
             guard let image = image else { break }
             let imageData = image.convertToData()
             data.append(
                 convertFileData(
-                    fieldName: "images", fileName: "abc",
+                    fieldName: "images", fileName: "image\(number)",
                     mimeType: "image/jpeg", fileData: imageData,
                     using: boundary
                 )
             )
+            number += 1
         }
         return data
     }
