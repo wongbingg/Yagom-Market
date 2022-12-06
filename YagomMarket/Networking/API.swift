@@ -15,7 +15,7 @@ protocol API {
 extension API {
     func execute(using client: APIClient = APIClient.shared,
                  _ completionHandler: @escaping (Result<ResponseType, Error>) -> Void) {
-        guard let urlRequest = configuration.makeURLRequest() else { return }
+        guard var urlRequest = configuration.makeURLRequest() else { return }
         client.requestData(with: urlRequest) { (result) in
             switch result {
             case .success(let data):
@@ -25,7 +25,7 @@ extension API {
                     return
                 }
                 do {
-//                    debugPrint(data.prettyPrintedJSONString!)
+                    debugPrint(data.prettyPrintedJSONString!)
                     let result = try JSONDecoder().decode(ResponseType.self, from: data)
                     completionHandler(.success(result))
                 } catch {

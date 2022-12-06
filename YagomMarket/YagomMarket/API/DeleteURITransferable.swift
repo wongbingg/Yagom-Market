@@ -10,6 +10,6 @@ protocol DeleteURITransferable {
     
     func completeFetch(
         _ deleteURI: String,
-        _ completionHandler: Results
+        _ completionHandler: @escaping (Results) -> Void
     )
 }

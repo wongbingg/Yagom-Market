@@ -6,7 +6,7 @@
 //
 
 struct SearchDeleteURIAPI<T: DeleteURITransferable>:
-    API where T.Results == (Result<SearchProductDetailResponse, Error>) -> Void {
+    API where T.Results == Result<SearchProductDetailResponse, Error> {
     
     typealias ResponseType = String
     
