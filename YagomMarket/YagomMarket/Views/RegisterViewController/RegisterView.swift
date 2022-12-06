@@ -9,8 +9,22 @@ import UIKit
 
 final class RegisterView: UIView {
     
+    private enum PlaceHolder {
+        static let whiteSpace = ""
+        static let productName = "상품명"
+        static let category = "카테고리"
+        static let tag = "# 태그"
+        static let price = "￦ 가격"
+        static let description = """
+- 구매 시기\n
+- 브랜드 /모델명\n
+- 제품의 상태 (사용감, 하자 유무 등)\n
+* 서로가 믿고 거래할 수 있도록, 자세한 정보와 다양한 각도의 상품 사진을 올려주세요.
+"""
+    }
+    
     // MARK: UIComponents
-    private let mainScrollView: UIScrollView = {
+    let mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
@@ -49,25 +63,50 @@ final class RegisterView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.image = UIImage(systemName: "camera.fill")
         button.backgroundColor = .systemGray6
+        button.tintColor = .systemBrown
         button.contentMode = .center
         button.heightAnchor.constraint(equalToConstant: 70).isActive = true
         button.widthAnchor.constraint(equalToConstant: 70).isActive = true
         return button
     }()
     
-    private let nameTextField = CustomTextField(placeholder: "상품명")
-    private let categoryTextField = CustomTextField(placeholder: "카테고리")
-    private let tagTextField = CustomTextField(placeholder: "# 태그")
-    private let priceTextField = CustomTextField(placeholder: "￦ 가격")
+    private let currentPhotoCountLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "0/5"
+        label.textColor = .systemGray3
+        return label
+    }()
+    
+    private let nameTextField = CustomTextField(placeholder: PlaceHolder.productName)
+    private let categoryTextField = CustomTextField(placeholder: PlaceHolder.category)
+    private let tagTextField = CustomTextField(placeholder: PlaceHolder.tag)
+    private let priceTextField = CustomTextField(placeholder: PlaceHolder.price)
     
     private let descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = UIFont.preferredFont(forTextStyle: .title3)
+        textView.font = UIFont.preferredFont(forTextStyle: .body)
         textView.textColor = .systemGray3
         textView.isScrollEnabled = false
-        textView.text = "- 구매 시기\n- 브랜드 /모델명\n- 제품의 상태 (사용감, 하자 유무 등)\n* 서로가 믿고 거래할 수 있도록, 자세한 정보와 다양한 각도의 상품 사진을 올려주세요."
+        textView.text = PlaceHolder.description
         return textView
+    }()
+    
+    private let accessoryView: UIView = {
+        let uiview = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 50))
+        uiview.layer.borderWidth = 1
+        uiview.layer.borderColor = UIColor.systemGray6.cgColor
+        return uiview
+    }()
+    
+    let keyboardDownButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "keyboard.chevron.compact.down"), for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.tintColor = .systemBrown
+        return button
     }()
     
     // MARK: Initializers
@@ -75,6 +114,9 @@ final class RegisterView: UIView {
         super.init(frame: frame)
         addSubViews()
         setupConstraints()
+        setupKeyboard()
+        setupAccessoryView()
+        descriptionTextView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -82,7 +124,8 @@ final class RegisterView: UIView {
     }
     
     // MARK: Methods
-    func appendImage(_ image: UIImage) {
+    func appendImage(_ image: Any?) {
+        guard let image = image as? UIImage else { return }
         let imageView: UIImageView = {
             let imageView = UIImageView()
             imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +136,74 @@ final class RegisterView: UIView {
             imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
             return imageView
         }()
-        photoStackView.addArrangedSubview(imageView)
+        
+        if photoStackView.subviews.count < 6 {
+            photoStackView.addArrangedSubview(imageView)
+            currentPhotoCountLabel.text = "\(photoStackView.subviews.count-1)/5"
+        } else {
+            print("사진의 개수 초과 Alert 띄우기")
+        }
+    }
+    
+    func retrieveDomain() -> ProductModel {
+        let model = ProductModel(
+            name: nameTextField.text ?? "",
+            description: descriptionTextView.text,
+            price: Double(Int(priceTextField.text ?? "") ?? 0),
+            currency: .KRW,
+            discountedPrice: 0.0,
+            stock: 10,
+            secret: URLCommand.secretKey
+        )
+        return model
+    }
+    
+    func retrieveImages() -> [UIImage] {
+        var images = [UIImage]()
+        var subviews = photoStackView.subviews
+        subviews.removeFirst()
+        subviews.forEach { uiview in
+            if let imageView = uiview as? UIImageView {
+                images.append(imageView.image!)
+            }
+        }
+        return images
+    }
+    
+    private func setupKeyboard() {
+        priceTextField.keyboardType = .decimalPad
+    }
+    
+    private func setupAccessoryView() {
+        accessoryView.addSubview(keyboardDownButton)
+        NSLayoutConstraint.activate([
+            keyboardDownButton.centerYAnchor.constraint(equalTo: accessoryView.centerYAnchor),
+            keyboardDownButton.trailingAnchor.constraint(equalTo: accessoryView.trailingAnchor, constant: -10),
+        ])
+        descriptionTextView.inputAccessoryView = accessoryView
+        priceTextField.inputAccessoryView = accessoryView
+        nameTextField.inputAccessoryView = accessoryView
+    }
+}
+
+// MARK: - UITextViewDelegate
+extension RegisterView: UITextViewDelegate {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        if descriptionTextView.text == PlaceHolder.description {
+            descriptionTextView.text = nil
+            descriptionTextView.textColor = .black
+        } else {
+            
+        }
+        return true
+    }
+    
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        if descriptionTextView.text == PlaceHolder.whiteSpace {
+            descriptionTextView.text = PlaceHolder.description
+            descriptionTextView.textColor = .systemGray3
+        }
+        return true
     }
 }
 
@@ -107,6 +217,7 @@ private extension RegisterView {
         
         photoScrollView.addSubview(photoStackView)
         photoStackView.addArrangedSubview(addPhotoButton)
+        addPhotoButton.addSubview(currentPhotoCountLabel)
         
         mainStackView.addArrangedSubview(nameTextField)
         mainStackView.addArrangedSubview(categoryTextField)
@@ -116,7 +227,6 @@ private extension RegisterView {
     }
     
     func setupConstraints() {
-        
         NSLayoutConstraint.activate([
             mainScrollView.topAnchor.constraint(equalTo: topAnchor),
             mainScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -125,40 +235,24 @@ private extension RegisterView {
         ])
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(
-                equalTo: mainScrollView.contentLayoutGuide.topAnchor
-            ),
-            mainStackView.bottomAnchor.constraint(
-                equalTo: mainScrollView.contentLayoutGuide.bottomAnchor
-            ),
-            mainStackView.leadingAnchor.constraint(
-                equalTo: mainScrollView.contentLayoutGuide.leadingAnchor
-            ),
-            mainStackView.trailingAnchor.constraint(
-                equalTo: mainScrollView.contentLayoutGuide.trailingAnchor
-            ),
-            mainStackView.widthAnchor.constraint(
-                equalTo: mainScrollView.frameLayoutGuide.widthAnchor
-            )
+            mainStackView.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor),
+            mainStackView.leadingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.leadingAnchor),
+            mainStackView.trailingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.trailingAnchor),
+            mainStackView.widthAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.widthAnchor)
         ])
         // MARK: stackview 에 직접 제약을 잡아주게 되면 layoutMargin 설정이 먹지 않는다..!
         NSLayoutConstraint.activate([
-            photoStackView.topAnchor.constraint(
-                equalTo: photoScrollView.contentLayoutGuide.topAnchor
-            ),
-            photoStackView.bottomAnchor.constraint(
-                equalTo: photoScrollView.contentLayoutGuide.bottomAnchor
-            ),
-            photoStackView.leadingAnchor.constraint(
-                equalTo: photoScrollView.contentLayoutGuide.leadingAnchor
-            ),
-            photoStackView.trailingAnchor.constraint(
-                equalTo: photoScrollView.contentLayoutGuide.trailingAnchor
-            ),
-            photoStackView.heightAnchor.constraint(
-                equalTo: photoScrollView.frameLayoutGuide.heightAnchor
-            )
+            photoStackView.topAnchor.constraint(equalTo: photoScrollView.contentLayoutGuide.topAnchor),
+            photoStackView.bottomAnchor.constraint(equalTo: photoScrollView.contentLayoutGuide.bottomAnchor),
+            photoStackView.leadingAnchor.constraint(equalTo: photoScrollView.contentLayoutGuide.leadingAnchor),
+            photoStackView.trailingAnchor.constraint(equalTo: photoScrollView.contentLayoutGuide.trailingAnchor),
+            photoStackView.heightAnchor.constraint(equalTo: photoScrollView.frameLayoutGuide.heightAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            currentPhotoCountLabel.centerXAnchor.constraint(equalTo: addPhotoButton.centerXAnchor),
+            currentPhotoCountLabel.bottomAnchor.constraint(equalTo: addPhotoButton.bottomAnchor, constant: -5)
         ])
     }
-    
 }
