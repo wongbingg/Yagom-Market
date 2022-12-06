@@ -15,7 +15,7 @@ final class RegisterProductAPITest: XCTestCase {
         try super.setUpWithError()
         let model = ProductModel(
             name: "테스트",
-            description: "Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스",
+            description: "Post테스트용",
             price: 1200,
             currency: .KRW,
             discountedPrice: nil,
