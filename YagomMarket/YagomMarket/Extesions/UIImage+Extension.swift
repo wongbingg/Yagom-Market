@@ -7,9 +7,18 @@
 
 import UIKit
 
-extension UIImage {
+extension UIImage { // 수정 필요
     func convertToData() -> Data {
-        guard let image = self.jpegData(compressionQuality: 0.5) else { return Data() } // 에러를 던져주어도 괜찮을듯..?
-        return image
+        var quality = 0.01
+        while true {
+            guard let image = self.jpegData(compressionQuality: quality) else { break }
+            if image.count > 1024*300 {
+                print("이미지 용량 300Kb 넘음")
+                quality *= 0.0
+            } else {
+                return image
+            }
+        }
+        return Data()
     }
 }
