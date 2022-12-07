@@ -6,9 +6,8 @@
 //
 
 protocol HomeViewModelInput {
-    func requestProductList(pageNumber: Int,
-                            ItemPerPages: Int,
-                            vendorName: String?)
+    func resetToFirstPage()
+    func addNextPage()
 }
 
 protocol HomeViewModelOutput {
@@ -19,35 +18,55 @@ protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {}
 
 final class DefaultHomeViewModel: HomeViewModel {
     var productList: Observable<[Page]> = Observable([])
+    private var hasNext: Bool?
+    private var currentPage = 1
+    private let currentItemPerPage = 20
     
-    func requestProductList(pageNumber: Int,
-                            ItemPerPages: Int,
-                            vendorName: String? = nil) {
-        var param: [String: Any]?
-        if let vendorName = vendorName {
-            param = ["page_no": pageNumber,
-                     "items_per_page": ItemPerPages,
-                     "search_value": vendorName]
-        } else {
-            param = ["page_no": pageNumber,
-                     "items_per_page": ItemPerPages]
-        }
-        
-        let apiCon = APIConfiguration(
-            method: .get,
-            base: URLCommand.host,
-            path: URLCommand.products,
-            parameters: param
-        )
-        
-        let searchProductListAPI = SearchProductListAPI(configuration: apiCon)
-        searchProductListAPI.execute { result in
+    func resetToFirstPage() {
+        currentPage = 1
+        let api = makeAPI()
+        api.execute { result in
             switch result {
             case .success(let data):
+                self.hasNext = data.hasNext
                 self.productList.value = data.pages
             case .failure(let error):
                 print(String(describing: error))
             }
         }
+    }
+    
+    func addNextPage() {
+        guard let hasNext = hasNext, hasNext == true else { return }
+        currentPage += 1
+        let api = makeAPI()
+        api.execute { result in
+            switch result {
+            case .success(let data):
+                self.hasNext = data.hasNext
+                self.productList.value += data.pages
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
+    }
+    
+    private func makeAPI() -> SearchProductListAPI {
+        let param = makeParameter()
+        let apiCon = makeAPIConfiguration(with: param)
+        return SearchProductListAPI(configuration: apiCon)
+    }
+    
+    private func makeParameter() -> [String: Any] {
+        return  ["page_no": currentPage, "items_per_page": currentItemPerPage]
+    }
+    
+    private func makeAPIConfiguration(with param: [String: Any]?) -> APIConfiguration {
+        return APIConfiguration(
+            method: .get,
+            base: URLCommand.host,
+            path: URLCommand.products,
+            parameters: param
+        )
     }
 }
