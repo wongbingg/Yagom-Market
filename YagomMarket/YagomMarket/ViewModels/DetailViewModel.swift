@@ -53,14 +53,14 @@ final class DefaultDetailViewModel: DetailViewModel {
     private func parse(data: SearchProductDetailAPI.ResponseType) {
         self.images = data.images
         if data.currency == .KRW {
-            self.price = String(Int(data.price ?? 0)).appending("원") // Int.max 를 넘어가는 일 발생
+            self.price = String(Int(data.price)).appending("원") // Int.max 를 넘어가는 일 발생
         } else {
-            self.price = String(data.price ?? 0.0).appending("달러")
+            self.price = String(data.price).appending("달러")
         }
         self.vendorName = data.vendors.name
         self.time = DateCalculator.shared.calculatePostedDay(with: data.createdAt)
-        self.description = data.description ?? ""
-        self.name = data.name ?? ""
+        self.description = data.description
+        self.name = data.name
         completeDataFetching?()
     }
 }
