@@ -16,6 +16,7 @@ final class TabBarController: UITabBarController {
     
     private func setupInitialView() {
         view.tintColor = .systemBrown
+        
         let homeVC = HomeViewController()
         let registerVC = RegisterViewController()
         let searchVC = SearchViewController()

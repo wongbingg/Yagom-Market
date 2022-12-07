@@ -8,9 +8,9 @@
 import Foundation
 
 final class DateCalculator {
+    private let dateFormatter = DateFormatter()
+    private let calendar = Calendar.current
     static let shared = DateCalculator()
-    let dateFormatter = DateFormatter()
-    let calendar = Calendar.current
     
     private init(){
         dateFormatter.locale = Locale(identifier: "ko_KR")

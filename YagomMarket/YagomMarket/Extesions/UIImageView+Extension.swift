@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIImageView {
+    
     static func generate() -> UIImageView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -16,6 +17,7 @@ extension UIImageView {
         imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
         return imageView
     }
+    
     func setImage(with thumbnail: String) {
         guard let url = URL(string: thumbnail) else { return }
         DispatchQueue.global().async {

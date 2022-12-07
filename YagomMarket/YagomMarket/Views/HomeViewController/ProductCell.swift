@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductCell: UICollectionViewCell {
+final class ProductCell: UICollectionViewCell {
     // MARK: UI Component
     private let mainStackView: UIStackView = {
         let stackView = UIStackView()
@@ -20,7 +20,7 @@ class ProductCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true //
+        imageView.clipsToBounds = true
         imageView.backgroundColor = .systemGray5
         imageView.layer.cornerRadius = 10
         imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)

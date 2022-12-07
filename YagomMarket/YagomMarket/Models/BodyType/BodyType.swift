@@ -12,6 +12,7 @@ protocol BodyType: Codable {
 }
 
 extension BodyType {
+    
     func encodeToData() -> Data? {
         guard let data = try? JSONEncoder().encode(self) else { return nil }
         return data

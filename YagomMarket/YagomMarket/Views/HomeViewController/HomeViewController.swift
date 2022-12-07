@@ -9,11 +9,11 @@ import UIKit
 
 final class HomeViewController: UIViewController {
     // MARK: Properties
+    private let viewModel = DefaultHomeViewModel()
     private let collectionView = ProductCollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
     )
-    private let viewModel = DefaultHomeViewModel()
     
     // MARK: View LifeCycles
     override func viewDidLoad() {
@@ -23,12 +23,7 @@ final class HomeViewController: UIViewController {
         adoptDataSource()
         registerCell()
         setupRefreshController()
-        viewModel.productList.bind { _ in
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
-        viewModel.resetToFirstPage()
+        setupViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +65,16 @@ final class HomeViewController: UIViewController {
         collectionView.refreshControl = refreshControl
     }
     
-    @objc func pullToRefresh(_ sender: UIRefreshControl) {
+    private func setupViewModel() {
+        viewModel.productList.bind { _ in
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+        viewModel.resetToFirstPage()
+    }
+    
+    @objc private func pullToRefresh(_ sender: UIRefreshControl) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.viewModel.resetToFirstPage()
             self.collectionView.reloadData()
@@ -81,6 +85,7 @@ final class HomeViewController: UIViewController {
 
 // MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
         let id = viewModel.productList.value[indexPath.row].id
@@ -139,7 +144,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - UITabBarControllerDelegate
 extension HomeViewController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+    
+    func tabBarController(_ tabBarController: UITabBarController,
+                          shouldSelect viewController: UIViewController) -> Bool {
         if let navCon = viewController as? UINavigationController {
             if navCon.viewControllers.first is RegisterViewController {
                 let vc = RegisterViewController()
@@ -154,6 +161,7 @@ extension HomeViewController: UITabBarControllerDelegate {
 
 //MARK: - UIScrollViewDelegate
 extension HomeViewController: UIScrollViewDelegate {
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let endY = (scrollView.bounds.maxY - scrollView.bounds.height)
         if scrollView.contentOffset.y == endY {

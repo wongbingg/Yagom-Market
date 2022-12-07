@@ -188,6 +188,7 @@ final class RegisterView: UIView {
 
 // MARK: - UITextViewDelegate
 extension RegisterView: UITextViewDelegate {
+    
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if descriptionTextView.text == PlaceHolder.description {
             descriptionTextView.text = nil
@@ -209,6 +210,7 @@ extension RegisterView: UITextViewDelegate {
 
 // MARK: - Layout setup
 private extension RegisterView {
+    
     func addSubViews() {
         addSubview(mainScrollView)
         

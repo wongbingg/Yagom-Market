@@ -121,16 +121,6 @@ final class DetailView: UIView {
     }
     
     // MARK: Methods
-    @objc func tapAction(_ sender: UITouch) {
-        let point = sender.location(in: self)
-        if imageStackView.bounds.contains(point) {
-            print("사진 탭됨")
-            // 사진만 볼 수 있는 화면으로 전환
-            // 검은배경에 사진 원본비율로
-            // 위아래 스와이프시 제거
-        }
-    }
-    
     func setupData(with viewModel: DetailViewModel) {
         nameLabel.text = viewModel.name
         descriptionTextView.text = viewModel.description
@@ -164,20 +154,37 @@ final class DetailView: UIView {
     private func adopScrollViewDelegate() {
         imageScrollView.delegate = self
     }
+    
+    @objc private func tapAction(_ sender: UITouch) {
+        let point = sender.location(in: self)
+        if imageStackView.bounds.contains(point) {
+            print("사진 탭됨")
+            // 사진만 볼 수 있는 화면으로 전환
+            // 검은배경에 사진 원본비율로
+            // 위아래 스와이프시 제거
+        }
+    }
 }
 
+// MARK: - UIScrollViewDelegate
 extension DetailView: UIScrollViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let imageCount = imageStackView.subviews.count - 1
-        if scrollView.contentOffset.x < 214 {
+        let width = UIScreen.main.bounds.width
+        let halfWidth = UIScreen.main.bounds.width/2
+        if scrollView.contentOffset.x < halfWidth {
             changeIndex(to: 1)
-        } else if scrollView.contentOffset.x > 214 && scrollView.contentOffset.x < 428 + 214 {
+        } else if scrollView.contentOffset.x > halfWidth
+                    && scrollView.contentOffset.x < width+halfWidth {
             changeIndex(to: 2)
-        } else if scrollView.contentOffset.x > 428 + 214 && scrollView.contentOffset.x < 428 + 428 + 214 {
+        } else if scrollView.contentOffset.x > width+halfWidth
+                    && scrollView.contentOffset.x < (width*2)+halfWidth {
             changeIndex(to: 3)
-        } else if scrollView.contentOffset.x > 428 + 428 + 214 && scrollView.contentOffset.x < 428 + 428 + 428 + 214 {
+        } else if scrollView.contentOffset.x > (width*2)+halfWidth
+                    && scrollView.contentOffset.x < (width*3)+halfWidth {
             changeIndex(to: 4)
-        } else if scrollView.contentOffset.x > 428 + 428 + 428 + 214 && scrollView.contentOffset.x < 428 + 428 + 428 + 428 + 214 {
+        } else if scrollView.contentOffset.x > (width*3)+halfWidth
+                    && scrollView.contentOffset.x < (width*4)+halfWidth {
             changeIndex(to: 5)
         }
     }
@@ -188,7 +195,7 @@ private extension DetailView {
     
     func addSubViews() {
         addSubview(mainScrollView)
-        addSubview(backgroundView)//
+        addSubview(backgroundView)
         backgroundView.addSubview(pagingLabel)
         
         mainScrollView.addSubview(imageScrollView)

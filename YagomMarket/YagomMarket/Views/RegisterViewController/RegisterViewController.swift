@@ -47,16 +47,7 @@ final class RegisterViewController: UIViewController {
         setupToolBar()
         setupButton()
         setupTapGesture()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillAppear(_:)),
-            name: UIResponder.keyboardWillShowNotification, object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillDisappear(_:)),
-            name: UIResponder.keyboardWillHideNotification, object: nil
-        )
+        setupKeyboardNotification()
     }
     
     // MARK: Methods
@@ -124,33 +115,17 @@ final class RegisterViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
-    private func presentPicker(filter: PHPickerFilter?) {
-        var configuration = PHPickerConfiguration(photoLibrary: .shared())
-        configuration.filter = filter
-        configuration.preferredAssetRepresentationMode = .current
-        configuration.selection = .ordered
-        configuration.selectionLimit = 5
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        present(picker, animated: true)
-    }
-    
-    private func displaySelectedPhotos() {
-        selectedAssetIdentifiers.forEach { str in
-            let itemProvider = selection[str]!.itemProvider
-            if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                    guard error == nil else {
-                        print(String(describing: error))
-                        return
-                    }
-                    DispatchQueue.main.async { [weak self] in
-                        self?.registerView.appendImage(image)
-                    }
-                }
-            }
-        }
+    private func setupKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillAppear(_:)),
+            name: UIResponder.keyboardWillShowNotification, object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillDisappear(_:)),
+            name: UIResponder.keyboardWillHideNotification, object: nil
+        )
     }
     
     @objc private func dismissView() {
@@ -171,7 +146,7 @@ final class RegisterViewController: UIViewController {
     
     @objc private func keyboardWillAppear(_ sender: Notification) {
         guard let userInfo = sender.userInfo,
-                let keyboarFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+              let keyboarFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
             return
         }
         
@@ -194,6 +169,7 @@ final class RegisterViewController: UIViewController {
 
 // MARK: - PHPickerViewControllerDelegate
 extension RegisterViewController: PHPickerViewControllerDelegate {
+    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
         
@@ -212,15 +188,45 @@ extension RegisterViewController: PHPickerViewControllerDelegate {
             displaySelectedPhotos()
         }
     }
+    
+    private func displaySelectedPhotos() {
+        selectedAssetIdentifiers.forEach { str in
+            let itemProvider = selection[str]!.itemProvider
+            if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                    guard error == nil else {
+                        print(String(describing: error))
+                        return
+                    }
+                    DispatchQueue.main.async { [weak self] in
+                        self?.registerView.appendImage(image)
+                    }
+                }
+            }
+        }
+    }
 }
 
 // MARK: - UIGestureRecognizerDelegate
 extension RegisterViewController: UIGestureRecognizerDelegate {
+    
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         let position = touch.location(in: registerView)
         if registerView.addPhotoButton.bounds.contains(position) {
             presentPicker(filter: .images)
         }
         return true
+    }
+    
+    private func presentPicker(filter: PHPickerFilter?) {
+        var configuration = PHPickerConfiguration(photoLibrary: .shared())
+        configuration.filter = filter
+        configuration.preferredAssetRepresentationMode = .current
+        configuration.selection = .ordered
+        configuration.selectionLimit = 5
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true)
     }
 }

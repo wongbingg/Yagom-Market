@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIImage { // 수정 필요
+    
     func convertToData() -> Data {
         var quality = 0.01
         while true {

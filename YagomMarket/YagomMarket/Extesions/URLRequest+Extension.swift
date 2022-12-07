@@ -8,10 +8,8 @@
 import Foundation
 
 extension URLRequest {
+    
     mutating func setContentType(_ contentType: String) {
-        self.setValue(
-            contentType,
-            forHTTPHeaderField: "Content-Type"
-        )
+        self.setValue(contentType, forHTTPHeaderField: "Content-Type")
     }
 }
