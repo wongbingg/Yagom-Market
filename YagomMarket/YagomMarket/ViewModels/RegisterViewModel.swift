@@ -43,6 +43,7 @@ final class DefaultRegisterViewModel: RegisterViewModel {
             switch result {
             case .success(_):
                 print("성공")
+                // dismiss 시키도록 구현
             case .failure(let error):
                 print(String(describing: error))
             }
