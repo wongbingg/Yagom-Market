@@ -9,11 +9,11 @@ import UIKit
 
 final class HomeViewController: UIViewController {
     // MARK: Properties
-    let collectionView = ProductCollectionView(
+    private let collectionView = ProductCollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
     )
-    let viewModel = DefaultHomeViewModel()
+    private let viewModel = DefaultHomeViewModel()
     
     // MARK: View LifeCycles
     override func viewDidLoad() {
@@ -22,12 +22,13 @@ final class HomeViewController: UIViewController {
         setupInitialView()
         adoptDataSource()
         registerCell()
+        setupRefreshController()
         viewModel.productList.bind { _ in
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
-        viewModel.requestProductList(pageNumber: 1, ItemPerPages: 50)
+        viewModel.resetToFirstPage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,8 +58,28 @@ final class HomeViewController: UIViewController {
         collectionView.register(ProductCell.self,
                                 forCellWithReuseIdentifier: "Cell")
     }
+    
+    private func setupRefreshController() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .systemBrown
+        refreshControl.addTarget(
+            self,
+            action: #selector(pullToRefresh),
+            for: .valueChanged
+        )
+        collectionView.refreshControl = refreshControl
+    }
+    
+    @objc func pullToRefresh(_ sender: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.viewModel.resetToFirstPage()
+            self.collectionView.reloadData()
+            sender.endRefreshing()
+        }
+    }
 }
 
+// MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
@@ -68,6 +89,7 @@ extension HomeViewController: UICollectionViewDelegate {
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -92,6 +114,7 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
@@ -114,6 +137,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - UITabBarControllerDelegate
 extension HomeViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if let navCon = viewController as? UINavigationController {
@@ -125,5 +149,15 @@ extension HomeViewController: UITabBarControllerDelegate {
             }
         }
         return true
+    }
+}
+
+//MARK: - UIScrollViewDelegate
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let endY = (scrollView.bounds.maxY - scrollView.bounds.height)
+        if scrollView.contentOffset.y == endY {
+            viewModel.addNextPage()
+        }
     }
 }
