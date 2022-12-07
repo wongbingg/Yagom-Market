@@ -88,7 +88,7 @@ class ProductCell: UICollectionViewCell {
         guard let data = data else { return }
         productImageView.setImage(with: data.thumbnail)
         if data.currency == .KRW {
-            priceLabel.text = String(Int(data.price)).appending("원")
+            priceLabel.text = String(data.price).appending("원")
         } else {
             priceLabel.text = String(data.price).appending("달러")
         }
