@@ -43,6 +43,25 @@ final class DetailView: UIView {
         return stackView
     }()
     
+    private let pagingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private let backgroundView: UIView = {
+        let uiview = UIView()
+        uiview.translatesAutoresizingMaskIntoConstraints = false
+        uiview.backgroundColor = .black
+        uiview.layer.cornerRadius = 3
+        uiview.layer.opacity = 0.4
+        uiview.layer.masksToBounds = true
+        return uiview
+    }()
+    
     private let priceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -94,6 +113,7 @@ final class DetailView: UIView {
         addSubViews()
         setupConstraints()
         setupGestureRecognizer()
+        adopScrollViewDelegate()
     }
     
     required init?(coder: NSCoder) {
@@ -124,12 +144,42 @@ final class DetailView: UIView {
         })
     }
     
+    func changeIndex(to number: Int) {
+        let imageCount = imageStackView.subviews.count
+        if imageCount == 1 {
+            backgroundView.isHidden = true
+            return
+        }
+        pagingLabel.text = "\(number) / \(imageCount)"
+    }
+    
     private func setupGestureRecognizer() {
         let tapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(tapAction(_:))
         )
         addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    private func adopScrollViewDelegate() {
+        imageScrollView.delegate = self
+    }
+}
+
+extension DetailView: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let imageCount = imageStackView.subviews.count - 1
+        if scrollView.contentOffset.x < 214 {
+            changeIndex(to: 1)
+        } else if scrollView.contentOffset.x > 214 && scrollView.contentOffset.x < 428 + 214 {
+            changeIndex(to: 2)
+        } else if scrollView.contentOffset.x > 428 + 214 && scrollView.contentOffset.x < 428 + 428 + 214 {
+            changeIndex(to: 3)
+        } else if scrollView.contentOffset.x > 428 + 428 + 214 && scrollView.contentOffset.x < 428 + 428 + 428 + 214 {
+            changeIndex(to: 4)
+        } else if scrollView.contentOffset.x > 428 + 428 + 428 + 214 && scrollView.contentOffset.x < 428 + 428 + 428 + 428 + 214 {
+            changeIndex(to: 5)
+        }
     }
 }
 
@@ -138,6 +188,8 @@ private extension DetailView {
     
     func addSubViews() {
         addSubview(mainScrollView)
+        addSubview(backgroundView)//
+        backgroundView.addSubview(pagingLabel)
         
         mainScrollView.addSubview(imageScrollView)
         mainScrollView.addSubview(mainStackView)
@@ -153,6 +205,15 @@ private extension DetailView {
     }
     
     func setupConstraints() {
+        NSLayoutConstraint.activate([
+            pagingLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+            pagingLabel.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
+            
+            backgroundView.heightAnchor.constraint(equalToConstant: 30),
+            backgroundView.widthAnchor.constraint(equalToConstant: 50),
+            backgroundView.bottomAnchor.constraint(equalTo: imageScrollView.bottomAnchor, constant: -20),
+            backgroundView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -20)
+        ])
         NSLayoutConstraint.activate([
             mainScrollView.topAnchor.constraint(equalTo: topAnchor),
             mainScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),

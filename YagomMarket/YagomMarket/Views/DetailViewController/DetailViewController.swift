@@ -35,6 +35,11 @@ final class DetailViewController: UIViewController {
         viewModel.search(productID: productId)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        detailView.changeIndex(to: 1)
+    }
+    
     // MARK: Methods
     private func setupTabBarController() {
         tabBarController?.tabBar.isHidden = true
