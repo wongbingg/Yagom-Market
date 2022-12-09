@@ -7,19 +7,33 @@
 
 import UIKit
 
-extension UIImage { // 수정 필요
-    
+extension UIImage {
+    var byteCount: Int {
+        return self.jpegData(compressionQuality: 1.0)!.count
+    }
+ 
     func convertToData() -> Data {
-        var quality = 0.01
-        while true {
-            guard let image = self.jpegData(compressionQuality: quality) else { break }
-            if image.count > 1024*300 {
-                print("이미지 용량 300Kb 넘음")
-                quality *= 0.0
-            } else {
-                return image
-            }
+        var width = CGFloat(300)
+        var image = self
+        while image.byteCount > 1000*300 {
+            image = image.resize(newWidth: width)
+            width -= 5
         }
-        return Data()
+        return image.jpegData(compressionQuality: 1.0)!
+    }
+    
+    func resize(newWidth: CGFloat) -> UIImage {
+        let scale = newWidth / self.size.width
+        let newHeight = self.size.height * scale
+
+        let size = CGSize(width: newWidth, height: newHeight)
+        let render = UIGraphicsImageRenderer(size: size)
+        let renderImage = render.image { context in
+            self.draw(in: CGRect(origin: .zero, size: size))
+        }
+        
+        print("화면 배율: \(UIScreen.main.scale)")// 배수
+        print("origin: \(self), resize: \(renderImage)")
+        return renderImage
     }
 }
