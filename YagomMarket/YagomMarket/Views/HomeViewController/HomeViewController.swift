@@ -162,9 +162,10 @@ extension HomeViewController: UITabBarControllerDelegate {
 //MARK: - UIScrollViewDelegate
 extension HomeViewController: UIScrollViewDelegate {
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let endY = (scrollView.bounds.maxY - scrollView.bounds.height)
-        if scrollView.contentOffset.y == endY {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let endY = (scrollView.contentSize.height)
+        let currentY = scrollView.contentOffset.y + scrollView.bounds.height
+        if currentY > endY + 50 {
             viewModel.addNextPage()
         }
     }
