@@ -9,6 +9,10 @@ import UIKit
 
 extension UIImageView {
     
+    var imageCacheManager: ImageCacheManager {
+        return URLCacheManager()
+    }
+    
     static func generate() -> UIImageView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -20,13 +24,9 @@ extension UIImageView {
     
     func setImage(with thumbnail: String) {
         guard let url = URL(string: thumbnail) else { return }
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.image = image
-                    }
-                }
+        imageCacheManager.getImage(with: url) { image in
+            DispatchQueue.main.async {
+                self.image = image
             }
         }
     }
