@@ -5,10 +5,12 @@
 //  Created by 이원빈 on 2022/12/02.
 //
 
-final class Observable<T> {
+final class Observable<T: Equatable> {
     var value: T {
         didSet {
-            listener?(value)
+            if oldValue != value {
+                listener?(value)
+            }
         }
     }
     var listener: ((T) -> Void)?
