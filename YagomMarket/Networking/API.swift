@@ -13,8 +13,10 @@ protocol API {
 }
 
 extension API {
+    typealias CompletionHandler = (Result<ResponseType, Error>) -> Void
+    
     func execute(using client: APIClient = APIClient.shared,
-                 _ completionHandler: @escaping (Result<ResponseType, Error>) -> Void) {
+                 _ completionHandler: @escaping CompletionHandler) {
         guard let urlRequest = configuration.makeURLRequest() else { return }
         client.requestData(with: urlRequest) { (result) in
             switch result {

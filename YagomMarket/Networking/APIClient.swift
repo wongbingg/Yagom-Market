@@ -8,11 +8,12 @@
 import Foundation
 
 struct APIClient {
+    typealias CompletionHandler = (Result<Data, Error>) -> Void
     static let shared = APIClient(sesseion: URLSession.shared)
     private let session: URLSession
     
     func requestData(with urlRequest: URLRequest,
-                     completionHandler: @escaping (Result<Data, Error>) -> Void) {
+                     completionHandler: @escaping CompletionHandler) {
         session.dataTask(with: urlRequest) { (data, response, error) in
             let successRange = 200..<300
             if let statusCode = (response as? HTTPURLResponse)?.statusCode,
@@ -29,7 +30,7 @@ struct APIClient {
     }
     
     func requestData(with url: URL,
-                     completionHandler: @escaping (Result<Data, Error>) -> Void) {
+                     completionHandler: @escaping CompletionHandler) {
         session.dataTask(with: url) { (data, _, error)  in
             guard let data = data else {
                 DispatchQueue.main.async {
