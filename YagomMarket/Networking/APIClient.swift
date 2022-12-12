@@ -18,7 +18,7 @@ struct APIClient {
             let successRange = 200..<300
             if let statusCode = (response as? HTTPURLResponse)?.statusCode,
             !successRange.contains(statusCode) {
-                print("\(statusCode) 현재 코드 200~300 범위를 넘었기 때문에 실패")
+                completionHandler(.failure(APIError.response(statusCode)))
                 return
             }
             guard let data = data else {
