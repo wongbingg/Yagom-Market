@@ -146,7 +146,12 @@ final class RegisterViewController: UIViewController {
         let images = registerView.retrieveImages()
         viewModel.adoptModel(with: domain)
         viewModel.adoptImages(with: images)
-        viewModel.requestPost()
+        viewModel.requestPost { description in
+            let alertManager = AlertManger(description: description, title: "제목")
+            DispatchQueue.main.async {
+                alertManager.showAlert(on: self)
+            }
+        }
     }
     
     @objc private func keyboardWillAppear(_ sender: Notification) {
@@ -218,6 +223,13 @@ extension RegisterViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         let position = touch.location(in: registerView)
         if registerView.addPhotoButton.bounds.contains(position) {
+            guard registerView.isFullImages == false else {
+                let alertManager = AlertManger(description: "더 이상 사진이 들어갈 수 없습니다", title: "오류")
+                DispatchQueue.main.async {
+                    alertManager.showAlert(on: self)
+                }
+                return false
+            }
             presentPicker(filter: .images)
         }
         return true
