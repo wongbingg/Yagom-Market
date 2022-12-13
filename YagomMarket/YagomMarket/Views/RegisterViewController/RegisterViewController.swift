@@ -36,6 +36,7 @@ final class RegisterViewController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemBrown
+        button.layer.cornerRadius = 5
         return button
     }()
     
@@ -83,18 +84,19 @@ final class RegisterViewController: UIViewController {
     
     private func setupToolBar() {
         view.addSubview(toolBar)
+        toolBar.addSubview(registerButton)
         NSLayoutConstraint.activate([
             toolBar.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             toolBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
-        toolBar.addSubview(registerButton)
-        registerButton.topAnchor.constraint(equalTo: toolBar.topAnchor, constant: 20).isActive = true
-        registerButton.trailingAnchor.constraint(equalTo: toolBar.trailingAnchor, constant: -20).isActive = true
-        registerButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        registerButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        registerButton.layer.cornerRadius = 5
+        NSLayoutConstraint.activate([
+            registerButton.topAnchor.constraint(equalTo: toolBar.topAnchor, constant: 20),
+            registerButton.trailingAnchor.constraint(equalTo: toolBar.trailingAnchor, constant: -20),
+            registerButton.heightAnchor.constraint(equalToConstant: 50),
+            registerButton.widthAnchor.constraint(equalToConstant: 70)
+        ])
     }
     
     private func setupButton() {
@@ -106,7 +108,8 @@ final class RegisterViewController: UIViewController {
         registerView.keyboardDownButton.addTarget(
             self,
             action: #selector(closeButtonDidTapped),
-            for: .touchUpInside)
+            for: .touchUpInside
+        )
     }
     
     private func setupTapGesture() {
@@ -119,12 +122,14 @@ final class RegisterViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillAppear(_:)),
-            name: UIResponder.keyboardWillShowNotification, object: nil
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
         )
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillDisappear(_:)),
-            name: UIResponder.keyboardWillHideNotification, object: nil
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
         )
     }
     
@@ -223,7 +228,7 @@ extension RegisterViewController: UIGestureRecognizerDelegate {
         configuration.filter = filter
         configuration.preferredAssetRepresentationMode = .current
         configuration.selection = .ordered
-        configuration.selectionLimit = 5
+        configuration.selectionLimit = registerView.getRemainedImagePlaces()
         
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self

@@ -22,6 +22,7 @@ final class RegisterView: UIView {
 * 서로가 믿고 거래할 수 있도록, 자세한 정보와 다양한 각도의 상품 사진을 올려주세요.
 """
     }
+    var isFullImages: Bool = false
     
     // MARK: UIComponents
     let mainScrollView: UIScrollView = {
@@ -54,7 +55,9 @@ final class RegisterView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
-        stackView.spacing = 5
+        stackView.spacing = 15
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         return stackView
     }()
     
@@ -63,9 +66,10 @@ final class RegisterView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.image = UIImage(systemName: "camera.fill")
         button.backgroundColor = .systemGray6
+        button.layer.cornerRadius = 5
         button.tintColor = .systemBrown
         button.contentMode = .center
-        button.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 80).isActive = true
         button.widthAnchor.constraint(equalToConstant: 70).isActive = true
         return button
     }()
@@ -108,7 +112,7 @@ final class RegisterView: UIView {
         button.tintColor = .systemBrown
         return button
     }()
-    
+
     // MARK: Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -126,20 +130,12 @@ final class RegisterView: UIView {
     // MARK: Methods
     func appendImage(_ image: Any?) {
         guard let image = image as? UIImage else { return }
-        let imageView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.image = image
-            imageView.contentMode = .scaleAspectFill
-            imageView.clipsToBounds = true
-            imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-            return imageView
-        }()
+        let customImageView = CustomImageView(image: image)
+        customImageView.setupButtonAction(with: #selector(deleteButtonDidTapped), in: self)
         
         if photoStackView.subviews.count < 6 {
-            photoStackView.addArrangedSubview(imageView)
-            currentPhotoCountLabel.text = "\(photoStackView.subviews.count-1)/5"
+            photoStackView.addArrangedSubview(customImageView)
+            updateCountLabel()
         } else {
             print("사진의 개수 초과 Alert 띄우기")
         }
@@ -163,26 +159,35 @@ final class RegisterView: UIView {
         var subviews = photoStackView.subviews
         subviews.removeFirst()
         subviews.forEach { uiview in
-            if let imageView = uiview as? UIImageView {
-                images.append(imageView.image!)
-            }
+            let imageView = uiview.subviews.compactMap { $0 as? UIImageView }[0]
+            images.append(imageView.image!)
         }
         return images
+    }
+    
+    func getRemainedImagePlaces() -> Int {
+        return 6 - photoStackView.subviews.count
+    }
+    
+    private func updateCountLabel() {
+        let imagesCount = photoStackView.subviews.count-1
+        currentPhotoCountLabel.text = "\(imagesCount)/5"
+        if imagesCount == 5 {
+            isFullImages = true
+        } else {
+            isFullImages = false
+        }
     }
     
     private func setupKeyboard() {
         priceTextField.keyboardType = .decimalPad
     }
+
     
-    private func setupAccessoryView() {
-        accessoryView.addSubview(keyboardDownButton)
-        NSLayoutConstraint.activate([
-            keyboardDownButton.centerYAnchor.constraint(equalTo: accessoryView.centerYAnchor),
-            keyboardDownButton.trailingAnchor.constraint(equalTo: accessoryView.trailingAnchor, constant: -10),
-        ])
-        descriptionTextView.inputAccessoryView = accessoryView
-        priceTextField.inputAccessoryView = accessoryView
-        nameTextField.inputAccessoryView = accessoryView
+    @objc func deleteButtonDidTapped(_ sender: UIButton) {
+        guard let customView = sender.superview else { return }
+        customView.removeFromSuperview()
+        updateCountLabel()
     }
 }
 
@@ -254,7 +259,18 @@ private extension RegisterView {
         
         NSLayoutConstraint.activate([
             currentPhotoCountLabel.centerXAnchor.constraint(equalTo: addPhotoButton.centerXAnchor),
-            currentPhotoCountLabel.bottomAnchor.constraint(equalTo: addPhotoButton.bottomAnchor, constant: -5)
+            currentPhotoCountLabel.bottomAnchor.constraint(equalTo: addPhotoButton.bottomAnchor, constant: -5),
         ])
+    }
+    
+    func setupAccessoryView() {
+        accessoryView.addSubview(keyboardDownButton)
+        NSLayoutConstraint.activate([
+            keyboardDownButton.centerYAnchor.constraint(equalTo: accessoryView.centerYAnchor),
+            keyboardDownButton.trailingAnchor.constraint(equalTo: accessoryView.trailingAnchor, constant: -10),
+        ])
+        descriptionTextView.inputAccessoryView = accessoryView
+        priceTextField.inputAccessoryView = accessoryView
+        nameTextField.inputAccessoryView = accessoryView
     }
 }
