@@ -36,7 +36,7 @@ final class DetailView: UIView {
         return scrollView
     }()
     
-    private let imageStackView: UIStackView = {
+    let imageStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
@@ -112,7 +112,6 @@ final class DetailView: UIView {
         super.init(frame: frame)
         addSubViews()
         setupConstraints()
-        setupGestureRecognizer()
         adopScrollViewDelegate()
     }
     
@@ -143,26 +142,8 @@ final class DetailView: UIView {
         pagingLabel.text = "\(number) / \(imageCount)"
     }
     
-    private func setupGestureRecognizer() {
-        let tapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(tapAction(_:))
-        )
-        addGestureRecognizer(tapGestureRecognizer)
-    }
-    
     private func adopScrollViewDelegate() {
         imageScrollView.delegate = self
-    }
-    
-    @objc private func tapAction(_ sender: UITouch) {
-        let point = sender.location(in: self)
-        if imageStackView.bounds.contains(point) {
-            print("사진 탭됨")
-            // 사진만 볼 수 있는 화면으로 전환
-            // 검은배경에 사진 원본비율로
-            // 위아래 스와이프시 제거
-        }
     }
 }
 

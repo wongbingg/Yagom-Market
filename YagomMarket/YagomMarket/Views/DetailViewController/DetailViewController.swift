@@ -55,5 +55,27 @@ final class DetailViewController: UIViewController {
             detailView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             detailView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
+        
+        setupGestureRecognizer()
+    }
+    
+    private func setupGestureRecognizer() {
+        let tapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(tapAction(_:))
+        )
+        view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc private func tapAction(_ sender: UITouch) {
+        let point = sender.location(in: view)
+        if detailView.imageStackView.bounds.contains(point) {
+            let urls = viewModel.images?.map { $0.url }
+            let imageViewer = ImageViewerController(imageURLs: urls!)
+            imageViewer.modalPresentationStyle = .formSheet
+            present(imageViewer, animated: true)
+        }
+    }
+    
     }
 }
