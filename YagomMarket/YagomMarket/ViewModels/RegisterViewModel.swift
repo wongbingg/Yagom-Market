@@ -8,7 +8,7 @@
 import UIKit
 
 protocol RegisterViewModelInput {
-    func requestPost()
+    func requestPost(_ completion: @escaping (String) -> Void)
 }
 
 protocol RegisterViewModelOutput {
@@ -29,7 +29,7 @@ final class DefaultRegisterViewModel: RegisterViewModel {
         images = imageArr
     }
     
-    func requestPost() {
+    func requestPost(_ completion: @escaping (String) -> Void) {
         let apiConfig = APIConfiguration(
             method: .post,
             base: URLCommand.host,
@@ -42,10 +42,12 @@ final class DefaultRegisterViewModel: RegisterViewModel {
         api.execute { result in
             switch result {
             case .success(_):
-                print("성공")
-                // dismiss 시키도록 구현
-            case .failure(let error):
-                print(String(describing: error))
+                completion("게시 성공!")
+            case .failure(let error as APIError):
+                completion(error.errorDescription!)
+            default:
+                print("알 수 없는 오류 발생")
+                completion("알 수 없는 오류 발생")
             }
         }
     }
