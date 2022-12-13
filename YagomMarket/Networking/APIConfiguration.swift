@@ -156,9 +156,15 @@ struct APIConfiguration {
                                using boundary: String) -> Data {
         var data = Data()
         var number = 1
+        let imageCompressionHandler = ImageCompressHandler()
+        let imageResizeHandler = ImageResizeHandler()
+        imageCompressionHandler.setNext(handler: imageResizeHandler)
+        
         for image in images {
-            guard let image = image else { break }
-            let imageData = image.convertToData()
+            guard let image = image,
+                  let imageData = imageCompressionHandler.handle(request: image) else {
+                break
+            }
             data.append(
                 convertFileData(
                     fieldName: "images", fileName: "image\(number)",
