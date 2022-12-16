@@ -7,7 +7,7 @@
 
 struct SearchProductDetailAPI: API {
     typealias ResponseType = SearchProductDetailResponse
-    let configuration: APIConfiguration
+    let configuration: APIConfiguration?
     
     init(configuration: APIConfiguration) {
         self.configuration = configuration

@@ -10,5 +10,5 @@ import Foundation
 struct EditProductAPI: API {
     typealias ResponseType = SearchProductDetailResponse
     
-    var configuration: APIConfiguration
+    var configuration: APIConfiguration?
 }

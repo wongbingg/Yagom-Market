@@ -7,9 +7,26 @@
 
 struct SearchProductListAPI: API {
     typealias ResponseType = SearchProductListResponse
-    let configuration: APIConfiguration
+    var configuration: APIConfiguration?
     
-    init(configuration: APIConfiguration) {
-        self.configuration = configuration
+    init(pageNumber: Int, itemPerPage: Int) {
+        let param = makeParameter(
+            pageNo: pageNumber,
+            itemPerPage: itemPerPage
+        )
+        configuration = makeAPIConfiguration(with: param)
+    }
+    
+    private func makeParameter(pageNo: Int, itemPerPage: Int) -> [String: Any] {
+        return  ["page_no": pageNo, "items_per_page": itemPerPage]
+    }
+    
+    private func makeAPIConfiguration(with param: [String: Any]?) -> APIConfiguration {
+        return APIConfiguration(
+            method: .get,
+            base: URLCommand.host,
+            path: URLCommand.products,
+            parameters: param
+        )
     }
 }

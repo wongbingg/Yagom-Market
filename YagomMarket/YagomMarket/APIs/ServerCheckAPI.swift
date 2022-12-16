@@ -7,7 +7,7 @@
 
 struct ServerCheckAPI: API {
     typealias ResponseType = String
-    let configuration: APIConfiguration
+    let configuration: APIConfiguration?
     
     init(configuration: APIConfiguration) {
         self.configuration = configuration

@@ -7,7 +7,7 @@
 
 struct RegisterProductAPI: API {
     typealias ResponseType = SearchProductDetailResponse
-    var configuration: APIConfiguration
+    var configuration: APIConfiguration?
     
     init(configuration: APIConfiguration) {
         self.configuration = configuration
