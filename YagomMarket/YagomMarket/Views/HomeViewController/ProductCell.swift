@@ -96,13 +96,16 @@ final class ProductCell: UICollectionViewCell {
         vendorNameLabel.text = data.vendorName + "   •" + DateCalculator.shared.calculatePostedDay(with: data.createdAt)
     }
     
+    func setupDefaultImage() {
+        productImageView.image = UIImage(systemName: "clock")
+    }
+    
     private func setupInitialView() {
         backgroundColor = .systemBackground
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        productImageView.image = nil
         priceLabel.text = nil
         titleLabel.text = nil
         vendorNameLabel.text = nil

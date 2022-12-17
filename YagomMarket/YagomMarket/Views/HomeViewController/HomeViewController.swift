@@ -28,7 +28,7 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = false
+        tabBarController?.tabBar.isHidden = false 
     }
     
     // MARK: Methods
@@ -114,6 +114,7 @@ extension HomeViewController: UICollectionViewDataSource {
         ) as? ProductCell else {
             return UICollectionViewCell()
         }
+        cell.setupDefaultImage()
         cell.setup(with: viewModel.productList.value[indexPath.row])
         return cell
     }
@@ -150,6 +151,7 @@ extension HomeViewController: UITabBarControllerDelegate {
         if let navCon = viewController as? UINavigationController {
             if navCon.viewControllers.first is RegisterViewController {
                 let vc = RegisterViewController()
+                vc.delegate = self
                 vc.modalPresentationStyle = .overFullScreen
                 present(vc, animated: true)
                 return false
@@ -167,6 +169,15 @@ extension HomeViewController: UIScrollViewDelegate {
         let currentY = scrollView.contentOffset.y + scrollView.bounds.height
         if currentY > endY + 50 {
             viewModel.addNextPage()
+        }
+    }
+}
+
+extension HomeViewController: RegisterViewControllerDelegate {
+    func viewWillDisappear() {
+        DispatchQueue.main.async { [weak self] in
+            self?.viewModel.resetToFirstPage()
+            self?.collectionView.reloadData()
         }
     }
 }
