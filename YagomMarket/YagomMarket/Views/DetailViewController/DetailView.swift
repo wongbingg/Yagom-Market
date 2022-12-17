@@ -27,7 +27,7 @@ final class DetailView: UIView {
         return stackView
     }()
     
-    private let imageScrollView: UIScrollView = {
+    let imageScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.decelerationRate = .normal
@@ -133,13 +133,30 @@ final class DetailView: UIView {
         })
     }
     
-    func changeIndex(to number: Int) {
+    func changeIndex() {
         let imageCount = imageStackView.subviews.count
-        if imageCount == 1 {
+        guard imageCount > 1 else {
             backgroundView.isHidden = true
             return
         }
-        pagingLabel.text = "\(number) / \(imageCount)"
+        backgroundView.isHidden = false
+        let width = UIScreen.main.bounds.width
+        let halfWidth = UIScreen.main.bounds.width/2
+        if imageScrollView.contentOffset.x < halfWidth {
+            pagingLabel.text = "1 / \(imageCount)"
+        } else if imageScrollView.contentOffset.x > halfWidth
+                    && imageScrollView.contentOffset.x < width+halfWidth {
+            pagingLabel.text = "2 / \(imageCount)"
+        } else if imageScrollView.contentOffset.x > width+halfWidth
+                    && imageScrollView.contentOffset.x < (width*2)+halfWidth {
+            pagingLabel.text = "3 / \(imageCount)"
+        } else if imageScrollView.contentOffset.x > (width*2)+halfWidth
+                    && imageScrollView.contentOffset.x < (width*3)+halfWidth {
+            pagingLabel.text = "4 / \(imageCount)"
+        } else if imageScrollView.contentOffset.x > (width*3)+halfWidth
+                    && imageScrollView.contentOffset.x < (width*4)+halfWidth {
+            pagingLabel.text = "5 / \(imageCount)"
+        }
     }
     
     private func adopScrollViewDelegate() {
@@ -151,23 +168,7 @@ final class DetailView: UIView {
 extension DetailView: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let width = UIScreen.main.bounds.width
-        let halfWidth = UIScreen.main.bounds.width/2
-        if scrollView.contentOffset.x < halfWidth {
-            changeIndex(to: 1)
-        } else if scrollView.contentOffset.x > halfWidth
-                    && scrollView.contentOffset.x < width+halfWidth {
-            changeIndex(to: 2)
-        } else if scrollView.contentOffset.x > width+halfWidth
-                    && scrollView.contentOffset.x < (width*2)+halfWidth {
-            changeIndex(to: 3)
-        } else if scrollView.contentOffset.x > (width*2)+halfWidth
-                    && scrollView.contentOffset.x < (width*3)+halfWidth {
-            changeIndex(to: 4)
-        } else if scrollView.contentOffset.x > (width*3)+halfWidth
-                    && scrollView.contentOffset.x < (width*4)+halfWidth {
-            changeIndex(to: 5)
-        }
+        changeIndex()
     }
 }
 

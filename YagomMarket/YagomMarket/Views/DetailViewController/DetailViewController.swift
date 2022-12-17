@@ -30,19 +30,28 @@ final class DetailViewController: UIViewController {
         viewModel.completeDataFetching = { [self] in
             DispatchQueue.main.async { [self] in
                 detailView.setupData(with: viewModel)
+                setupNavigationBar()
             }
         }
         viewModel.search(productID: productId)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        detailView.changeIndex(to: 1)
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        detailView.changeIndex()
     }
-    
+
     // MARK: Methods
     private func setupTabBarController() {
         tabBarController?.tabBar.isHidden = true
+    }
+    
+    private func setupNavigationBar() {
+        guard viewModel.vendorName == "wongbing" else { return }
+        let barbutton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"),
+                                   style: .done,
+                                   target: self, action: #selector(buttonDidTapped))
+        navigationItem.rightBarButtonItem = barbutton
     }
     
     private func setupInitialView() {
@@ -67,15 +76,80 @@ final class DetailViewController: UIViewController {
         view.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    private func showEditView() {
+        let editView = RegisterViewController(with: viewModel)
+        editView.delegate = self
+        editView.modalPresentationStyle = .overFullScreen
+        present(editView, animated: true)
+    }
+    
+    private func performDelete(_ completion: @escaping () -> Void) {
+        let searchDeleteURIAPI = makeSearchDeleteURIAPI(with: productId)
+        searchDeleteURIAPI.searchDeleteURI { result in
+            switch result {
+            case .success(let deleteURI):
+                let deleteAPI = DeleteProductAPI()
+                deleteAPI.execute(with: deleteURI) { result in
+                    switch result {
+                    case .success(_):
+                        completion()
+                    case .failure(let error):
+                        print(String(describing: error))
+                    }
+                }
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
+    }
+    
+    private func makeSearchDeleteURIAPI(with id: Int) -> SearchDeleteURIAPI {
+        let apiConfig = APIConfiguration(
+            method: .post,
+            base: URLCommand.host,
+            path: URLCommand.products +
+            URLCommand.productId(delete: id),
+            body: DeleteKeyRequestModel(secret: URLCommand.secretKey),
+            parameters: nil
+        )
+        return SearchDeleteURIAPI(configuration: apiConfig)
+    }
+    
     @objc private func tapAction(_ sender: UITouch) {
         let point = sender.location(in: view)
         if detailView.imageStackView.bounds.contains(point) {
+            let currentPage = detailView.imageScrollView.contentOffset.x / UIScreen.main.bounds.maxX
             let urls = viewModel.images?.map { $0.url }
-            let imageViewer = ImageViewerController(imageURLs: urls!)
+            let imageViewer = ImageViewerController(imageURLs: urls!, currentPage: Int(currentPage))
             imageViewer.modalPresentationStyle = .formSheet
             present(imageViewer, animated: true)
         }
     }
     
+    @objc private func buttonDidTapped() {
+        DefaultAlertBuilder(preferredStyle: .actionSheet)
+            .setButton(name: "수정", style: .default) {
+                self.showEditView()
+            }
+            .setButton(name: "삭제", style: .destructive) {
+                DefaultAlertBuilder(title: "안내", message: "정말 삭제 하시겠습니까?", preferredStyle: .alert)
+                    .setButton(name: "예", style: .default) { [self] in
+                        performDelete {
+                            DispatchQueue.main.async {
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
+                    }
+                    .setButton(name: "아니오", style: .destructive, nil)
+                    .showAlert(on: self)
+            }
+            .setButton(name: "cancel", style: .cancel, nil)
+            .showAlert(on: self)
+    }
+}
+
+extension DetailViewController: RegisterViewControllerDelegate {
+    func viewWillDisappear() {
+        viewModel.search(productID: productId)
     }
 }
