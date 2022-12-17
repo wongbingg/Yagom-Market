@@ -24,7 +24,10 @@ final class DefaultHomeViewModel: HomeViewModel {
     
     func resetToFirstPage() {
         currentPage = 1
-        let api = makeAPI()
+        let api = SearchProductListAPI(
+            pageNumber: currentPage,
+            itemPerPage: currentItemPerPage
+        )
         api.execute { result in
             switch result {
             case .success(let data):
@@ -39,7 +42,10 @@ final class DefaultHomeViewModel: HomeViewModel {
     func addNextPage() {
         guard let hasNext = hasNext, hasNext == true else { return }
         currentPage += 1
-        let api = makeAPI()
+        let api = SearchProductListAPI(
+            pageNumber: currentPage,
+            itemPerPage: currentItemPerPage
+        )
         api.execute { result in
             switch result {
             case .success(let data):
@@ -51,22 +57,7 @@ final class DefaultHomeViewModel: HomeViewModel {
         }
     }
     
-    private func makeAPI() -> SearchProductListAPI {
-        let param = makeParameter()
-        let apiCon = makeAPIConfiguration(with: param)
-        return SearchProductListAPI(configuration: apiCon)
-    }
-    
-    private func makeParameter() -> [String: Any] {
-        return  ["page_no": currentPage, "items_per_page": currentItemPerPage]
-    }
-    
-    private func makeAPIConfiguration(with param: [String: Any]?) -> APIConfiguration {
-        return APIConfiguration(
-            method: .get,
-            base: URLCommand.host,
-            path: URLCommand.products,
-            parameters: param
-        )
+    func refresh() {
+        // 특정 상품 수정 후 homeview로 나왔을 때 특정 상품의 수정사항이 반영되도록 
     }
 }
