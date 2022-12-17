@@ -169,6 +169,21 @@ final class RegisterView: UIView {
         return 6 - photoStackView.subviews.count
     }
     
+    func setupData(with viewModel: DetailViewModel?) {
+        guard let viewModel = viewModel else { return }
+        addPhotoButton.removeFromSuperview()
+        nameTextField.text = viewModel.name
+        descriptionTextView.text = viewModel.description
+        descriptionTextView.textColor = .black
+        let price = viewModel.price?.replacingOccurrences(of: "원", with: "")
+        priceTextField.text = price
+        viewModel.images?.forEach({ image in
+            let imageView = UIImageView.generate2()
+            imageView.setImage(with: image.url)
+            photoStackView.addArrangedSubview(imageView)
+        })
+    }
+    
     private func updateCountLabel() {
         let imagesCount = photoStackView.subviews.count-1
         currentPhotoCountLabel.text = "\(imagesCount)/5"

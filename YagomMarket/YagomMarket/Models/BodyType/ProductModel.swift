@@ -25,4 +25,17 @@ struct ProductModel: BodyType {
         case stock
         case secret
     }
+    
+    func translateToEditModel() -> EditProductModel {
+        return EditProductModel(
+            name: name,
+            description: description,
+            thumbnailId: nil,
+            price: price,
+            currency: currency,
+            discountedPrice: discountedPrice,
+            stock: stock,
+            secret: URLCommand.secretKey
+        )
+    }
 }

@@ -8,12 +8,18 @@
 import UIKit
 import PhotosUI
 
+protocol RegisterViewControllerDelegate: AnyObject {
+    func viewWillDisappear()
+}
+
 final class RegisterViewController: UIViewController {
     // MARK: Properties
     private let registerView = RegisterView()
     private let viewModel = DefaultRegisterViewModel()
     private var selection = [String: PHPickerResult]()
     private var selectedAssetIdentifiers = [String]()
+    private var productId: Int?
+    weak var delegate: RegisterViewControllerDelegate?
     
     // MARK: UIComponents
     private let navigationBar: UINavigationBar = {
@@ -40,6 +46,19 @@ final class RegisterViewController: UIViewController {
         return button
     }()
     
+    init(with viewModel: DetailViewModel? = nil) {
+        if viewModel != nil {
+            registerView.setupData(with: viewModel)
+            registerButton.setTitle("수정", for: .normal)
+            productId = viewModel?.productId
+        }
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +68,11 @@ final class RegisterViewController: UIViewController {
         setupButton()
         setupTapGesture()
         setupKeyboardNotification()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        delegate?.viewWillDisappear()
     }
     
     // MARK: Methods
@@ -100,11 +124,19 @@ final class RegisterViewController: UIViewController {
     }
     
     private func setupButton() {
-        registerButton.addTarget(
-            self,
-            action: #selector(registerButtonDidTapped),
-            for: .touchUpInside
-        )
+        if productId == nil {
+            registerButton.addTarget(
+                self,
+                action: #selector(registerButtonDidTapped),
+                for: .touchUpInside
+            )
+        } else {
+            registerButton.addTarget(
+                self,
+                action: #selector(editButtonDidTapped),
+                for: .touchUpInside
+            )
+        }
         registerView.keyboardDownButton.addTarget(
             self,
             action: #selector(closeButtonDidTapped),
@@ -147,9 +179,23 @@ final class RegisterViewController: UIViewController {
         viewModel.adoptModel(with: domain)
         viewModel.adoptImages(with: images)
         viewModel.requestPost { description in
-            let alertManager = AlertManger(description: description, title: "제목")
             DispatchQueue.main.async {
-                alertManager.showAlert(on: self)
+                DefaultAlertBuilder(title: nil, message: description, preferredStyle: .alert)
+                    .setButton(name: "확인", style: .default) {
+                        self.dismiss(animated: true)
+                    }
+                    .showAlert(on: self)
+            }
+        }
+    }
+    
+    @objc private func editButtonDidTapped() {
+        guard let productId = productId else { return }
+        let domain = registerView.retrieveDomain()
+        viewModel.adoptModel(with: domain)
+        viewModel.requestPatch(with: productId) {
+            DispatchQueue.main.async {
+                self.dismiss(animated: true)
             }
         }
     }
@@ -224,10 +270,14 @@ extension RegisterViewController: UIGestureRecognizerDelegate {
         let position = touch.location(in: registerView)
         if registerView.addPhotoButton.bounds.contains(position) {
             guard registerView.isFullImages == false else {
-                let alertManager = AlertManger(description: "더 이상 사진이 들어갈 수 없습니다", title: "오류")
-                DispatchQueue.main.async {
-                    alertManager.showAlert(on: self)
-                }
+                DefaultAlertBuilder(
+                    title: "오류",
+                    message: "더 이상 사진이 들어갈 수 없습니다",
+                    preferredStyle: .alert
+                ).setButton(
+                    name: "확인",
+                    style: .default, nil
+                ).showAlert(on: self)
                 return false
             }
             presentPicker(filter: .images)
