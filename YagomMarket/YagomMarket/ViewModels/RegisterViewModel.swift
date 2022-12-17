@@ -51,4 +51,26 @@ final class DefaultRegisterViewModel: RegisterViewModel {
             }
         }
     }
+    
+    func requestPatch(with productId: Int, _ completion: @escaping () -> Void) {
+        let editModel = model?.translateToEditModel()
+        let apiConfig = APIConfiguration(
+            method: .patch,
+            base: URLCommand.host,
+            path: URLCommand.products +
+            URLCommand.productId(search: productId),
+            body: editModel,
+            parameters: nil,
+            images: nil
+        )
+        let api = EditProductAPI(configuration: apiConfig)
+        api.execute { result in
+            switch result {
+            case .success(_):
+                completion()
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
+    }
 }

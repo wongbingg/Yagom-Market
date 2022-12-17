@@ -12,6 +12,7 @@ protocol DetailViewModelInput {
 }
 
 protocol DetailViewModelOutput {
+    var productId: Int? { get }
     var images: [Image]? { get }
     var price: String? { get }
     var vendorName: String? { get }
@@ -23,6 +24,7 @@ protocol DetailViewModelOutput {
 protocol DetailViewModel: DetailViewModelInput, DetailViewModelOutput {}
 
 final class DefaultDetailViewModel: DetailViewModel {
+    private(set) var productId: Int?
     var images: [Image]?
     var price: String?
     var vendorName: String?
@@ -32,6 +34,7 @@ final class DefaultDetailViewModel: DetailViewModel {
     var completeDataFetching: (() -> Void)?
     
     func search(productID: Int) {
+        productId = productID
         let apiConfig = APIConfiguration(
             method: .get,
             base: URLCommand.host,
