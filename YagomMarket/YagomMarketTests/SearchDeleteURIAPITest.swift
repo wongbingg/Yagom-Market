@@ -9,7 +9,7 @@ import XCTest
 @testable import YagomMarket
 
 final class SearchDeleteURIAPITest: XCTestCase {
-    var sut: SearchDeleteURIAPI<DeleteProductAPI>!
+    var sut: SearchDeleteURIAPI!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -21,7 +21,7 @@ final class SearchDeleteURIAPITest: XCTestCase {
             body: DeleteKeyRequestModel(secret: URLCommand.secretKey),
             parameters: nil
         )
-        sut = SearchDeleteURIAPI<DeleteProductAPI>(configuration: apiConfig)
+        sut = SearchDeleteURIAPI(configuration: apiConfig)
     }
     
     override func tearDownWithError() throws {

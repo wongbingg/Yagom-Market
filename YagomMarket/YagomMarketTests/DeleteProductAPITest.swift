@@ -9,16 +9,19 @@ import XCTest
 @testable import YagomMarket
 
 final class DeleteProductAPITest: XCTestCase {
-    var sut: SearchDeleteURIAPI<DeleteProductAPI>!
+    var sut: SearchDeleteURIAPI!
+    var sut2: DeleteProductAPI!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
         sut = makeAPI() as? SearchDeleteURIAPI
+        sut2 = DeleteProductAPI()
     }
     
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         sut = nil
+        sut2 = nil
     }
     
     func test_id에_해당하는상품이_삭제가_되는지() {
@@ -27,11 +30,19 @@ final class DeleteProductAPITest: XCTestCase {
         var flag: Int?
         
         // when
-        sut.searchDeleteURI { result in
+        sut.searchDeleteURI { [self] result in
             switch result {
-            case .success(_):
-                flag = 1
-                expectation.fulfill()
+            case .success(let deleteURI):
+                sut2.execute(with: deleteURI) { result in
+                    switch result {
+                    case .success(_):
+                        flag = 1
+                        expectation.fulfill()
+                    case .failure(_):
+                        flag = 0
+                        expectation.fulfill()
+                    }
+                }
             case .failure(_):
                 print("test fail")
                 flag = 0
@@ -41,12 +52,10 @@ final class DeleteProductAPITest: XCTestCase {
         
         // then
         wait(for: [expectation], timeout: 3.0)
-//        XCTAssertNotNil(flag)
         XCTAssertEqual(flag, 1)
     }
     
     func makeAPI() -> any API {
-        let deleteProductAPI = DeleteProductAPI()
         let apiConfig = APIConfiguration(
             method: .post,
             base: URLCommand.host,
@@ -55,6 +64,6 @@ final class DeleteProductAPITest: XCTestCase {
             body: DeleteKeyRequestModel(secret: URLCommand.secretKey),
             parameters: nil
         )
-        return SearchDeleteURIAPI(configuration: apiConfig, delegate: deleteProductAPI)
+        return SearchDeleteURIAPI(configuration: apiConfig)
     }
 }
