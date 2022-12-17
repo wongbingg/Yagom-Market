@@ -12,10 +12,10 @@ extension UIImage {
         return self.jpegData(compressionQuality: 1.0)!.count
     }
  
-    func convertToData() -> Data {
+    func convertToData() -> Data { // 화질이 너무 구려짐
         var width = CGFloat(300)
         var image = self
-        while image.byteCount > 1000*300 {
+        while image.byteCount > 1024*300 {
             image = image.resize(newWidth: width)
             width -= 5
         }
@@ -29,7 +29,7 @@ extension UIImage {
         let size = CGSize(width: newWidth, height: newHeight)
         let render = UIGraphicsImageRenderer(size: size)
         let renderImage = render.image { context in
-            self.draw(in: CGRect(origin: .zero, size: size))
+            self.draw(in: CGRect(origin: .zero, size: size).integral)
         }
         
         print("화면 배율: \(UIScreen.main.scale)")// 배수

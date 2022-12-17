@@ -19,7 +19,7 @@ struct SearchProductListResponse: Decodable {
     let pages: [Page]
 }
 
-struct Page: Decodable {
+struct Page: Decodable, Equatable {
     let id: Int
     let vendorId: Int
     let vendorName: String

@@ -22,6 +22,16 @@ extension UIImageView {
         return imageView
     }
     
+    static func generate2() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        return imageView
+    }
+    
     func setImage(with thumbnail: String) {
         guard let url = URL(string: thumbnail) else { return }
         imageCacheManager.getImage(with: url) { image in
