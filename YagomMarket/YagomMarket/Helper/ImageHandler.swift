@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageCompressHandler: Handler {
+final class ImageCompressHandler: Handler {
     var nextHandler: Handler?
     
     func handle(request: UIImage) -> Data? {
@@ -20,7 +20,7 @@ class ImageCompressHandler: Handler {
     }
 }
 
-class ImageResizeHandler: Handler {
+final class ImageResizeHandler: Handler {
     var nextHandler: Handler?
     
     func handle(request: UIImage) -> Data? {
