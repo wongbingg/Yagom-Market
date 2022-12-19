@@ -10,8 +10,15 @@ struct SearchDeleteURIAPI: API {
     
     var configuration: APIConfiguration?
     
-    init(configuration: APIConfiguration) {
-        self.configuration = configuration
+    init(productId: Int) {
+        configuration = APIConfiguration(
+            method: .post,
+            base: URLCommand.host,
+            path: URLCommand.products +
+            URLCommand.productId(delete: productId),
+            body: DeleteKeyRequestModel(secret: URLCommand.secretKey),
+            parameters: nil
+        )
     }
     
     func searchDeleteURI(_ completion: @escaping (Result<String, Error>) -> Void) {

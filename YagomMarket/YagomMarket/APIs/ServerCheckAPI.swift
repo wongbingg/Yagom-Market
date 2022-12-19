@@ -9,7 +9,12 @@ struct ServerCheckAPI: API {
     typealias ResponseType = String
     let configuration: APIConfiguration?
     
-    init(configuration: APIConfiguration) {
-        self.configuration = configuration
+    init() {
+        configuration = APIConfiguration(
+            method: .get,
+            base: URLCommand.host,
+            path: URLCommand.healthChecker,
+            parameters: nil
+        )
     }
 }

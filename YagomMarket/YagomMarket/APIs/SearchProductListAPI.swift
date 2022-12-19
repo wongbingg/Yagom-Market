@@ -9,16 +9,21 @@ struct SearchProductListAPI: API {
     typealias ResponseType = SearchProductListResponse
     var configuration: APIConfiguration?
     
-    init(pageNumber: Int, itemPerPage: Int) {
+    init(pageNumber: Int, itemPerPage: Int, searchValue: String? = nil) {
         let param = makeParameter(
             pageNo: pageNumber,
-            itemPerPage: itemPerPage
+            itemPerPage: itemPerPage,
+            searchValue: searchValue
         )
         configuration = makeAPIConfiguration(with: param)
     }
     
-    private func makeParameter(pageNo: Int, itemPerPage: Int) -> [String: Any] {
-        return  ["page_no": pageNo, "items_per_page": itemPerPage]
+    private func makeParameter(pageNo: Int, itemPerPage: Int, searchValue: String? = nil) -> [String: Any] {
+        if let vendorName = searchValue {
+            return ["page_no": 1, "items_per_page": 3, "search_value": vendorName]
+        } else {
+            return  ["page_no": pageNo, "items_per_page": itemPerPage]
+        }
     }
     
     private func makeAPIConfiguration(with param: [String: Any]?) -> APIConfiguration {

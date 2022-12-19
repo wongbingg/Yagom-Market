@@ -9,7 +9,13 @@ struct SearchProductDetailAPI: API {
     typealias ResponseType = SearchProductDetailResponse
     let configuration: APIConfiguration?
     
-    init(configuration: APIConfiguration) {
-        self.configuration = configuration
+    init(productId: Int) {
+        configuration = APIConfiguration(
+            method: .get,
+            base: URLCommand.host,
+            path: URLCommand.products +
+            URLCommand.productId(search: productId),
+            parameters: nil
+        )
     }
 }
