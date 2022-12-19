@@ -35,14 +35,7 @@ final class DefaultDetailViewModel: DetailViewModel {
     
     func search(productID: Int) {
         productId = productID
-        let apiConfig = APIConfiguration(
-            method: .get,
-            base: URLCommand.host,
-            path: URLCommand.products +
-            URLCommand.productId(search: productID),
-            parameters: nil
-        )
-        let searchProductDetailAPI = SearchProductDetailAPI(configuration: apiConfig)
+        let searchProductDetailAPI = SearchProductDetailAPI(productId: productID)
         searchProductDetailAPI.execute { result in
             switch result {
             case .success(let data):

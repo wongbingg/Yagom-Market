@@ -30,15 +30,8 @@ final class DefaultRegisterViewModel: RegisterViewModel {
     }
     
     func requestPost(_ completion: @escaping (String) -> Void) {
-        let apiConfig = APIConfiguration(
-            method: .post,
-            base: URLCommand.host,
-            path: URLCommand.products,
-            body: model,
-            parameters: nil,
-            images: images
-        )
-        let api = RegisterProductAPI(configuration: apiConfig)
+        guard let model = model, let images = images else { return }
+        let api = RegisterProductAPI(postModel: model, images: images)
         api.execute { result in
             switch result {
             case .success(_):
@@ -53,17 +46,8 @@ final class DefaultRegisterViewModel: RegisterViewModel {
     }
     
     func requestPatch(with productId: Int, _ completion: @escaping () -> Void) {
-        let editModel = model?.translateToEditModel()
-        let apiConfig = APIConfiguration(
-            method: .patch,
-            base: URLCommand.host,
-            path: URLCommand.products +
-            URLCommand.productId(search: productId),
-            body: editModel,
-            parameters: nil,
-            images: nil
-        )
-        let api = EditProductAPI(configuration: apiConfig)
+        guard let editModel = model?.translateToEditModel() else { return }
+        let api = EditProductAPI(editModel: editModel, productId: productId)
         api.execute { result in
             switch result {
             case .success(_):

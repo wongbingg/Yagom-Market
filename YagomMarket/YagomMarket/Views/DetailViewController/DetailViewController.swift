@@ -104,15 +104,7 @@ final class DetailViewController: UIViewController {
     }
     
     private func makeSearchDeleteURIAPI(with id: Int) -> SearchDeleteURIAPI {
-        let apiConfig = APIConfiguration(
-            method: .post,
-            base: URLCommand.host,
-            path: URLCommand.products +
-            URLCommand.productId(delete: id),
-            body: DeleteKeyRequestModel(secret: URLCommand.secretKey),
-            parameters: nil
-        )
-        return SearchDeleteURIAPI(configuration: apiConfig)
+        return SearchDeleteURIAPI(productId: id)
     }
     
     @objc private func tapAction(_ sender: UITouch) {
