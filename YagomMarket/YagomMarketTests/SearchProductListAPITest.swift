@@ -13,14 +13,7 @@ final class SearchProductListAPITest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        let param = ["page_no": 1, "items_per_page": 3, "search_value": "wongbing"] as [String : Any]
-        let apiCon = APIConfiguration(
-            method: .get,
-            base: URLCommand.host,
-            path: URLCommand.products,
-            parameters: param
-        )
-        sut = SearchProductListAPI(configuration: apiCon)
+        sut = SearchProductListAPI(pageNumber: 1, itemPerPage: 3, searchValue: "wongbing")
     }
     
     override func tearDownWithError() throws {
@@ -38,7 +31,7 @@ final class SearchProductListAPITest: XCTestCase {
             switch result {
             case .success(let fetchedData):
                 response = fetchedData
-//                print(fetchedData)
+                print(fetchedData)
                 expectation.fulfill()
             case .failure(let error):
                 print(error)

@@ -23,16 +23,7 @@ final class EditProductAPITest: XCTestCase {
             stock: 100,
             secret: URLCommand.secretKey
         )
-        let apiConfig = APIConfiguration(
-            method: .patch,
-            base: URLCommand.host,
-            path: URLCommand.products +
-            URLCommand.productId(search: 277),
-            body: model,
-            parameters: nil,
-            images: nil
-        )
-        sut = EditProductAPI(configuration: apiConfig)
+        sut = EditProductAPI(editModel: model, productId: 277)
     }
     
     override func tearDownWithError() throws {

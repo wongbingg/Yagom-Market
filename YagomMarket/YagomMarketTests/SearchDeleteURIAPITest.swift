@@ -13,15 +13,7 @@ final class SearchDeleteURIAPITest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        let apiConfig = APIConfiguration(
-            method: .post,
-            base: URLCommand.host,
-            path: URLCommand.products +
-            URLCommand.productId(delete: 278),
-            body: DeleteKeyRequestModel(secret: URLCommand.secretKey),
-            parameters: nil
-        )
-        sut = SearchDeleteURIAPI(configuration: apiConfig)
+        sut = SearchDeleteURIAPI(productId: 278)
     }
     
     override func tearDownWithError() throws {

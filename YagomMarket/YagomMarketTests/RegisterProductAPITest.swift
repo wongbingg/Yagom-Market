@@ -22,15 +22,7 @@ final class RegisterProductAPITest: XCTestCase {
             stock: 3,
             secret: URLCommand.secretKey
         )
-        let apiConfig = APIConfiguration(
-            method: .post,
-            base: URLCommand.host,
-            path: URLCommand.products,
-            body: model,
-            parameters: nil,
-            images: [UIImage(named: "Photo")]
-        )
-        sut = RegisterProductAPI(configuration: apiConfig)
+        sut = RegisterProductAPI(postModel: model, images: [UIImage(named: "Photo")!])
     }
     
     override func tearDownWithError() throws {

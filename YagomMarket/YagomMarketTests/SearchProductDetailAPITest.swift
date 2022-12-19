@@ -13,14 +13,7 @@ final class SearchProductDetailAPITest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        let apiConfig = APIConfiguration(
-            method: .get,
-            base: URLCommand.host,
-            path: URLCommand.products +
-            URLCommand.productId(search: 180),
-            parameters: nil
-        )
-        sut = SearchProductDetailAPI(configuration: apiConfig)
+        sut = SearchProductDetailAPI(productId: 180)
     }
     
     override func tearDownWithError() throws {
@@ -38,6 +31,7 @@ final class SearchProductDetailAPITest: XCTestCase {
             switch result {
             case .success(let fetchedData):
                 response = fetchedData
+                print(fetchedData)
                 expectation.fulfill()
             case .failure(let error):
                 print(error)

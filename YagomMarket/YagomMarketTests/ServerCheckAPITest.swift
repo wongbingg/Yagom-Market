@@ -14,13 +14,7 @@ final class ServerCheckAPITest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        let apiConfig = APIConfiguration(
-            method: .get,
-            base: URLCommand.host,
-            path: URLCommand.healthChecker,
-            parameters: nil
-        )
-        sut = ServerCheckAPI(configuration: apiConfig)
+        sut = ServerCheckAPI()
     }
     
     override func tearDownWithError() throws {

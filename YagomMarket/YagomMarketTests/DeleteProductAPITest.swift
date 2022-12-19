@@ -56,14 +56,6 @@ final class DeleteProductAPITest: XCTestCase {
     }
     
     func makeAPI() -> any API {
-        let apiConfig = APIConfiguration(
-            method: .post,
-            base: URLCommand.host,
-            path: URLCommand.products +
-            URLCommand.productId(delete: 285),
-            body: DeleteKeyRequestModel(secret: URLCommand.secretKey),
-            parameters: nil
-        )
-        return SearchDeleteURIAPI(configuration: apiConfig)
+        return SearchDeleteURIAPI(productId: 285)
     }
 }
