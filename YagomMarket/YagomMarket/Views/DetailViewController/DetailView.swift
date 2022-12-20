@@ -131,6 +131,7 @@ final class DetailView: UIView {
         vendorNameLabel.text = viewModel.vendorName?.appending(" •")
         priceLabel.text = viewModel.price
         timeLabel.text = viewModel.time
+        guard imageStackView.arrangedSubviews.isEmpty else { return }
         viewModel.images?.forEach({ image in
             let imageView = UIImageView.generate()
             imageView.setImage(with: image.url)
@@ -248,5 +249,4 @@ private extension DetailView {
             pagingLabel.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
         ])
     }
-    
 }
