@@ -110,8 +110,13 @@ final class DetailView: UIView {
     // MARK: Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubViews()
-        setupConstraints()
+        layoutMainScrollView()
+        layoutImageScrollView()
+        layoutImageStackView()
+        layoutMainStackView()
+        layoutBackgroundView()
+        layoutPagingLabel()
+        
         adopScrollViewDelegate()
     }
     
@@ -172,43 +177,23 @@ extension DetailView: UIScrollViewDelegate {
     }
 }
 
-// MARK: - Layout Setup
+// MARK: - Layout Constraints
 private extension DetailView {
     
-    func addSubViews() {
+    func layoutMainScrollView() {
         addSubview(mainScrollView)
-        addSubview(backgroundView)
-        backgroundView.addSubview(pagingLabel)
-        
         mainScrollView.addSubview(imageScrollView)
         mainScrollView.addSubview(mainStackView)
         
-        imageScrollView.addSubview(imageStackView)
-        
-        mainStackView.addArrangedSubview(priceLabel)
-        mainStackView.addArrangedSubview(nameLabel)
-        mainStackView.addArrangedSubview(lowerStackView)
-        mainStackView.addArrangedSubview(descriptionTextView)
-        lowerStackView.addArrangedSubview(vendorNameLabel)
-        lowerStackView.addArrangedSubview(timeLabel)
-    }
-    
-    func setupConstraints() {
-        NSLayoutConstraint.activate([
-            pagingLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            pagingLabel.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
-            
-            backgroundView.heightAnchor.constraint(equalToConstant: 30),
-            backgroundView.widthAnchor.constraint(equalToConstant: 50),
-            backgroundView.bottomAnchor.constraint(equalTo: imageScrollView.bottomAnchor, constant: -20),
-            backgroundView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -20)
-        ])
         NSLayoutConstraint.activate([
             mainScrollView.topAnchor.constraint(equalTo: topAnchor),
             mainScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
             mainScrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             mainScrollView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
+    }
+    
+    func layoutImageScrollView() {
         NSLayoutConstraint.activate([
             imageScrollView.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor),
             imageScrollView.bottomAnchor.constraint(equalTo: mainStackView.topAnchor),
@@ -217,13 +202,10 @@ private extension DetailView {
             imageScrollView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.5),
             imageScrollView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
         ])
-        NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: imageScrollView.bottomAnchor),
-            mainStackView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor),
-            mainStackView.leadingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.leadingAnchor),
-            mainStackView.trailingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.trailingAnchor),
-            mainStackView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor)
-        ])
+    }
+    
+    func layoutImageStackView() {
+        imageScrollView.addSubview(imageStackView)
         NSLayoutConstraint.activate([
             imageStackView.topAnchor.constraint(equalTo: imageScrollView.contentLayoutGuide.topAnchor),
             imageStackView.bottomAnchor.constraint(equalTo: imageScrollView.contentLayoutGuide.bottomAnchor),
@@ -232,4 +214,39 @@ private extension DetailView {
             imageStackView.heightAnchor.constraint(equalTo: imageScrollView.frameLayoutGuide.heightAnchor)
         ])
     }
+    
+    func layoutMainStackView() {
+        mainStackView.addArrangedSubview(priceLabel)
+        mainStackView.addArrangedSubview(nameLabel)
+        mainStackView.addArrangedSubview(lowerStackView)
+        lowerStackView.addArrangedSubview(vendorNameLabel)
+        lowerStackView.addArrangedSubview(timeLabel)
+        mainStackView.addArrangedSubview(descriptionTextView)
+        NSLayoutConstraint.activate([
+            mainStackView.topAnchor.constraint(equalTo: imageScrollView.bottomAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor),
+            mainStackView.leadingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.leadingAnchor),
+            mainStackView.trailingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.trailingAnchor),
+            mainStackView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor)
+        ])
+    }
+    
+    func layoutBackgroundView() {
+        addSubview(backgroundView)
+        NSLayoutConstraint.activate([
+            backgroundView.heightAnchor.constraint(equalToConstant: 30),
+            backgroundView.widthAnchor.constraint(equalToConstant: 50),
+            backgroundView.bottomAnchor.constraint(equalTo: imageScrollView.bottomAnchor, constant: -20),
+            backgroundView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -20)
+        ])
+    }
+    
+    func layoutPagingLabel() {
+        backgroundView.addSubview(pagingLabel)
+        NSLayoutConstraint.activate([
+            pagingLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+            pagingLabel.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
+        ])
+    }
+    
 }

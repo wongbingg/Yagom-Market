@@ -116,8 +116,11 @@ final class RegisterView: UIView {
     // MARK: Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubViews()
-        setupConstraints()
+        layoutMainScrollView()
+        layoutMainStackView()
+        layoutPhotoScrollView()
+        layoutPhotoStackView()
+        
         setupKeyboard()
         setupAccessoryView()
         descriptionTextView.delegate = self
@@ -228,34 +231,31 @@ extension RegisterView: UITextViewDelegate {
     }
 }
 
-// MARK: - Layout setup
+// MARK: - Layout Constraints
 private extension RegisterView {
     
-    func addSubViews() {
+    func layoutMainScrollView() {
         addSubview(mainScrollView)
-        
         mainScrollView.addSubview(mainStackView)
         mainStackView.addArrangedSubview(photoScrollView)
-        
         photoScrollView.addSubview(photoStackView)
         photoStackView.addArrangedSubview(addPhotoButton)
         addPhotoButton.addSubview(currentPhotoCountLabel)
         
-        mainStackView.addArrangedSubview(nameTextField)
-        mainStackView.addArrangedSubview(categoryTextField)
-        mainStackView.addArrangedSubview(tagTextField)
-        mainStackView.addArrangedSubview(priceTextField)
-        mainStackView.addArrangedSubview(descriptionTextView)
-    }
-    
-    func setupConstraints() {
         NSLayoutConstraint.activate([
             mainScrollView.topAnchor.constraint(equalTo: topAnchor),
             mainScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
             mainScrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             mainScrollView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
-        
+    }
+    
+    func layoutMainStackView() {
+        mainStackView.addArrangedSubview(nameTextField)
+        mainStackView.addArrangedSubview(categoryTextField)
+        mainStackView.addArrangedSubview(tagTextField)
+        mainStackView.addArrangedSubview(priceTextField)
+        mainStackView.addArrangedSubview(descriptionTextView)
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor),
@@ -263,7 +263,9 @@ private extension RegisterView {
             mainStackView.trailingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.trailingAnchor),
             mainStackView.widthAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.widthAnchor)
         ])
-        // MARK: stackview 에 직접 제약을 잡아주게 되면 layoutMargin 설정이 먹지 않는다..!
+    }
+    
+    func layoutPhotoScrollView() {
         NSLayoutConstraint.activate([
             photoStackView.topAnchor.constraint(equalTo: photoScrollView.contentLayoutGuide.topAnchor),
             photoStackView.bottomAnchor.constraint(equalTo: photoScrollView.contentLayoutGuide.bottomAnchor),
@@ -271,7 +273,9 @@ private extension RegisterView {
             photoStackView.trailingAnchor.constraint(equalTo: photoScrollView.contentLayoutGuide.trailingAnchor),
             photoStackView.heightAnchor.constraint(equalTo: photoScrollView.frameLayoutGuide.heightAnchor)
         ])
-        
+    }
+    
+    func layoutPhotoStackView() {
         NSLayoutConstraint.activate([
             currentPhotoCountLabel.centerXAnchor.constraint(equalTo: addPhotoButton.centerXAnchor),
             currentPhotoCountLabel.bottomAnchor.constraint(equalTo: addPhotoButton.bottomAnchor, constant: -5),

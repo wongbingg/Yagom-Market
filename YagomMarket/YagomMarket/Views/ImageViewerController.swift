@@ -8,32 +8,38 @@
 import UIKit
 
 final class ImageViewerController: UIViewController {
+    // MARK: Properties
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isPagingEnabled = true
         return scrollView
     }()
+    
     private let imageStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         return stackView
     }()
+    
     private let pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
+    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
+    
     private var images: [UIImage] = []
     private var startIndex = 0
     
+    // MARK: Initializers
     init(imageURLs: [String], currentPage: Int) {
         super.init(nibName: nil, bundle: nil)
         setImages(imageURLs: imageURLs)
@@ -87,7 +93,43 @@ final class ImageViewerController: UIViewController {
         }
     }
     
-    private func setupInitialView() {
+    
+    }
+    
+    @objc func pageChanged(_ sender: UIPageControl) {
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.scrollView.contentOffset.x = (UIScreen.main.bounds.maxX) * CGFloat(sender.currentPage)
+        }
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+extension ImageViewerController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let width = UIScreen.main.bounds.width
+        let halfWidth = UIScreen.main.bounds.width/2
+        if scrollView.contentOffset.x < halfWidth {
+            pageControl.currentPage = 0
+        } else if scrollView.contentOffset.x > halfWidth
+                    && scrollView.contentOffset.x < width+halfWidth {
+            pageControl.currentPage = 1
+        } else if scrollView.contentOffset.x > width+halfWidth
+                    && scrollView.contentOffset.x < (width*2)+halfWidth {
+            pageControl.currentPage = 2
+        } else if scrollView.contentOffset.x > (width*2)+halfWidth
+                    && scrollView.contentOffset.x < (width*3)+halfWidth {
+            pageControl.currentPage = 3
+        } else if scrollView.contentOffset.x > (width*3)+halfWidth
+                    && scrollView.contentOffset.x < (width*4)+halfWidth {
+            pageControl.currentPage = 4
+        }
+    }
+}
+
+// MARK: - Layout Constraints
+private extension ImageViewerController {
+    
+     func layoutInitialView() {
         view.backgroundColor = .black
         view.addSubview(pageControl)
         NSLayoutConstraint.activate([
@@ -111,33 +153,5 @@ final class ImageViewerController: UIViewController {
             imageStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             imageStackView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor)
         ])
-    }
-    
-    @objc func pageChanged(_ sender: UIPageControl) {
-        UIView.animate(withDuration: 0.3, delay: 0) {
-            self.scrollView.contentOffset.x = (UIScreen.main.bounds.maxX) * CGFloat(sender.currentPage)
-        }
-    }
-}
-
-extension ImageViewerController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let width = UIScreen.main.bounds.width
-        let halfWidth = UIScreen.main.bounds.width/2
-        if scrollView.contentOffset.x < halfWidth {
-            pageControl.currentPage = 0
-        } else if scrollView.contentOffset.x > halfWidth
-                    && scrollView.contentOffset.x < width+halfWidth {
-            pageControl.currentPage = 1
-        } else if scrollView.contentOffset.x > width+halfWidth
-                    && scrollView.contentOffset.x < (width*2)+halfWidth {
-            pageControl.currentPage = 2
-        } else if scrollView.contentOffset.x > (width*2)+halfWidth
-                    && scrollView.contentOffset.x < (width*3)+halfWidth {
-            pageControl.currentPage = 3
-        } else if scrollView.contentOffset.x > (width*3)+halfWidth
-                    && scrollView.contentOffset.x < (width*4)+halfWidth {
-            pageControl.currentPage = 4
-        }
     }
 }

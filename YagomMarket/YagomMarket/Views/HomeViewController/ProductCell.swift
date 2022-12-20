@@ -75,8 +75,9 @@ final class ProductCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupInitialView()
-        addSubViews()
-        setupConstraints()
+        layoutProductImageView()
+        layoutLabelStackView()
+        layoutLowerStackView()
     }
     
     required init?(coder: NSCoder) {
@@ -96,6 +97,7 @@ final class ProductCell: UICollectionViewCell {
         vendorNameLabel.text = data.vendorName + "   •" + DateCalculator.shared.calculatePostedDay(with: data.createdAt)
     }
     
+    
     func setupDefaultImage() {
         productImageView.image = UIImage(systemName: "clock")
     }
@@ -112,21 +114,13 @@ final class ProductCell: UICollectionViewCell {
     }
 }
 
-// MARK: - Layout Setup
+// MARK: - Layout Constraints
 private extension ProductCell {
-    func addSubViews() {
+    
+    func layoutProductImageView() {
         addSubview(productImageView)
         addSubview(labelStackView)
         addSubview(lowerStackView)
-        
-        labelStackView.addArrangedSubview(priceLabel)
-        labelStackView.addArrangedSubview(titleLabel)
-        
-        lowerStackView.addArrangedSubview(vendorNameLabel)
-        lowerStackView.addArrangedSubview(fakeView)
-    }
-    
-    func setupConstraints() {
         NSLayoutConstraint.activate([
             productImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
             productImageView.topAnchor.constraint(equalTo: topAnchor),
@@ -134,11 +128,21 @@ private extension ProductCell {
             productImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             productImageView.bottomAnchor.constraint(equalTo: labelStackView.topAnchor, constant: -9),
         ])
+    }
+    
+    func layoutLabelStackView() {
+        labelStackView.addArrangedSubview(priceLabel)
+        labelStackView.addArrangedSubview(titleLabel)
         NSLayoutConstraint.activate([
             labelStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             labelStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             labelStackView.bottomAnchor.constraint(equalTo: lowerStackView.topAnchor, constant: -9),
         ])
+    }
+    
+    func layoutLowerStackView() {
+        lowerStackView.addArrangedSubview(vendorNameLabel)
+        lowerStackView.addArrangedSubview(fakeView)
         NSLayoutConstraint.activate([
             lowerStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             lowerStackView.trailingAnchor.constraint(equalTo: trailingAnchor),

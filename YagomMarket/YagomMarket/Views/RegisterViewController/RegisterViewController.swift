@@ -29,12 +29,14 @@ final class RegisterViewController: UIViewController {
         navBar.barTintColor = UIColor.white
         return navBar
     }()
+    
     private let toolBar: UIToolbar = {
         let toolBar = UIToolbar()
         toolBar.translatesAutoresizingMaskIntoConstraints = false
         toolBar.backgroundColor = .systemGray2
         return toolBar
     }()
+    
     private let registerButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -63,6 +65,7 @@ final class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInitialView()
+        
         setupNavigationBar()
         setupToolBar()
         setupButton()
@@ -76,54 +79,7 @@ final class RegisterViewController: UIViewController {
     }
     
     // MARK: Methods
-    private func setupInitialView() {
-        view.backgroundColor = .white
-        view.addSubview(registerView)
-        registerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            registerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
-            registerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
-            registerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            registerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        ])
-    }
-    
-    private func setupNavigationBar() {
-        view.addSubview(navigationBar)
-        NSLayoutConstraint.activate([
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            navigationBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
-        let navItem = UINavigationItem(title: " ")
-        let cancelButton = UIBarButtonItem(
-            barButtonSystemItem: .close,
-            target: self,
-            action: #selector(dismissView)
-        )
-        navItem.leftBarButtonItem = cancelButton
-        navigationBar.items = [navItem]
-    }
-    
-    private func setupToolBar() {
-        view.addSubview(toolBar)
-        toolBar.addSubview(registerButton)
-        NSLayoutConstraint.activate([
-            toolBar.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            toolBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
-        NSLayoutConstraint.activate([
-            registerButton.topAnchor.constraint(equalTo: toolBar.topAnchor, constant: 20),
-            registerButton.trailingAnchor.constraint(equalTo: toolBar.trailingAnchor, constant: -20),
-            registerButton.heightAnchor.constraint(equalToConstant: 50),
-            registerButton.widthAnchor.constraint(equalToConstant: 70)
-        ])
-    }
-    
-    private func setupButton() {
+    private func setupRegisterButton() {
         if productId == nil {
             registerButton.addTarget(
                 self,
@@ -137,12 +93,15 @@ final class RegisterViewController: UIViewController {
                 for: .touchUpInside
             )
         }
+    }
+    
         registerView.keyboardDownButton.addTarget(
             self,
             action: #selector(closeButtonDidTapped),
             for: .touchUpInside
         )
     }
+    
     
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer()
@@ -295,5 +254,47 @@ extension RegisterViewController: UIGestureRecognizerDelegate {
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
         present(picker, animated: true)
+    }
+}
+
+// MARK: - Layout Constraints
+private extension RegisterViewController {
+    func layoutInitialView() {
+        view.backgroundColor = .white
+        view.addSubview(registerView)
+        registerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            registerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            registerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
+            registerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            registerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+    }
+    
+    func layoutNavigationBar() {
+        view.addSubview(navigationBar)
+        NSLayoutConstraint.activate([
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            navigationBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+    }
+    
+    func layoutToolBar() {
+        view.addSubview(toolBar)
+        toolBar.addSubview(registerButton)
+        NSLayoutConstraint.activate([
+            toolBar.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            toolBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+        NSLayoutConstraint.activate([
+            registerButton.topAnchor.constraint(equalTo: toolBar.topAnchor, constant: 20),
+            registerButton.trailingAnchor.constraint(equalTo: toolBar.trailingAnchor, constant: -20),
+            registerButton.heightAnchor.constraint(equalToConstant: 50),
+            registerButton.widthAnchor.constraint(equalToConstant: 70)
+        ])
     }
 }

@@ -13,6 +13,7 @@ final class DetailViewController: UIViewController {
     private let detailView = DetailView()
     private let viewModel = DefaultDetailViewModel()
     
+    // MARK: Initializers
     init(productId: Int) {
         self.productId = productId
         super.init(nibName: nil, bundle: nil)
@@ -25,7 +26,8 @@ final class DetailViewController: UIViewController {
     // MARK: View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupInitialView()
+        layoutInitialView()
+        
         setupTabBarController()
         viewModel.completeDataFetching = { [self] in
             DispatchQueue.main.async { [self] in
@@ -40,7 +42,7 @@ final class DetailViewController: UIViewController {
         super.viewWillLayoutSubviews()
         detailView.changeIndex()
     }
-
+    
     // MARK: Methods
     private func setupTabBarController() {
         tabBarController?.tabBar.isHidden = true
@@ -54,18 +56,6 @@ final class DetailViewController: UIViewController {
         navigationItem.rightBarButtonItem = barbutton
     }
     
-    private func setupInitialView() {
-        view.backgroundColor = .systemBackground
-        view.addSubview(detailView)
-        detailView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            detailView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            detailView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            detailView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            detailView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        ])
-        
-        setupGestureRecognizer()
     }
     
     private func setupGestureRecognizer() {
@@ -140,8 +130,24 @@ final class DetailViewController: UIViewController {
     }
 }
 
+// MARK: - RegisterViewDelegate
 extension DetailViewController: RegisterViewControllerDelegate {
     func viewWillDisappear() {
         viewModel.search(productID: productId)
+    }
+}
+
+// MARK: - Layout Constraints
+private extension DetailViewController {
+    func layoutInitialView() {
+        view.backgroundColor = .systemBackground
+        view.addSubview(detailView)
+        detailView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            detailView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            detailView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            detailView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            detailView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
     }
 }
