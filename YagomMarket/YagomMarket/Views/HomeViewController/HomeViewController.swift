@@ -28,6 +28,10 @@ final class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
+        DispatchQueue.main.async {
+            self.viewModel.resetToFirstPage()
+            self.collectionView.reloadData()
+        }
     }
     
     // MARK: Methods
