@@ -64,11 +64,13 @@ final class RegisterViewController: UIViewController {
     // MARK: View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupInitialView()
+        layoutInitialView()
+        layoutNavigationBar()
+        layoutToolBar()
         
         setupNavigationBar()
-        setupToolBar()
-        setupButton()
+        setupRegisterButton()
+        setupKeyboardButton()
         setupTapGesture()
         setupKeyboardNotification()
     }
@@ -95,6 +97,7 @@ final class RegisterViewController: UIViewController {
         }
     }
     
+    private func setupKeyboardButton() {
         registerView.keyboardDownButton.addTarget(
             self,
             action: #selector(closeButtonDidTapped),
@@ -102,6 +105,16 @@ final class RegisterViewController: UIViewController {
         )
     }
     
+    private func setupNavigationBar() {
+        let navItem = UINavigationItem(title: " ")
+        let cancelButton = UIBarButtonItem(
+            barButtonSystemItem: .close,
+            target: self,
+            action: #selector(dismissView)
+        )
+        navItem.leftBarButtonItem = cancelButton
+        navigationBar.items = [navItem]
+    }
     
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer()
