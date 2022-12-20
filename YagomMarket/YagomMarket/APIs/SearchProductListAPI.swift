@@ -18,9 +18,11 @@ struct SearchProductListAPI: API {
         configuration = makeAPIConfiguration(with: param)
     }
     
-    private func makeParameter(pageNo: Int, itemPerPage: Int, searchValue: String? = nil) -> [String: Any] {
+    private func makeParameter(pageNo: Int,
+                               itemPerPage: Int,
+                               searchValue: String? = nil) -> [String: Any] {
         if let vendorName = searchValue {
-            return ["page_no": 1, "items_per_page": 3, "search_value": vendorName]
+            return ["page_no": pageNo, "items_per_page": itemPerPage, "search_value": vendorName]
         } else {
             return  ["page_no": pageNo, "items_per_page": itemPerPage]
         }

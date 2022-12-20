@@ -9,26 +9,101 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     // MARK: Properties
-    let searchView = SearchView()
+    private let searchView = SearchView()
+    private let resultView = ResultView()
+    private let searchBar = UISearchBar()
     
     // MARK: View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupInitialView()
+        layoutSearchView()
+        setupNavigationBar()
     }
     
     // MARK: Methods
-    private func setupInitialView() {
+    private func setupNavigationBar() {
+        searchBar.placeholder = "검색어를 입력해주세요"
+        searchBar.delegate = self
+        navigationItem.titleView = searchBar
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.left"),
+            style: .done,
+            target: self,
+            action: #selector(closeButtonDidTapped)
+        )
+        let homeButton = UIBarButtonItem(
+            image: UIImage(systemName: "house"),
+            style: .done,
+            target: self,
+            action: #selector(homeButtonDidTapped)
+        )
+        backButton.tintColor = .systemBrown
+        homeButton.tintColor = .systemBrown
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.rightBarButtonItem = homeButton
+    }
    
+    @objc private func closeButtonDidTapped() {
+        navigationController?.popViewController(animated: true)
+    }
     
+    @objc private func homeButtonDidTapped() {
+        // 홈뷰로 이동
+    }
+}
 
 // MARK: - UISearchBarDelegate
+extension SearchViewController: UISearchBarDelegate {
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            resultView.removeFromSuperview()
+            layoutSearchView()
+        } else {
+            searchView.removeFromSuperview()
+            layoutResultView(with: searchText.lowercased())
+        }
+    }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchValue = searchBar.text else { return }
+        let api = SearchProductListAPI(
+            pageNumber: 1,
+            itemPerPage: 100,
+            searchValue: searchValue.lowercased()
+        )
+        api.execute { result in
+            switch result {
+            case .success(let model):
+                DispatchQueue.main.async {
+                    let resultVC = ResultViewController(model: model)
+                    self.navigationController?.pushViewController(
+                        resultVC,
+                        animated: true
+                    )
+                }
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
+    }
+}
 
 // MARK: ResultViewDelegate
+extension SearchViewController: ResultViewDelegate {
     
+    func itemDidTapped(model: SearchProductListResponse) {
+        let ResultVC = ResultViewController(model: model)
+        self.navigationController?.pushViewController(
+            ResultVC,
+            animated: true
+        )
+    }
     
+    func scrollViewDidScroll() {
+        searchBar.endEditing(true)
+    }
+}
 
 // MARK: - Layout Constraints
 private extension SearchViewController {

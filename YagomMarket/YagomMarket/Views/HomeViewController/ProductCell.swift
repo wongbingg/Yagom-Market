@@ -97,6 +97,11 @@ final class ProductCell: UICollectionViewCell {
         vendorNameLabel.text = data.vendorName + "   •" + DateCalculator.shared.calculatePostedDay(with: data.createdAt)
     }
     
+    func resultViewSetup() {
+        priceLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+        vendorNameLabel.text = nil
+    }
     
     func setupDefaultImage() {
         productImageView.image = UIImage(systemName: "clock")

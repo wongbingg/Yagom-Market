@@ -11,7 +11,7 @@ final class SearchView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .blue
+        backgroundColor = .gray
     }
     
     required init?(coder: NSCoder) {

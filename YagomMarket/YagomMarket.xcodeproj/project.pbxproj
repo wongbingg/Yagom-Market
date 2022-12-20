@@ -13,6 +13,11 @@
 		AF07969F2924B6A4002E876C /* DeleteKeyRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF07969E2924B6A4002E876C /* DeleteKeyRequestModel.swift */; };
 		AF0796A12924BE62002E876C /* DeleteProductAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796A02924BE62002E876C /* DeleteProductAPI.swift */; };
 		AF0796A32924BED2002E876C /* DeleteProductAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796A22924BED2002E876C /* DeleteProductAPITest.swift */; };
+		AF11758C29501991002632D2 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF11758B29501991002632D2 /* ChatViewController.swift */; };
+		AF11758E295019A4002632D2 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF11758D295019A4002632D2 /* ChatView.swift */; };
+		AF11759129501A04002632D2 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF11759029501A04002632D2 /* MyPageViewController.swift */; };
+		AF11759329501A1A002632D2 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF11759229501A1A002632D2 /* MyPageView.swift */; };
+		AF1175962950517E002632D2 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1175952950517E002632D2 /* ResultView.swift */; };
 		AF13E5B52935C90E00F92C89 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13E5B42935C90E00F92C89 /* RegisterViewModel.swift */; };
 		AF13E5B72935C93B00F92C89 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13E5B62935C93B00F92C89 /* DetailViewController.swift */; };
 		AF13E5BA2935CC6500F92C89 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13E5B92935CC6500F92C89 /* DetailViewModel.swift */; };
@@ -54,6 +59,7 @@
 		AFD9AB56292325DB009A67AB /* RegisterProductAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD9AB55292325DB009A67AB /* RegisterProductAPITest.swift */; };
 		AFD9AB582923818D009A67AB /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD9AB572923818D009A67AB /* ProductModel.swift */; };
 		AFDD9A382944A287004D4DE1 /* ImageViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDD9A372944A287004D4DE1 /* ImageViewerController.swift */; };
+		AFE911D829517B7E004A1D1B /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE911D729517B7E004A1D1B /* ResultViewController.swift */; };
 		AFEE294D292613FD008028C2 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE294C292613FD008028C2 /* UIImage+Extension.swift */; };
 		AFEFB638294898B3008D2CC4 /* AlertBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEFB637294898B3008D2CC4 /* AlertBuilder.swift */; };
 		AFF5E0662939BA81000CC513 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF5E0652939BA81000CC513 /* Observable.swift */; };
@@ -81,6 +87,11 @@
 		AF07969E2924B6A4002E876C /* DeleteKeyRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteKeyRequestModel.swift; sourceTree = "<group>"; };
 		AF0796A02924BE62002E876C /* DeleteProductAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductAPI.swift; sourceTree = "<group>"; };
 		AF0796A22924BED2002E876C /* DeleteProductAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductAPITest.swift; sourceTree = "<group>"; };
+		AF11758B29501991002632D2 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		AF11758D295019A4002632D2 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		AF11759029501A04002632D2 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		AF11759229501A1A002632D2 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		AF1175952950517E002632D2 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		AF13E5B42935C90E00F92C89 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		AF13E5B62935C93B00F92C89 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		AF13E5B92935CC6500F92C89 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
@@ -125,6 +136,7 @@
 		AFD9AB55292325DB009A67AB /* RegisterProductAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterProductAPITest.swift; sourceTree = "<group>"; };
 		AFD9AB572923818D009A67AB /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		AFDD9A372944A287004D4DE1 /* ImageViewerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerController.swift; sourceTree = "<group>"; };
+		AFE911D729517B7E004A1D1B /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		AFEE294C292613FD008028C2 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		AFEFB637294898B3008D2CC4 /* AlertBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertBuilder.swift; sourceTree = "<group>"; };
 		AFF5E0652939BA81000CC513 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
@@ -153,6 +165,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF11758F295019D5002632D2 /* ChatViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AF11758B29501991002632D2 /* ChatViewController.swift */,
+				AF11758D295019A4002632D2 /* ChatView.swift */,
+			);
+			path = ChatViewController;
+			sourceTree = "<group>";
+		};
+		AF11759429501A37002632D2 /* MyPageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AF11759029501A04002632D2 /* MyPageViewController.swift */,
+				AF11759229501A1A002632D2 /* MyPageView.swift */,
+			);
+			path = MyPageViewController;
+			sourceTree = "<group>";
+		};
 		AF1520D92926033F004957E7 /* Extesions */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,10 +304,13 @@
 				AFDD9A372944A287004D4DE1 /* ImageViewerController.swift */,
 				AF01194B293E07EB00FD2D1C /* CustomTextField.swift */,
 				AF738E22294751FC008F60CE /* CustomImageView.swift */,
+				AFE911D729517B7E004A1D1B /* ResultViewController.swift */,
 				AFFF2169293CD0A9001B585F /* HomeViewController */,
 				AFFF216A293CD0B5001B585F /* DetailViewController */,
 				AFFF216B293CD0C3001B585F /* RegisterViewController */,
 				AFFF216C293CD0CD001B585F /* SearchViewController */,
+				AF11758F295019D5002632D2 /* ChatViewController */,
+				AF11759429501A37002632D2 /* MyPageViewController */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -345,6 +378,7 @@
 			children = (
 				AFC44D4E29348CD600B01142 /* SearchViewController.swift */,
 				AFC44D482934838A00B01142 /* SearchView.swift */,
+				AF1175952950517E002632D2 /* ResultView.swift */,
 			);
 			path = SearchViewController;
 			sourceTree = "<group>";
@@ -476,6 +510,8 @@
 				AF01194C293E07EB00FD2D1C /* CustomTextField.swift in Sources */,
 				AF0796992924A8E7002E876C /* SearchDeleteURIAPI.swift in Sources */,
 				AF5BB77B292210E20013BFC1 /* HomeViewController.swift in Sources */,
+				AF11759129501A04002632D2 /* MyPageViewController.swift in Sources */,
+				AFE911D829517B7E004A1D1B /* ResultViewController.swift in Sources */,
 				AF1520DB2926035F004957E7 /* Data+Extension.swift in Sources */,
 				AFD9AB582923818D009A67AB /* ProductModel.swift in Sources */,
 				AFEFB638294898B3008D2CC4 /* AlertBuilder.swift in Sources */,
@@ -485,6 +521,7 @@
 				AF5BB777292210E20013BFC1 /* AppDelegate.swift in Sources */,
 				AF5BB779292210E20013BFC1 /* SceneDelegate.swift in Sources */,
 				AF6881B129486CF000842212 /* Handler.swift in Sources */,
+				AF11758C29501991002632D2 /* ChatViewController.swift in Sources */,
 				AFC44D53293497C900B01142 /* ProductCell.swift in Sources */,
 				AFF5E0682939C1B5000CC513 /* RegisterView.swift in Sources */,
 				AF7174642922375B0004FC02 /* APIClient.swift in Sources */,
@@ -495,6 +532,7 @@
 				AF160EC82934DFE80014C385 /* UIImageView+Extension.swift in Sources */,
 				AFDD9A382944A287004D4DE1 /* ImageViewerController.swift in Sources */,
 				AF717471292252000004FC02 /* SearchProductListResponse.swift in Sources */,
+				AF11759329501A1A002632D2 /* MyPageView.swift in Sources */,
 				AFF96945292F05C5009AB014 /* BodyType.swift in Sources */,
 				AFC44D512934975300B01142 /* ProductCollectionView.swift in Sources */,
 				AF71746829224A010004FC02 /* API.swift in Sources */,
@@ -503,6 +541,8 @@
 				AF13E5BA2935CC6500F92C89 /* DetailViewModel.swift in Sources */,
 				AFC44D492934838A00B01142 /* SearchView.swift in Sources */,
 				AF07969F2924B6A4002E876C /* DeleteKeyRequestModel.swift in Sources */,
+				AF1175962950517E002632D2 /* ResultView.swift in Sources */,
+				AF11758E295019A4002632D2 /* ChatView.swift in Sources */,
 				AF13E5B72935C93B00F92C89 /* DetailViewController.swift in Sources */,
 				AF7174662922383A0004FC02 /* APIError.swift in Sources */,
 				AFF96943292F046A009AB014 /* EditProductModel.swift in Sources */,
