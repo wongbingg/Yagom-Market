@@ -37,16 +37,14 @@ final class ImageViewerController: UIViewController {
     }()
     
     private var images: [UIImage] = []
-    private var startIndex = 0
     
     // MARK: Initializers
     init(imageURLs: [String], currentPage: Int) {
         super.init(nibName: nil, bundle: nil)
         setImages(imageURLs: imageURLs)
-        pageControl.numberOfPages = imageURLs.count
-        startIndex = currentPage
-        pageControl.pageIndicatorTintColor = UIColor.systemGray
-        scrollView.delegate = self
+        setupPageControl(total: imageURLs.count,
+                         index: currentPage)
+        setupScrollView()
     }
     
     required init?(coder: NSCoder) {
@@ -56,18 +54,12 @@ final class ImageViewerController: UIViewController {
     // MARK: View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupInitialView()
-        setupPageControl()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        layoutInitialView()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        pageControl.currentPage = startIndex
-        self.scrollView.contentOffset.x = (UIScreen.main.bounds.maxX) * CGFloat(startIndex)
+        self.scrollView.contentOffset.x = (UIScreen.main.bounds.maxX) * CGFloat(pageControl.currentPage)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -75,14 +67,6 @@ final class ImageViewerController: UIViewController {
     }
     
     // MARK: Methods
-    private func setupPageControl() {
-        pageControl.addTarget(
-            self,
-            action: #selector(pageChanged),
-            for: .valueChanged
-        )
-    }
-    
     private func setImages(imageURLs: [String]) {
         for url in imageURLs {
             let imageView = UIImageView.generate()
@@ -93,10 +77,22 @@ final class ImageViewerController: UIViewController {
         }
     }
     
-    
+    private func setupPageControl(total: Int, index: Int) {
+        pageControl.numberOfPages = total
+        pageControl.currentPage = index
+        pageControl.pageIndicatorTintColor = UIColor.systemGray
+        pageControl.addTarget(
+            self,
+            action: #selector(pageValueDidChanged),
+            for: .valueChanged
+        )
     }
     
-    @objc func pageChanged(_ sender: UIPageControl) {
+    private func setupScrollView() {
+        scrollView.delegate = self
+    }
+    
+    @objc func pageValueDidChanged(_ sender: UIPageControl) {
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.scrollView.contentOffset.x = (UIScreen.main.bounds.maxX) * CGFloat(sender.currentPage)
         }
