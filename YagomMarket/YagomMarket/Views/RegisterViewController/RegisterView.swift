@@ -101,6 +101,7 @@ final class RegisterView: UIView {
         let uiview = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 50))
         uiview.layer.borderWidth = 1
         uiview.layer.borderColor = UIColor.systemGray6.cgColor
+        uiview.layer.backgroundColor = UIColor.systemBackground.cgColor
         return uiview
     }()
     
@@ -116,6 +117,7 @@ final class RegisterView: UIView {
     // MARK: Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .systemBackground
         layoutMainScrollView()
         layoutMainStackView()
         layoutPhotoScrollView()
@@ -200,6 +202,20 @@ final class RegisterView: UIView {
     private func setupKeyboard() {
         priceTextField.keyboardType = .decimalPad
     }
+    
+    private func setProperColor() -> UIColor {
+        if #available(iOS 13, *) {
+            return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+                if traitCollection.userInterfaceStyle == .dark {
+                    return UIColor.white
+                } else {
+                    return UIColor.black
+                }
+            }
+        } else {
+            return UIColor.black
+        }
+    }
 
     
     @objc func deleteButtonDidTapped(_ sender: UIButton) {
@@ -215,7 +231,7 @@ extension RegisterView: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if descriptionTextView.text == PlaceHolder.description {
             descriptionTextView.text = nil
-            descriptionTextView.textColor = .black
+            descriptionTextView.textColor = setProperColor()
         } else {
             
         }

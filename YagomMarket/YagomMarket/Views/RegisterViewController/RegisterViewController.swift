@@ -26,7 +26,7 @@ final class RegisterViewController: UIViewController {
         let navBar = UINavigationBar()
         navBar.translatesAutoresizingMaskIntoConstraints = false
         navBar.isTranslucent = true
-        navBar.barTintColor = UIColor.white
+        navBar.backgroundColor = .systemBackground
         return navBar
     }()
     
@@ -273,7 +273,7 @@ extension RegisterViewController: UIGestureRecognizerDelegate {
 // MARK: - Layout Constraints
 private extension RegisterViewController {
     func layoutInitialView() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.addSubview(registerView)
         registerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
