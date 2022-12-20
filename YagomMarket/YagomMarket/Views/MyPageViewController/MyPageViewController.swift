@@ -5,10 +5,18 @@
 //  Created by 이원빈 on 2022/12/19.
 //
 
+import UIKit
 
+final class MyPageViewController: UIViewController {
     // MARK: Properties
+    let myPageView = MyPageView()
     
     // MARK: View LifeCycles
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        layoutInitialView()
+    }
+}
 
 // MARK: - Layout Constraints
 private extension MyPageViewController {
