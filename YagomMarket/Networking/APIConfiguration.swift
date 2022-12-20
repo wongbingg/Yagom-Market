@@ -157,8 +157,8 @@ struct APIConfiguration {
         var data = Data()
         var number = 1
         let imageCompressionHandler = ImageCompressHandler()
-        let imageResizeHandler = ImageResizeHandler()
-        imageCompressionHandler.setNext(handler: imageResizeHandler)
+        let imageDownsizeHandler = ImageDownsizeHandler()
+        imageCompressionHandler.setNext(handler: imageDownsizeHandler)
         
         for image in images {
             guard let image = image,

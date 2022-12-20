@@ -17,7 +17,7 @@ protocol Handler: AnyObject {
 }
 
 extension Handler {
-    
+    @discardableResult
     func setNext(handler: Handler) -> Handler {
         self.nextHandler = handler
         return handler
