@@ -28,7 +28,30 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         layoutInitialView()
         
+        setupGestureRecognizer()
         setupTabBarController()
+        setupViewModel()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        detailView.changeIndex()
+    }
+    
+    // MARK: Methods
+    private func setupGestureRecognizer() {
+        let tapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(imageDidTapped(_:))
+        )
+        view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    private func setupTabBarController() {
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    private func setupViewModel() {
         viewModel.completeDataFetching = { [self] in
             DispatchQueue.main.async { [self] in
                 detailView.setupData(with: viewModel)
@@ -38,32 +61,15 @@ final class DetailViewController: UIViewController {
         viewModel.search(productID: productId)
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        detailView.changeIndex()
-    }
-    
-    // MARK: Methods
-    private func setupTabBarController() {
-        tabBarController?.tabBar.isHidden = true
-    }
-    
     private func setupNavigationBar() {
+        navigationController?.navigationBar.tintColor = .systemBrown
         guard viewModel.vendorName == "wongbing" else { return }
-        let barbutton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"),
-                                   style: .done,
-                                   target: self, action: #selector(buttonDidTapped))
-        navigationItem.rightBarButtonItem = barbutton
-    }
-    
-    }
-    
-    private func setupGestureRecognizer() {
-        let tapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(tapAction(_:))
+        let rightBarButton = UIBarButtonItem(
+            image: UIImage(systemName: "ellipsis"),
+            style: .done,
+            target: self, action: #selector(rightBarButtonDidTapped)
         )
-        view.addGestureRecognizer(tapGestureRecognizer)
+        navigationItem.rightBarButtonItem = rightBarButton
     }
     
     private func showEditView() {
@@ -74,7 +80,7 @@ final class DetailViewController: UIViewController {
     }
     
     private func performDelete(_ completion: @escaping () -> Void) {
-        let searchDeleteURIAPI = makeSearchDeleteURIAPI(with: productId)
+        let searchDeleteURIAPI = SearchDeleteURIAPI(productId: productId)
         searchDeleteURIAPI.searchDeleteURI { result in
             switch result {
             case .success(let deleteURI):
@@ -93,11 +99,20 @@ final class DetailViewController: UIViewController {
         }
     }
     
-    private func makeSearchDeleteURIAPI(with id: Int) -> SearchDeleteURIAPI {
-        return SearchDeleteURIAPI(productId: id)
+    private func showDeleteAction() {
+        DefaultAlertBuilder(title: "안내", message: "정말 삭제 하시겠습니까?", preferredStyle: .alert)
+            .setButton(name: "예", style: .default) { [self] in
+                performDelete {
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+            }
+            .setButton(name: "아니오", style: .destructive, nil)
+            .showAlert(on: self)
     }
     
-    @objc private func tapAction(_ sender: UITouch) {
+    @objc private func imageDidTapped(_ sender: UITouch) {
         let point = sender.location(in: view)
         if detailView.imageStackView.bounds.contains(point) {
             let currentPage = detailView.imageScrollView.contentOffset.x / UIScreen.main.bounds.maxX
@@ -108,22 +123,13 @@ final class DetailViewController: UIViewController {
         }
     }
     
-    @objc private func buttonDidTapped() {
+    @objc private func rightBarButtonDidTapped() {
         DefaultAlertBuilder(preferredStyle: .actionSheet)
             .setButton(name: "수정", style: .default) {
                 self.showEditView()
             }
             .setButton(name: "삭제", style: .destructive) {
-                DefaultAlertBuilder(title: "안내", message: "정말 삭제 하시겠습니까?", preferredStyle: .alert)
-                    .setButton(name: "예", style: .default) { [self] in
-                        performDelete {
-                            DispatchQueue.main.async {
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                        }
-                    }
-                    .setButton(name: "아니오", style: .destructive, nil)
-                    .showAlert(on: self)
+                self.showDeleteAction()
             }
             .setButton(name: "cancel", style: .cancel, nil)
             .showAlert(on: self)
