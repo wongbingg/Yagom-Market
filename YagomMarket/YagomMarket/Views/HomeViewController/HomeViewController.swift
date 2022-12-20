@@ -18,35 +18,34 @@ final class HomeViewController: UIViewController {
     // MARK: View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBarController?.delegate = self
-        setupInitialView()
-        adoptDataSource()
-        registerCell()
-        setupRefreshController()
         layoutCollectionView()
         
+        setupTabBarController()
+        setupCollectionView()
         setupViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = false 
+        tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: Methods
+    private func setupTabBarController() {
+        tabBarController?.delegate = self
     }
     
-    private func adoptDataSource() {
+    private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.refreshControl = generateRefreshControl()
+        collectionView.register(
+            ProductCell.self,
+            forCellWithReuseIdentifier: "Cell"
+        )
     }
     
-    private func registerCell() {
-        collectionView.register(ProductCell.self,
-                                forCellWithReuseIdentifier: "Cell")
-    }
-    
-    private func setupRefreshController() {
+    private func generateRefreshControl() -> UIRefreshControl {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .systemBrown
         refreshControl.addTarget(
@@ -54,7 +53,7 @@ final class HomeViewController: UIViewController {
             action: #selector(pullToRefresh),
             for: .valueChanged
         )
-        collectionView.refreshControl = refreshControl
+        return refreshControl
     }
     
     private func setupViewModel() {
@@ -106,7 +105,6 @@ extension HomeViewController: UICollectionViewDataSource {
         ) as? ProductCell else {
             return UICollectionViewCell()
         }
-        cell.setupDefaultImage()
         cell.setup(with: viewModel.productList.value[indexPath.row])
         return cell
     }

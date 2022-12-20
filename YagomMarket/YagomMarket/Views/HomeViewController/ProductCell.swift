@@ -108,6 +108,7 @@ final class ProductCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        productImageView.image = nil
         priceLabel.text = nil
         titleLabel.text = nil
         vendorNameLabel.text = nil
