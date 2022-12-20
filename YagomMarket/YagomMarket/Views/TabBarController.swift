@@ -18,21 +18,26 @@ final class TabBarController: UITabBarController {
         view.tintColor = .systemBrown
         
         let homeVC = HomeViewController()
-        let registerVC = RegisterViewController()
         let searchVC = SearchViewController()
+        let registerVC = RegisterViewController()
+        let chatVC = ChatViewController()
+        let myPageVC = MyPageViewController()
 
         homeVC.title = "Home"
         homeVC.tabBarItem.image = UIImage(systemName: "house")
-        let navHome = UINavigationController(rootViewController: homeVC)
         
-        registerVC.title = "Register" // 등록하는게 의미가 없는 상태, 왜냐면 modal로 따로 띄워주는 중 
+        chatVC.title = "Chat"
+        chatVC.tabBarItem.image = UIImage(systemName: "bubble.right")
+        
+        myPageVC.title = "MY"
+        myPageVC.tabBarItem.image = UIImage(systemName: "person")
+        
+        registerVC.title = "Register"
         registerVC.tabBarItem.image = UIImage(systemName: "plus.circle")
-        let navRegister = UINavigationController(rootViewController: registerVC)
         
         searchVC.title = "Search"
         searchVC.tabBarItem.image = UIImage(systemName: "magnifyingglass")
-        let navSearch = UINavigationController(rootViewController: searchVC)
         
-        setViewControllers([navHome, navRegister, navSearch], animated: false)
+        setViewControllers([homeVC, searchVC, registerVC, chatVC, myPageVC], animated: false)
     }
 }

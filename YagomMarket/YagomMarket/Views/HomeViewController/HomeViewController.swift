@@ -148,14 +148,18 @@ extension HomeViewController: UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController,
                           shouldSelect viewController: UIViewController) -> Bool {
-        if let navCon = viewController as? UINavigationController {
-            if navCon.viewControllers.first is RegisterViewController {
-                let vc = RegisterViewController()
-                vc.delegate = self
-                vc.modalPresentationStyle = .overFullScreen
-                present(vc, animated: true)
-                return false
-            }
+        if viewController is RegisterViewController {
+            let registerVC = RegisterViewController()
+            registerVC.delegate = self
+            registerVC.modalPresentationStyle = .overFullScreen
+            tabBarController.present(registerVC, animated: true)
+            return false
+        }
+        
+        if viewController is SearchViewController {
+            let searchVC = SearchViewController()
+            tabBarController.navigationController?.pushViewController(searchVC, animated: true)
+            return false // 기존에 viewController를 보여주는 것을 하지 않는다는 뜻.
         }
         return true
     }
