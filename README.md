@@ -39,7 +39,7 @@
             <img src="https://i.imgur.com/ahueArW.gif"/>
         </td>
         <td valign="top" width="30%">
-            <img src="https://i.imgur.com/6NdKIV8.gif"/>
+            <img src="https://i.imgur.com/D0T5Phe.gif"/>
         </td>
         <td valign="top" width="30%">
             <img src="https://i.imgur.com/3Juwkkn.gif">
