@@ -226,28 +226,29 @@
         <td valign="top" width="30%" align="center" border="1">
             <strong>오류 화면</strong>
         </td>
-        <td valign="top" width="30%" align="center">
-            <strong>문제점 분석</strong>
-        </td>
         <td valign="top" width="30%" align="center" border="1">
             <strong>개선 화면</strong>
         </td>
     </tr>
     <tr>
         <td valign="top" width="30%">
-            <img src="https://i.imgur.com/LJaC4Zg.gif"/>
+            <img src="https://i.imgur.com/QWRmpZU.gif"/>
         </td>
         <td valign="top" width="30%">
-            - 빠르게 스크롤작업을 할 때<br>
-            - 사진을 받아오는 작업이 쌓여서 한꺼번에 실행이 되었습니다.
-        </td>
-        <td valign="top" width="30%">
-            <img src="https://i.imgur.com/wwaLOWa.gif">
+            <img src="https://i.imgur.com/lyPL70c.gif">
         </td>
     </tr>
 </table>
     
-
+- 빠르게 스크롤작업을 할 때 사진을 받아오는 작업이 쌓여서 한꺼번에 실행이 되었습니다.
+            
+#### 해결방법
+- 이미지를 받아오는 비동기 메서드가 이미지를 받아왔을 때
+- cellForRowAt에서 받아온 indexPath와 재사용되고있는 셀의 index가 같을 때만 이미지를 할당하도록 제약을 주었습니다.
+-  쌓여있던 네트워킹 작업들을 취소해주고자OperationQueue를 이용해서 작업을 수행하고, 셀의 prepareForReuse() 메서드 내에서 OperationQueue.cancelAllOperations() 메서드를 실행시켜 주었습니다. 하지만 효과는 보지 못했습니다
+    
+    
+    
 </details>
 
 ### ⚠️ TabBarController에서 Modal뷰 띄우기
@@ -356,3 +357,4 @@
 - [UITabBarControllerDelegate](https://developer.apple.com/documentation/uikit/uitabbarcontrollerdelegate/)
 #### 블로그
 - [SearchBar 참고 블로그](https://zeddios.tistory.com/1196)
+
