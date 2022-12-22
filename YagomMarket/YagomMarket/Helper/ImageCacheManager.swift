@@ -12,11 +12,11 @@ protocol ImageCacheManager {
 }
 
 final class URLCacheManager: ImageCacheManager {
-    let cache = URLCache.shared
+    private let cache = URLCache.shared
+    private var dataTask: URLSessionDataTask?
     
     func getImage(with imageURL: URL, _ completion: @escaping (UIImage) -> Void) {
         let request = URLRequest(url: imageURL)
-        
         if self.cache.cachedResponse(for: request) != nil {
             self.loadImageFromCache(with: imageURL) { image in
                 completion(image)
@@ -31,26 +31,22 @@ final class URLCacheManager: ImageCacheManager {
     func loadImageFromCache(with imageURL: URL, _ completion: @escaping (UIImage) -> Void) {
         let request = URLRequest(url: imageURL)
         
-        DispatchQueue.global(qos: .userInitiated).async {
-            if let data = self.cache.cachedResponse(for: request)?.data,
-                let image = UIImage(data: data) {
-                completion(image)
-            }
+        if let data = self.cache.cachedResponse(for: request)?.data,
+            let image = UIImage(data: data) {
+            completion(image)
         }
     }
     
     func downloadImage(with imageURL: URL, _ completion: @escaping (UIImage) -> Void) {
         let request = URLRequest(url: imageURL)
         
-        DispatchQueue.global().async {
-            let dataTask = URLSession.shared.dataTask(with: imageURL) { data, response, _ in
-                if let data = data {
-                    let cachedData = CachedURLResponse(response: response!, data: data)
-                    self.cache.storeCachedResponse(cachedData, for: request)
-                    completion(UIImage(data: data)!)
-                }
+        self.dataTask = URLSession.shared.dataTask(with: imageURL) { data, response, _ in
+            if let data = data {
+                let cachedData = CachedURLResponse(response: response!, data: data)
+                self.cache.storeCachedResponse(cachedData, for: request)
+                completion(UIImage(data: data)!)
             }
-            dataTask.resume()
         }
+        self.dataTask?.resume()
     }
 }

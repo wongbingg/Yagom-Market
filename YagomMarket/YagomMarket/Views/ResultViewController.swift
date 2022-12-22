@@ -69,7 +69,7 @@ extension ResultViewController: UICollectionViewDataSource {
         ) as? ProductCell else {
             return UICollectionViewCell()
         }
-        cell.setup(with: model.pages[indexPath.row])
+        cell.setupUIComponents(with: model.pages[indexPath.row], at: indexPath.row)
         cell.resultViewSetup()
         return cell
     }

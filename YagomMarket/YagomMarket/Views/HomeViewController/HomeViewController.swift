@@ -28,10 +28,6 @@ final class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
-        DispatchQueue.main.async {
-            self.viewModel.resetToFirstPage()
-            self.collectionView.reloadData()
-        }
     }
     
     // MARK: Methods
@@ -109,7 +105,7 @@ extension HomeViewController: UICollectionViewDataSource {
         ) as? ProductCell else {
             return UICollectionViewCell()
         }
-        cell.setup(with: viewModel.productList.value[indexPath.row])
+        cell.setupUIComponents(with: viewModel.productList.value[indexPath.row], at: indexPath.row)
         return cell
     }
 }
@@ -165,7 +161,7 @@ extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let endY = (scrollView.contentSize.height)
         let currentY = scrollView.contentOffset.y + scrollView.bounds.height
-        if currentY > endY + 50 {
+        if currentY > endY + 40 {
             viewModel.addNextPage()
         }
     }

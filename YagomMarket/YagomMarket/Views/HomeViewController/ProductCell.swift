@@ -8,6 +8,11 @@
 import UIKit
 
 final class ProductCell: UICollectionViewCell {
+    // MARK: Properties
+    private var index: Int?
+    private let imageCacheManager: ImageCacheManager = URLCacheManager()
+    private let operationQueue = OperationQueue.current
+    
     // MARK: UI Component
     private let mainStackView: UIStackView = {
         let stackView = UIStackView()
@@ -85,16 +90,13 @@ final class ProductCell: UICollectionViewCell {
     }
     
     // MARK: Methods
-    func setup(with data: Page?) {
+    func setupUIComponents(with data: Page?, at index: Int) {
+        self.index = index
         guard let data = data else { return }
-        productImageView.setImage(with: data.thumbnail)
-        if data.currency == .KRW {
-            priceLabel.text = String(Int(data.price)).appending("원")
-        } else {
-            priceLabel.text = String(data.price).appending("달러")
-        }
         titleLabel.text = data.name
-        vendorNameLabel.text = data.vendorName + "   •" + DateCalculator.shared.calculatePostedDay(with: data.createdAt)
+        setupPrice(with: data)
+        setupVendorName(with: data)
+        setupImage(with: URL(string: data.thumbnail), at: index)
     }
     
     func resultViewSetup() {
@@ -103,20 +105,44 @@ final class ProductCell: UICollectionViewCell {
         vendorNameLabel.text = nil
     }
     
-    func setupDefaultImage() {
-        productImageView.image = UIImage(systemName: "clock")
-    }
-    
     private func setupInitialView() {
         backgroundColor = .systemBackground
     }
-
+    
+    private func setupVendorName(with data: Page) {
+        let separator = "   •"
+        let postedDay = DateCalculator.shared.calculatePostedDay(with: data.createdAt)
+        vendorNameLabel.text = data.vendorName + separator + postedDay
+    }
+    
+    private func setupPrice(with data: Page) {
+        if data.currency == .KRW {
+            let price = String(data.price)
+            let kPrice = String(price.split(separator: ".")[0])
+            priceLabel.text = kPrice.appending("원")
+        } else {
+            let price = String(data.price)
+            priceLabel.text = price.appending("달러")
+        }
+    }
+    
+    private func setupImage(with url: URL?, at index: Int) {
+        guard let url = url else { return }
+        let workItem = BlockOperation {
+            self.imageCacheManager.getImage(with: url) { image in
+                guard self.index == index else { return }
+                DispatchQueue.main.async {
+                    self.productImageView.image = image
+                }
+            }
+        }
+        operationQueue?.addOperation(workItem)
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
-        productImageView.image = nil
-        priceLabel.text = nil
-        titleLabel.text = nil
-        vendorNameLabel.text = nil
+        productImageView.image = UIImage()
+        operationQueue?.cancelAllOperations()
     }
 }
 
