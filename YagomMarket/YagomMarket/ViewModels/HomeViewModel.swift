@@ -20,7 +20,7 @@ final class DefaultHomeViewModel: HomeViewModel {
     var productList: Observable<[Page]> = Observable([])
     private var hasNext: Bool?
     private var currentPage = 1
-    private let currentItemPerPage = 20
+    private let currentItemPerPage = 50
     
     func resetToFirstPage() {
         currentPage = 1

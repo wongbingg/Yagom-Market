@@ -49,7 +49,7 @@ final class DefaultDetailViewModel: DetailViewModel {
     private func parse(data: SearchProductDetailAPI.ResponseType) {
         self.images = data.images
         if data.currency == .KRW {
-            self.price = String(Int(data.price)).appending("원") // Int.max 를 넘어가는 일 발생
+            self.price = String(Int(data.price)).appending("원")
         } else {
             self.price = String(data.price).appending("달러")
         }
