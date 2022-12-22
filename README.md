@@ -204,11 +204,11 @@
     
 - 새로운 방법 resize() 와 downSample()
     ```swift
-    이미지 비율조절을 통해 사이즈를 줄일 수 있는 resize 
-    메서드를 구현했습니다. 다만 문제점은 jpegData() 를 이용
-    했을 때보다 화질저하가 많이 일어난다는 점이었습니다. 그래서
-    먼저 jpegData() 메서드를 통해 사진을 압축하도록 한 뒤,
-    사이즈가 만족되지 못하면, resize() 메서드가 이용되도록
+    이미지 비율조절을 통해 사이즈를 줄일 수 있는 resize() 와  
+    downSample() 메서드를 구현했습니다. 다만 문제점은 
+    jpegData() 를 이용했을 때보다 화질저하가 많이 일어난다는 점이었습니다.
+    그래서 먼저 jpegData() 메서드를 통해 사진을 압축하도록 한 뒤,
+    사이즈가 만족되지 못하면, resize(), downSample() 메서드가 이용되도록
     "책임연쇄패턴" 을 사용 했습니다.
     ```
 
@@ -232,13 +232,14 @@
     </tr>
     <tr>
         <td valign="top" width="30%">
-            <img src="https://i.imgur.com/QWRmpZU.gif"/>
+            <img src="https://i.imgur.com/QWRmpZU.gif" width="200">
         </td>
         <td valign="top" width="30%">
-            <img src="https://i.imgur.com/lyPL70c.gif">
+            <img src="https://user-images.githubusercontent.com/95671495/209077765-4e26aa2d-b530-4598-ad33-3e5bcbea2495.gif" width="200">
         </td>
     </tr>
 </table>
+
     
 - 빠르게 스크롤작업을 할 때 사진을 받아오는 작업이 쌓여서 한꺼번에 실행이 되었습니다.
             
@@ -300,17 +301,18 @@
     </tr>
     <tr>
         <td valign="top">
-            <img src="https://i.imgur.com/ZxiL4IW.gif" width="200">
+            <img src="https://user-images.githubusercontent.com/95671495/209078715-ea6430ff-eb14-48bc-9f3a-2f42e1d70889.gif" width="200">
         </td>
         <td valign="top">
-            <img src="https://i.imgur.com/gJ8RSV0.gif" width="200">
+            <img src="https://user-images.githubusercontent.com/95671495/209078776-ca8bdb7a-2eb4-4300-9f75-5aaa93b0467a.gif" width="200">
         </td>
     </tr>
 </table>
     
-- DetailView의 페이지 인덱스 레이블 업데이트가 viewDidLoad()에서 설정되지 않아 ViewDidAppear()에서 설정 해주었습니다.
+- DetailView의 페이지 인덱스 레이블 (사진 우측하단) 업데이트가 viewDidLoad()에서 설정되지 않아 ViewDidAppear()에서 설정 해주었습니다.
     ```swift
     왼쪽 gif 같이 한박자 늦게 페이지 인덱스 레이블이 띄워졌습니다
+    
     "해결"
     viewDidLayoutSubviews() 에서 실행시켜 주니 해결 되었습니다.
     ```
@@ -337,7 +339,8 @@
 - 스크롤뷰의 contentOffset이 viewDidLoad()에서 조정되지 않아 viewDidAppear() 에서 조정 해주었습니다.
     ```swift
     하지만 원하는대로 ScrollView 의 contentOffset이 지정되지 
-    않고 위와같은 문제가 생겼습니다.
+    않고 위와같이 한박자 늦는 문제가 생겼습니다.
+    
     "해결"
     viewDidLayoutSubviews()에서 contentOffset 을 조정해주니 
     잘 적용 되었습니다.
