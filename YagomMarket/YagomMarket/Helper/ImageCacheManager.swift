@@ -39,7 +39,7 @@ final class URLCacheManager: ImageCacheManager {
     
     func downloadImage(with imageURL: URL, _ completion: @escaping (UIImage) -> Void) {
         let request = URLRequest(url: imageURL)
-        
+
         self.dataTask = URLSession.shared.dataTask(with: imageURL) { data, response, _ in
             if let data = data {
                 let cachedData = CachedURLResponse(response: response!, data: data)
@@ -49,4 +49,12 @@ final class URLCacheManager: ImageCacheManager {
         }
         self.dataTask?.resume()
     }
+    
+//    func downloadImage(with imageURL: URL) async throws -> UIImage {
+//        let request = URLRequest(url: imageURL)
+//        let (data, response) = try await URLSession.shared.data(for: request)
+//        let cachedData = CachedURLResponse(response: response!, data: data)
+//        self.cache.storeCachedResponse(cachedData, for: request)
+//        return UIImage(data: data)!
+//    }
 }
