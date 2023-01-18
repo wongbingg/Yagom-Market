@@ -15,7 +15,8 @@ protocol RegisterViewControllerDelegate: AnyObject {
 final class RegisterViewController: UIViewController {
     // MARK: Properties
     private let registerView = RegisterView()
-    private let viewModel = DefaultRegisterViewModel()
+//    private let viewModel = DefaultRegisterViewModel()
+    private let viewModel: RegisterViewModel
     private var selection = [String: PHPickerResult]()
     private var selectedAssetIdentifiers = [String]()
     private var productId: Int?
@@ -48,12 +49,17 @@ final class RegisterViewController: UIViewController {
         return button
     }()
     
-    init(with viewModel: DetailViewModel? = nil) {
-        if viewModel != nil {
-            registerView.setupData(with: viewModel)
-            registerButton.setTitle("수정", for: .normal)
-            productId = viewModel?.productId
-        }
+//    init(with viewModel: ProductDetailViewModel? = nil) {
+//        if viewModel != nil {
+//            registerView.setupData(with: viewModel)
+//            registerButton.setTitle("수정", for: .normal)
+//            productId = viewModel?.productId
+//        }
+//        super.init(nibName: nil, bundle: nil)
+//    }
+    
+    init(with viewModel: RegisterViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     

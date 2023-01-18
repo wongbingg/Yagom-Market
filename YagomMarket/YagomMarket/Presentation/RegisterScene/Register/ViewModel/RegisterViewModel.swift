@@ -7,20 +7,32 @@
 
 import UIKit
 
+struct RegisterViewModelActions {
+    let registerButtonTapped: () -> Void
+}
+
 protocol RegisterViewModelInput {
     func requestPost(_ completion: @escaping (String) -> Void)
+    func requestPatch(with productId: Int, _ completion: @escaping () -> Void)
+    func adoptModel(with domain: ProductModel)
+    func adoptImages(with imageArr: [UIImage])
 }
 
 protocol RegisterViewModelOutput {
-    
+    var model: ProductModel? { get }
+    var images: [UIImage]? { get }
 }
 
 protocol RegisterViewModel: RegisterViewModelInput, RegisterViewModelOutput {}
 
 final class DefaultRegisterViewModel: RegisterViewModel {
-    private var model: ProductModel?
-    private var images: [UIImage]?
+    var model: ProductModel?
+    var images: [UIImage]?
+    private let actions: RegisterViewModelActions
     
+    init(actions: RegisterViewModelActions) {
+        self.actions = actions
+    }
     func adoptModel(with domain: ProductModel) {
         model = domain
     }

@@ -174,7 +174,7 @@ final class RegisterView: UIView {
         return 6 - photoStackView.subviews.count
     }
     
-    func setupData(with viewModel: DetailViewModel?) {
+    func setupData(with viewModel: ProductDetailViewModel?) {
         guard let viewModel = viewModel else { return }
         addPhotoButton.removeFromSuperview()
         nameTextField.text = viewModel.name
