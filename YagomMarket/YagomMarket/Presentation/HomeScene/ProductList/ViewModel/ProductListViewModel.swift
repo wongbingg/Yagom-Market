@@ -1,26 +1,36 @@
 //
-//  HomeViewModel.swift
+//  ProductListViewModel.swift
 //  YagomMarket
 //
 //  Created by 이원빈 on 2022/11/28.
 //
 
-protocol HomeViewModelInput {
+struct ProductListViewModelActions {
+    let productTapped: (Int) -> Void
+    let anotherTabTapped: () -> Void
+}
+
+protocol ProductListViewModelInput {
     func resetToFirstPage()
     func addNextPage()
 }
 
-protocol HomeViewModelOutput {
+protocol ProductListViewModelOutput {
     var productList: Observable<[Page]> { get set }
 }
 
-protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {}
+protocol ProductListViewModel: ProductListViewModelInput, ProductListViewModelOutput {}
 
-final class DefaultHomeViewModel: HomeViewModel {
+final class DefaultProductListViewModel: ProductListViewModel {
     var productList: Observable<[Page]> = Observable([])
     private var hasNext: Bool?
     private var currentPage = 1
     private let currentItemPerPage = 50
+    private let actions: ProductListViewModelActions
+    
+    init(actions: ProductListViewModelActions) {
+        self.actions = actions
+    }
     
     func resetToFirstPage() {
         currentPage = 1

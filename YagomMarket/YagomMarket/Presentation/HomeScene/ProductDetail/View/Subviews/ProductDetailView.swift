@@ -1,5 +1,5 @@
 //
-//  DetailView.swift
+//  ProductDetailView.swift
 //  YagomMarket
 //
 //  Created by 이원빈 on 2022/11/28.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DetailView: UIView {
+final class ProductDetailView: UIView {
     // MARK: UIComponents
     private let mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -125,7 +125,7 @@ final class DetailView: UIView {
     }
     
     // MARK: Methods
-    func setupData(with viewModel: DetailViewModel) {
+    func setupData(with viewModel: ProductDetailViewModel) {
         nameLabel.text = viewModel.name
         descriptionTextView.text = viewModel.description
         vendorNameLabel.text = viewModel.vendorName?.appending(" •")
@@ -171,7 +171,7 @@ final class DetailView: UIView {
 }
 
 // MARK: - UIScrollViewDelegate
-extension DetailView: UIScrollViewDelegate {
+extension ProductDetailView: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         changeIndex()
@@ -179,7 +179,7 @@ extension DetailView: UIScrollViewDelegate {
 }
 
 // MARK: - Layout Constraints
-private extension DetailView {
+private extension ProductDetailView {
     
     func layoutMainScrollView() {
         addSubview(mainScrollView)

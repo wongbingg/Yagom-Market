@@ -7,11 +7,13 @@
 
 import Foundation
 
-protocol DetailViewModelInput {
+protocol ProductDetailViewModelInput {
+    var completeDataFetching: (() -> Void)? { get set }
+    
     func search(productID: Int)
 }
 
-protocol DetailViewModelOutput {
+protocol ProductDetailViewModelOutput {
     var productId: Int? { get }
     var images: [Image]? { get }
     var price: String? { get }
@@ -21,9 +23,9 @@ protocol DetailViewModelOutput {
     var name: String? { get }
 }
 
-protocol DetailViewModel: DetailViewModelInput, DetailViewModelOutput {}
+protocol ProductDetailViewModel: ProductDetailViewModelInput, ProductDetailViewModelOutput {}
 
-final class DefaultDetailViewModel: DetailViewModel {
+final class DefaultProductDetailViewModel: ProductDetailViewModel {
     private(set) var productId: Int?
     var images: [Image]?
     var price: String?

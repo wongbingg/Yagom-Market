@@ -1,5 +1,5 @@
 //
-//  DetailViewController.swift
+//  ProductDetailViewController.swift
 //  YagomMarket
 //
 //  Created by 이원빈 on 2022/11/29.
@@ -7,15 +7,16 @@
 
 import UIKit
 
-final class DetailViewController: UIViewController {
+final class ProductDetailViewController: UIViewController {
     // MARK: Properties
     private let productId: Int
-    private let detailView = DetailView()
-    private let viewModel = DefaultDetailViewModel()
+    private let detailView = ProductDetailView()
+    private let viewModel: ProductDetailViewModel
     
     // MARK: Initializers
-    init(productId: Int) {
+    init(productId: Int, viewModel: ProductDetailViewModel) {
         self.productId = productId
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -52,12 +53,12 @@ final class DetailViewController: UIViewController {
     }
     
     private func setupViewModel() {
-        viewModel.completeDataFetching = { [self] in
-            DispatchQueue.main.async { [self] in
-                detailView.setupData(with: viewModel)
-                setupNavigationBar()
-            }
-        }
+//        viewModel.completeDataFetching = { [self] in
+//            DispatchQueue.main.async { [self] in
+//                detailView.setupData(with: viewModel)
+//                setupNavigationBar()
+//            }
+//        }
         viewModel.search(productID: productId)
     }
     
@@ -73,11 +74,12 @@ final class DetailViewController: UIViewController {
     }
     
     private func showEditView() {
-        let editView = RegisterViewController(with: viewModel)
-        editView.delegate = self
-        editView.modalPresentationStyle = .overFullScreen
-        present(editView, animated: true)
+//        let editView = RegisterViewController(with: viewModel)
+//        editView.delegate = self
+//        editView.modalPresentationStyle = .overFullScreen
+//        present(editView, animated: true)
     }
+    // Coordinator 로 수정
     
     private func performDelete(_ completion: @escaping () -> Void) {
         let searchDeleteURIAPI = SearchDeleteURIAPI(productId: productId)
@@ -137,14 +139,14 @@ final class DetailViewController: UIViewController {
 }
 
 // MARK: - RegisterViewDelegate
-extension DetailViewController: RegisterViewControllerDelegate {
+extension ProductDetailViewController: RegisterViewControllerDelegate {
     func viewWillDisappear() {
         viewModel.search(productID: productId)
     }
 }
 
 // MARK: - Layout Constraints
-private extension DetailViewController {
+private extension ProductDetailViewController {
     func layoutInitialView() {
         view.backgroundColor = .systemBackground
         view.addSubview(detailView)

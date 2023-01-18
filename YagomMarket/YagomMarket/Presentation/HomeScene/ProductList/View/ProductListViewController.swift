@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  ProductListViewController.swift
 //  YagomMarket
 //
 //  Created by 이원빈 on 2022/11/14.
@@ -7,13 +7,22 @@
 
 import UIKit
 
-final class HomeViewController: UIViewController {
+final class ProductListViewController: UIViewController {
     // MARK: Properties
-    private let viewModel = DefaultHomeViewModel()
+    private let viewModel: ProductListViewModel
     private let collectionView = ProductCollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
     )
+    
+    init(with viewModel: ProductListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: View LifeCycles
     override func viewDidLoad() {
@@ -75,18 +84,19 @@ final class HomeViewController: UIViewController {
 }
 
 // MARK: - UICollectionViewDelegate
-extension HomeViewController: UICollectionViewDelegate {
+extension ProductListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
         let id = viewModel.productList.value[indexPath.row].id
-        let detailVC = DetailViewController(productId: id)
-        navigationController?.pushViewController(detailVC, animated: true)
+//        let detailVC = ProductDetailViewController(productId: id, viewModel: viewModel)
+//        navigationController?.pushViewController(detailVC, animated: true)
+        // viewModel 단에서 해결
     }
 }
 
 // MARK: - UICollectionViewDataSource
-extension HomeViewController: UICollectionViewDataSource {
+extension ProductListViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -111,7 +121,7 @@ extension HomeViewController: UICollectionViewDataSource {
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-extension HomeViewController: UICollectionViewDelegateFlowLayout {
+extension ProductListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -134,29 +144,29 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - UITabBarControllerDelegate
-extension HomeViewController: UITabBarControllerDelegate {
+extension ProductListViewController: UITabBarControllerDelegate {
     
-    func tabBarController(_ tabBarController: UITabBarController,
-                          shouldSelect viewController: UIViewController) -> Bool {
-        if viewController is RegisterViewController {
-            let registerVC = RegisterViewController()
-            registerVC.delegate = self
-            registerVC.modalPresentationStyle = .overFullScreen
-            tabBarController.present(registerVC, animated: true)
-            return false
-        }
-        
-        if viewController is SearchViewController {
-            let searchVC = SearchViewController()
-            tabBarController.navigationController?.pushViewController(searchVC, animated: true)
-            return false // 기존에 viewController를 보여주는 것을 하지 않는다는 뜻.
-        }
-        return true
-    }
+//    func tabBarController(_ tabBarController: UITabBarController,
+//                          shouldSelect viewController: UIViewController) -> Bool {
+//        if viewController is RegisterViewController {
+//            let registerVC = RegisterViewController()
+//            registerVC.delegate = self
+//            registerVC.modalPresentationStyle = .overFullScreen
+//            tabBarController.present(registerVC, animated: true)
+//            return false
+//        }
+//        
+//        if viewController is SearchViewController {
+//            let searchVC = SearchViewController()
+//            tabBarController.navigationController?.pushViewController(searchVC, animated: true)
+//            return false // 기존에 viewController를 보여주는 것을 하지 않는다는 뜻.
+//        }
+//        return true
+//    }
 }
 
 //MARK: - UIScrollViewDelegate
-extension HomeViewController: UIScrollViewDelegate {
+extension ProductListViewController: UIScrollViewDelegate {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let endY = (scrollView.contentSize.height)
@@ -167,7 +177,7 @@ extension HomeViewController: UIScrollViewDelegate {
     }
 }
 
-extension HomeViewController: RegisterViewControllerDelegate {
+extension ProductListViewController: RegisterViewControllerDelegate {
     func viewWillDisappear() {
         DispatchQueue.main.async { [weak self] in
             self?.viewModel.resetToFirstPage()
@@ -177,7 +187,7 @@ extension HomeViewController: RegisterViewControllerDelegate {
 }
 
 // MARK: - Layout Constraints
-private extension HomeViewController {
+private extension ProductListViewController {
     
     func layoutCollectionView() {
         view.backgroundColor = .systemBackground
