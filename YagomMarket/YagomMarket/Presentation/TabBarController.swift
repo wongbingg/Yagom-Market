@@ -8,7 +8,31 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-
+    let homeVC: UINavigationController
+    let searchVC: UINavigationController
+    let registerVC: RegisterViewController
+    let chatVC: ChatViewController
+    let myPageVC: MyPageViewController
+    
+    init(
+        homeVC: UINavigationController,
+        searchVC: UINavigationController,
+        registerVC: RegisterViewController,
+        chatVC: ChatViewController,
+        myPageVC: MyPageViewController
+    ) {
+        self.homeVC = homeVC
+        self.searchVC = searchVC
+        self.registerVC = registerVC
+        self.chatVC = chatVC
+        self.myPageVC = myPageVC
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInitialView()
@@ -16,12 +40,6 @@ final class TabBarController: UITabBarController {
     
     private func setupInitialView() {
         view.tintColor = .systemBrown
-        
-        let homeVC = HomeViewController()
-        let searchVC = SearchViewController()
-        let registerVC = RegisterViewController()
-        let chatVC = ChatViewController()
-        let myPageVC = MyPageViewController()
 
         homeVC.title = "Home"
         homeVC.tabBarItem.image = UIImage(systemName: "house")
