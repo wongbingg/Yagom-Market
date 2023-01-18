@@ -44,8 +44,8 @@ extension ResultViewController: UICollectionViewDelegate {
                         didSelectItemAt indexPath: IndexPath) {
        
         let id =  model.pages[indexPath.row].id
-        let detailVC = DetailViewController(productId: id)
-        navigationController?.pushViewController(detailVC, animated: true)
+//        let detailVC = ProductDetailViewController(productId: id)
+//        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 

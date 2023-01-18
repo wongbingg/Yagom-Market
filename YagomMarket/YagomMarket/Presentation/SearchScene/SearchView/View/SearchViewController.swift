@@ -12,6 +12,16 @@ final class SearchViewController: UIViewController {
     private let searchView = SearchView()
     private let resultView = ResultView()
     private let searchBar = UISearchBar()
+    private let viewModel: SearchViewModel
+    
+    init(with viewModel: SearchViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: View LifeCycles
     override func viewDidLoad() {
