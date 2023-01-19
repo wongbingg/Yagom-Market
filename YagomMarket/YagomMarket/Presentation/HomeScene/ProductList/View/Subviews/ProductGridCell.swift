@@ -1,5 +1,5 @@
 //
-//  ProductCell.swift
+//  ProductGridCell.swift
 //  YagomMarket
 //
 //  Created by 이원빈 on 2022/11/28.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProductCell: UICollectionViewCell {
+final class ProductGridCell: UICollectionViewCell {
     // MARK: Properties
     private var index: Int?
     private let imageCacheManager: ImageCacheManager = URLCacheManager()
@@ -147,7 +147,7 @@ final class ProductCell: UICollectionViewCell {
 }
 
 // MARK: - Layout Constraints
-private extension ProductCell {
+private extension ProductGridCell {
     
     func layoutProductImageView() {
         addSubview(productImageView)
