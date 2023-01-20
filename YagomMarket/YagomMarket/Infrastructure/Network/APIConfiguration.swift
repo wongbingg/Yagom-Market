@@ -76,11 +76,11 @@ struct APIConfiguration {
         urlRequest.setValue(URLCommand.identifier,
                             forHTTPHeaderField: "identifier")
         switch body {
-        case is ProductModel:
+        case is ProductPostRequestDTO:
             return addPOSTBody(in: urlRequest)
-        case is EditProductModel:
+        case is ProductEditRequestDTO:
             return addPATCHBody(in: urlRequest)
-        case is DeleteKeyRequestModel:
+        case is ProductDeleteKeyRequestDTO:
             return addSearchDeleteKeyBody(in: urlRequest)
         default:
             return urlRequest
@@ -114,7 +114,7 @@ struct APIConfiguration {
     
     private func addPOSTBody(in request: URLRequest) -> URLRequest {
         var urlRequest = request
-        guard let body = body as? ProductModel else { return urlRequest }
+        guard let body = body as? ProductPostRequestDTO else { return urlRequest }
         let boundary = UUID().uuidString
         let postBody = createPostBody(with: body, at: boundary)
         urlRequest.httpBody = postBody
@@ -124,7 +124,7 @@ struct APIConfiguration {
     
     private func addPATCHBody(in request: URLRequest) -> URLRequest? {
         var urlRequest = request
-        guard let body = body as? EditProductModel else { return nil }
+        guard let body = body as? ProductEditRequestDTO else { return nil }
         urlRequest.httpBody = body.encodeToData()
         urlRequest.setContentType(URLCommand.json)
         return urlRequest
@@ -132,14 +132,14 @@ struct APIConfiguration {
     
     private func addSearchDeleteKeyBody(in request: URLRequest) -> URLRequest? {
         var urlRequest = request
-        guard let body = body as? DeleteKeyRequestModel else { return nil }
+        guard let body = body as? ProductDeleteKeyRequestDTO else { return nil }
         urlRequest.httpBody = body.encodeToData()
         urlRequest.setContentType(URLCommand.json)
         return urlRequest
     }
     
     // MARK: - multipart/form-data
-    private func createPostBody(with body: ProductModel,
+    private func createPostBody(with body: ProductPostRequestDTO,
                                 at boundary: String) -> Data? {
         var data = Data()
         guard let paramData = try? JSONEncoder().encode(body),

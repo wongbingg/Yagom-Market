@@ -6,7 +6,7 @@
 //
 
 struct SearchProductListAPI: API {
-    typealias ResponseType = SearchProductListResponse
+    typealias ResponseType = ProductListResponseDTO
     var configuration: APIConfiguration?
     
     init(pageNumber: Int, itemPerPage: Int, searchValue: String? = nil) {

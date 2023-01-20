@@ -8,10 +8,10 @@
 import Foundation
 
 struct EditProductAPI: API {
-    typealias ResponseType = SearchProductDetailResponse
+    typealias ResponseType = ProductDetailResponseDTO
     var configuration: APIConfiguration?
     
-    init(editModel: EditProductModel, productId: Int) {
+    init(editModel: ProductEditRequestDTO, productId: Int) {
         configuration = APIConfiguration(
             method: .patch,
             base: URLCommand.host,

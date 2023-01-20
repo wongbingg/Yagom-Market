@@ -6,7 +6,7 @@
 //
 
 struct SearchProductDetailAPI: API {
-    typealias ResponseType = SearchProductDetailResponse
+    typealias ResponseType = ProductDetailResponseDTO
     let configuration: APIConfiguration?
     
     init(productId: Int) {

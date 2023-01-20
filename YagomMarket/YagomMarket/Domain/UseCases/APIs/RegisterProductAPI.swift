@@ -8,10 +8,10 @@
 import UIKit
 
 struct RegisterProductAPI: API {
-    typealias ResponseType = SearchProductDetailResponse
+    typealias ResponseType = ProductDetailResponseDTO
     var configuration: APIConfiguration?
     
-    init(postModel: ProductModel, images: [UIImage]) {
+    init(postModel: ProductPostRequestDTO, images: [UIImage]) {
         configuration = APIConfiguration(
             method: .post,
             base: URLCommand.host,

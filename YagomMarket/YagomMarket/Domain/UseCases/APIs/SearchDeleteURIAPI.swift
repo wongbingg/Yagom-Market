@@ -16,19 +16,12 @@ struct SearchDeleteURIAPI: API {
             base: URLCommand.host,
             path: URLCommand.products +
             URLCommand.productId(delete: productId),
-            body: DeleteKeyRequestModel(secret: URLCommand.secretKey),
+            body: ProductDeleteKeyRequestDTO(secret: URLCommand.secretKey),
             parameters: nil
         )
     }
     
-    func searchDeleteURI(_ completion: @escaping (Result<String, Error>) -> Void) {
-        execute { result in
-            switch result {
-            case .success(let deleteURI):
-                completion(.success(deleteURI))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func searchDeleteURI() async throws -> String {
+        try await execute()
     }
 }
