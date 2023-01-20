@@ -15,26 +15,14 @@ protocol API {
 extension API {
     typealias CompletionHandler = (Result<ResponseType, Error>) -> Void
     
-    func execute(using client: APIClient = APIClient.shared,
-                 _ completionHandler: @escaping CompletionHandler) {
-        guard let urlRequest = configuration?.makeURLRequest() else { return }
-        client.requestData(with: urlRequest) { (result) in
-            switch result {
-            case .success(let data):
-                if ResponseType.self == String.self {
-                    let result = String(data: data, encoding: .utf8)!
-                    completionHandler(.success(result as! Self.ResponseType))
-                    return
-                }
-                do {
-                    let result = try JSONDecoder().decode(ResponseType.self, from: data)
-                    completionHandler(.success(result))
-                } catch {
-                    completionHandler(.failure(error))
-                }
-            case .failure(let error):
-                completionHandler(.failure(error))
-            }
+    func execute(using client: APIClient = APIClient.shared) async throws -> ResponseType {
+        guard let urlRequest = configuration?.makeURLRequest() else { throw APIError.invalidURL }
+        let data = try await client.requestData(with: urlRequest)
+        if ResponseType.self == String.self {
+            let result = String(data: data, encoding: .utf8)!
+            return result as! Self.ResponseType
         }
+        let result = try JSONDecoder().decode(ResponseType.self, from: data)
+        return result
     }
 }
