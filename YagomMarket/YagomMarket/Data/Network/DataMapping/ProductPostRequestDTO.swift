@@ -1,13 +1,13 @@
 //
-//  RegisterProductModel.swift
+//  ProductPostRequestDTO.swift
 //  YagomMarket
 //
-//  Created by 이원빈 on 2022/11/15.
+//  Created by 이원빈 on 2023/01/20.
 //
 
 import Foundation
 
-struct ProductModel: BodyType {
+struct ProductPostRequestDTO: BodyType {
     let name: String
     let description: String
     let price: Double
@@ -26,8 +26,8 @@ struct ProductModel: BodyType {
         case secret
     }
     
-    func translateToEditModel() -> EditProductModel {
-        return EditProductModel(
+    func toEditModel() -> ProductEditRequestDTO {
+        return ProductEditRequestDTO(
             name: name,
             description: description,
             thumbnailId: nil,

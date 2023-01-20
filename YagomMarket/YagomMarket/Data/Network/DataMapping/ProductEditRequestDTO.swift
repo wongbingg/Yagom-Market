@@ -1,13 +1,13 @@
 //
-//  EditProductModel.swift
+//  ProductEditRequestDTO.swift
 //  YagomMarket
 //
-//  Created by 이원빈 on 2022/11/24.
+//  Created by 이원빈 on 2023/01/20.
 //
 
 import Foundation
 
-struct EditProductModel: BodyType {
+struct ProductEditRequestDTO: BodyType {
     let name: String?
     let description: String?
     let thumbnailId: Int?
