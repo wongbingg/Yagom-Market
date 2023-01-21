@@ -9,10 +9,22 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     // MARK: Properties
-    private let searchView = SearchView()
-    private let resultView = ResultView()
     private let searchBar = UISearchBar()
-    private let viewModel: SearchViewModel
+    
+    private let searchDefaultView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .gray
+        return view
+    }()
+    
+    private let resultTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
+    private var viewModel: SearchViewModel
     
     init(with viewModel: SearchViewModel) {
         self.viewModel = viewModel
@@ -26,11 +38,19 @@ final class SearchViewController: UIViewController {
     // MARK: View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupInitialView()
         layoutSearchView()
         setupNavigationBar()
+        setupTableView()
+        setupSearchBar()
     }
     
     // MARK: Methods
+    private func setupInitialView() {
+        view.backgroundColor = .systemBackground
+        tabBarController?.tabBar.isHidden = true
+    }
+    
     private func setupNavigationBar() {
         searchBar.placeholder = "검색어를 입력해주세요"
         searchBar.delegate = self
@@ -52,6 +72,15 @@ final class SearchViewController: UIViewController {
         navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItem = homeButton
     }
+    
+    private func setupTableView() {
+        resultTableView.delegate = self
+        resultTableView.dataSource = self
+    }
+    
+    private func setupSearchBar() {
+        searchBar.delegate = self
+    }
    
     @objc private func closeButtonDidTapped() {
         navigationController?.popViewController(animated: true)
@@ -67,51 +96,38 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
-            resultView.removeFromSuperview()
+            resultTableView.removeFromSuperview()
             layoutSearchView()
         } else {
-            searchView.removeFromSuperview()
-            layoutResultView(with: searchText.lowercased())
+            searchDefaultView.removeFromSuperview()
+            layoutResultView()
+            Task {
+                let response = await searchQueryList(keyword: searchText.lowercased())
+                viewModel.searchedResults = response
+                resultTableView.reloadData()
+            }
         }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchValue = searchBar.text else { return }
-        let api = SearchProductListAPI(
-            pageNumber: 1,
-            itemPerPage: 100,
-            searchValue: searchValue.lowercased()
-        )
-        api.execute { result in
-            switch result {
-            case .success(let model):
-                DispatchQueue.main.async {
-                    let resultVC = ResultViewController(model: model)
-                    self.navigationController?.pushViewController(
-                        resultVC,
-                        animated: true
-                    )
-                }
-            case .failure(let error):
-                print(String(describing: error))
+        Task {
+            do {
+                try await viewModel.goToResultVC(with: searchValue)
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }
-}
-
-// MARK: ResultViewDelegate
-extension SearchViewController: ResultViewDelegate {
     
-    func itemDidTapped(model: SearchProductListResponse) {
-        let ResultVC = ResultViewController(model: model)
-        self.navigationController?.pushViewController(
-            ResultVC,
-            animated: true
-        )
-    }
-    
-    func scrollViewDidScroll() {
-        searchBar.endEditing(true)
+    private func searchQueryList(keyword: String) async -> [String] {
+        do {
+            let response = try await viewModel.search(keyword: keyword)
+            return response
+        } catch {
+            print(error.localizedDescription)
+            return []
+        }
     }
 }
 
@@ -119,28 +135,58 @@ extension SearchViewController: ResultViewDelegate {
 private extension SearchViewController {
     
     func layoutSearchView() {
-        view.backgroundColor = .systemBackground
-        view.addSubview(searchView)
-        searchView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(searchDefaultView)
         NSLayoutConstraint.activate([
-            searchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            searchView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            searchView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            searchView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            searchDefaultView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchDefaultView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            searchDefaultView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchDefaultView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
     
-    func layoutResultView(with title: String) {
-        view.backgroundColor = .systemBackground
-        view.addSubview(resultView)
-        resultView.delegate = self
-        resultView.searchValue(title)
-        resultView.translatesAutoresizingMaskIntoConstraints = false
+    func layoutResultView() {
+        view.addSubview(resultTableView)
         NSLayoutConstraint.activate([
-            resultView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            resultView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            resultView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            resultView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            resultTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            resultTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            resultTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            resultTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
+    }
+}
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
+        return viewModel.searchedResults.count
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: .none)
+        cell.textLabel?.text = viewModel.searchedResults[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath) {
+        let searchValue = viewModel.searchedResults[indexPath.row]
+        Task {
+            do {
+                try await viewModel.goToResultVC(with: searchValue)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchBar.endEditing(true)
     }
 }
