@@ -7,67 +7,77 @@
 
 struct ProductListViewModelActions {
     let productTapped: (Int) -> Void
-    let anotherTabTapped: () -> Void
+    let registerTapSelected: () -> Void
+    let searchTapSelected: () -> Void
 }
 
 protocol ProductListViewModelInput {
-    func resetToFirstPage()
-    func addNextPage()
+    func resetToFirstPage() async throws -> [ProductCell]
+    func addNextPage() async throws -> [ProductCell]
+    func didSelectItemAt(indexPath: Int)
+    func registerTapSelected()
+    func searchTapSelected()
 }
 
 protocol ProductListViewModelOutput {
-    var productList: Observable<[Page]> { get set }
+    var productList: [ProductCell] { get }
 }
 
 protocol ProductListViewModel: ProductListViewModelInput, ProductListViewModelOutput {}
 
 final class DefaultProductListViewModel: ProductListViewModel {
-    var productList: Observable<[Page]> = Observable([])
     private var hasNext: Bool?
     private var currentPage = 1
     private let currentItemPerPage = 50
     private let actions: ProductListViewModelActions
+    private(set) var productList: [ProductCell] = []
+    
     
     init(actions: ProductListViewModelActions) {
         self.actions = actions
     }
     
-    func resetToFirstPage() {
+    @discardableResult
+    func resetToFirstPage() async throws -> [ProductCell] {
         currentPage = 1
         let api = SearchProductListAPI(
             pageNumber: currentPage,
             itemPerPage: currentItemPerPage
         )
-        api.execute { result in
-            switch result {
-            case .success(let data):
-                self.hasNext = data.hasNext
-                self.productList.value = data.pages
-            case .failure(let error):
-                print(String(describing: error))
-            }
-        }
+        let response = try await api.execute()
+        hasNext = response.hasNext
+        productList = response.toDomain()
+        return response.toDomain()
     }
     
-    func addNextPage() {
-        guard let hasNext = hasNext, hasNext == true else { return }
+    @discardableResult
+    func addNextPage() async throws -> [ProductCell] {
+        guard let hasNext = hasNext, hasNext == true else { return [] } // 마지막 페이지에 대한 얼럿처리
         currentPage += 1
         let api = SearchProductListAPI(
             pageNumber: currentPage,
             itemPerPage: currentItemPerPage
         )
-        api.execute { result in
-            switch result {
-            case .success(let data):
-                self.hasNext = data.hasNext
-                self.productList.value += data.pages
-            case .failure(let error):
-                print(String(describing: error))
-            }
-        }
+        let response = try await api.execute()
+        self.hasNext = response.hasNext
+        productList += response.toDomain()
+        return response.toDomain()
+    }
+    
+    func didSelectItemAt(indexPath: Int) {
+        let id = productList[indexPath].id
+        actions.productTapped(id)
     }
     
     func refresh() {
         // 특정 상품 수정 후 homeview로 나왔을 때 특정 상품의 수정사항이 반영되도록 
+    }
+    
+    func searchTapSelected() {
+        actions.searchTapSelected()
+    }
+    
+    func registerTapSelected() {
+        actions.registerTapSelected()
     }
 }
