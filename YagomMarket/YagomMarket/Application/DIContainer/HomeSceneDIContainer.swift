@@ -29,16 +29,6 @@ final class HomeSceneDIContainer {
         return DefaultProductDetailViewModel(actions: actions, productId: productId)
     }
     
-    // MARK: - Search
-    func makeSearchViewController(actions: SearchViewModelActions) -> SearchViewController {
-        let viewModel = makeSearchViewModel(actions: actions)
-        return SearchViewController(with: viewModel)
-    }
-    
-    func makeSearchViewModel(actions: SearchViewModelActions) -> SearchViewModel {
-        return DefaultSearchViewModel(actions: actions)
-    }
-    
     // MARK: - Modal View
     func makeRegisterViewController(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewController {
         let viewModel = makeRegisterViewModel(model: model, actions: actions)

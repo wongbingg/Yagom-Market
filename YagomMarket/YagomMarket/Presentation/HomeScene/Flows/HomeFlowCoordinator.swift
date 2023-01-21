@@ -9,9 +9,12 @@ import UIKit
 
 protocol HomeFlowCoordinatorDependencies: AnyObject {
     func makeProductListViewController(actions: ProductListViewModelActions) -> ProductListViewController
-    func makeProductDetailViewController(productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewController
-    func makeRegisterViewController(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewController
-    func makeImageViewerController(imageURLs: [String], currentPage: Int) -> ImageViewerViewController
+    func makeProductDetailViewController(productId: Int,
+                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController
+    func makeRegisterViewController(model: ProductDetail?,
+                                    actions: RegisterViewModelActions) -> RegisterViewController
+    func makeImageViewerController(imageURLs: [String],
+                                   currentPage: Int) -> ImageViewerViewController
 }
 
 final class HomeFlowCoordinator {
@@ -56,10 +59,10 @@ final class HomeFlowCoordinator {
     
     func searchTapSelected() {
         let searchSceneDIContainer = SearchSceneDIContainer()
-        let coordinator = searchSceneDIContainer.makeSearchFlowCoordinator()
-        let vc = coordinator.generate()!.children[0]
-        navigationController?.pushViewController(vc, animated: true)
-        
+        let coordinator = searchSceneDIContainer.makeSearchFlowCoordinator(
+            navigationController: navigationController!
+        )
+        coordinator.start()
     }
     
     func imageTapped(imageURLs: [String], currentPage: Int) {
