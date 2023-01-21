@@ -11,14 +11,19 @@ struct RegisterProductAPI: API {
     typealias ResponseType = ProductDetailResponseDTO
     var configuration: APIConfiguration?
     
-    init(postModel: ProductPostRequestDTO, images: [UIImage]) {
+    init(model: RegisterModel) {
         configuration = APIConfiguration(
             method: .post,
             base: URLCommand.host,
             path: URLCommand.products,
-            body: postModel,
+            body: model.requestDTO,
             parameters: nil,
-            images: images
+            images: model.images
         )
     }
+}
+
+struct RegisterModel {
+    let requestDTO: ProductPostRequestDTO
+    let images: [UIImage]
 }
