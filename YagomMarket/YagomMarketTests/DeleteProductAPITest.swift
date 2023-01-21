@@ -14,7 +14,7 @@ final class DeleteProductAPITest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        sut = makeAPI() as? SearchDeleteURIAPI
+        sut = SearchDeleteURIAPI(productId: 1737)
         sut2 = DeleteProductAPI()
     }
     
@@ -24,38 +24,15 @@ final class DeleteProductAPITest: XCTestCase {
         sut2 = nil
     }
     
-    func test_id에_해당하는상품이_삭제가_되는지() {
+    func test_id에_해당하는상품이_삭제가_되는지() async throws {
         // given
-        let expectation = XCTestExpectation(description: "Delete Product Test")
-        var flag: Int?
-        
+        var deleteURI: String?
+        var response: DeleteProductAPI.ResponseType?
         // when
-        sut.searchDeleteURI { [self] result in
-            switch result {
-            case .success(let deleteURI):
-                sut2.execute(with: deleteURI) { result in
-                    switch result {
-                    case .success(_):
-                        flag = 1
-                        expectation.fulfill()
-                    case .failure(_):
-                        flag = 0
-                        expectation.fulfill()
-                    }
-                }
-            case .failure(_):
-                print("test fail")
-                flag = 0
-                expectation.fulfill()
-            }
-        }
-        
+        deleteURI = try await sut.execute()
+        response = try await sut2.execute(with: deleteURI!)
         // then
-        wait(for: [expectation], timeout: 3.0)
-        XCTAssertEqual(flag, 1)
-    }
-    
-    func makeAPI() -> any API {
-        return SearchDeleteURIAPI(productId: 285)
+        XCTAssertNotNil(deleteURI)
+        XCTAssertNotNil(response)
     }
 }

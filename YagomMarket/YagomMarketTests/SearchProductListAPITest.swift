@@ -13,7 +13,11 @@ final class SearchProductListAPITest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        sut = SearchProductListAPI(pageNumber: 1, itemPerPage: 3, searchValue: "wongbing")
+        sut = SearchProductListAPI(
+            pageNumber: 1,
+            itemPerPage: 3,
+            searchValue: "wongbing"
+        )
     }
     
     override func tearDownWithError() throws {
@@ -21,25 +25,12 @@ final class SearchProductListAPITest: XCTestCase {
         sut = nil
     }
     
-    func test_productList를_GET으로_받아올수있는지() {
+    func test_productList를_GET으로_받아올수있는지() async throws {
         // given
-        var response: SearchProductListResponse?
-        let expectation = XCTestExpectation(description: "APITaskExpectation")
-        
+        var response: ProductListResponseDTO?
         // when
-        sut.execute { result in
-            switch result {
-            case .success(let fetchedData):
-                response = fetchedData
-                print(fetchedData)
-                expectation.fulfill()
-            case .failure(let error):
-                print(error)
-            }
-        }
-        
-        wait(for: [expectation], timeout: 3.0)
-        
+        response = try await sut.execute()
+        print(response!)
         // then
         XCTAssertNotNil(response)
     }

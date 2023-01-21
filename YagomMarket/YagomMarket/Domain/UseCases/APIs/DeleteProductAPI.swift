@@ -20,7 +20,11 @@ class DeleteProductAPI: API {
             parameters: nil
         )
         configuration = apiConfig
-        let response = try await execute(with: deleteURI)
-        return response
+        do {
+            let response = try await execute()
+            return response
+        } catch {
+            throw error
+        }
     }
 }

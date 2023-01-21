@@ -13,7 +13,7 @@ final class RegisterProductAPITest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        let model = ProductModel(
+        let model = ProductPostRequestDTO(
             name: "테스트",
             description: "Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스트용Post테스",
             price: 1200,
@@ -22,7 +22,8 @@ final class RegisterProductAPITest: XCTestCase {
             stock: 3,
             secret: URLCommand.secretKey
         )
-        sut = RegisterProductAPI(postModel: model, images: [UIImage(named: "Photo")!])
+        let registerModel = RegisterModel(requestDTO: model, images: [UIImage(named: "Photo")!])
+        sut = RegisterProductAPI(model: registerModel)
     }
     
     override func tearDownWithError() throws {
@@ -30,24 +31,12 @@ final class RegisterProductAPITest: XCTestCase {
         sut = nil
     }
     
-    func test_원하는상품을_POST를통해_등록할수있는지() {
+    func test_원하는상품을_POST를통해_등록할수있는지() async throws {
         // given
-        var response: SearchProductDetailResponse?
-        let expectation = XCTestExpectation(description: "Register Product Test")
-        
+        var response: ProductDetailResponseDTO?
         // when
-        sut.execute { result in
-            switch result {
-            case .success(let fetchedResponse):
-                print(fetchedResponse)
-                response = fetchedResponse
-                expectation.fulfill()
-            case .failure(let error):
-                print(error)
-            }
-        }
-        wait(for: [expectation], timeout: 5.0)
-        
+        response = try await sut.execute()
+        print(response!)
         // then
         XCTAssertNotNil(response)
     }

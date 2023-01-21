@@ -13,7 +13,7 @@ final class SearchDeleteURIAPITest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        sut = SearchDeleteURIAPI(productId: 278)
+        sut = SearchDeleteURIAPI(productId: 1737)
     }
     
     override func tearDownWithError() throws {
@@ -21,24 +21,12 @@ final class SearchDeleteURIAPITest: XCTestCase {
         sut = nil
     }
     
-    func test_secretKey와rowData를이용해서_삭제uri를요청하면_잘받아와지는지() {
+    func test_secretKey와rowData를이용해서_삭제uri를요청하면_잘받아와지는지() async throws {
         // given
-        let expectation = XCTestExpectation(description: "Search DeleteURI Test")
-        
-        // when
         var response: String?
-        sut.searchDeleteURI { result in
-            switch result {
-            case .success(let deleteURI):
-                print(deleteURI)
-                response = deleteURI
-                expectation.fulfill()
-            case .failure(let error):
-                print(String(describing: error))
-            }
-        }
-        wait(for: [expectation], timeout: 3.0)
-        
+        // when
+        response = try await sut.execute()
+        print(response)
         // then
         XCTAssertNotNil(response)
     }

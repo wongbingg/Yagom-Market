@@ -22,6 +22,11 @@ struct SearchDeleteURIAPI: API {
     }
     
     func searchDeleteURI() async throws -> String {
-        try await execute()
+        do {
+            let response = try await execute()
+            return response
+        } catch {
+            throw error
+        }
     }
 }

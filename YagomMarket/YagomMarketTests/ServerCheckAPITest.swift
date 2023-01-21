@@ -22,23 +22,13 @@ final class ServerCheckAPITest: XCTestCase {
         sut = nil
     }
     
-    func test_서버가_활성화되었는지() {
+    func test_서버가_활성화되었는지() async throws {
         // given
         var response: String?
-        let expectation = XCTestExpectation(description: "HealthCheckTest")
         // when
-        sut.execute { result in
-            // then
-            switch result {
-            case .success(let success):
-                response = success
-                expectation.fulfill()
-            case .failure(let error):
-                print(String(describing: error))
-            }
-        }
-        wait(for: [expectation], timeout: 3.0)
-        XCTAssertNotNil(response)
+        response = try await sut.execute()
+        print(response!)
+        // then
         XCTAssertEqual(response, "\"OK\"")
     }
 }

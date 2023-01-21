@@ -21,24 +21,13 @@ final class SearchProductDetailAPITest: XCTestCase {
         sut = nil
     }
     
-    func test_productDetail이_response로_받아와지는지() {
+    func test_productDetail이_response로_받아와지는지() async throws {
         // given
-        var response: SearchProductDetailResponse?
-        let expectation = XCTestExpectation(description: "Search Product Detail Test")
+        var response: ProductDetailResponseDTO?
         
         // when
-        sut.execute { result in
-            switch result {
-            case .success(let fetchedData):
-                response = fetchedData
-                print(fetchedData)
-                expectation.fulfill()
-            case .failure(let error):
-                print(error)
-            }
-        }
-        wait(for: [expectation], timeout: 5.0)
-        
+        response = try await sut.execute()
+        print(response!)
         // then
         XCTAssertNotNil(response)
     }

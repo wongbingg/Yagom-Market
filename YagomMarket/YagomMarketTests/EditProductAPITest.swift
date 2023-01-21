@@ -13,7 +13,7 @@ final class EditProductAPITest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        let model = EditProductModel(
+        let model = ProductEditRequestDTO(
             name: "미라클 모닝",
             description: "아침형 인간이 될 수 있는 절호의 기회! \n 키오에게 문의하기 📞",
             thumbnailId: nil,
@@ -23,7 +23,7 @@ final class EditProductAPITest: XCTestCase {
             stock: 100,
             secret: URLCommand.secretKey
         )
-        sut = EditProductAPI(editModel: model, productId: 277)
+        sut = EditProductAPI(editModel: model, productId: 1737)
     }
     
     override func tearDownWithError() throws {
@@ -31,24 +31,13 @@ final class EditProductAPITest: XCTestCase {
         sut = nil
     }
     
-    func test_상품수정이_잘이루어지는지() {
+    func test_상품수정이_잘이루어지는지() async throws {
         // given
-        let expectation = XCTestExpectation(description: "Edit Product TEST")
-        var response: SearchProductDetailResponse?
-        
+        var response: ProductDetailResponseDTO?
         // when
-        sut.execute { result in
-            switch result {
-            case .success(let success):
-                response = success
-                expectation.fulfill()
-            case .failure(let failure):
-                print(String(describing: failure))
-            }
-        }
-        
+        response = try await sut.execute()
+        print(response)
         // then
-        wait(for: [expectation], timeout: 3.0)
         XCTAssertNotNil(response)
     }
 }
