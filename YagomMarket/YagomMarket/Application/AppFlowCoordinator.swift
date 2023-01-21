@@ -34,16 +34,22 @@ final class AppFlowCoordinator {
         let flow2 = searchSceneDIContainer.makeSearchFlowCoordinator()
         let searchVC = flow2.generate()
         
+        let chatSceneDIContainer = appDIContainer.makeChatSceneDIContainer()
+        let flow3 = chatSceneDIContainer.makeChatFlowCoordinator()
+        let chatVC = flow3.generate()
+        
+        let myPageSceneDIContainer = appDIContainer.makeMyPageSceneDIContainer()
+        let flow4 = myPageSceneDIContainer.makeMyPageFlowCoordinator()
+        let myPageVC = flow4.generate()
+        
         let registerVC = RegisterViewController(with: DefaultRegisterViewModel())
-        let chatVC = ChatViewController()
-        let myPageVC = MyPageViewController()
         
         let tabBarController = TabBarController(
             homeVC: homeVC!,
             searchVC: searchVC!,
             registerVC: registerVC,
-            chatVC: chatVC,
-            myPageVC: myPageVC
+            chatVC: chatVC!,
+            myPageVC: myPageVC!
         )
         
         window?.rootViewController = tabBarController

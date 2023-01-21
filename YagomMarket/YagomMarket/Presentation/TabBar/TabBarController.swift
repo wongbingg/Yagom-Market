@@ -11,15 +11,15 @@ final class TabBarController: UITabBarController {
     let homeVC: UINavigationController
     let searchVC: UINavigationController
     let registerVC: UIViewController
-    let chatVC: ChatViewController
-    let myPageVC: MyPageViewController
+    let chatVC: UIViewController
+    let myPageVC: UIViewController
     
     init(
         homeVC: UINavigationController,
         searchVC: UINavigationController,
         registerVC: UIViewController,
-        chatVC: ChatViewController,
-        myPageVC: MyPageViewController
+        chatVC: UIViewController,
+        myPageVC: UIViewController
     ) {
         self.homeVC = homeVC
         self.searchVC = searchVC
