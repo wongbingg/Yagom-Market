@@ -1,5 +1,5 @@
 //
-//  ImageViewerController.swift
+//  ImageViewerViewController.swift
 //  YagomMarket
 //
 //  Created by 이원빈 on 2022/12/10.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ImageViewerController: UIViewController {
+final class ImageViewerViewController: UIViewController {
     // MARK: Properties
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -100,7 +100,7 @@ final class ImageViewerController: UIViewController {
 }
 
 // MARK: - UIScrollViewDelegate
-extension ImageViewerController: UIScrollViewDelegate {
+extension ImageViewerViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let width = UIScreen.main.bounds.width
         let halfWidth = UIScreen.main.bounds.width/2
@@ -123,7 +123,7 @@ extension ImageViewerController: UIScrollViewDelegate {
 }
 
 // MARK: - Layout Constraints
-private extension ImageViewerController {
+private extension ImageViewerViewController {
     
      func layoutInitialView() {
         view.backgroundColor = .black
