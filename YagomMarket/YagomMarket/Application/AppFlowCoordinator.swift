@@ -9,7 +9,7 @@ import UIKit
 
 final class AppFlowCoordinator {
     
-    var window: UIWindow?
+    private var window: UIWindow?
     private let appDIContainer: AppDIContainer
     
     init(window: UIWindow?, appDIContainer: AppDIContainer) {
@@ -34,10 +34,7 @@ final class AppFlowCoordinator {
         let flow2 = searchSceneDIContainer.makeSearchFlowCoordinator()
         let searchVC = flow2.generate()
         
-        let registerSceneDIContainer = appDIContainer.makeRegisterSceneDIContainer()
-        let flow3 = registerSceneDIContainer.makeRegisterFlowCoordinator()
-        let registerVC = flow3.generate()
-        
+        let registerVC = RegisterViewController(with: DefaultRegisterViewModel())
         let chatVC = ChatViewController()
         let myPageVC = MyPageViewController()
         
