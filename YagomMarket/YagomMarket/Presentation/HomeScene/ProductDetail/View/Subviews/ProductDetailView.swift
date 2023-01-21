@@ -125,16 +125,16 @@ final class ProductDetailView: UIView {
     }
     
     // MARK: Methods
-    func setupData(with viewModel: ProductDetailViewModel) {
-        nameLabel.text = viewModel.name
-        descriptionTextView.text = viewModel.description
-        vendorNameLabel.text = viewModel.vendorName?.appending(" •")
-        priceLabel.text = viewModel.price
-        timeLabel.text = viewModel.time
+    func setupData(with model: ProductDetail) {
+        nameLabel.text = model.name
+        descriptionTextView.text = model.description
+        vendorNameLabel.text = model.vendorName.appending(" •")
+        priceLabel.text = model.price
+        timeLabel.text = model.time
         guard imageStackView.arrangedSubviews.isEmpty else { return }
-        viewModel.images?.forEach({ image in
+        model.imageURLs.forEach({ imageURL in
             let imageView = UIImageView.generate()
-            imageView.setImage(with: image.url)
+            imageView.setImage(with: imageURL)
             imageStackView.addArrangedSubview(imageView)
         })
     }

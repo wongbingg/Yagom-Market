@@ -9,13 +9,11 @@ import UIKit
 
 final class ProductDetailViewController: UIViewController {
     // MARK: Properties
-    private let productId: Int
     private let detailView = ProductDetailView()
     private let viewModel: ProductDetailViewModel
     
     // MARK: Initializers
-    init(productId: Int, viewModel: ProductDetailViewModel) {
-        self.productId = productId
+    init(viewModel: ProductDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -28,10 +26,12 @@ final class ProductDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutInitialView()
-        
+        setupInitialView()
+        Task {
+            await setupNavigationBar()
+        }
         setupGestureRecognizer()
         setupTabBarController()
-        setupViewModel()
     }
     
     override func viewWillLayoutSubviews() {
@@ -40,6 +40,14 @@ final class ProductDetailViewController: UIViewController {
     }
     
     // MARK: Methods
+    
+    private func setupInitialView() {
+        Task {
+            guard let model = await viewModel.productDetail else { return }
+            detailView.setupData(with: model)
+        }
+    }
+    
     private func setupGestureRecognizer() {
         let tapGestureRecognizer = UITapGestureRecognizer(
             target: self,
@@ -52,19 +60,9 @@ final class ProductDetailViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     
-    private func setupViewModel() {
-//        viewModel.completeDataFetching = { [self] in
-//            DispatchQueue.main.async { [self] in
-//                detailView.setupData(with: viewModel)
-//                setupNavigationBar()
-//            }
-//        }
-        viewModel.search(productID: productId)
-    }
-    
-    private func setupNavigationBar() {
+    private func setupNavigationBar() async {
         navigationController?.navigationBar.tintColor = .systemBrown
-        guard viewModel.vendorName == "wongbing" else { return }
+        guard await viewModel.productDetail?.vendorName == "wongbing" else { return }
         let rightBarButton = UIBarButtonItem(
             image: UIImage(systemName: "ellipsis"),
             style: .done,
@@ -74,29 +72,22 @@ final class ProductDetailViewController: UIViewController {
     }
     
     private func showEditView() {
+        Task {
+            await viewModel.showEditView()
+        }
 //        let editView = RegisterViewController(with: viewModel)
 //        editView.delegate = self
 //        editView.modalPresentationStyle = .overFullScreen
 //        present(editView, animated: true)
     }
-    // Coordinator 로 수정
     
-    private func performDelete(_ completion: @escaping () -> Void) {
-        let searchDeleteURIAPI = SearchDeleteURIAPI(productId: productId)
-        searchDeleteURIAPI.searchDeleteURI { result in
-            switch result {
-            case .success(let deleteURI):
-                let deleteAPI = DeleteProductAPI()
-                deleteAPI.execute(with: deleteURI) { result in
-                    switch result {
-                    case .success(_):
-                        completion()
-                    case .failure(let error):
-                        print(String(describing: error))
-                    }
-                }
-            case .failure(let error):
-                print(String(describing: error))
+    private func performDelete() {
+        Task {
+            do {
+                try await viewModel.deleteProduct()
+                // completion 처리 성공 얼럿 띄우기
+            } catch {
+                print(error)
             }
         }
     }
@@ -104,11 +95,8 @@ final class ProductDetailViewController: UIViewController {
     private func showDeleteAction() {
         DefaultAlertBuilder(title: "안내", message: "정말 삭제 하시겠습니까?", preferredStyle: .alert)
             .setButton(name: "예", style: .default) { [self] in
-                performDelete {
-                    DispatchQueue.main.async {
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                }
+                performDelete()
+                self.navigationController?.popViewController(animated: true)
             }
             .setButton(name: "아니오", style: .destructive, nil)
             .showAlert(on: self)
@@ -118,10 +106,10 @@ final class ProductDetailViewController: UIViewController {
         let point = sender.location(in: view)
         if detailView.imageStackView.bounds.contains(point) {
             let currentPage = detailView.imageScrollView.contentOffset.x / UIScreen.main.bounds.maxX
-            let urls = viewModel.images?.map { $0.url }
-            let imageViewer = ImageViewerController(imageURLs: urls!, currentPage: Int(currentPage))
-            imageViewer.modalPresentationStyle = .formSheet
-            present(imageViewer, animated: true)
+            Task {
+                let urls = await viewModel.productDetail?.imageURLs
+                viewModel.showImageViewer(imageURLs: urls!, currentPage: Int(currentPage))
+            }
         }
     }
     
@@ -141,7 +129,7 @@ final class ProductDetailViewController: UIViewController {
 // MARK: - RegisterViewDelegate
 extension ProductDetailViewController: RegisterViewControllerDelegate {
     func viewWillDisappear() {
-        viewModel.search(productID: productId)
+//        viewModel.search(productID: productId)
     }
 }
 
