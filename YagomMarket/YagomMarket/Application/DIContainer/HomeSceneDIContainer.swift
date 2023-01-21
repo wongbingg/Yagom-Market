@@ -19,13 +19,38 @@ final class HomeSceneDIContainer {
     }
     
     // MARK: - Product Detail
-    func makeProductDetailViewController(productId: Int) -> ProductDetailViewController {
-        let viewModel = makeProductDetailViewModel()
-        return ProductDetailViewController(productId: productId, viewModel: viewModel)
+    func makeProductDetailViewController(productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewController {
+        let viewModel = makeProductDetailViewModel(productId: productId, actions: actions)
+        return ProductDetailViewController(viewModel: viewModel)
     }
     
-    func makeProductDetailViewModel() -> ProductDetailViewModel {
-        return DefaultProductDetailViewModel()
+    func makeProductDetailViewModel(productId: Int,
+                                    actions: ProductDetailViewModelActions) -> ProductDetailViewModel {
+        return DefaultProductDetailViewModel(actions: actions, productId: productId)
+    }
+    
+    // MARK: - Search
+    func makeSearchViewController(actions: SearchViewModelActions) -> SearchViewController {
+        let viewModel = makeSearchViewModel(actions: actions)
+        return SearchViewController(with: viewModel)
+    }
+    
+    func makeSearchViewModel(actions: SearchViewModelActions) -> SearchViewModel {
+        return DefaultSearchViewModel(actions: actions)
+    }
+    
+    // MARK: - Modal View
+    func makeRegisterViewController(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewController {
+        let viewModel = makeRegisterViewModel(model: model, actions: actions)
+        return RegisterViewController(with: viewModel)
+    }
+    
+    func makeRegisterViewModel(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewModel {
+        return DefaultRegisterViewModel(model: model, actions: actions)
+    }
+    
+    func makeImageViewerController(imageURLs: [String], currentPage: Int) -> ImageViewerViewController {
+        return ImageViewerViewController(imageURLs: imageURLs, currentPage: currentPage)
     }
     
     // MARK: - UseCase
