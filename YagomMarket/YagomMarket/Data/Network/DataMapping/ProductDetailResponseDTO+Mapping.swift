@@ -60,7 +60,8 @@ extension ProductDetailResponseDTO {
 
 extension ProductDetailResponseDTO {
     func toDomain() -> ProductDetail {
-        return .init(imageURLs: images.map { $0.toDomain() },
+        return .init(id: id,
+                     imageURLs: images.map { $0.toDomain() },
                      price: String(price),
                      vendorName: vendors.toDomain(),
                      time: createdAt,

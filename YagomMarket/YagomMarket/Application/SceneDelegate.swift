@@ -16,10 +16,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-//        let tabBarController = TabBarController()
-//        let navigationController = UINavigationController(rootViewController: tabBarController)
-//        window?.rootViewController = navigationController
-        
         let coordinator = AppFlowCoordinator(
             window: window,
             appDIContainer: appDIContainer

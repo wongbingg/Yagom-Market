@@ -26,7 +26,7 @@ struct ProductPostRequestDTO: BodyType {
         case secret
     }
     
-    func toEditModel() -> ProductEditRequestDTO {
+    func toEditRequestDTO() -> ProductEditRequestDTO { // 추후 다른 방법으로 수정 
         return ProductEditRequestDTO(
             name: name,
             description: description,
