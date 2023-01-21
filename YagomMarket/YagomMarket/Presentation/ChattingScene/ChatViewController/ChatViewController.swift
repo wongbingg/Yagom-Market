@@ -16,6 +16,34 @@ final class ChatViewController: UIViewController {
         super.viewDidLoad()
         layoutInitialView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        adoptTabBarDelegate()
+    }
+    
+    private func adoptTabBarDelegate() {
+        tabBarController?.delegate = self
+    }
+}
+
+extension ChatViewController: UITabBarControllerDelegate {
+    
+    func tabBarController(_ tabBarController: UITabBarController,
+                          shouldSelect viewController: UIViewController) -> Bool {
+        if viewController is RegisterViewController {
+//            viewModel.registerTapSelected()
+            print("챗뷰에서 등록뷰 탭")
+            return false
+        }
+
+        if viewController == tabBarController.children[1] {
+//            viewModel.searchTapSelected()
+            print("챗뷰에서 서치뷰 탭")
+            return false
+        }
+        return true
+    }
 }
 
 // MARK: - Layout Constraints
