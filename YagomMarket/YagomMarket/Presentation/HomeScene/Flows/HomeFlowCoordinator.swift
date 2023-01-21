@@ -9,7 +9,9 @@ import UIKit
 
 protocol HomeFlowCoordinatorDependencies: AnyObject {
     func makeProductListViewController(actions: ProductListViewModelActions) -> ProductListViewController
-    func makeProductDetailViewController(productId: Int) -> ProductDetailViewController
+    func makeProductDetailViewController(productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewController
+    func makeRegisterViewController(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewController
+    func makeImageViewerController(imageURLs: [String], currentPage: Int) -> ImageViewerViewController
 }
 
 final class HomeFlowCoordinator {
@@ -20,19 +22,11 @@ final class HomeFlowCoordinator {
         self.dependencies = dependencies
     }
     
-//    func start() {
-//        let actions = ProductListViewModelActions(
-//            productTapped: productTapped(id:),
-//            anotherTabTapped: anotherTabTapped
-//        )
-//        let homeVC = dependencies.makeProductListViewController(actions: actions)
-//        navigationController.pushViewController(homeVC, animated: true)
-//    }
-    // test
     func generate() -> UINavigationController? {
         let actions = ProductListViewModelActions(
             productTapped: productTapped(id:),
-            anotherTabTapped: anotherTabTapped
+            registerTapSelected: registerTapSelected,
+            searchTapSelected: searchTapSelected
         )
         let homeVC = dependencies.makeProductListViewController(actions: actions)
         navigationController = UINavigationController(rootViewController: homeVC)
@@ -41,11 +35,61 @@ final class HomeFlowCoordinator {
     
     // MARK: View Transition
     func productTapped(id: Int) {
-        let productDetailVC = dependencies.makeProductDetailViewController(productId: id)
+        let actions = ProductDetailViewModelActions(
+            imageTapped: imageTapped(imageURLs:currentPage:),
+            showEditView: showEditView(model:)
+        )
+        let productDetailVC = dependencies.makeProductDetailViewController(
+            productId: id,
+            actions: actions
+        )
         navigationController?.pushViewController(productDetailVC, animated: true)
     }
     
-    func anotherTabTapped() {
-        // 탭 이동 -- 고민
+    func registerTapSelected() {
+        let actions = RegisterViewModelActions(registerButtonTapped: registerButtonTapped,
+                                               editButtonTapped: editButtonTapped)
+        let registerVC = dependencies.makeRegisterViewController(model: nil, actions: actions)
+        registerVC.modalPresentationStyle = .overFullScreen
+        navigationController?.topViewController?.present(registerVC, animated: true)
+    }
+    
+    func searchTapSelected() {
+        let searchSceneDIContainer = SearchSceneDIContainer()
+        let coordinator = searchSceneDIContainer.makeSearchFlowCoordinator()
+        let vc = coordinator.generate()!.children[0]
+        navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
+    func imageTapped(imageURLs: [String], currentPage: Int) {
+        let imageViewerVC = dependencies.makeImageViewerController(
+            imageURLs: imageURLs,
+            currentPage: currentPage
+        )
+        // CustomModal 설정
+        navigationController?.topViewController?.present(imageViewerVC, animated: true)
+    }
+    
+    func showEditView(model: ProductDetail) {
+        let actions = RegisterViewModelActions(
+            registerButtonTapped: registerButtonTapped,
+            editButtonTapped: editButtonTapped
+        )
+        let editModalVC = dependencies.makeRegisterViewController(
+            model: model,
+            actions: actions
+        )
+//        editView.delegate = self
+        editModalVC.modalPresentationStyle = .overFullScreen
+        navigationController?.topViewController?.present(editModalVC, animated: true)
+    }
+    
+    func registerButtonTapped() {
+        print("등록버튼 탭")
+    }
+    
+    func editButtonTapped() {
+        print("수정버튼 탭")
     }
 }
