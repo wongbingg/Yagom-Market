@@ -9,7 +9,18 @@ import UIKit
 
 final class MyPageViewController: UIViewController {
     // MARK: Properties
-    let myPageView = MyPageView()
+    private let myPageView = MyPageView()
+    private let viewModel: MyPageViewModel
+    
+    // MARK: Initializers
+    init(with viewModel: MyPageViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: View LifeCycles
     override func viewDidLoad() {
@@ -19,6 +30,7 @@ final class MyPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
         adoptTabBarDelegate()
     }
     
@@ -32,13 +44,13 @@ extension MyPageViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController,
                           shouldSelect viewController: UIViewController) -> Bool {
         if viewController is RegisterViewController {
-//            viewModel.registerTapSelected()
+            viewModel.registerTapSelected()
             print("마이페이지에서 등록뷰 탭")
             return false
         }
 
         if viewController == tabBarController.children[1] {
-//            viewModel.searchTapSelected()
+            viewModel.searchTapSelected()
             print("마이페이지에서 서치뷰 탭")
             return false
         }
