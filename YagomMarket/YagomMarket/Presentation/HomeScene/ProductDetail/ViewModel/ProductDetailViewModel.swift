@@ -7,58 +7,62 @@
 
 import Foundation
 
+struct ProductDetailViewModelActions {
+    let imageTapped: ([String], Int) -> Void
+    let showEditView: (ProductDetail) -> Void
+}
+
 protocol ProductDetailViewModelInput {
-    var completeDataFetching: (() -> Void)? { get set }
-    
-    func search(productID: Int)
+    func deleteProduct() async throws
+    func showEditView() async
+    func showImageViewer(imageURLs: [String], currentPage: Int)
 }
 
 protocol ProductDetailViewModelOutput {
-    var productId: Int? { get }
-    var images: [Image]? { get }
-    var price: String? { get }
-    var vendorName: String? { get }
-    var time: String? { get }
-    var description: String? { get }
-    var name: String? { get }
+    var productDetail: ProductDetail? { get async }
 }
 
 protocol ProductDetailViewModel: ProductDetailViewModelInput, ProductDetailViewModelOutput {}
 
 final class DefaultProductDetailViewModel: ProductDetailViewModel {
-    private(set) var productId: Int?
-    var images: [Image]?
-    var price: String?
-    var vendorName: String?
-    var time: String?
-    var description: String?
-    var name: String?
-    var completeDataFetching: (() -> Void)?
-    
-    func search(productID: Int) {
-        productId = productID
-        let searchProductDetailAPI = SearchProductDetailAPI(productId: productID)
-        searchProductDetailAPI.execute { result in
-            switch result {
-            case .success(let data):
-                self.parse(data: data)
-            case .failure(let error):
-                print(String(describing: error))
-            }
+    private let actions: ProductDetailViewModelActions
+    private let productId: Int
+    var productDetail: ProductDetail? {
+        get async {
+            await fetchProduct(with: productId)
         }
     }
     
-    private func parse(data: SearchProductDetailAPI.ResponseType) {
-        self.images = data.images
-        if data.currency == .KRW {
-            self.price = String(Int(data.price)).appending("원")
-        } else {
-            self.price = String(data.price).appending("달러")
+    init(actions: ProductDetailViewModelActions, productId: Int) {
+        self.actions = actions
+        self.productId = productId
+    }
+    
+    private func fetchProduct(with id: Int) async -> ProductDetail? {
+        let api = SearchProductDetailAPI(productId: id)
+        do {
+            let response = try await api.execute()
+            return response.toDomain()
+        } catch {
+            print(error)
+            return nil
         }
-        self.vendorName = data.vendors.name
-        self.time = DateCalculator.shared.calculatePostedDay(with: data.createdAt)
-        self.description = data.description
-        self.name = data.name
-        completeDataFetching?()
+    }
+    
+    func deleteProduct() async throws {
+        let searchDeleteURIAPI = SearchDeleteURIAPI(productId: productId)
+        let deleteURI = try await searchDeleteURIAPI.searchDeleteURI()
+        let deleteAPI = DeleteProductAPI()
+        _ = try await deleteAPI.execute(with: deleteURI)
+    }
+    
+    @MainActor
+    func showEditView() async {
+        guard let productDetail = await productDetail else { return }
+        actions.showEditView(productDetail)
+    }
+    
+    func showImageViewer(imageURLs: [String], currentPage: Int) {
+        actions.imageTapped(imageURLs, currentPage)
     }
 }
