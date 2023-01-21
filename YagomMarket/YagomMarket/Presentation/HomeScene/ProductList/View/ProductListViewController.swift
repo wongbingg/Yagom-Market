@@ -29,18 +29,19 @@ final class ProductListViewController: UIViewController {
         super.viewDidLoad()
         layoutCollectionView()
         
-        setupTabBarController()
+//        setupTabBarController()
         setupCollectionView()
-        setupViewModel()
+        requestInitialData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
+        adoptTabBarDelegate()
     }
     
     // MARK: Methods
-    private func setupTabBarController() {
+    private func adoptTabBarDelegate() {
         tabBarController?.delegate = self
     }
     
@@ -48,10 +49,8 @@ final class ProductListViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.refreshControl = generateRefreshControl()
-        collectionView.register(
-            ProductCell.self,
-            forCellWithReuseIdentifier: "Cell"
-        )
+        collectionView.register(ProductGridCell.self,
+                                forCellWithReuseIdentifier: "Cell")
     }
     
     private func generateRefreshControl() -> UIRefreshControl {
@@ -65,20 +64,28 @@ final class ProductListViewController: UIViewController {
         return refreshControl
     }
     
-    private func setupViewModel() {
-        viewModel.productList.bind { _ in
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
+    private func requestInitialData() {
+        Task {
+            do {
+                _ = try await viewModel.resetToFirstPage()
+                collectionView.reloadData()
+            } catch {
+                print(error.localizedDescription)
             }
         }
-        viewModel.resetToFirstPage()
     }
     
     @objc private func pullToRefresh(_ sender: UIRefreshControl) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.viewModel.resetToFirstPage()
-            self.collectionView.reloadData()
-            sender.endRefreshing()
+            Task {
+                do {
+                    _ = try await self.viewModel.resetToFirstPage()
+                    self.collectionView.reloadData()
+                    sender.endRefreshing()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
 }
@@ -86,12 +93,8 @@ final class ProductListViewController: UIViewController {
 // MARK: - UICollectionViewDelegate
 extension ProductListViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView,
-                        didSelectItemAt indexPath: IndexPath) {
-        let id = viewModel.productList.value[indexPath.row].id
-//        let detailVC = ProductDetailViewController(productId: id, viewModel: viewModel)
-//        navigationController?.pushViewController(detailVC, animated: true)
-        // viewModel 단에서 해결
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectItemAt(indexPath: indexPath.row)
     }
 }
 
@@ -104,18 +107,15 @@ extension ProductListViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return viewModel.productList.value.count
+        return viewModel.productList.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "Cell",
-            for: indexPath
-        ) as? ProductCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ProductGridCell else {
             return UICollectionViewCell()
         }
-        cell.setupUIComponents(with: viewModel.productList.value[indexPath.row], at: indexPath.row)
+        cell.setupUIComponents(with: viewModel.productList[indexPath.row], at: indexPath.row)
         return cell
     }
 }
@@ -129,6 +129,7 @@ extension ProductListViewController: UICollectionViewDelegateFlowLayout {
         guard let flow = collectionViewLayout as? UICollectionViewFlowLayout else {
             return CGSize()
         }
+        
         flow.minimumLineSpacing = 5
         flow.minimumInteritemSpacing = 5
         flow.sectionInset = UIEdgeInsets(
@@ -146,23 +147,19 @@ extension ProductListViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UITabBarControllerDelegate
 extension ProductListViewController: UITabBarControllerDelegate {
     
-//    func tabBarController(_ tabBarController: UITabBarController,
-//                          shouldSelect viewController: UIViewController) -> Bool {
-//        if viewController is RegisterViewController {
-//            let registerVC = RegisterViewController()
-//            registerVC.delegate = self
-//            registerVC.modalPresentationStyle = .overFullScreen
-//            tabBarController.present(registerVC, animated: true)
-//            return false
-//        }
-//        
-//        if viewController is SearchViewController {
-//            let searchVC = SearchViewController()
-//            tabBarController.navigationController?.pushViewController(searchVC, animated: true)
-//            return false // 기존에 viewController를 보여주는 것을 하지 않는다는 뜻.
-//        }
-//        return true
-//    }
+    func tabBarController(_ tabBarController: UITabBarController,
+                          shouldSelect viewController: UIViewController) -> Bool {
+        if viewController is RegisterViewController {
+            viewModel.registerTapSelected()
+            return false
+        }
+
+        if viewController == tabBarController.children[1] {
+            viewModel.searchTapSelected()
+            return false
+        }
+        return true
+    }
 }
 
 //MARK: - UIScrollViewDelegate
@@ -172,17 +169,19 @@ extension ProductListViewController: UIScrollViewDelegate {
         let endY = (scrollView.contentSize.height)
         let currentY = scrollView.contentOffset.y + scrollView.bounds.height
         if currentY > endY + 40 {
-            viewModel.addNextPage()
+            Task {
+                try await viewModel.addNextPage()
+            }
         }
     }
 }
 
 extension ProductListViewController: RegisterViewControllerDelegate {
     func viewWillDisappear() {
-        DispatchQueue.main.async { [weak self] in
-            self?.viewModel.resetToFirstPage()
-            self?.collectionView.reloadData()
-        }
+//        await MainActor.run { [weak self] in
+//            try await self?.viewModel.resetToFirstPage()
+//            self?.collectionView.reloadData()
+//        }
     }
 }
 

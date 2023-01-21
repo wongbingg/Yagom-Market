@@ -90,13 +90,13 @@ final class ProductGridCell: UICollectionViewCell {
     }
     
     // MARK: Methods
-    func setupUIComponents(with data: Page?, at index: Int) {
+    func setupUIComponents(with data: ProductCell?, at index: Int) {
         self.index = index
         guard let data = data else { return }
-        titleLabel.text = data.name
+        titleLabel.text = data.title
         setupPrice(with: data)
         setupVendorName(with: data)
-        setupImage(with: URL(string: data.thumbnail), at: index)
+        setupImage(with: URL(string: data.imageURL), at: index)
     }
     
     func resultViewSetup() {
@@ -109,13 +109,13 @@ final class ProductGridCell: UICollectionViewCell {
         backgroundColor = .systemBackground
     }
     
-    private func setupVendorName(with data: Page) {
+    private func setupVendorName(with data: ProductCell) {
         let separator = "   •"
-        let postedDay = DateCalculator.shared.calculatePostedDay(with: data.createdAt)
-        vendorNameLabel.text = data.vendorName + separator + postedDay
+        let postedDay = DateCalculator.shared.calculatePostedDay(with: data.postDate)
+        vendorNameLabel.text = data.vendor + separator + postedDay
     }
     
-    private func setupPrice(with data: Page) {
+    private func setupPrice(with data: ProductCell) {
         if data.currency == .KRW {
             let price = String(data.price)
             let kPrice = String(price.split(separator: ".")[0])
@@ -129,7 +129,7 @@ final class ProductGridCell: UICollectionViewCell {
     private func setupImage(with url: URL?, at index: Int) {
         guard let url = url else { return }
         let workItem = BlockOperation {
-            self.imageCacheManager.getImage(with: url) { image in
+            self.imageCacheManager.getImage(with: url) { image in // 이미지 처리 고민
                 guard self.index == index else { return }
                 DispatchQueue.main.async {
                     self.productImageView.image = image
