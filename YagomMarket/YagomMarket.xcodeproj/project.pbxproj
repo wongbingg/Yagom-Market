@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AF01194C293E07EB00FD2D1C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF01194B293E07EB00FD2D1C /* CustomTextField.swift */; };
+		AF0165DD2976AD030083DDAD /* API_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF0165DC2976AD030083DDAD /* API_Info.plist */; };
+		AF0165DF2976AD880083DDAD /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0165DE2976AD880083DDAD /* Bundle+.swift */; };
 		AF0796992924A8E7002E876C /* SearchDeleteURIAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796982924A8E7002E876C /* SearchDeleteURIAPI.swift */; };
 		AF07969D2924AE73002E876C /* SearchDeleteURIAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF07969C2924AE73002E876C /* SearchDeleteURIAPITest.swift */; };
 		AF07969F2924B6A4002E876C /* DeleteKeyRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF07969E2924B6A4002E876C /* DeleteKeyRequestModel.swift */; };
@@ -82,6 +84,8 @@
 
 /* Begin PBXFileReference section */
 		AF01194B293E07EB00FD2D1C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		AF0165DC2976AD030083DDAD /* API_Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API_Info.plist; sourceTree = "<group>"; };
+		AF0165DE2976AD880083DDAD /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
 		AF0796982924A8E7002E876C /* SearchDeleteURIAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDeleteURIAPI.swift; sourceTree = "<group>"; };
 		AF07969C2924AE73002E876C /* SearchDeleteURIAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDeleteURIAPITest.swift; sourceTree = "<group>"; };
 		AF07969E2924B6A4002E876C /* DeleteKeyRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteKeyRequestModel.swift; sourceTree = "<group>"; };
@@ -216,6 +220,7 @@
 		AF5BB775292210E20013BFC1 /* YagomMarket */ = {
 			isa = PBXGroup;
 			children = (
+				AF0165DE2976AD880083DDAD /* Bundle+.swift */,
 				AFD41D71293722FC008E36C0 /* Helper */,
 				AF5BB78A292214220013BFC1 /* Entries */,
 				AFF99D7129364C5700AD4DB0 /* Protocols */,
@@ -244,6 +249,7 @@
 				AF5BB77F292210E30013BFC1 /* Assets.xcassets */,
 				AF5BB781292210E30013BFC1 /* LaunchScreen.storyboard */,
 				AF5BB784292210E30013BFC1 /* Info.plist */,
+				AF0165DC2976AD030083DDAD /* API_Info.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -485,6 +491,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF5BB783292210E30013BFC1 /* LaunchScreen.storyboard in Resources */,
+				AF0165DD2976AD030083DDAD /* API_Info.plist in Resources */,
 				AF5BB780292210E30013BFC1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -508,6 +515,7 @@
 				AFD9AB4A29231000009A67AB /* SearchProductDetailAPI.swift in Sources */,
 				AF8ED162293040750070D55C /* URLRequest+Extension.swift in Sources */,
 				AF01194C293E07EB00FD2D1C /* CustomTextField.swift in Sources */,
+				AF0165DF2976AD880083DDAD /* Bundle+.swift in Sources */,
 				AF0796992924A8E7002E876C /* SearchDeleteURIAPI.swift in Sources */,
 				AF5BB77B292210E20013BFC1 /* HomeViewController.swift in Sources */,
 				AF11759129501A04002632D2 /* MyPageViewController.swift in Sources */,
