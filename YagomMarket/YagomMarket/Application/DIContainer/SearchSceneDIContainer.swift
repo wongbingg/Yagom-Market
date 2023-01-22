@@ -59,6 +59,12 @@ final class SearchSceneDIContainer {
         
         return SearchFlowCoordinator(dependencies: self)
     }
+    
+    // Test
+    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator {
+        
+        return SearchFlowCoordinator(navCon: navigationController, dependencies: self)
+    }
 }
 
 extension SearchSceneDIContainer: SearchFlowCoordinatorDependencies {}

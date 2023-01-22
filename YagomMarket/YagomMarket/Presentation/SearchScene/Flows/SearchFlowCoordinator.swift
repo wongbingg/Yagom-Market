@@ -24,22 +24,26 @@ final class SearchFlowCoordinator {
         self.dependencies = dependencies
     }
     
+    // test
+    init(navCon: UINavigationController, dependencies: SearchFlowCoordinatorDependencies) {
+        self.navigationController = navCon
+        self.dependencies = dependencies
+    }
+    
+    // test
     func start() {
-//        let actions = SearchViewModelActions(goToResultVC: goToResultVC(with:))
-//        let searchVC = dependencies.makeSearchViewController(actions: actions)
-//        navCon.pushViewController(searchVC, animated: true)
-//        navigationController = UINavigationController(rootViewController: searchVC)
-//        let actions = ProductListViewModelActions(
-//            productTapped: productTapped(id:),
-//            anotherTabTapped: anotherTabTapped
-//        )
-//        let homeVC = dependencies.makeProductListViewController(actions: actions)
-//        navigationController.pushViewController(homeVC, animated: true)
+        let actions = SearchViewModelActions(goToResultVC: goToResultVC(with:))
+        let searchVC = dependencies.makeSearchViewController(actions: actions)
+        navigationController?.pushViewController(searchVC, animated: true)
     }
     
     func generate() -> UINavigationController? {
-        let actions = SearchViewModelActions(goToResultVC: goToResultVC(with:))
-        let searchVC = dependencies.makeSearchViewController(actions: actions)
+        let actions = SearchViewModelActions(
+            goToResultVC: goToResultVC(with:)
+        )
+        let searchVC = dependencies.makeSearchViewController(
+            actions: actions
+        )
         navigationController = UINavigationController(rootViewController: searchVC)
         return navigationController
     }
