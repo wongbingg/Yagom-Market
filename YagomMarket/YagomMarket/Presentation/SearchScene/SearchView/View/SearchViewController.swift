@@ -42,7 +42,6 @@ final class SearchViewController: UIViewController {
         layoutSearchView()
         setupNavigationBar()
         setupTableView()
-        setupSearchBar()
     }
     
     // MARK: Methods
@@ -76,10 +75,6 @@ final class SearchViewController: UIViewController {
     private func setupTableView() {
         resultTableView.delegate = self
         resultTableView.dataSource = self
-    }
-    
-    private func setupSearchBar() {
-        searchBar.delegate = self
     }
    
     @objc private func closeButtonDidTapped() {
@@ -176,6 +171,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let searchValue = viewModel.searchedResults[indexPath.row]
         Task {
             do {
@@ -186,7 +182,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.endEditing(true)
     }
 }
