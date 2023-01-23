@@ -15,7 +15,11 @@ final class HomeSceneDIContainer {
     }
     
     func makeProductListViewModel(actions: ProductListViewModelActions) -> ProductListViewModel {
-        return DefaultProductListViewModel(actions: actions)
+        return DefaultProductListViewModel(
+            actions: actions,
+            addNextProductPageUseCase: makeAddNextProductPageUseCase(),
+            resetToFirstProductPageUseCase: makeResetToFirstProductPageUseCase()
+        )
     }
     
     // MARK: - Product Detail
@@ -26,7 +30,11 @@ final class HomeSceneDIContainer {
     
     func makeProductDetailViewModel(productId: Int,
                                     actions: ProductDetailViewModelActions) -> ProductDetailViewModel {
-        return DefaultProductDetailViewModel(actions: actions, productId: productId)
+        return DefaultProductDetailViewModel(
+            actions: actions,
+            deleteProductUseCase: makeDeleteProductUseCase(),
+            fetchProductDetailUseCase: makeFetchProductDetailUseCase(),
+            productId: productId)
     }
     
     // MARK: - Modal View
@@ -44,6 +52,27 @@ final class HomeSceneDIContainer {
     }
     
     // MARK: - UseCase
+    func makeAddNextProductPageUseCase() -> AddNextProductPageUseCase {
+        return AddNextProductPageUseCase(productsRepository: makeProductsRepository())
+    }
+    
+    func makeResetToFirstProductPageUseCase() -> ResetToFirstProductPageUseCase {
+        return ResetToFirstProductPageUseCase(productsRepository: makeProductsRepository())
+    }
+    
+    func makeDeleteProductUseCase() -> DeleteProductUseCase {
+        return DeleteProductUseCase(productsRepository: makeProductsRepository())
+    }
+    
+    func makeFetchProductDetailUseCase() -> FetchProductDetailUseCase {
+        return FetchProductDetailUseCase(productsRepository: makeProductsRepository())
+    }
+    
+    
+    // MARK: - Repositories
+    func makeProductsRepository() -> ProductsRepository {
+        return DefaultProductsRepository()
+    }
     
     // MARK: - Home Flow Coordinator
     func makeHomeFlowCoordinator(fireStoreCollectionId: String) -> HomeFlowCoordinator {
