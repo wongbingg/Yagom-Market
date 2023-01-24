@@ -11,9 +11,7 @@ struct RegisterViewModelActions {
 }
 
 protocol RegisterViewModelInput {
-    func requestPost(with registerModel: RegisterModel) async
-    func requestPatch(with registerModel: RegisterModel) async
-    func registerButtonTapped(with registerModel: RegisterModel) async
+    func registerButtonTapped(with registerModel: RegisterModel?) async
 }
 
 protocol RegisterViewModelOutput {
@@ -31,7 +29,7 @@ final class DefaultRegisterViewModel: RegisterViewModel {
         self.actions = actions
     }
     
-    func requestPost(with registerModel: RegisterModel) async {
+    private func requestPost(with registerModel: RegisterModel) async {
         let api = RegisterProductAPI(model: registerModel)
         do {
             _ = try await api.execute()
@@ -41,7 +39,7 @@ final class DefaultRegisterViewModel: RegisterViewModel {
         }
     }
     
-    func requestPatch(with registerModel: RegisterModel) async {
+    private func requestPatch(with registerModel: RegisterModel) async {
         let editModel = registerModel.requestDTO.toEditRequestDTO()
         let api = EditProductAPI(editModel: editModel, productId: model?.id ?? 0)
         do {
@@ -52,7 +50,9 @@ final class DefaultRegisterViewModel: RegisterViewModel {
         }
     }
     
-    func registerButtonTapped(with registerModel: RegisterModel) async {
+    @MainActor
+    func registerButtonTapped(with registerModel: RegisterModel?) async {
+        guard let registerModel = registerModel else { return }
         if model == nil {
             await requestPost(with: registerModel)
             actions?.registerButtonTapped()
