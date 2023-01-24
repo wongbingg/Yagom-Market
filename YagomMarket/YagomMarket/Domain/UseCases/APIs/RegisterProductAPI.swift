@@ -25,5 +25,5 @@ struct RegisterProductAPI: API {
 
 struct RegisterModel {
     let requestDTO: ProductPostRequestDTO
-    let images: [UIImage]
+    let images: [UIImage]?
 }
