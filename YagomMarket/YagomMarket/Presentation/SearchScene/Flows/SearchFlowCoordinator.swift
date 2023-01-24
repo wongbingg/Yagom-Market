@@ -37,15 +37,15 @@ final class SearchFlowCoordinator {
         navigationController?.pushViewController(searchVC, animated: true)
     }
     
-    func generate() -> UINavigationController? {
+    func generate() -> SearchViewController {
         let actions = SearchViewModelActions(
             goToResultVC: goToResultVC(with:)
         )
         let searchVC = dependencies.makeSearchViewController(
             actions: actions
         )
-        navigationController = UINavigationController(rootViewController: searchVC)
-        return navigationController
+//        navigationController = UINavigationController(rootViewController: searchVC)
+        return searchVC
     }
     
     // MARK: View Transition
@@ -93,10 +93,10 @@ final class SearchFlowCoordinator {
     }
     
     func registerButtonTapped() {
-        print("등록버튼 탭") //dismiss 역할
+        navigationController?.topViewController?.dismiss(animated: true)
     }
     
     func editButtonTapped() {
-        print("수정버튼 탭") // dismiss 역할
+        navigationController?.topViewController?.dismiss(animated: true)
     }
 }
