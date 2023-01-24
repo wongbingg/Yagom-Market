@@ -27,6 +27,7 @@ protocol ProductDetailViewModel: ProductDetailViewModelInput, ProductDetailViewM
 final class DefaultProductDetailViewModel: ProductDetailViewModel {
     private let actions: ProductDetailViewModelActions
     private let productId: Int
+    
     var productDetail: ProductDetail? {
         get async {
             await fetchProduct(with: productId)

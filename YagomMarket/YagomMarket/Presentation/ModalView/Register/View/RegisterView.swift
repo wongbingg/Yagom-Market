@@ -91,7 +91,7 @@ final class RegisterView: UIView {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = UIFont.preferredFont(forTextStyle: .body)
-        textView.textColor = .systemGray3
+        textView.textColor = .label
         textView.isScrollEnabled = false
         textView.text = PlaceHolder.description
         return textView

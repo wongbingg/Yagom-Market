@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class DateCalculator { // 12시 넘어서 올리면 오늘이라고 안뜨고 1일전 이라고 뜸.. 현재시간 제대로 측정 되는지 확인필요. createAt 시간 변환 제대로 되는지 확인 필요.
+final class DateCalculator {
     private let dateFormatter = DateFormatter()
     private let calendar = Calendar.current
     static let shared = DateCalculator()
