@@ -8,18 +8,18 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    let homeVC: UINavigationController
-    let searchVC: UINavigationController
-    let registerVC: UIViewController
-    let chatVC: UIViewController
-    let myPageVC: UIViewController
+    let homeVC: ProductListViewController
+    let searchVC: SearchViewController
+    let registerVC: RegisterViewController
+    let chatVC: ChatViewController
+    let myPageVC: MyPageViewController
     
     init(
-        homeVC: UINavigationController,
-        searchVC: UINavigationController,
-        registerVC: UIViewController,
-        chatVC: UIViewController,
-        myPageVC: UIViewController
+        homeVC: ProductListViewController,
+        searchVC: SearchViewController,
+        registerVC: RegisterViewController,
+        chatVC: ChatViewController,
+        myPageVC: MyPageViewController
     ) {
         self.homeVC = homeVC
         self.searchVC = searchVC
@@ -36,6 +36,7 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInitialView()
+        setupNavigationBar()
     }
     
     private func setupInitialView() {
@@ -57,5 +58,9 @@ final class TabBarController: UITabBarController {
         searchVC.tabBarItem.image = UIImage(systemName: "magnifyingglass")
         
         setViewControllers([homeVC, searchVC, registerVC, chatVC, myPageVC], animated: false)
+    }
+    
+    private func setupNavigationBar() {
+        navigationItem.hidesBackButton = true
     }
 }
