@@ -11,7 +11,7 @@ final class DefaultProductsQueryRepository {
     
 }
 
-extension DefaultProductsQueryRepository: ProductQueryRepositories {
+extension DefaultProductsQueryRepository: ProductsQueryRepository {
     
     func fetchProductsQuery(keyword: String) async throws -> [String] {
         var list = [String]()

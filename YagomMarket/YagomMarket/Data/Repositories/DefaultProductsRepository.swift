@@ -1,13 +1,22 @@
 //
-//  DefaultProductDetailRepository.swift
+//  DefaultProductsRepository.swift
 //  YagomMarket
 //
-//  Created by 이원빈 on 2023/01/22.
+//  Created by 이원빈 on 2023/01/23.
 //
 
 import Foundation
 
-final class DefaultProductDetailRepository: ProductDetailRepository {
+final class DefaultProductsRepository {}
+
+extension DefaultProductsRepository: ProductsRepository {
+    
+    func fetchProductsList(pageNumber: Int,
+                           itemPerPage: Int) async throws -> ProductListResponseDTO {
+        let api = SearchProductListAPI(pageNumber: pageNumber, itemPerPage: itemPerPage)
+        let response = try await api.execute()
+        return response
+    }
     
     func fetchProductDetail(productId: Int) async throws -> ProductDetail {
         let api = SearchProductDetailAPI(productId: productId)
