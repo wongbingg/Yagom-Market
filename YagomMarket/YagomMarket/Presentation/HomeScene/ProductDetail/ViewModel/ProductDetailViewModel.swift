@@ -26,6 +26,8 @@ protocol ProductDetailViewModel: ProductDetailViewModelInput, ProductDetailViewM
 
 final class DefaultProductDetailViewModel: ProductDetailViewModel {
     private let actions: ProductDetailViewModelActions
+    private let deleteProductUseCase: DeleteProductUseCase
+    private let fetchProductDetailUseCase: FetchProductDetailUseCase
     private let productId: Int
     
     var productDetail: ProductDetail? {
@@ -34,16 +36,22 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         }
     }
     
-    init(actions: ProductDetailViewModelActions, productId: Int) {
+    init(
+        actions: ProductDetailViewModelActions,
+        deleteProductUseCase: DeleteProductUseCase,
+        fetchProductDetailUseCase: FetchProductDetailUseCase,
+        productId: Int
+    ) {
         self.actions = actions
+        self.deleteProductUseCase = deleteProductUseCase
+        self.fetchProductDetailUseCase = fetchProductDetailUseCase
         self.productId = productId
     }
     
     private func fetchProduct(with id: Int) async -> ProductDetail? {
-        let api = SearchProductDetailAPI(productId: id)
         do {
-            let response = try await api.execute()
-            return response.toDomain()
+            let response = try await fetchProductDetailUseCase.execute(productId: productId)
+            return response
         } catch {
             print(error)
             return nil
@@ -51,10 +59,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     }
     
     func deleteProduct() async throws {
-        let searchDeleteURIAPI = SearchDeleteURIAPI(productId: productId)
-        let deleteURI = try await searchDeleteURIAPI.searchDeleteURI()
-        let deleteAPI = DeleteProductAPI()
-        _ = try await deleteAPI.execute(with: deleteURI)
+        try await deleteProductUseCase.execute(productId: productId)
     }
     
     @MainActor

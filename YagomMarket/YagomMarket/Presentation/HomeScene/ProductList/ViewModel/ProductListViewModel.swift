@@ -12,8 +12,8 @@ struct ProductListViewModelActions {
 }
 
 protocol ProductListViewModelInput {
-    func resetToFirstPage() async throws -> [ProductCell]
-    func addNextPage() async throws -> [ProductCell]
+    func resetToFirstPage() async throws
+    func addNextPage() async throws
     func didSelectItemAt(indexPath: Int)
     func registerTapSelected()
     func searchTapSelected()
@@ -26,42 +26,29 @@ protocol ProductListViewModelOutput {
 protocol ProductListViewModel: ProductListViewModelInput, ProductListViewModelOutput {}
 
 final class DefaultProductListViewModel: ProductListViewModel {
-    private var hasNext: Bool?
-    private var currentPage = 1
-    private let currentItemPerPage = 50
     private let actions: ProductListViewModelActions
+    private let addNextProductPageUseCase: AddNextProductPageUseCase
+    private let resetToFirstProductPageUseCase: ResetToFirstProductPageUseCase
     private(set) var productList: [ProductCell] = []
     
-    
-    init(actions: ProductListViewModelActions) {
+    init(
+        actions: ProductListViewModelActions,
+        addNextProductPageUseCase: AddNextProductPageUseCase,
+        resetToFirstProductPageUseCase: ResetToFirstProductPageUseCase
+    ) {
         self.actions = actions
+        self.addNextProductPageUseCase = addNextProductPageUseCase
+        self.resetToFirstProductPageUseCase = resetToFirstProductPageUseCase
     }
     
-    @discardableResult
-    func resetToFirstPage() async throws -> [ProductCell] {
-        currentPage = 1
-        let api = SearchProductListAPI(
-            pageNumber: currentPage,
-            itemPerPage: currentItemPerPage
-        )
-        let response = try await api.execute()
-        hasNext = response.hasNext
-        productList = response.toDomain()
-        return response.toDomain()
+    func resetToFirstPage() async throws {
+        let response = try await resetToFirstProductPageUseCase.execute()
+        productList = response
     }
     
-    @discardableResult
-    func addNextPage() async throws -> [ProductCell] {
-        guard let hasNext = hasNext, hasNext == true else { return [] } // 마지막 페이지에 대한 얼럿처리
-        currentPage += 1
-        let api = SearchProductListAPI(
-            pageNumber: currentPage,
-            itemPerPage: currentItemPerPage
-        )
-        let response = try await api.execute()
-        self.hasNext = response.hasNext
-        productList += response.toDomain()
-        return response.toDomain()
+    func addNextPage() async throws {
+        let response = try await addNextProductPageUseCase.execute()
+        productList += response
     }
     
     func didSelectItemAt(indexPath: Int) {

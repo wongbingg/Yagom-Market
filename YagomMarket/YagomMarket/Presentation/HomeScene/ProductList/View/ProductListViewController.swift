@@ -29,7 +29,6 @@ final class ProductListViewController: UIViewController {
         super.viewDidLoad()
         layoutCollectionView()
         
-//        setupTabBarController()
         setupCollectionView()
         requestInitialData()
     }
@@ -170,7 +169,12 @@ extension ProductListViewController: UIScrollViewDelegate {
         let currentY = scrollView.contentOffset.y + scrollView.bounds.height
         if currentY > endY + 40 {
             Task {
-                try await viewModel.addNextPage()
+                do {
+                    try await viewModel.addNextPage()
+                    collectionView.reloadData()
+                } catch {
+                    print(error.localizedDescription)
+                }
             }
         }
     }
