@@ -36,7 +36,12 @@ final class SearchSceneDIContainer {
     
     func makeProductDetailViewModel(productId: Int,
                                     actions: ProductDetailViewModelActions) -> ProductDetailViewModel {
-        return DefaultProductDetailViewModel(actions: actions, productId: productId)
+        return DefaultProductDetailViewModel(
+            actions: actions,
+            deleteProductUseCase: makeDeleteProductUseCase(),
+            fetchProductDetailUseCase: makeFetchProductDetailUseCase(),
+            productId: productId
+        )
     }
     
     // MARK: - Modal View
@@ -53,6 +58,17 @@ final class SearchSceneDIContainer {
         return ImageViewerViewController(imageURLs: imageURLs, currentPage: currentPage)
     }
     // MARK: - UseCase
+    func makeDeleteProductUseCase() -> DeleteProductUseCase {
+        return DeleteProductUseCase(productsRepository: makeProductsRepository())
+    }
+    func makeFetchProductDetailUseCase() -> FetchProductDetailUseCase {
+        return FetchProductDetailUseCase(productsRepository: makeProductsRepository())
+    }
+    
+    // MARK: - Repositories
+    func makeProductsRepository() -> ProductsRepository {
+        return DefaultProductsRepository()
+    }
     
     // MARK: - Search Flow Coordinator
     func makeSearchFlowCoordinator() -> SearchFlowCoordinator {
