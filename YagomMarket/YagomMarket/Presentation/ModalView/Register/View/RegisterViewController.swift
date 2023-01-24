@@ -142,9 +142,15 @@ final class RegisterViewController: UIViewController {
     }
     
     @objc private func registerButtonDidTapped() {
-        let model = registerView.retrieveDomain()
-        let imageURLs = registerView.retrieveImages()
-        let registerModel = RegisterModel(requestDTO: model, images: imageURLs)
+        var registerModel: RegisterModel?
+        if viewModel.model == nil {
+            let model = registerView.retrieveDomain()
+            let images = registerView.retrieveImages()
+            registerModel = RegisterModel(requestDTO: model, images: images)
+        } else {
+            let model = registerView.retrieveDomain()
+            registerModel = RegisterModel(requestDTO: model, images: nil)
+        }
         Task {
             await viewModel.registerButtonTapped(with: registerModel)
         }
