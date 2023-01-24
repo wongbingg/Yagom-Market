@@ -17,25 +17,16 @@ final class DateCalculator { // 12시 넘어서 올리면 오늘이라고 안뜨
         dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
     }
-
-    func calculatePostedDay(with createdAt: String ) -> String {
-        let nowComponents = calendar.dateComponents([.day, .month], from: Date())
-        
-        guard let nowDay = nowComponents.day,
-              let nowMonth = nowComponents.month,
-              let postedDate = dateFormatter.date(from: createdAt) else { return "" }
-        
-        let postedDateComponents = calendar.dateComponents([.day, .month], from: postedDate)
-        
-        guard let postedDay = postedDateComponents.day,
-              let postedMonth = postedDateComponents.month else { return "" }
-        
-        if nowMonth > postedMonth {
-            return "\(nowMonth - postedMonth)달 전"
-        } else if nowDay - postedDay == 0 {
-                return "오늘"
+    
+    func calculatePostedDay(with createdAt: String) -> String {
+        guard let postedDate = dateFormatter.date(from: createdAt),
+              let distanceDay = Calendar.current.dateComponents([.day], from: postedDate, to: Date()).day else { return "" }
+        if distanceDay == 0 {
+            return "오늘"
+        } else if distanceDay < 30 {
+            return "\(distanceDay)일 전"
         } else {
-            return "\(nowDay - postedDay)일 전"
+            return "\(distanceDay/30)달 전"
         }
     }
 }

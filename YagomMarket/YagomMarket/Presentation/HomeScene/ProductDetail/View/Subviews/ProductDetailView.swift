@@ -94,6 +94,7 @@ final class ProductDetailView: UIView {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 2
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
@@ -130,7 +131,7 @@ final class ProductDetailView: UIView {
         descriptionTextView.text = model.description
         vendorNameLabel.text = model.vendorName.appending(" •")
         priceLabel.text = model.price
-        timeLabel.text = model.time
+        timeLabel.text = model.time.split(separator: "T").compactMap { String($0) }[0]
         guard imageStackView.arrangedSubviews.isEmpty else { return }
         model.imageURLs.forEach({ imageURL in
             let imageView = UIImageView.generate()
