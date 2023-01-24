@@ -5,7 +5,7 @@
 //  Created by 이원빈 on 2023/01/21.
 //
 
-import Foundation
+import UIKit
 
 final class ChatSceneDIContainer {
     // MARK: - Chat
@@ -41,9 +41,12 @@ final class ChatSceneDIContainer {
     // MARK: - UseCase
     
     // MARK: - Chat Flow Coordinator
-    func makeChatFlowCoordinator() -> ChatFlowCoordinator {
+    func makeChatFlowCoordinator(navigationController: UINavigationController) -> ChatFlowCoordinator {
         
-        return ChatFlowCoordinator(dependencies: self)
+        return ChatFlowCoordinator(
+            navigationController: navigationController,
+            dependencies: self
+        )
     }
     
     // Test

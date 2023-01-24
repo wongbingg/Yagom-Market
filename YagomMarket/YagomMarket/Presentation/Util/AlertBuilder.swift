@@ -11,6 +11,7 @@ protocol AlertBuilder {
     var alertController: UIAlertController { get }
     
     func setButton(name: String, style: UIAlertAction.Style, _ completion: (() -> Void)?) -> Self
+    func showAlert(on viewController: UIViewController)
 }
 
 final class DefaultAlertBuilder: AlertBuilder {
@@ -20,7 +21,7 @@ final class DefaultAlertBuilder: AlertBuilder {
         alertController = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
     }
     
-    func setButton(name: String, style: UIAlertAction.Style, _ completion: (() -> Void)?) -> DefaultAlertBuilder {
+    func setButton(name: String, style: UIAlertAction.Style, _ completion: (() -> Void)? = nil) -> DefaultAlertBuilder {
         let button = UIAlertAction(title: name, style: style) { alertAction in
             completion?()
         }

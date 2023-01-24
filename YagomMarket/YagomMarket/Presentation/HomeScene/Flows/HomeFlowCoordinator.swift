@@ -18,22 +18,26 @@ protocol HomeFlowCoordinatorDependencies: AnyObject {
 }
 
 final class HomeFlowCoordinator {
-    var navigationController: UINavigationController?
+    var navigationController: UINavigationController
     var dependencies: HomeFlowCoordinatorDependencies
     
-    init(dependencies: HomeFlowCoordinatorDependencies) {
+    init(
+        navigationController: UINavigationController,
+        dependencies: HomeFlowCoordinatorDependencies
+    ) {
+        self.navigationController = navigationController
         self.dependencies = dependencies
     }
     
-    func generate() -> UINavigationController? {
+    func generate() -> ProductListViewController {
         let actions = ProductListViewModelActions(
             productTapped: productTapped(id:),
             registerTapSelected: registerTapSelected,
             searchTapSelected: searchTapSelected
         )
         let homeVC = dependencies.makeProductListViewController(actions: actions)
-        navigationController = UINavigationController(rootViewController: homeVC)
-        return navigationController
+        //        navigationController = UINavigationController(rootViewController: homeVC)
+        return homeVC
     }
     
     // MARK: View Transition
@@ -46,7 +50,7 @@ final class HomeFlowCoordinator {
             productId: id,
             actions: actions
         )
-        navigationController?.pushViewController(productDetailVC, animated: true)
+        navigationController.pushViewController(productDetailVC, animated: true)
     }
     
     func registerTapSelected() {
@@ -54,13 +58,13 @@ final class HomeFlowCoordinator {
                                                editButtonTapped: editButtonTapped)
         let registerVC = dependencies.makeRegisterViewController(model: nil, actions: actions)
         registerVC.modalPresentationStyle = .overFullScreen
-        navigationController?.topViewController?.present(registerVC, animated: true)
+        navigationController.topViewController?.present(registerVC, animated: true)
     }
     
     func searchTapSelected() {
         let searchSceneDIContainer = SearchSceneDIContainer()
         let coordinator = searchSceneDIContainer.makeSearchFlowCoordinator(
-            navigationController: navigationController!
+            navigationController: navigationController
         )
         coordinator.start()
     }
@@ -71,7 +75,7 @@ final class HomeFlowCoordinator {
             currentPage: currentPage
         )
         // CustomModal 설정
-        navigationController?.topViewController?.present(imageViewerVC, animated: true)
+        navigationController.topViewController?.present(imageViewerVC, animated: true)
     }
     
     func showEditView(model: ProductDetail) {
@@ -83,16 +87,16 @@ final class HomeFlowCoordinator {
             model: model,
             actions: actions
         )
-//        editView.delegate = self
+        //        editView.delegate = self
         editModalVC.modalPresentationStyle = .overFullScreen
-        navigationController?.topViewController?.present(editModalVC, animated: true)
+        navigationController.topViewController?.present(editModalVC, animated: true)
     }
     
     func registerButtonTapped() {
-        print("등록버튼 탭")
+        navigationController.topViewController?.dismiss(animated: true)
     }
     
     func editButtonTapped() {
-        print("수정버튼 탭")
+        self.navigationController.topViewController?.dismiss(animated: true)
     }
 }
