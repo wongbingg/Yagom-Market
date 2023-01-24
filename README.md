@@ -1,27 +1,70 @@
 # 야곰 마켓 [Refactoring]
 
-> 야곰아카데미 `오픈마켓`를 리팩토링한 프로젝트 입니다.
+> 야곰아카데미 `오픈마켓`를 리팩토링한 프로젝트 입니다. 기존 프로젝트는 [`ios-open-market 저장소`](https://github.com/wongbingg/ios-open-market/tree/step4) 에서 확인할 수 있습니다.
 
 ## 📄 소개
-- 야곰아카데미 서버와 통신을 통해 상품을 조회,수정,게시,삭제할 수 있는 앱 입니다.
+- 야곰아카데미 오픈마켓 서버와 통신을 통해 상품을 조회,수정,게시,삭제할 수 있는 앱 입니다.
 - `번개장터`와 `당근마켓` iOS 앱 UI를 참고하여 프로젝트를 진행했습니다.
 
 ## 🔑 핵심기술
-- **`MVVM 패턴`**
+- **`아키텍쳐`**
+    - MVVM
+    - Coordinator
 - **`디자인패턴`**
     - 빌더패턴
     - 책임연쇄패턴
-    - 옵저버블패턴
 - **`코드베이스 UI`**
     - 오토레이아웃
 - **`네트워킹`**
     - URLSession
 - **`비동기처리`**
-    - DispatchQueue
+    - Async/await
+- **`의존성`**
+    - Firebase
+
+## 프로젝트 구조
+
+#### Domain Layer
+- `Entity`
+    - ProductCell: 컬렉션뷰에서 셀이 보여줄 상품정보 도메인 모델입니다.
+    - ProductDetail: 상세보기 화면에서 보여줄 상품정보 도메인 모델입니다.
+    - LoginInfo: 로그인 정보가 담긴 모델입니다.
+    - LoginError: 로그인 시 발생할 수 있는 에러 열거형 입니다.
+- `UseCase`
+    - AddNextProductPageUseCase: 홈뷰에서 페이지네이션에 사용되는 UseCase입니다.
+    - ResetToFirstProductPageUseCase: 홈뷰에서 아래로 당겼을 때 새로고침 UseCase 입니다.
+    - DeleteProductUseCase: 디테일뷰 에서 상품삭제 UseCase 입니다.
+    - FetchProductDetailUseCase: 디테일뷰로 들어갈 때 상세 데이터요청 UseCase 입니다.
+    - SigninUseCase: 로그인을 시도하는 UseCase 입니다.
+    - CreateUserUseCase: 계정등록을 하는 UseCase 입니다.
+#### Presentation Layer
+> 각 scene은 FlowCoordinator와 하나 이상의 view를 가집니다. 
+- `LoginScene` : 로그인 화면을 담당합니다.
+- `HomeScene` : 홈탭 화면을 담당합니다.
+- `SearchScene` : 서치탭 화면을 담당합니다.
+    - `SearchScene`의 경우 탭에 존재하지만, 탭이 눌리기 이전 탭의 NavigationController를 기반하여 화면을 전환합니다. 
+- `ChatScene` : 채팅탭 화면을 담당합니다.
+- `MyPageScene` : 마이페이지 화면을 담당합니다.
+- `ModalView` : 모달뷰를 정의해줍니다.(RegisterView, ImageViewerView)
+    - `RegisterView`의 경우 탭에 존재하지만, Modal Present 방식을 이용하여 화면을 띄워줍니다. 
+
+
+#### Data Layer
+- `ProductsRepository`
+    - fetchList : 상품 리스트를 받아옵니다. 
+    - fetchDetail : 상품 상세정보를 받아옵니다. 
+    - edit : 상품 상세정보를 수정합니다.
+    - delete : 상품을 삭제합니다. 
+- `ProductQueryRepository`
+    - fetch : 서치 keyword에 해당하는 검색결과 이름 리스트를 받아옵니다.
+- `FirebaseAuthService`
+    - createUser: 사용자 계정을 등록합니다.
+    - signIn: 사용자 계정으로 로그인을 시도합니다.
+
 
 ## 📱 실행화면
 
-
+<details>
 <table>
     <tr>
         <td valign="top" width="30%" align="center" border="1">
@@ -71,11 +114,12 @@
         </td>
     </tr>
 </table>
-
+</details>
 
 ## 🔭 시각 자료
-### - UML Diagram
-<span style = "color:gray">작성 예정</span>
+
+### - 의존성 주입
+![](https://i.imgur.com/DGSaa7d.png)
 
 ### - File Tree
 
@@ -95,30 +139,15 @@
 
 #### ☑️ API 종류별 네트워킹 테스트 진행
 
-<details>
-    <summary>
-        펼쳐보기
-    </summary>
-
-- API문서에 주어진 7개의 기능에 대한 단위테스트를 진행하였습니다.
+- API 문서에 주어진 7개의 기능에 대한 단위테스트를 진행하였습니다.
     
 <img src="https://i.imgur.com/T3nwUwL.png" width=200>
 
-</details>
+
 
 ### ✅ TabBarController
 
 #### ☑️ 화면구성
-
-<details>
-    <summary>
-        펼쳐보기
-    </summary>
-
-- 
-
-</details>
-
 
 
 ### ✅ SearchBar
@@ -159,32 +188,13 @@
     
 </details>
 
-### ✅ Observable 패턴
-
-#### ☑️ View와 ViewModel간의 데이터전달
-
-<details>
-    <summary>
-        펼쳐보기
-    </summary>
-
-<span style = "color:gray">작성 예정</span>
-    
-</details>
-
 ### ✅ URLCache
 
 
 #### ☑️ 네트워킹을 통해 이미지를 받아오기
 
-<details>
-    <summary>
-        펼쳐보기
-    </summary>
-    
 - onDisk 와 onMemory 방식 둘다 가능한 URLCache를 이용하여 캐싱작업을 했습니다.
 
-</details>
 
 
 ## 🛠 Trouble Shooting
@@ -223,18 +233,18 @@
 
 <table>
     <tr>
-        <td valign="top" width="30%" align="center" border="1">
+        <td valign="top" align="center" border="1">
             <strong>오류 화면</strong>
         </td>
-        <td valign="top" width="30%" align="center" border="1">
+        <td valign="top" align="center" border="1">
             <strong>개선 화면</strong>
         </td>
     </tr>
     <tr>
-        <td valign="top" width="30%">
+        <td valign="top">
             <img src="https://i.imgur.com/QWRmpZU.gif" width="200">
         </td>
-        <td valign="top" width="30%">
+        <td valign="top">
             <img src="https://user-images.githubusercontent.com/95671495/209077765-4e26aa2d-b530-4598-ad33-3e5bcbea2495.gif" width="200">
         </td>
     </tr>
