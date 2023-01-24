@@ -5,7 +5,7 @@
 //  Created by 이원빈 on 2023/01/21.
 //
 
-import Foundation
+import UIKit
 
 final class MyPageSceneDIContainer {
     // MARK: - MyPage
@@ -41,9 +41,12 @@ final class MyPageSceneDIContainer {
     // MARK: - UseCase
     
     // MARK: - MyPage Flow Coordinator
-    func makeMyPageFlowCoordinator() -> MyPageFlowCoordinator {
+    func makeMyPageFlowCoordinator(navigationController: UINavigationController) -> MyPageFlowCoordinator {
         
-        return MyPageFlowCoordinator(dependencies: self)
+        return MyPageFlowCoordinator(
+            navigationController: navigationController,
+            dependencies: self
+        )
     }
     
     // Test

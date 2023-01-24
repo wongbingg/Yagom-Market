@@ -14,21 +14,25 @@ protocol MyPageFlowCoordinatorDependencies: AnyObject {
 }
 
 final class MyPageFlowCoordinator {
-    var navigationController: UINavigationController?
+    var navigationController: UINavigationController
     var dependencies: MyPageFlowCoordinatorDependencies
     
-    init(dependencies: MyPageFlowCoordinatorDependencies) {
+    init(
+        navigationController: UINavigationController,
+        dependencies: MyPageFlowCoordinatorDependencies
+    ) {
+        self.navigationController = navigationController
         self.dependencies = dependencies
     }
     
-    func generate() -> UINavigationController? {
+    func generate() -> MyPageViewController {
         let actions = MyPageViewModelActions(
             registerTapSelected: registerTapSelected,
             searchTapSelected: searchTapSelected
         )
         let myPageVC = dependencies.makeMyPageViewController(actions: actions)
-        navigationController = UINavigationController(rootViewController: myPageVC)
-        return navigationController
+//        navigationController = UINavigationController(rootViewController: myPageVC)
+        return myPageVC
     }
     
     // MARK: View Transition
@@ -37,23 +41,23 @@ final class MyPageFlowCoordinator {
                                                editButtonTapped: editButtonTapped)
         let registerVC = dependencies.makeRegisterViewController(model: nil, actions: actions)
         registerVC.modalPresentationStyle = .overFullScreen
-        navigationController?.topViewController?.present(registerVC, animated: true)
+        navigationController.topViewController?.present(registerVC, animated: true)
     }
     
     func searchTapSelected() {
         let searchSceneDIContainer = SearchSceneDIContainer()
         let coordinator = searchSceneDIContainer.makeSearchFlowCoordinator(
-            navigationController: navigationController!
+            navigationController: navigationController
         )
         coordinator.start()
     }
     
     func registerButtonTapped() {
-        print("등록버튼 탭")
+        navigationController.topViewController?.dismiss(animated: true)
     }
     
     func editButtonTapped() {
-        print("수정버튼 탭")
+        navigationController.topViewController?.dismiss(animated: true)
     }
 }
 

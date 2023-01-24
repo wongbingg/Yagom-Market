@@ -14,21 +14,25 @@ protocol ChatFlowCoordinatorDependencies: AnyObject {
 }
 
 final class ChatFlowCoordinator {
-    var navigationController: UINavigationController?
+    var navigationController: UINavigationController
     var dependencies: ChatFlowCoordinatorDependencies
     
-    init(dependencies: ChatFlowCoordinatorDependencies) {
+    init(
+        navigationController: UINavigationController,
+        dependencies: ChatFlowCoordinatorDependencies
+    ) {
+        self.navigationController = navigationController
         self.dependencies = dependencies
     }
     
-    func generate() -> UINavigationController? {
+    func generate() -> ChatViewController {
         let actions = ChatViewModelActions(
             registerTapSelected: registerTapSelected,
             searchTapSelected: searchTapSelected
         )
         let chatVC = dependencies.makeChatViewController(actions: actions)
-        navigationController = UINavigationController(rootViewController: chatVC)
-        return navigationController
+//        navigationController = UINavigationController(rootViewController: chatVC)
+        return chatVC
     }
     
     // MARK: View Transition
@@ -37,22 +41,22 @@ final class ChatFlowCoordinator {
                                                editButtonTapped: editButtonTapped)
         let registerVC = dependencies.makeRegisterViewController(model: nil, actions: actions)
         registerVC.modalPresentationStyle = .overFullScreen
-        navigationController?.topViewController?.present(registerVC, animated: true)
+        navigationController.topViewController?.present(registerVC, animated: true)
     }
     
     func searchTapSelected() {
         let searchSceneDIContainer = SearchSceneDIContainer()
         let coordinator = searchSceneDIContainer.makeSearchFlowCoordinator(
-            navigationController: navigationController!
+            navigationController: navigationController
         )
         coordinator.start()
     }
     
     func registerButtonTapped() {
-        print("등록버튼 탭")
+        navigationController.topViewController?.dismiss(animated: true)
     }
     
     func editButtonTapped() {
-        print("수정버튼 탭")
+        navigationController.topViewController?.dismiss(animated: true)
     }
 }
