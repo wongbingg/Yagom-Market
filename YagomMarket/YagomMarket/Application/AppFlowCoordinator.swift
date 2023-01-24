@@ -9,50 +9,22 @@ import UIKit
 
 final class AppFlowCoordinator {
     
-    private var window: UIWindow?
+    private var navigationController: UINavigationController!
     private let appDIContainer: AppDIContainer
     
-    init(window: UIWindow?, appDIContainer: AppDIContainer) {
-        self.window = window
+    init(
+        navigationController: UINavigationController,
+        appDIContainer: AppDIContainer
+    ) {
+        self.navigationController = navigationController
         self.appDIContainer = appDIContainer
     }
     
     func start() {
-//        let loginSceneDIContainer = appDIContainer.makeLoginSceneDIContainer()
-//        let flow = loginSceneDIContainer.makeLoginFlowCoordinator(
-//            navigationController: navigationController
-//        )
-//        flow.start()
-        
-        let homeSceneDIContainer = appDIContainer.makeHomeSceneDIContainer()
-        let flow1 = homeSceneDIContainer.makeHomeFlowCoordinator(
-            fireStoreCollectionId: "" // collectionId 들어가야됨
+        let loginSceneDIContainer = appDIContainer.makeLoginSceneDIContainer()
+        let flow = loginSceneDIContainer.makeLoginFlowCoordinator(
+            navigationController: navigationController
         )
-        let homeVC = flow1.generate()
-        
-        let searchSceneDIContainer = appDIContainer.makeSearchSceneDIContainer()
-        let flow2 = searchSceneDIContainer.makeSearchFlowCoordinator()
-        let searchVC = flow2.generate()
-        
-        let chatSceneDIContainer = appDIContainer.makeChatSceneDIContainer()
-        let flow3 = chatSceneDIContainer.makeChatFlowCoordinator()
-        let chatVC = flow3.generate()
-        
-        let myPageSceneDIContainer = appDIContainer.makeMyPageSceneDIContainer()
-        let flow4 = myPageSceneDIContainer.makeMyPageFlowCoordinator()
-        let myPageVC = flow4.generate()
-        
-        let registerVC = RegisterViewController(with: DefaultRegisterViewModel())
-        
-        let tabBarController = TabBarController(
-            homeVC: homeVC!,
-            searchVC: searchVC!,
-            registerVC: registerVC,
-            chatVC: chatVC!,
-            myPageVC: myPageVC!
-        )
-        
-        window?.rootViewController = tabBarController
-        window?.makeKeyAndVisible()
+        flow.start()
     }
 }
