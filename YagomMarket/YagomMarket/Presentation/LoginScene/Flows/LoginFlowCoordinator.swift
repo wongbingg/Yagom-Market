@@ -37,7 +37,7 @@ final class LoginFlowCoordinator {
         let homeSceneDIContainer = appDIContainer.makeHomeSceneDIContainer()
         let flow1 = homeSceneDIContainer.makeHomeFlowCoordinator(
             navigationController: navigationController,
-            fireStoreCollectionId: userUID
+            userUID: userUID
         )
         let homeVC = flow1.generate()
         

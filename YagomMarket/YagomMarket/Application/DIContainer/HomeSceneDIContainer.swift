@@ -76,9 +76,11 @@ final class HomeSceneDIContainer {
     
     // MARK: - Home Flow Coordinator
     func makeHomeFlowCoordinator(navigationController: UINavigationController,
-                                 fireStoreCollectionId: String) -> HomeFlowCoordinator {
+                                 userUID: String) -> HomeFlowCoordinator {
         
-        return HomeFlowCoordinator(navigationController: navigationController, dependencies: self)
+        return HomeFlowCoordinator(userUID: userUID,
+                                   navigationController: navigationController,
+                                   dependencies: self)
     }
 }
 

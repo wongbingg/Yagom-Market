@@ -18,13 +18,16 @@ protocol HomeFlowCoordinatorDependencies: AnyObject {
 }
 
 final class HomeFlowCoordinator {
+    let userUID: String
     var navigationController: UINavigationController
     var dependencies: HomeFlowCoordinatorDependencies
     
     init(
+        userUID: String,
         navigationController: UINavigationController,
         dependencies: HomeFlowCoordinatorDependencies
     ) {
+        self.userUID = userUID
         self.navigationController = navigationController
         self.dependencies = dependencies
     }
@@ -36,7 +39,6 @@ final class HomeFlowCoordinator {
             searchTapSelected: searchTapSelected
         )
         let homeVC = dependencies.makeProductListViewController(actions: actions)
-        //        navigationController = UINavigationController(rootViewController: homeVC)
         return homeVC
     }
     
