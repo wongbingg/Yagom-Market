@@ -127,10 +127,8 @@ final class ImageViewerViewController: UIViewController {
                 imageView.transform = CGAffineTransform.init(scaleX: sender.scale, y: sender.scale)
             }
         } else if sender.state == .ended {
-            if imageView.frame.size.width < originSize.width {
-                UIView.animate(withDuration: 0.1) {
-                    imageView.transform = CGAffineTransform.identity
-                }
+            UIView.animate(withDuration: 0.1) {
+                imageView.transform = CGAffineTransform.identity
             }
         }
     }
