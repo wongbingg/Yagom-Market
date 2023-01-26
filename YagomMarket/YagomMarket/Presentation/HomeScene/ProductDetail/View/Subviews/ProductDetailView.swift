@@ -130,7 +130,7 @@ final class ProductDetailView: UIView {
         nameLabel.text = model.name
         descriptionTextView.text = model.description
         vendorNameLabel.text = model.vendorName.appending(" •")
-        priceLabel.text = model.price
+        setupPrice(with: model)
         timeLabel.text = model.time.split(separator: "T").compactMap { String($0) }[0]
         guard imageStackView.arrangedSubviews.isEmpty else { return }
         model.imageURLs.forEach({ imageURL in
@@ -138,6 +138,17 @@ final class ProductDetailView: UIView {
             imageView.setImage(with: imageURL)
             imageStackView.addArrangedSubview(imageView)
         })
+    }
+    
+    private func setupPrice(with data: ProductDetail) {
+        if data.currency == .KRW {
+            let price = String(data.price)
+            let kPrice = String(price.split(separator: ".")[0])
+            priceLabel.text = kPrice.appending("원")
+        } else {
+            let price = String(data.price)
+            priceLabel.text = price.appending("달러")
+        }
     }
     
     func changeIndex() {

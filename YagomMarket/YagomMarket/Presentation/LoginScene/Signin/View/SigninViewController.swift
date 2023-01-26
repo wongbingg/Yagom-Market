@@ -9,23 +9,48 @@ import UIKit
 
 final class SigninViewController: UIViewController {
     
+    private let mainStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 50
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 100, left: 40, bottom: 300, right: 40)
+        return stackView
+    }()
+    
+    private let subTitle: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.text = "이메일과 비밀번호를 입력하여 계정을 등록하세요."
+        label.setContentHuggingPriority(UILayoutPriority(249), for: .vertical)
+        return label
+    }()
+    
     private let registerButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("등록하기", for: .normal)
         button.setTitleColor(.label, for: .normal)
-        button.widthAnchor.constraint(equalToConstant: 200).isActive = true
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         button.layer.backgroundColor = UIColor.systemGray3.cgColor
         button.layer.cornerRadius = 5
         return button
     }()
     
+    private let textFieldStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        return stackView
+    }()
+    
     private let idTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addLeftPadding()
-        textField.widthAnchor.constraint(equalToConstant: 200).isActive = true
         textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemGray3.cgColor
@@ -38,7 +63,6 @@ final class SigninViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addLeftPadding()
-        textField.widthAnchor.constraint(equalToConstant: 200).isActive = true
         textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemGray3.cgColor
@@ -121,21 +145,20 @@ final class SigninViewController: UIViewController {
 private extension SigninViewController {
     
     func addSubviews() {
-        view.addSubview(registerButton)
-        view.addSubview(idTextField)
-        view.addSubview(passwordTextField)
+        view.addSubview(mainStackView)
+        mainStackView.addArrangedSubview(subTitle)
+        mainStackView.addArrangedSubview(textFieldStackView)
+        textFieldStackView.addArrangedSubview(idTextField)
+        textFieldStackView.addArrangedSubview(passwordTextField)
+        mainStackView.addArrangedSubview(registerButton)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            idTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            idTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -160),
-            
-            passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            passwordTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
-            
-            registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            registerButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
 }
