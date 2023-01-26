@@ -18,7 +18,8 @@ final class ResetToFirstProductPageUseCase {
         AddNextProductPageUseCase.currentPage = 1
         let response = try await productsRepository.fetchProductsList(
             pageNumber: AddNextProductPageUseCase.currentPage,
-            itemPerPage: AddNextProductPageUseCase.currentItemPerPage
+            itemPerPage: AddNextProductPageUseCase.currentItemPerPage,
+            searchValue: nil
         )
         AddNextProductPageUseCase.hasNext = response.hasNext
         return response.toDomain()

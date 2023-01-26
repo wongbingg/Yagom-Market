@@ -23,7 +23,8 @@ final class AddNextProductPageUseCase {
         Self.currentPage += 1
         let response = try await productsRepository.fetchProductsList(
             pageNumber: Self.currentPage,
-            itemPerPage: Self.currentItemPerPage
+            itemPerPage: Self.currentItemPerPage,
+            searchValue: nil
         )
         Self.hasNext = response.hasNext
         return response.toDomain()
