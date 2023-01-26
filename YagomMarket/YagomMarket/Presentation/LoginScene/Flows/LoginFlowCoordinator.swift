@@ -33,7 +33,8 @@ final class LoginFlowCoordinator {
         navigationController.pushViewController(loginVC, animated: true)
     }
     
-    private func successLogin(_ userUID: String) {
+    func successLogin(_ userUID: String) {
+        LoginCacheManager().setNewLoginInfo(userUID)
         let homeSceneDIContainer = appDIContainer.makeHomeSceneDIContainer()
         let flow1 = homeSceneDIContainer.makeHomeFlowCoordinator(
             navigationController: navigationController,

@@ -11,6 +11,7 @@ final class AppFlowCoordinator {
     
     private var navigationController: UINavigationController!
     private let appDIContainer: AppDIContainer
+    private let loginCacheManager = LoginCacheManager()
     
     init(
         navigationController: UINavigationController,
@@ -25,6 +26,10 @@ final class AppFlowCoordinator {
         let flow = loginSceneDIContainer.makeLoginFlowCoordinator(
             navigationController: navigationController
         )
-        flow.start()
+        if let loginInfo = loginCacheManager.fetchPreviousInfo() {
+            flow.successLogin(loginInfo)
+        } else {
+            flow.start()
+        }
     }
 }
