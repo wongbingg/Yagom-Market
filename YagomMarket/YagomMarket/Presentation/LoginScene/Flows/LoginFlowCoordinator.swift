@@ -11,12 +11,13 @@ import FirebaseAuth
 protocol LoginFlowCoordinatorDependencies: AnyObject {
     func makeLoginViewController(actions: LoginViewModelActions) -> LoginViewController
     func makeSigninViewController(actions: SigninViewModelActions) -> SigninViewController
+    func makeTabBarController(navigationController: UINavigationController, userUID: String) -> TabBarController
 }
 
 final class LoginFlowCoordinator {
     private var navigationController: UINavigationController!
     private var dependencies: LoginFlowCoordinatorDependencies
-    private let appDIContainer = AppDIContainer()
+    
     
     init(navigationController: UINavigationController,
          dependencies: LoginFlowCoordinatorDependencies) {
@@ -35,39 +36,7 @@ final class LoginFlowCoordinator {
     
     func successLogin(_ userUID: String) {
         LoginCacheManager().setNewLoginInfo(userUID)
-        let homeSceneDIContainer = appDIContainer.makeHomeSceneDIContainer()
-        let flow1 = homeSceneDIContainer.makeHomeFlowCoordinator(
-            navigationController: navigationController,
-            userUID: userUID
-        )
-        let homeVC = flow1.generate()
-        
-        let searchSceneDIContainer = appDIContainer.makeSearchSceneDIContainer()
-        let flow2 = searchSceneDIContainer.makeSearchFlowCoordinator()
-        let searchVC = flow2.generate()
-        
-        let chatSceneDIContainer = appDIContainer.makeChatSceneDIContainer()
-        let flow3 = chatSceneDIContainer.makeChatFlowCoordinator(
-            navigationController: navigationController
-        )
-        let chatVC = flow3.generate()
-        
-        let myPageSceneDIContainer = appDIContainer.makeMyPageSceneDIContainer()
-        let flow4 = myPageSceneDIContainer.makeMyPageFlowCoordinator(
-            navigationController: navigationController
-        )
-        let myPageVC = flow4.generate()
-        
-        let registerVC = RegisterViewController(with: DefaultRegisterViewModel())
-        
-        let tabBarController = TabBarController(
-            homeVC: homeVC,
-            searchVC: searchVC,
-            registerVC: registerVC,
-            chatVC: chatVC,
-            myPageVC: myPageVC
-        )
-        
+        let tabBarController = dependencies.makeTabBarController(navigationController: navigationController, userUID: userUID)
         navigationController.pushViewController(tabBarController, animated: true)
     }
     
