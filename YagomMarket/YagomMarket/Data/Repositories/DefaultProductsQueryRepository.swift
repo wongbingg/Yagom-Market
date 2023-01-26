@@ -18,7 +18,7 @@ extension DefaultProductsQueryRepository: ProductsQueryRepository {
         let api = SearchProductListAPI(
             pageNumber: 1,
             itemPerPage: 100,
-            searchValue: keyword
+            searchValue: keyword.lowercased()
         )
         let response = try await api.execute()
         response.pages.forEach { page in
