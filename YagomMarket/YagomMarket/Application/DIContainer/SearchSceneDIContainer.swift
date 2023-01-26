@@ -15,7 +15,11 @@ final class SearchSceneDIContainer {
     }
     
     func makeSearchViewModel(actions: SearchViewModelActions) -> SearchViewModel {
-        return DefaultSearchViewModel(actions: actions)
+        return DefaultSearchViewModel(
+            actions: actions,
+            searchQueryUseCase: makeSearchQueryUseCase(),
+            searchQueryResultsUseCase: makeSearchQueryResultsUseCase()
+        )
     }
     
     // MARK: - Result
@@ -61,8 +65,17 @@ final class SearchSceneDIContainer {
     func makeDeleteProductUseCase() -> DeleteProductUseCase {
         return DeleteProductUseCase(productsRepository: makeProductsRepository())
     }
+    
     func makeFetchProductDetailUseCase() -> FetchProductDetailUseCase {
         return FetchProductDetailUseCase(productsRepository: makeProductsRepository())
+    }
+    
+    func makeSearchQueryUseCase() -> SearchQueryUseCase {
+        return SearchQueryUseCase(productsQueryRepository: makeProductsQueryRepository())
+    }
+    
+    func makeSearchQueryResultsUseCase() -> SearchQueryResultsUseCase {
+        return SearchQueryResultsUseCase(productsRepository: makeProductsRepository())
     }
     
     // MARK: - Repositories
@@ -70,16 +83,23 @@ final class SearchSceneDIContainer {
         return DefaultProductsRepository()
     }
     
+    func makeProductsQueryRepository() -> ProductsQueryRepository {
+        return DefaultProductsQueryRepository()
+    }
+    
     // MARK: - Search Flow Coordinator
     func makeSearchFlowCoordinator() -> SearchFlowCoordinator {
-        
+
         return SearchFlowCoordinator(dependencies: self)
     }
     
     // Test
     func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator {
         
-        return SearchFlowCoordinator(navCon: navigationController, dependencies: self)
+        return SearchFlowCoordinator(
+            navCon: navigationController,
+            dependencies: self
+        )
     }
 }
 
