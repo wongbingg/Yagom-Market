@@ -9,7 +9,8 @@ import Foundation
 
 protocol ProductsRepository {
     func fetchProductsList(pageNumber: Int,
-                           itemPerPage: Int) async throws -> ProductListResponseDTO
+                           itemPerPage: Int,
+                           searchValue: String?) async throws -> ProductListResponseDTO
     func fetchProductDetail(productId: Int) async throws -> ProductDetail
     func editProductDetail(with editModel: ProductEditRequestDTO,
                            productId: Int) async throws

@@ -12,8 +12,13 @@ final class DefaultProductsRepository {}
 extension DefaultProductsRepository: ProductsRepository {
     
     func fetchProductsList(pageNumber: Int,
-                           itemPerPage: Int) async throws -> ProductListResponseDTO {
-        let api = SearchProductListAPI(pageNumber: pageNumber, itemPerPage: itemPerPage)
+                           itemPerPage: Int,
+                           searchValue: String? = nil) async throws -> ProductListResponseDTO {
+        let api = SearchProductListAPI(
+            pageNumber: pageNumber,
+            itemPerPage: itemPerPage,
+            searchValue: searchValue
+        )
         let response = try await api.execute()
         return response
     }
