@@ -9,8 +9,8 @@ import UIKit
 
 extension UIImageView {
     
-    var imageCacheManager: ImageCacheManager {
-        return URLCacheManager()
+    var imageRepository: ImageRepository {
+        return DefaultImageRepository(imageCacheManager: DefaultImageCacheManager())
     }
     
     static func generate() -> UIImageView {
@@ -32,12 +32,10 @@ extension UIImageView {
         return imageView
     }
     
-    func setImage(with thumbnail: String) {
-        guard let url = URL(string: thumbnail) else { return }
-        imageCacheManager.getImage(with: url) { image in
-            DispatchQueue.main.async {
-                self.image = image
-            }
-        }
+    @MainActor
+    func setImage(with imageURL: String) async throws {
+        let data = try await imageRepository.fetchImage(with: imageURL)
+        guard let image = UIImage(data: data) else { return }
+        self.image = image
     }
 }
