@@ -98,9 +98,12 @@ extension SearchViewController: UISearchBarDelegate {
             searchDefaultView.removeFromSuperview()
             layoutResultView()
             Task {
-                let response = await searchQueryList(keyword: searchText.lowercased())
-                viewModel.searchedResults = response
-                resultTableView.reloadData()
+                do {
+                    try await viewModel.search(keyword: searchText)
+                    resultTableView.reloadData()
+                } catch {
+                    print(error.localizedDescription)
+                }
             }
         }
     }
@@ -113,16 +116,6 @@ extension SearchViewController: UISearchBarDelegate {
             } catch {
                 print(error.localizedDescription)
             }
-        }
-    }
-    
-    private func searchQueryList(keyword: String) async -> [String] {
-        do {
-            let response = try await viewModel.search(keyword: keyword)
-            return response
-        } catch {
-            print(error.localizedDescription)
-            return []
         }
     }
 }

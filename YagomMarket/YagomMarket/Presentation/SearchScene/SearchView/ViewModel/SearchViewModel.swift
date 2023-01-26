@@ -13,7 +13,7 @@ struct SearchViewModelActions {
 }
 
 protocol SearchViewModelInput {
-    func search(keyword: String) async throws -> [String]
+    func search(keyword: String) async throws
     func goToResultVC(with keyword: String) async throws
     func goToHomeTab()
 }
@@ -23,37 +23,29 @@ protocol SearchViewModelOutput {
 protocol SearchViewModel: SearchViewModelInput, SearchViewModelOutput {}
 
 final class DefaultSearchViewModel: SearchViewModel {
-    let actions: SearchViewModelActions
+    private let actions: SearchViewModelActions
+    private let searchQueryUseCase: SearchQueryUseCase
+    private let searchQueryResultsUseCase: SearchQueryResultsUseCase
     var searchedResults: [String] = []
     
-    init(actions: SearchViewModelActions) {
-        self.actions = actions    
+    init(
+        actions: SearchViewModelActions,
+        searchQueryUseCase: SearchQueryUseCase,
+        searchQueryResultsUseCase: SearchQueryResultsUseCase
+    ) {
+        self.actions = actions
+        self.searchQueryUseCase = searchQueryUseCase
+        self.searchQueryResultsUseCase = searchQueryResultsUseCase
     }
     
-    func search(keyword: String) async throws -> [String] {
-        let api = SearchProductListAPI(
-            pageNumber: 1,
-            itemPerPage: 100,
-            searchValue: keyword
-        )
-        let response = try await api.execute()
-        var list = [String]()
-        response.pages.forEach { page in
-            list.append(page.name)
-        }
-        searchedResults = Array(Set(list))
-        return searchedResults
+    func search(keyword: String) async throws {
+        let response = try await searchQueryUseCase.execute(keyword: keyword)
+        searchedResults = response
     }
     
     @MainActor
     func goToResultVC(with keyword: String) async throws {
-        let api = SearchProductListAPI(
-            pageNumber: 1,
-            itemPerPage: 100,
-            searchValue: keyword.lowercased()
-        )
-        
-        let response = try await api.execute()
+        let response = try await searchQueryResultsUseCase.execute(keyword: keyword)
         actions.goToResultVC(response)
     }
     
