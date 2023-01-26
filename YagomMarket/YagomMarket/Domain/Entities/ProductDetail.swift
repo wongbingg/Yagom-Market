@@ -9,6 +9,7 @@ struct ProductDetail {
     let id: Int
     let imageURLs: [String]
     let price: String
+    let currency: Currency
     let vendorName: String
     let time: String
     let description: String
@@ -20,7 +21,7 @@ extension ProductDetail {
         return .init(name: name,
                      description: description,
                      price: Double(price) ?? 0.0,
-                     currency: .KRW,
+                     currency: currency,
                      discountedPrice: nil,
                      stock: 10,
                      secret: URLCommand.secretKey)

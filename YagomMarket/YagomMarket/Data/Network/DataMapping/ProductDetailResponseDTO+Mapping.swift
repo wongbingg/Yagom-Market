@@ -63,6 +63,7 @@ extension ProductDetailResponseDTO {
         return .init(id: id,
                      imageURLs: images.map { $0.toDomain() },
                      price: String(price),
+                     currency: currency,
                      vendorName: vendors.toDomain(),
                      time: createdAt,
                      description: description,
