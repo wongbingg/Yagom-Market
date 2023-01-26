@@ -25,26 +25,32 @@ final class SearchFlowCoordinator {
     }
     
     // test
-    init(navCon: UINavigationController, dependencies: SearchFlowCoordinatorDependencies) {
+    init(
+        navCon: UINavigationController,
+        dependencies: SearchFlowCoordinatorDependencies
+    ) {
         self.navigationController = navCon
         self.dependencies = dependencies
     }
     
     // test
     func start() {
-        let actions = SearchViewModelActions(goToResultVC: goToResultVC(with:))
+        let actions = SearchViewModelActions(
+            goToResultVC: goToResultVC(with:),
+            goToHomeTab: goToHomeTab
+        )
         let searchVC = dependencies.makeSearchViewController(actions: actions)
         navigationController?.pushViewController(searchVC, animated: true)
     }
     
     func generate() -> SearchViewController {
         let actions = SearchViewModelActions(
-            goToResultVC: goToResultVC(with:)
+            goToResultVC: goToResultVC(with:),
+            goToHomeTab: goToHomeTab
         )
         let searchVC = dependencies.makeSearchViewController(
             actions: actions
         )
-//        navigationController = UINavigationController(rootViewController: searchVC)
         return searchVC
     }
     
@@ -58,6 +64,12 @@ final class SearchFlowCoordinator {
             actions: actions
         )
         navigationController?.pushViewController(resultVC, animated: true)
+    }
+    
+    func goToHomeTab() {
+        navigationController?.popViewController(animated: true)
+        let tabBarController = navigationController?.topViewController as! TabBarController
+        tabBarController.selectedIndex = 0
     }
     
     func cellTapped(at id: Int) {
@@ -74,7 +86,6 @@ final class SearchFlowCoordinator {
             imageURLs: imageURLs,
             currentPage: currentPage
         )
-        // CustomModal 설정
         navigationController?.topViewController?.present(imageViewerVC, animated: true)
     }
     

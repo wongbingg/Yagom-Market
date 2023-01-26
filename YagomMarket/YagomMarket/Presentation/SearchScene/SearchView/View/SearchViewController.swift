@@ -83,6 +83,7 @@ final class SearchViewController: UIViewController {
     
     @objc private func homeButtonDidTapped() {
         // 홈뷰로 이동
+        viewModel.goToHomeTab()
     }
 }
 

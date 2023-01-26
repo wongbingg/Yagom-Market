@@ -9,11 +9,13 @@ import Foundation
 
 struct SearchViewModelActions {
     let goToResultVC: (ProductListResponseDTO) -> Void
+    let goToHomeTab: () -> Void
 }
 
 protocol SearchViewModelInput {
     func search(keyword: String) async throws -> [String]
     func goToResultVC(with keyword: String) async throws
+    func goToHomeTab()
 }
 protocol SearchViewModelOutput {
     var searchedResults: [String] { get set }
@@ -53,5 +55,9 @@ final class DefaultSearchViewModel: SearchViewModel {
         
         let response = try await api.execute()
         actions.goToResultVC(response)
+    }
+    
+    func goToHomeTab() {
+        actions.goToHomeTab()
     }
 }
