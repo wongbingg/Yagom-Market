@@ -31,7 +31,6 @@ final class ChatFlowCoordinator {
             searchTapSelected: searchTapSelected
         )
         let chatVC = dependencies.makeChatViewController(actions: actions)
-//        navigationController = UINavigationController(rootViewController: chatVC)
         return chatVC
     }
     
