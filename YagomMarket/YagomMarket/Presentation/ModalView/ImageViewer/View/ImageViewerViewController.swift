@@ -9,7 +9,12 @@ import UIKit
 
 final class ImageViewerViewController: UIViewController {
     // MARK: Properties
-    private let scrollView: UIScrollView = {
+    private var originSize = CGSize(width: 0, height: 0)
+    private var originalPosition = CGPoint(x: 0, y: 0)
+    private let customTransitioningDelegate = ImageViewerTransitioningDelegate()
+    
+    // MARK: UI Components
+    private let mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isPagingEnabled = true
@@ -29,18 +34,11 @@ final class ImageViewerViewController: UIViewController {
         return pageControl
     }()
     
-    private let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
-    private var images: [UIImage] = []
     
     // MARK: Initializers
     init(imageURLs: [String], currentPage: Int) {
         super.init(nibName: nil, bundle: nil)
+        setupModalStyle()
         setImages(imageURLs: imageURLs)
         setupPageControl(total: imageURLs.count,
                          index: currentPage)
@@ -59,20 +57,28 @@ final class ImageViewerViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.scrollView.contentOffset.x = (UIScreen.main.bounds.maxX) * CGFloat(pageControl.currentPage)
+        self.mainScrollView.contentOffset.x = (UIScreen.main.bounds.maxX) * CGFloat(pageControl.currentPage)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        // 페이지 인덱스 정보를 DetailViewController 에 전달해주기
+        // TODO: 페이지 인덱스 정보를 DetailViewController 에 전달해주기
     }
     
     // MARK: Methods
+    private func setupModalStyle() {    
+        modalPresentationStyle = .custom
+        modalTransitionStyle = .crossDissolve
+        transitioningDelegate = customTransitioningDelegate
+    }
+    
     private func setImages(imageURLs: [String]) {
         for url in imageURLs {
             let imageView = UIImageView.generate()
             imageView.clipsToBounds = false
             imageView.contentMode = .scaleAspectFit
             imageView.setImage(with: url)
+            imageView.isUserInteractionEnabled = true
+            adoptPinchGestureRecognizer(to: imageView)
             imageStackView.addArrangedSubview(imageView)
         }
     }
@@ -89,18 +95,50 @@ final class ImageViewerViewController: UIViewController {
     }
     
     private func setupScrollView() {
-        scrollView.delegate = self
+        mainScrollView.delegate = self
+    }
+    
+    private func adoptPinchGestureRecognizer(to imageView: UIImageView) {
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(
+            target: self,
+            action: #selector(pinchAction(_:))
+        )
+        imageView.addGestureRecognizer(pinchGestureRecognizer)
     }
     
     @objc func pageValueDidChanged(_ sender: UIPageControl) {
         UIView.animate(withDuration: 0.3, delay: 0) {
-            self.scrollView.contentOffset.x = (UIScreen.main.bounds.maxX) * CGFloat(sender.currentPage)
+            self.mainScrollView.contentOffset.x = (UIScreen.main.bounds.maxX) * CGFloat(sender.currentPage)
+        }
+    }
+    
+    @objc private func pinchAction(_ sender: UIPinchGestureRecognizer) {
+        
+        guard let imageView = sender.view as? UIImageView else { return }
+        
+        if sender.state == .began {
+            originSize = imageView.frame.size
+        } else if sender.state == .changed  {
+            if sender.scale < 0.7 {
+                imageView.transform = CGAffineTransform.init(scaleX: 0.7, y: 0.7)
+            } else if sender.scale > 3.0 {
+                imageView.transform = CGAffineTransform.init(scaleX: 3.0, y: 3.0)
+            } else {
+                imageView.transform = CGAffineTransform.init(scaleX: sender.scale, y: sender.scale)
+            }
+        } else if sender.state == .ended {
+            if imageView.frame.size.width < originSize.width {
+                UIView.animate(withDuration: 0.1) {
+                    imageView.transform = CGAffineTransform.identity
+                }
+            }
         }
     }
 }
 
 // MARK: - UIScrollViewDelegate
 extension ImageViewerViewController: UIScrollViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let width = UIScreen.main.bounds.width
         let halfWidth = UIScreen.main.bounds.width/2
@@ -126,28 +164,27 @@ extension ImageViewerViewController: UIScrollViewDelegate {
 private extension ImageViewerViewController {
     
      func layoutInitialView() {
-        view.backgroundColor = .black
         view.addSubview(pageControl)
+         view.addSubview(mainScrollView)
+         mainScrollView.addSubview(imageStackView)
         NSLayoutConstraint.activate([
             pageControl.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             pageControl.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
-        view.addSubview(scrollView)
-        scrollView.addSubview(imageStackView)
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            mainScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            mainScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
         NSLayoutConstraint.activate([
-            imageStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            imageStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            imageStackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            imageStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            imageStackView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor)
+            imageStackView.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor),
+            imageStackView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor),
+            imageStackView.leadingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.leadingAnchor),
+            imageStackView.trailingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.trailingAnchor),
+            imageStackView.heightAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.heightAnchor)
         ])
     }
 }
