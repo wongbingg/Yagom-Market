@@ -183,7 +183,7 @@ final class RegisterView: UIView {
         let price = model.price.replacingOccurrences(of: "원", with: "")
         priceTextField.text = price
         model.imageURLs.forEach { imageURL in
-            let imageView = UIImageView.generate2()
+            let imageView = UIImageView.generateToRegister()
             imageView.setImage(with: imageURL)
             photoStackView.addArrangedSubview(imageView)
         }

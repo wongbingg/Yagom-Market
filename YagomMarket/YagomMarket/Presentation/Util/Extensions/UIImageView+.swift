@@ -22,7 +22,7 @@ extension UIImageView {
         return imageView
     }
     
-    static func generate2() -> UIImageView {
+    static func generateToRegister() -> UIImageView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
