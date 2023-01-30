@@ -17,10 +17,14 @@ struct APIClient {
     }
 
     func requestData(with urlRequest: URLRequest) async throws -> Data {
-        let (data, response) = try await session.data(for: urlRequest) // 여기서의 에러처리는?
-        let successRange = 200..<300
-        guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { throw APIError.unknown }
-        guard successRange.contains(statusCode) else { throw APIError.response(statusCode) }
-        return data
+        do {
+            let (data, response) = try await session.data(for: urlRequest)
+            let successRange = 200..<300
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { throw APIError.unknown }
+            guard successRange.contains(statusCode) else { throw APIError.response(statusCode) }
+            return data
+        } catch {
+            throw APIError.serverConnectError
+        }
     }
 }

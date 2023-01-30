@@ -9,13 +9,16 @@ import Foundation
 
 enum APIError: LocalizedError {
     case unknown
+    case serverConnectError
     case response(Int)
     case invalidURL
     
-    var errorDescription: String? {
+    var errorDescription: String {
         switch self {
         case .unknown:
             return "Unknown error has occured."
+        case .serverConnectError:
+            return "서버에 연결할 수 없습니다."
         case .response(let code):
             return "현재 코드: \(code) \n 서버코드가 200~300 범위를 넘었습니다. 요청이 잘못되었습니다."
         case .invalidURL:
