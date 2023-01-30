@@ -117,7 +117,7 @@ final class ProductDetailView: UIView {
         layoutMainStackView()
         layoutBackgroundView()
         layoutPagingLabel()
-        
+
         adopScrollViewDelegate()
     }
     
@@ -126,18 +126,18 @@ final class ProductDetailView: UIView {
     }
     
     // MARK: Methods
-    func setupData(with model: ProductDetail) {
+    func setupData(with model: ProductDetail) async throws {
         nameLabel.text = model.name
         descriptionTextView.text = model.description
         vendorNameLabel.text = model.vendorName.appending(" •")
         setupPrice(with: model)
         timeLabel.text = model.time.split(separator: "T").compactMap { String($0) }[0]
         guard imageStackView.arrangedSubviews.isEmpty else { return }
-        model.imageURLs.forEach({ imageURL in
+        for imageURL in model.imageURLs {
             let imageView = UIImageView.generate()
-            imageView.setImage(with: imageURL)
+            try await imageView.setImage(with: imageURL)
             imageStackView.addArrangedSubview(imageView)
-        })
+        }
     }
     
     private func setupPrice(with data: ProductDetail) {

@@ -39,10 +39,16 @@ final class ImageViewerViewController: UIViewController {
     init(imageURLs: [String], currentPage: Int) {
         super.init(nibName: nil, bundle: nil)
         setupModalStyle()
-        setImages(imageURLs: imageURLs)
         setupPageControl(total: imageURLs.count,
                          index: currentPage)
         setupScrollView()
+        Task {
+            do {
+                try await setImages(imageURLs: imageURLs)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -71,12 +77,12 @@ final class ImageViewerViewController: UIViewController {
         transitioningDelegate = customTransitioningDelegate
     }
     
-    private func setImages(imageURLs: [String]) {
+    private func setImages(imageURLs: [String]) async throws {
         for url in imageURLs {
             let imageView = UIImageView.generate()
             imageView.clipsToBounds = false
             imageView.contentMode = .scaleAspectFit
-            imageView.setImage(with: url)
+            try await imageView.setImage(with: url)
             imageView.isUserInteractionEnabled = true
             adoptPinchGestureRecognizer(to: imageView)
             imageStackView.addArrangedSubview(imageView)

@@ -79,9 +79,14 @@ final class RegisterViewController: UIViewController {
     
     // MARK: Methods
     private func setupInitialView() {
-        if viewModel.model != nil {
-            registerView.setupData(with: viewModel.model)
-            registerButton.setTitle("수정", for: .normal)
+        guard viewModel.model != nil else { return }
+        registerButton.setTitle("수정", for: .normal)
+        Task {
+            do {
+                try await registerView.setupData(with: viewModel.model)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     

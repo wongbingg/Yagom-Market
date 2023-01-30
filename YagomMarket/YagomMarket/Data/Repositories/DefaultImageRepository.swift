@@ -18,7 +18,7 @@ final class DefaultImageRepository {
 extension DefaultImageRepository: ImageRepository {
   
     func fetchImage(with imagePath: String) async throws -> Data {
-        guard let imageURL = URL(string: imagePath) else { throw APIError.unknown }
+        guard let imageURL = URL(string: imagePath) else { throw APIError.invalidURL }
         return try await imageCacheManager.getImage(with: imageURL)
     }
 }

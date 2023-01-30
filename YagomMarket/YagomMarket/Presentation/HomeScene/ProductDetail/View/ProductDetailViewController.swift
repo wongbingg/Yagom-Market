@@ -44,7 +44,11 @@ final class ProductDetailViewController: UIViewController {
     private func setupInitialView() {
         Task {
             guard let model = await viewModel.productDetail else { return }
-            detailView.setupData(with: model)
+            do {
+                try await detailView.setupData(with: model)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     

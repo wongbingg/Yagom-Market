@@ -174,7 +174,8 @@ final class RegisterView: UIView {
         return 6 - photoStackView.subviews.count
     }
     
-    func setupData(with model: ProductDetail?) {
+    @MainActor
+    func setupData(with model: ProductDetail?) async throws {
         guard let model = model else { return }
         addPhotoButton.removeFromSuperview()
         nameTextField.text = model.name
@@ -182,9 +183,9 @@ final class RegisterView: UIView {
         descriptionTextView.textColor = .black
         let price = model.price.replacingOccurrences(of: "원", with: "")
         priceTextField.text = price
-        model.imageURLs.forEach { imageURL in
+        for imageURL in model.imageURLs {
             let imageView = UIImageView.generateToRegister()
-            imageView.setImage(with: imageURL)
+            try await imageView.setImage(with: imageURL)
             photoStackView.addArrangedSubview(imageView)
         }
     }
