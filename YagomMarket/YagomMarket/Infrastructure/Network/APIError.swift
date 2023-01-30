@@ -13,7 +13,7 @@ enum APIError: LocalizedError {
     case response(Int)
     case invalidURL
     
-    var errorDescription: String {
+    var errorDescription: String? {
         switch self {
         case .unknown:
             return "Unknown error has occured."
