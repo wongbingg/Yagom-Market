@@ -30,12 +30,14 @@ final class MyPageSceneDIContainer {
 //    }
     
     // MARK: - Modal View
-    func makeRegisterViewController(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewController {
+    func makeRegisterViewController(model: ProductDetail?,
+                                    actions: RegisterViewModelActions) -> RegisterViewController {
         let viewModel = makeRegisterViewModel(model: model, actions: actions)
         return RegisterViewController(with: viewModel)
     }
     
-    func makeRegisterViewModel(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewModel {
+    func makeRegisterViewModel(model: ProductDetail?,
+                               actions: RegisterViewModelActions) -> RegisterViewModel {
         return DefaultRegisterViewModel(model: model, actions: actions)
     }
     // MARK: - UseCase

@@ -23,19 +23,22 @@ final class SearchSceneDIContainer {
     }
     
     // MARK: - Result
-    func makeResultViewController(model: ProductListResponseDTO, actions: ResultViewModelAction) -> ResultViewController {
+    func makeResultViewController(model: ProductListResponseDTO,
+                                  actions: ResultViewModelAction) -> ResultViewController {
         let viewModel = makeResultViewModel(model: model, actions: actions)
         return ResultViewController(viewModel: viewModel)
     }
     
-    func makeResultViewModel(model: ProductListResponseDTO,actions: ResultViewModelAction) -> ResultViewModel {
+    func makeResultViewModel(model: ProductListResponseDTO,
+                             actions: ResultViewModelAction) -> ResultViewModel {
         return DefaultResultViewModel(model: model, actions: actions)
     }
     
     // MARK: - Product Detail
-    func makeProductDetailViewController(productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewController {
+    func makeProductDetailViewController(productId: Int,
+                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController {
         let viewModel = makeProductDetailViewModel(productId: productId, actions: actions)
-        return ProductDetailViewController(viewModel: viewModel)
+        return ProductDetailViewController(viewModel: viewModel )
     }
     
     func makeProductDetailViewModel(productId: Int,
@@ -49,16 +52,19 @@ final class SearchSceneDIContainer {
     }
     
     // MARK: - Modal View
-    func makeRegisterViewController(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewController {
+    func makeRegisterViewController(model: ProductDetail?,
+                                    actions: RegisterViewModelActions) -> RegisterViewController {
         let viewModel = makeRegisterViewModel(model: model, actions: actions)
         return RegisterViewController(with: viewModel)
     }
     
-    func makeRegisterViewModel(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewModel {
+    func makeRegisterViewModel(model: ProductDetail?,
+                               actions: RegisterViewModelActions) -> RegisterViewModel {
         return DefaultRegisterViewModel(model: model, actions: actions)
     }
     
-    func makeImageViewerController(imageURLs: [String], currentPage: Int) -> ImageViewerViewController {
+    func makeImageViewerController(imageURLs: [String],
+                                   currentPage: Int) -> ImageViewerViewController {
         return ImageViewerViewController(imageURLs: imageURLs, currentPage: currentPage)
     }
     // MARK: - UseCase

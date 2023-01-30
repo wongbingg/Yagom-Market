@@ -11,7 +11,8 @@ import FirebaseAuth
 protocol LoginFlowCoordinatorDependencies: AnyObject {
     func makeLoginViewController(actions: LoginViewModelActions) -> LoginViewController
     func makeSigninViewController(actions: SigninViewModelActions) -> SigninViewController
-    func makeTabBarController(navigationController: UINavigationController, userUID: String) -> TabBarController
+    func makeTabBarController(navigationController: UINavigationController,
+                              userUID: String) -> TabBarController
 }
 
 final class LoginFlowCoordinator {
@@ -36,7 +37,10 @@ final class LoginFlowCoordinator {
     
     func successLogin(_ userUID: String) {
         LoginCacheManager().setNewLoginInfo(userUID)
-        let tabBarController = dependencies.makeTabBarController(navigationController: navigationController, userUID: userUID)
+        let tabBarController = dependencies.makeTabBarController(
+            navigationController: navigationController,
+            userUID: userUID
+        )
         navigationController.pushViewController(tabBarController, animated: true)
     }
     

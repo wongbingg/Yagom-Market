@@ -23,9 +23,12 @@ final class HomeSceneDIContainer {
     }
     
     // MARK: - Product Detail
-    func makeProductDetailViewController(productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewController {
+    func makeProductDetailViewController(productId: Int,
+                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController {
         let viewModel = makeProductDetailViewModel(productId: productId, actions: actions)
-        return ProductDetailViewController(viewModel: viewModel)
+        return ProductDetailViewController(
+            viewModel: viewModel
+        )
     }
     
     func makeProductDetailViewModel(productId: Int,
@@ -38,17 +41,23 @@ final class HomeSceneDIContainer {
     }
     
     // MARK: - Modal View
-    func makeRegisterViewController(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewController {
+    func makeRegisterViewController(model: ProductDetail?,
+                                    actions: RegisterViewModelActions) -> RegisterViewController {
         let viewModel = makeRegisterViewModel(model: model, actions: actions)
         return RegisterViewController(with: viewModel)
     }
     
-    func makeRegisterViewModel(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewModel {
+    func makeRegisterViewModel(model: ProductDetail?,
+                               actions: RegisterViewModelActions) -> RegisterViewModel {
         return DefaultRegisterViewModel(model: model, actions: actions)
     }
     
-    func makeImageViewerController(imageURLs: [String], currentPage: Int) -> ImageViewerViewController {
-        return ImageViewerViewController(imageURLs: imageURLs, currentPage: currentPage)
+    func makeImageViewerController(imageURLs: [String],
+                                   currentPage: Int) -> ImageViewerViewController {
+        return ImageViewerViewController(
+            imageURLs: imageURLs,
+            currentPage: currentPage
+        )
     }
     
     // MARK: - UseCase
@@ -72,6 +81,10 @@ final class HomeSceneDIContainer {
     // MARK: - Repositories
     func makeProductsRepository() -> ProductsRepository {
         return DefaultProductsRepository()
+    }
+    
+    func makeImageRepository() -> ImageRepository {
+        return DefaultImageRepository(imageCacheManager: DefaultImageCacheManager())
     }
     
     // MARK: - Home Flow Coordinator
