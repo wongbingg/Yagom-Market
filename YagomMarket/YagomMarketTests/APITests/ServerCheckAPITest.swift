@@ -26,8 +26,12 @@ final class ServerCheckAPITest: XCTestCase {
         // given
         var response: String?
         // when
-        response = try await sut.execute()
-        print(response!)
+        do {
+            response = try await sut.execute()
+            print(response!)
+        } catch let error as APIError{
+            print(error.errorDescription)
+        }
         // then
         XCTAssertEqual(response, "\"OK\"")
     }
