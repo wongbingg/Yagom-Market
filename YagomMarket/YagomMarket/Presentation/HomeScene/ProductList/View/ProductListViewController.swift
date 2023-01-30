@@ -68,8 +68,14 @@ final class ProductListViewController: UIViewController {
             do {
                 _ = try await viewModel.resetToFirstPage()
                 collectionView.reloadData()
-            } catch {
-                print(error.localizedDescription)
+            } catch let error as APIError {
+                DefaultAlertBuilder(
+                    title: "에러",
+                    message: error.errorDescription,
+                    preferredStyle: .alert
+                )
+                .setButton(name: "확인", style: .default)
+                .showAlert(on: self)
             }
         }
     }
@@ -81,8 +87,15 @@ final class ProductListViewController: UIViewController {
                     _ = try await self.viewModel.resetToFirstPage()
                     self.collectionView.reloadData()
                     sender.endRefreshing()
-                } catch {
-                    print(error.localizedDescription)
+                } catch let error as APIError {
+                    DefaultAlertBuilder(
+                        title: "에러",
+                        message: error.errorDescription,
+                        preferredStyle: .alert
+                    )
+                    .setButton(name: "확인", style: .default)
+                    .showAlert(on: self)
+                    sender.endRefreshing()
                 }
             }
         }
@@ -182,10 +195,7 @@ extension ProductListViewController: UIScrollViewDelegate {
 
 extension ProductListViewController: RegisterViewControllerDelegate {
     func viewWillDisappear() {
-//        await MainActor.run { [weak self] in
-//            try await self?.viewModel.resetToFirstPage()
-//            self?.collectionView.reloadData()
-//        }
+        // TODO: RegisterView에서 상품등록 후 해당상품이 바로 업데이트 되도록
     }
 }
 

@@ -52,8 +52,11 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         do {
             let response = try await fetchProductDetailUseCase.execute(productId: productId)
             return response
+        } catch let error as APIError {
+            print(error.errorDescription ?? "Api Error 발생")
+            return nil
         } catch {
-            print(error)
+            print(error.localizedDescription)
             return nil
         }
     }
