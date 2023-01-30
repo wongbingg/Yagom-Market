@@ -114,7 +114,7 @@ extension ProductListViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ProductGridCell else {
             return UICollectionViewCell()
         }
-        cell.setupUIComponents(with: viewModel.productList[indexPath.row], at: indexPath.row)
+        cell.setupUIComponents(with: viewModel.productList[indexPath.row])
         return cell
     }
 }
@@ -152,7 +152,7 @@ extension ProductListViewController: UITabBarControllerDelegate {
             viewModel.registerTapSelected()
             return false
         }
-
+        
         if viewController == tabBarController.children[1] {
             viewModel.searchTapSelected()
             return false

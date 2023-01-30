@@ -65,7 +65,7 @@ extension ResultViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ProductGridCell else {
             return UICollectionViewCell()
         }
-        cell.setupUIComponents(with: viewModel.model.pages[indexPath.row].toDomain(), at: indexPath.row)
+        cell.setupUIComponents(with: viewModel.model.pages[indexPath.row].toDomain())
         cell.resultViewSetup()
         return cell
     }

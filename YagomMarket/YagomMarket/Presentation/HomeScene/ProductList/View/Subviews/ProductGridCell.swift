@@ -9,9 +9,7 @@ import UIKit
 
 final class ProductGridCell: UICollectionViewCell {
     // MARK: Properties
-    private var index: Int?
-    private let imageCacheManager: ImageCacheManager = URLCacheManager()
-    private let operationQueue = OperationQueue.current
+    private var task: Task<Sendable, Error>?
     
     // MARK: UI Component
     private let mainStackView: UIStackView = {
@@ -90,13 +88,12 @@ final class ProductGridCell: UICollectionViewCell {
     }
     
     // MARK: Methods
-    func setupUIComponents(with data: ProductCell?, at index: Int) {
-        self.index = index
+    func setupUIComponents(with data: ProductCell?) {
         guard let data = data else { return }
         titleLabel.text = data.title
         setupPrice(with: data)
         setupVendorName(with: data)
-        setupImage(with: URL(string: data.imageURL), at: index)
+        setupImage(with: data.imageURL)
     }
     
     func resultViewSetup() {
@@ -126,23 +123,22 @@ final class ProductGridCell: UICollectionViewCell {
         }
     }
     
-    private func setupImage(with url: URL?, at index: Int) {
-        guard let url = url else { return }
-        let workItem = BlockOperation {
-            self.imageCacheManager.getImage(with: url) { image in // 이미지 처리 고민
-                guard self.index == index else { return }
-                DispatchQueue.main.async {
-                    self.productImageView.image = image
-                }
+    private func setupImage(with imagePath: String) {
+        task = Task {
+            try Task.checkCancellation()
+            do {
+                try await productImageView.setImage(with: imagePath)
+            } catch let error as APIError {
+                print(error.errorDescription)
             }
+            return Sendable.self
         }
-        operationQueue?.addOperation(workItem)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         productImageView.image = UIImage()
-        operationQueue?.cancelAllOperations()
+        task?.cancel()
     }
 }
 
