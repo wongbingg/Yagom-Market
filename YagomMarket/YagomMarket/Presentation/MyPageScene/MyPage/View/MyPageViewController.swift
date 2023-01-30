@@ -45,13 +45,11 @@ extension MyPageViewController: UITabBarControllerDelegate {
                           shouldSelect viewController: UIViewController) -> Bool {
         if viewController is RegisterViewController {
             viewModel.registerTapSelected()
-            print("마이페이지에서 등록뷰 탭")
             return false
         }
 
         if viewController == tabBarController.children[1] {
             viewModel.searchTapSelected()
-            print("마이페이지에서 서치뷰 탭")
             return false
         }
         return true
