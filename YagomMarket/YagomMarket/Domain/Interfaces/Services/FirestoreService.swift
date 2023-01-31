@@ -10,10 +10,9 @@ import FirebaseFirestore
 
 protocol FirestoreService {
     associatedtype T
-    
-    func create(_ entity: T) async throws
-    func read() async throws -> T
-    func update(to entity: T) async throws
-    func delete() async throws
-}
 
+    func create(collectionId: String, documentId: String, entity: T) async throws
+    func read(collectionId: String, documentId: String, entity: T) async throws -> T
+    func update(collectionId: String, documentId: String, to entity: T) async throws
+    func delete(collectionId: String, documentId: String) async throws
+}
