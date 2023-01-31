@@ -8,15 +8,26 @@
 import Foundation
 
 struct LoginCacheManager {
-    func setNewLoginInfo(_ info: String) {
+    static func setNewLoginInfo(_ info: String) {
         UserDefaults.standard.set(info, forKey: "loginInfo")
     }
     
-    func fetchPreviousInfo() -> String? {
+    static func fetchPreviousInfo() -> String? {
         return UserDefaults.standard.string(forKey: "loginInfo")
     }
     
-    func removeLoginInfo() {
+    static func removeLoginInfo() {
         UserDefaults.standard.removeObject(forKey: "loginInfo")
+    }
+}
+
+enum LoginCacheError: LocalizedError {
+    case noPreviousInfo
+    
+    var errorDescription: String? {
+        switch self {
+        case .noPreviousInfo:
+            return "이전에 저장된 정보가 없습니다."
+        }
     }
 }
