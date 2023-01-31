@@ -8,6 +8,7 @@
 struct LoginInfo {
     let id: String
     let password: String
+    let vendorName: String?
     
     func validate() throws {
         guard id.contains("@") && id.contains(".") else {
