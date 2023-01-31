@@ -12,6 +12,7 @@ enum APIError: LocalizedError {
     case serverConnectError
     case response(Int)
     case invalidURL
+    case failToParse
     
     var errorDescription: String? {
         switch self {
@@ -23,6 +24,8 @@ enum APIError: LocalizedError {
             return "현재 코드: \(code) \n 서버코드가 200~300 범위를 넘었습니다. 요청이 잘못되었습니다."
         case .invalidURL:
             return "잘못된 URL 입니다."
+        case .failToParse:
+            return "JSON decoding에 실패했습니다."
         }
     }
 }

@@ -22,7 +22,11 @@ extension API {
             let result = String(data: data, encoding: .utf8)!
             return result as! Self.ResponseType
         }
-        let result = try JSONDecoder().decode(ResponseType.self, from: data)
-        return result
+        do {
+            let result = try JSONDecoder().decode(ResponseType.self, from: data)
+            return result
+        } catch {
+            throw APIError.failToParse
+        }
     }
 }
