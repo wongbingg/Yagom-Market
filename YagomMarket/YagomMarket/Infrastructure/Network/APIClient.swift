@@ -8,7 +8,6 @@
 import Foundation
 
 struct APIClient {
-    typealias CompletionHandler = (Result<Data, Error>) -> Void
     static let shared = APIClient(sesseion: URLSession.shared)
     private let session: URLSession
     

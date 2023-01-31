@@ -13,7 +13,6 @@ protocol API {
 }
 
 extension API {
-    typealias CompletionHandler = (Result<ResponseType, Error>) -> Void
     
     func execute(using client: APIClient = APIClient.shared) async throws -> ResponseType {
         guard let urlRequest = configuration?.makeURLRequest() else { throw APIError.invalidURL }
