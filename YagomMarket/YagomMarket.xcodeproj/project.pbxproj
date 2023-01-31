@@ -31,6 +31,7 @@
 		AF0166342976D9190083DDAD /* SearchFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0166332976D9190083DDAD /* SearchFlowCoordinator.swift */; };
 		AF0166362976D9B20083DDAD /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0166352976D9B20083DDAD /* SearchViewModel.swift */; };
 		AF0166382976DA830083DDAD /* SearchSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0166372976DA830083DDAD /* SearchSceneDIContainer.swift */; };
+		AF06CEF22988CA5D0004676C /* MockURLSessionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06CEF12988CA5D0004676C /* MockURLSessionTest.swift */; };
 		AF0796992924A8E7002E876C /* SearchDeleteURIAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796982924A8E7002E876C /* SearchDeleteURIAPI.swift */; };
 		AF07969D2924AE73002E876C /* SearchDeleteURIAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF07969C2924AE73002E876C /* SearchDeleteURIAPITest.swift */; };
 		AF0796A12924BE62002E876C /* DeleteProductAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796A02924BE62002E876C /* DeleteProductAPI.swift */; };
@@ -160,6 +161,7 @@
 		AF0166332976D9190083DDAD /* SearchFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFlowCoordinator.swift; sourceTree = "<group>"; };
 		AF0166352976D9B20083DDAD /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		AF0166372976DA830083DDAD /* SearchSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSceneDIContainer.swift; sourceTree = "<group>"; };
+		AF06CEF12988CA5D0004676C /* MockURLSessionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSessionTest.swift; sourceTree = "<group>"; };
 		AF0796982924A8E7002E876C /* SearchDeleteURIAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDeleteURIAPI.swift; sourceTree = "<group>"; };
 		AF07969C2924AE73002E876C /* SearchDeleteURIAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDeleteURIAPITest.swift; sourceTree = "<group>"; };
 		AF0796A02924BE62002E876C /* DeleteProductAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductAPI.swift; sourceTree = "<group>"; };
@@ -858,6 +860,7 @@
 			isa = PBXGroup;
 			children = (
 				AFD9AB4F292313BA009A67AB /* APIConfigurationTest.swift */,
+				AF06CEF12988CA5D0004676C /* MockURLSessionTest.swift */,
 				AF71748129227BE40004FC02 /* ServerCheckAPITest.swift */,
 				AF71747F29227BCB0004FC02 /* SearchProductListAPITest.swift */,
 				AFD9AB4D29231238009A67AB /* SearchProductDetailAPITest.swift */,
@@ -1199,6 +1202,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF06CEF22988CA5D0004676C /* MockURLSessionTest.swift in Sources */,
 				AF71748229227BE40004FC02 /* ServerCheckAPITest.swift in Sources */,
 				AFB4C3FF2980212A00D6749E /* FirestoreServiceTest.swift in Sources */,
 				AFD9AB56292325DB009A67AB /* RegisterProductAPITest.swift in Sources */,
