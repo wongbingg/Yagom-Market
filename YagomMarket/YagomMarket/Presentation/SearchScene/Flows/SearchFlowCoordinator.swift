@@ -70,6 +70,7 @@ final class SearchFlowCoordinator {
         navigationController?.popViewController(animated: true)
         let tabBarController = navigationController?.topViewController as! TabBarController
         tabBarController.selectedIndex = 0
+        navigationController?.navigationBar.topItem?.title = "Home"
     }
     
     func cellTapped(at id: Int) {

@@ -37,11 +37,16 @@ final class ProductListViewController: UIViewController {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
         adoptTabBarDelegate()
+        setupNavigationBar()
     }
     
     // MARK: Methods
     private func adoptTabBarDelegate() {
         tabBarController?.delegate = self
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.topItem?.title = "Home"
     }
     
     private func setupCollectionView() {

@@ -32,6 +32,11 @@ final class ChatViewController: UIViewController {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
         adoptTabBarDelegate()
+        setupNavigationBar()
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.topItem?.title = "Chat"
     }
     
     private func adoptTabBarDelegate() {
