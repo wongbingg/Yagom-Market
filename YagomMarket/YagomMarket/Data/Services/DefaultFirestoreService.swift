@@ -7,48 +7,55 @@
 
 import FirebaseFirestore
 
-final class DefaultFirestoreService: FirestoreService {
-    typealias T = UserProfile
-    
+protocol Entity {
+    func toDictionary() -> Dictionary<String, Any>
+    func toEntity(with documentSnapshot: DocumentSnapshot) -> Self
+}
+
+final class DefaultFirestoreService<E: Entity>: FirestoreService {
+    typealias T = E
     private let dataBase = Firestore.firestore()
-    private let collectionId: String
-    private let documentId: String
     
-    init(collectionId: String, documentId: String) {
-        self.collectionId = collectionId
-        self.documentId = documentId
+    func create(collectionId: String,
+                documentId: String,
+                entity: E) async throws {
+        let dictionary = entity.toDictionary()
+        try await dataBase
+            .collection(collectionId)
+            .document(documentId)
+            .setData(dictionary)
     }
     
-    func create(_ entity: UserProfile) async throws {
+    func read(collectionId: String,
+              documentId: String,
+              entity: E) async throws -> E {
+        let documentSnapshot = try await dataBase
+            .collection(collectionId)
+            .document(documentId)
+            .getDocument()
+        return documentSnapshot.toEntity(entity)!
+    }
+    
+    func update(collectionId: String,
+                documentId: String,
+                to entity: E) async throws {
         let dictionary = entity.toDictionary()
-        try await dataBase.collection(collectionId)
+        try await dataBase
+            .collection(collectionId)
             .document(documentId).setData(dictionary)
     }
     
-    func read() async throws -> UserProfile {
-        let documentSnapshot = try await dataBase.collection(collectionId)
-            .document(documentId).getDocument()
-        return documentSnapshot.toUserProfile()!
-        
-    }
-    
-    func update(to entity: UserProfile) async throws {
-        let dictionary = entity.toDictionary()
-        try await dataBase.collection(collectionId)
-            .document(documentId).setData(dictionary)
-    }
-    
-    func delete() async throws {
-        try await dataBase.collection(collectionId)
+    func delete(collectionId: String,
+                documentId: String) async throws {
+        try await dataBase
+            .collection(collectionId)
             .document(documentId).delete()
     }
 }
 
 extension DocumentSnapshot {
-    func toUserProfile() -> UserProfile? {
-        guard let name = self.get("name") as? String,
-              let email = self.get("email") as? String,
-              let likedProductIds = self.get("likedProductIds") as? [Int] else { return nil }
-        return .init(name: name, email: email, likedProductIds: likedProductIds)
+
+    func toEntity<E: Entity>(_ e: E) -> E? {
+        e.toEntity(with: self)
     }
 }
