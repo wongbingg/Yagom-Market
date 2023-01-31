@@ -71,6 +71,18 @@ final class SigninViewController: UIViewController {
         return textField
     }()
     
+    private let vendorNameTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addLeftPadding()
+        textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.systemGray3.cgColor
+        textField.layer.cornerRadius = 5
+        textField.placeholder = "VendorName을 입력하세요"
+        return textField
+    }()
+    
     private let viewModel: SigninViewModel
     
     init(with viewModel: SigninViewModel) {
@@ -104,8 +116,9 @@ final class SigninViewController: UIViewController {
     
     private func retrieveInfo() -> LoginInfo? {
         guard let id = idTextField.text,
-              let password = passwordTextField.text else { return nil }
-        return LoginInfo(id: id, password: password)
+              let password = passwordTextField.text,
+              let vendorName = vendorNameTextField.text else { return nil }
+        return LoginInfo(id: id, password: password, vendorName: vendorName)
     }
     
     private func successAlert(with id: String) {
@@ -150,6 +163,7 @@ private extension SigninViewController {
         mainStackView.addArrangedSubview(textFieldStackView)
         textFieldStackView.addArrangedSubview(idTextField)
         textFieldStackView.addArrangedSubview(passwordTextField)
+        textFieldStackView.addArrangedSubview(vendorNameTextField)
         mainStackView.addArrangedSubview(registerButton)
     }
     
