@@ -97,12 +97,12 @@ final class ProductDetailViewController: UIViewController {
     }
     
     private func showDeleteAction() {
-        DefaultAlertBuilder(title: "안내", message: "정말 삭제 하시겠습니까?", preferredStyle: .alert)
-            .setButton(name: "예", style: .default) { [self] in
+        DefaultAlertBuilder(title: .alert, message: "정말 삭제 하시겠습니까?", preferredStyle: .alert)
+            .setButton(name: .yes, style: .default) { [self] in
                 performDelete()
                 self.navigationController?.popViewController(animated: true)
             }
-            .setButton(name: "아니오", style: .destructive, nil)
+            .setButton(name: .no, style: .destructive, nil)
             .showAlert(on: self)
     }
     
@@ -119,13 +119,13 @@ final class ProductDetailViewController: UIViewController {
     
     @objc private func rightBarButtonDidTapped() {
         DefaultAlertBuilder(preferredStyle: .actionSheet)
-            .setButton(name: "수정", style: .default) {
+            .setButton(name: .edit, style: .default) {
                 self.showEditView()
             }
-            .setButton(name: "삭제", style: .destructive) {
+            .setButton(name: .delete, style: .destructive) {
                 self.showDeleteAction()
             }
-            .setButton(name: "cancel", style: .cancel, nil)
+            .setButton(name: .cancel, style: .cancel, nil)
             .showAlert(on: self)
     }
 }

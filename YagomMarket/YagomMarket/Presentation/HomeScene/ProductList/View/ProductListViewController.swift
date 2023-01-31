@@ -75,11 +75,11 @@ final class ProductListViewController: UIViewController {
                 collectionView.reloadData()
             } catch let error as APIError {
                 DefaultAlertBuilder(
-                    title: "에러",
+                    title: .error,
                     message: error.errorDescription,
                     preferredStyle: .alert
                 )
-                .setButton(name: "확인", style: .default)
+                .setButton(name: .confirm, style: .default)
                 .showAlert(on: self)
             }
         }
@@ -94,11 +94,11 @@ final class ProductListViewController: UIViewController {
                     sender.endRefreshing()
                 } catch let error as APIError {
                     DefaultAlertBuilder(
-                        title: "에러",
+                        title: .error,
                         message: error.errorDescription,
                         preferredStyle: .alert
                     )
-                    .setButton(name: "확인", style: .default)
+                    .setButton(name: .confirm, style: .default)
                     .showAlert(on: self)
                     sender.endRefreshing()
                 }

@@ -105,11 +105,11 @@ extension MyPageViewController: UITableViewDataSource, UITableViewDelegate {
         case 1:
             viewModel.likedListCellTapped()
         case 2:
-            DefaultAlertBuilder(title: "안내", message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
-                .setButton(name: "확인", style: .default) { [weak self] in
+            DefaultAlertBuilder(title: .alert, message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
+                .setButton(name: .confirm, style: .default) { [weak self] in
                     self?.viewModel.logoutCellTapped()
                 }
-                .setButton(name: "취소", style: .destructive)
+                .setButton(name: .cancel, style: .destructive)
                 .showAlert(on: self)
         default:
             return
