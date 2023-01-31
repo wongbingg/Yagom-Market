@@ -11,6 +11,12 @@ protocol MyPageFlowCoordinatorDependencies: AnyObject {
     func makeMyPageViewController(actions: MyPageViewModelActions) -> MyPageViewController
     func makeRegisterViewController(model: ProductDetail?,
                                     actions: RegisterViewModelActions) -> RegisterViewController
+    func makeResultViewController(model: ProductListResponseDTO,
+                                  actions: ResultViewModelAction) -> ResultViewController
+    func makeProductDetailViewController(productId: Int,
+                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController
+    func makeImageViewerController(imageURLs: [String],
+                                   currentPage: Int) -> ImageViewerViewController
 }
 
 final class MyPageFlowCoordinator {
@@ -28,17 +34,21 @@ final class MyPageFlowCoordinator {
     func generate() -> MyPageViewController {
         let actions = MyPageViewModelActions(
             registerTapSelected: registerTapSelected,
-            searchTapSelected: searchTapSelected
+            searchTapSelected: searchTapSelected,
+            logoutCellTapped: logoutCellTapped,
+            likedListCellTapped: likedListCellTapped,
+            myProductListCellTapped: myProductListCellTapped
         )
         let myPageVC = dependencies.makeMyPageViewController(actions: actions)
-//        navigationController = UINavigationController(rootViewController: myPageVC)
         return myPageVC
     }
     
     // MARK: View Transition
     func registerTapSelected() {
-        let actions = RegisterViewModelActions(registerButtonTapped: registerButtonTapped,
-                                               editButtonTapped: editButtonTapped)
+        let actions = RegisterViewModelActions(
+            registerButtonTapped: registerButtonTapped,
+            editButtonTapped: editButtonTapped
+        )
         let registerVC = dependencies.makeRegisterViewController(model: nil, actions: actions)
         registerVC.modalPresentationStyle = .overFullScreen
         navigationController.topViewController?.present(registerVC, animated: true)
@@ -50,6 +60,61 @@ final class MyPageFlowCoordinator {
             navigationController: navigationController
         )
         coordinator.start()
+    }
+    
+    func logoutCellTapped() {
+        LoginCacheManager.removeLoginInfo()
+        let loginSceneDIContainer = LoginSceneDIContainer()
+        let coordinator = loginSceneDIContainer.makeLoginFlowCoordinator(
+            navigationController: navigationController
+        )
+        coordinator.start()
+    }
+    
+    func likedListCellTapped() {
+        // TODO: firestore에 저장된 id를 기반으로 검색 후 컬렉션뷰로 보여주기
+    }
+    
+    func myProductListCellTapped(with model: ProductListResponseDTO) {
+        let actions = ResultViewModelAction(
+            cellTapped: cellTapped(at:)
+        )
+        let resultVC = dependencies.makeResultViewController(
+            model: model,
+            actions: actions
+        )
+        navigationController.pushViewController(resultVC, animated: true)
+    }
+    
+    func cellTapped(at id: Int) {
+        let actions = ProductDetailViewModelActions(
+            imageTapped: imageTapped(imageURLs:currentPage:),
+            showEditView: showEditView(model:)
+        )
+        let detailVC = dependencies.makeProductDetailViewController(productId: id, actions: actions)
+        navigationController.pushViewController(detailVC, animated: true)
+    }
+    
+    func imageTapped(imageURLs: [String], currentPage: Int) {
+        let imageViewerVC = dependencies.makeImageViewerController(
+            imageURLs: imageURLs,
+            currentPage: currentPage
+        )
+        navigationController.topViewController?.present(imageViewerVC, animated: true)
+    }
+    
+    func showEditView(model: ProductDetail) {
+        let actions = RegisterViewModelActions(
+            registerButtonTapped: registerButtonTapped,
+            editButtonTapped: editButtonTapped
+        )
+        let editModalVC = dependencies.makeRegisterViewController(
+            model: model,
+            actions: actions
+        )
+//        editView.delegate = self
+        editModalVC.modalPresentationStyle = .overFullScreen
+        navigationController.topViewController?.present(editModalVC, animated: true)
     }
     
     func registerButtonTapped() {
