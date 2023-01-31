@@ -26,6 +26,7 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInitialView()
+        setupNavigationBar()
         setupButton()
     }
     
@@ -36,6 +37,10 @@ final class LoginViewController: UIViewController {
     private func setupInitialView() {
         view.backgroundColor = .systemBackground
         view = loginView
+    }
+    
+    private func setupNavigationBar() {
+        navigationItem.hidesBackButton = true
     }
     
     private func setupButton() {
