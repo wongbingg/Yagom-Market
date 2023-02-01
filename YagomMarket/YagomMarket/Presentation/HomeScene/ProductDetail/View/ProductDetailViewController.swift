@@ -27,6 +27,7 @@ final class ProductDetailViewController: UIViewController {
         super.viewDidLoad()
         layoutInitialView()
         setupInitialView()
+        setupButton()
         Task {
             await setupNavigationBar()
         }
@@ -40,16 +41,25 @@ final class ProductDetailViewController: UIViewController {
     }
     
     // MARK: Methods
-    
     private func setupInitialView() {
         Task {
             guard let model = await viewModel.productDetail else { return }
+            let isLiked = await viewModel.isLiked
+            detailView.setupLikeButton(isLike: isLiked)
             do {
                 try await detailView.setupData(with: model)
             } catch {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    private func setupButton() {
+        detailView.likeButton.addTarget(
+            self,
+            action: #selector(likeButtonTapped),
+            for: .touchUpInside
+        )
     }
     
     private func setupGestureRecognizer() {
@@ -127,6 +137,27 @@ final class ProductDetailViewController: UIViewController {
             }
             .setButton(name: .cancel, style: .cancel, nil)
             .showAlert(on: self)
+    }
+    
+    @objc private func likeButtonTapped() {
+        detailView.likeButton.isSelected.toggle()
+        if detailView.likeButton.isSelected == true {
+            Task {
+                do {
+                    try await viewModel.addLikeProduct()
+                } catch {
+                    print(error.localizedDescription) // firestoreError 따로 만들기
+                }
+            }
+        } else {
+            Task {
+                do {
+                    try await viewModel.deleteLikeProduct()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
 }
 
