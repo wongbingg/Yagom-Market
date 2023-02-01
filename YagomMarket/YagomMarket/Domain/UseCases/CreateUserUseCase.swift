@@ -7,15 +7,36 @@
 
 final class CreateUserUseCase {
     private let firebaseAuthService: FirebaseAuthService
+    private let firestoreService: DefaultFirestoreService<UserProfile>
     
-    init(firebaseAuthService: FirebaseAuthService) {
+    init(
+        firebaseAuthService: FirebaseAuthService,
+        firestoreService: DefaultFirestoreService<UserProfile>
+    ) {
         self.firebaseAuthService = firebaseAuthService
+        self.firestoreService = firestoreService
     }
     
     func execute(with loginInfo: LoginInfo) async throws {
-        _ = try await firebaseAuthService.createUser(
+        let response = try await firebaseAuthService.createUser(
             email: loginInfo.id,
             password: loginInfo.password
+        )
+        
+        let userUID = response?.user.uid ?? "empty userUID"
+        
+        let email = loginInfo.id
+        let vendorName = loginInfo.vendorName ?? "empty vendorName"
+        let userInfo = UserProfile(
+            vendorName: vendorName,
+            email: email,
+            likedProductIds: []
+        )
+        
+        try await firestoreService.create(
+            collectionId: "UserProfile",
+            documentId: userUID,
+            entity: userInfo
         )
     }
 }

@@ -82,12 +82,19 @@ final class LoginSceneDIContainer {
     }
     
     func makeCreateUserUseCase() -> CreateUserUseCase {
-        return CreateUserUseCase(firebaseAuthService: makeFirebaseAuthService())
+        return CreateUserUseCase(
+            firebaseAuthService: makeFirebaseAuthService(),
+            firestoreService: makeFirestoreService()
+        )
     }
     
     // MARK: - Services
     func makeFirebaseAuthService() -> FirebaseAuthService {
         return DefaultFirebaseAuthService()
+    }
+    
+    func makeFirestoreService() -> DefaultFirestoreService<UserProfile> {
+        return DefaultFirestoreService<UserProfile>()
     }
     
     // MARK: - Login Flow Coordinator

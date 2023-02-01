@@ -37,6 +37,8 @@ final class HomeSceneDIContainer {
             actions: actions,
             deleteProductUseCase: makeDeleteProductUseCase(),
             fetchProductDetailUseCase: makeFetchProductDetailUseCase(),
+            searchUserProfileUseCase: makeSearchUserProfileUseCase(),
+            handleLikedProductUseCase: makeHandleLikedProductUseCase(),
             productId: productId)
     }
     
@@ -77,6 +79,14 @@ final class HomeSceneDIContainer {
         return FetchProductDetailUseCase(productsRepository: makeProductsRepository())
     }
     
+    func makeSearchUserProfileUseCase() -> SearchUserProfileUseCase {
+        return SearchUserProfileUseCase(firestoreService: makeFirestoreService())
+    }
+    
+    func makeHandleLikedProductUseCase() -> HandleLikedProductUseCase {
+        return HandleLikedProductUseCase(firestoreService: makeFirestoreService())
+    }
+    
     
     // MARK: - Repositories
     func makeProductsRepository() -> ProductsRepository {
@@ -85,6 +95,10 @@ final class HomeSceneDIContainer {
     
     func makeImageRepository() -> ImageRepository {
         return DefaultImageRepository(imageCacheManager: DefaultImageCacheManager())
+    }
+    
+    func makeFirestoreService() -> DefaultFirestoreService<UserProfile> {
+        return DefaultFirestoreService<UserProfile>()
     }
     
     // MARK: - Home Flow Coordinator

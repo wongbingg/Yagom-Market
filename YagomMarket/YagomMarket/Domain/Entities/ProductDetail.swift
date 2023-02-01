@@ -26,4 +26,15 @@ extension ProductDetail {
                      stock: 10,
                      secret: URLCommand.secretKey)
     }
+    
+    func toCell() -> ProductCell {
+        return .init(id: id,
+                     imageURL: imageURLs[0],
+                     title: name,
+                     description: description,
+                     vendor: vendorName,
+                     postDate: time,
+                     price: price,
+                     currency: currency)
+    }
 }

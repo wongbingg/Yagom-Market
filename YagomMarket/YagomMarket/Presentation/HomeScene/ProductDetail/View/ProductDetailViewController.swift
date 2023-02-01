@@ -27,6 +27,7 @@ final class ProductDetailViewController: UIViewController {
         super.viewDidLoad()
         layoutInitialView()
         setupInitialView()
+        setupButton()
         Task {
             await setupNavigationBar()
         }
@@ -40,16 +41,25 @@ final class ProductDetailViewController: UIViewController {
     }
     
     // MARK: Methods
-    
     private func setupInitialView() {
         Task {
             guard let model = await viewModel.productDetail else { return }
+            let isLiked = await viewModel.isLiked
+            detailView.setupLikeButton(isLike: isLiked)
             do {
                 try await detailView.setupData(with: model)
             } catch {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    private func setupButton() {
+        detailView.likeButton.addTarget(
+            self,
+            action: #selector(likeButtonTapped),
+            for: .touchUpInside
+        )
     }
     
     private func setupGestureRecognizer() {
@@ -97,12 +107,12 @@ final class ProductDetailViewController: UIViewController {
     }
     
     private func showDeleteAction() {
-        DefaultAlertBuilder(title: "안내", message: "정말 삭제 하시겠습니까?", preferredStyle: .alert)
-            .setButton(name: "예", style: .default) { [self] in
+        DefaultAlertBuilder(title: .alert, message: "정말 삭제 하시겠습니까?", preferredStyle: .alert)
+            .setButton(name: .yes, style: .default) { [self] in
                 performDelete()
                 self.navigationController?.popViewController(animated: true)
             }
-            .setButton(name: "아니오", style: .destructive, nil)
+            .setButton(name: .no, style: .destructive, nil)
             .showAlert(on: self)
     }
     
@@ -119,14 +129,35 @@ final class ProductDetailViewController: UIViewController {
     
     @objc private func rightBarButtonDidTapped() {
         DefaultAlertBuilder(preferredStyle: .actionSheet)
-            .setButton(name: "수정", style: .default) {
+            .setButton(name: .edit, style: .default) {
                 self.showEditView()
             }
-            .setButton(name: "삭제", style: .destructive) {
+            .setButton(name: .delete, style: .destructive) {
                 self.showDeleteAction()
             }
-            .setButton(name: "cancel", style: .cancel, nil)
+            .setButton(name: .cancel, style: .cancel, nil)
             .showAlert(on: self)
+    }
+    
+    @objc private func likeButtonTapped() {
+        detailView.likeButton.isSelected.toggle()
+        if detailView.likeButton.isSelected == true {
+            Task {
+                do {
+                    try await viewModel.addLikeProduct()
+                } catch {
+                    print(error.localizedDescription) // firestoreError 따로 만들기
+                }
+            }
+        } else {
+            Task {
+                do {
+                    try await viewModel.deleteLikeProduct()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
 }
 

@@ -25,7 +25,7 @@ final class RegisterViewController: UIViewController {
         let navBar = UINavigationBar()
         navBar.translatesAutoresizingMaskIntoConstraints = false
         navBar.isTranslucent = true
-        navBar.backgroundColor = .systemBackground
+        navBar.backgroundColor = .systemBrown
         return navBar
     }()
     
@@ -232,11 +232,11 @@ extension RegisterViewController: UIGestureRecognizerDelegate {
         if registerView.addPhotoButton.bounds.contains(position) {
             guard registerView.isFullImages == false else {
                 DefaultAlertBuilder(
-                    title: "오류",
+                    title: .error,
                     message: "더 이상 사진이 들어갈 수 없습니다",
                     preferredStyle: .alert
                 ).setButton(
-                    name: "확인",
+                    name: .confirm,
                     style: .default, nil
                 ).showAlert(on: self)
                 return false

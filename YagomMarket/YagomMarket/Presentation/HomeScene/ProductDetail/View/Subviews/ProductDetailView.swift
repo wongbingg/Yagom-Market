@@ -108,6 +108,16 @@ final class ProductDetailView: UIView {
         return textView
     }()
     
+    let likeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
+        button.tintColor = .red
+        button.transform = CGAffineTransform(scaleX: 2, y: 2)
+        return button
+    }()
+    
     // MARK: Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -138,6 +148,10 @@ final class ProductDetailView: UIView {
             try await imageView.setImage(with: imageURL)
             imageStackView.addArrangedSubview(imageView)
         }
+    }
+    
+    func setupLikeButton(isLike: Bool) {
+        likeButton.isSelected = isLike
     }
     
     private func setupPrice(with data: ProductDetail) {
@@ -229,6 +243,7 @@ private extension ProductDetailView {
     }
     
     func layoutMainStackView() {
+        mainStackView.addArrangedSubview(likeButton)
         mainStackView.addArrangedSubview(priceLabel)
         mainStackView.addArrangedSubview(nameLabel)
         mainStackView.addArrangedSubview(lowerStackView)

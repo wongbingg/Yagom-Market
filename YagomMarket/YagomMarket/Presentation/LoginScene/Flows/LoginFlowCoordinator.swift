@@ -36,7 +36,7 @@ final class LoginFlowCoordinator {
     }
     
     func successLogin(_ userUID: String) {
-        LoginCacheManager().setNewLoginInfo(userUID)
+        LoginCacheManager.setNewLoginInfo(userUID)
         let tabBarController = dependencies.makeTabBarController(
             navigationController: navigationController,
             userUID: userUID

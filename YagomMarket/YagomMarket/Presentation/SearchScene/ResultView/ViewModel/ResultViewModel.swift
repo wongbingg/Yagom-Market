@@ -12,22 +12,22 @@ protocol ResultViewModelInput {
     func didSelectItemAt(indexPath: Int)
 }
 protocol ResultViewModelOutput {
-    var model: ProductListResponseDTO { get }
+    var productCells: [ProductCell] { get }
 }
 
 protocol ResultViewModel: ResultViewModelInput, ResultViewModelOutput {}
 
 final class DefaultResultViewModel: ResultViewModel {
-    var model: ProductListResponseDTO
+    var productCells: [ProductCell]
     let actions: ResultViewModelAction
     
-    init(model: ProductListResponseDTO, actions: ResultViewModelAction) {
-        self.model = model
+    init(cells: [ProductCell], actions: ResultViewModelAction) {
+        self.productCells = cells
         self.actions = actions
     }
     
     func didSelectItemAt(indexPath: Int) {
-        let id = model.pages[indexPath].id
+        let id = productCells[indexPath].id
         actions.cellTapped(id)
     }
 }

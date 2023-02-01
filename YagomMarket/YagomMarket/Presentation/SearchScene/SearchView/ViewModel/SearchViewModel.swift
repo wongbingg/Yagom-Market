@@ -8,7 +8,7 @@
 import Foundation
 
 struct SearchViewModelActions {
-    let goToResultVC: (ProductListResponseDTO) -> Void
+    let goToResultVC: ([ProductCell]) -> Void
     let goToHomeTab: () -> Void
 }
 
@@ -46,7 +46,7 @@ final class DefaultSearchViewModel: SearchViewModel {
     @MainActor
     func goToResultVC(with keyword: String) async throws {
         let response = try await searchQueryResultsUseCase.execute(keyword: keyword)
-        actions.goToResultVC(response)
+        actions.goToResultVC(response.toDomain())
     }
     
     func goToHomeTab() {

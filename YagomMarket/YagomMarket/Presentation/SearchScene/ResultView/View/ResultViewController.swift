@@ -57,7 +57,7 @@ extension ResultViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return viewModel.model.pages.count
+        return viewModel.productCells.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -65,7 +65,7 @@ extension ResultViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ProductGridCell else {
             return UICollectionViewCell()
         }
-        cell.setupUIComponents(with: viewModel.model.pages[indexPath.row].toDomain())
+        cell.setupUIComponents(with: viewModel.productCells[indexPath.row])
         cell.resultViewSetup()
         return cell
     }
