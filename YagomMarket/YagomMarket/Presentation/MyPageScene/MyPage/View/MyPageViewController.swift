@@ -103,7 +103,13 @@ extension MyPageViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         case 1:
-            viewModel.likedListCellTapped()
+            Task {
+                do {
+                    try await viewModel.likedListCellTapped()
+                } catch {
+                    // TODO: Alert 처리
+                }
+            }
         case 2:
             DefaultAlertBuilder(
                 title: .alert,

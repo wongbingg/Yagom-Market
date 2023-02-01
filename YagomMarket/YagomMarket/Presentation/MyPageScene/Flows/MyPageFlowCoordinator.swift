@@ -11,7 +11,7 @@ protocol MyPageFlowCoordinatorDependencies: AnyObject {
     func makeMyPageViewController(actions: MyPageViewModelActions) -> MyPageViewController
     func makeRegisterViewController(model: ProductDetail?,
                                     actions: RegisterViewModelActions) -> RegisterViewController
-    func makeResultViewController(model: ProductListResponseDTO,
+    func makeResultViewController(cells: [ProductCell],
                                   actions: ResultViewModelAction) -> ResultViewController
     func makeProductDetailViewController(productId: Int,
                                          actions: ProductDetailViewModelActions) -> ProductDetailViewController
@@ -71,16 +71,23 @@ final class MyPageFlowCoordinator {
         coordinator.start()
     }
     
-    func likedListCellTapped() {
-        // TODO: firestore에 저장된 id를 기반으로 검색 후 컬렉션뷰로 보여주기
-    }
-    
-    func myProductListCellTapped(with model: ProductListResponseDTO) {
+    func likedListCellTapped(with model: [ProductCell]) {
         let actions = ResultViewModelAction(
             cellTapped: cellTapped(at:)
         )
         let resultVC = dependencies.makeResultViewController(
-            model: model,
+            cells: model,
+            actions: actions
+        )
+        navigationController.pushViewController(resultVC, animated: true)
+    }
+    
+    func myProductListCellTapped(with model: [ProductCell]) {
+        let actions = ResultViewModelAction(
+            cellTapped: cellTapped(at:)
+        )
+        let resultVC = dependencies.makeResultViewController(
+            cells: model,
             actions: actions
         )
         navigationController.pushViewController(resultVC, animated: true)
