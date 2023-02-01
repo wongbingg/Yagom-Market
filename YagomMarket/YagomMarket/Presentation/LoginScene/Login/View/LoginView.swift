@@ -32,7 +32,7 @@ final class LoginView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.preferredFont(forTextStyle: .title2)
         label.font = .boldSystemFont(ofSize: label.font.pointSize)
-        label.text = "OpenMarket에 로그인 하세요."
+        label.text = "Yagom Market에 로그인 하세요."
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return label
     }()

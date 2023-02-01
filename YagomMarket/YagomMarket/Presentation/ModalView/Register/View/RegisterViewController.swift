@@ -25,7 +25,7 @@ final class RegisterViewController: UIViewController {
         let navBar = UINavigationBar()
         navBar.translatesAutoresizingMaskIntoConstraints = false
         navBar.isTranslucent = true
-        navBar.backgroundColor = .systemBackground
+        navBar.backgroundColor = .systemBrown
         return navBar
     }()
     
