@@ -49,6 +49,7 @@
 		AF18750F29824D1D00BFE50D /* DefaultImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF18750E29824D1D00BFE50D /* DefaultImageRepository.swift */; };
 		AF3295EC29821DF300BCA1AA /* SearchQueryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3295EB29821DF300BCA1AA /* SearchQueryUseCase.swift */; };
 		AF3295EE2982200500BCA1AA /* SearchQueryResultsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3295ED2982200500BCA1AA /* SearchQueryResultsUseCase.swift */; };
+		AF465E18298AA1730071A0F3 /* HandleLikedProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF465E17298AA1730071A0F3 /* HandleLikedProductUseCase.swift */; };
 		AF471C41297E67D900A3ACD6 /* ProductsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C40297E67D900A3ACD6 /* ProductsRepository.swift */; };
 		AF471C43297E686300A3ACD6 /* DefaultProductsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C42297E686300A3ACD6 /* DefaultProductsRepository.swift */; };
 		AF471C45297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C44297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift */; };
@@ -179,6 +180,7 @@
 		AF18750E29824D1D00BFE50D /* DefaultImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageRepository.swift; sourceTree = "<group>"; };
 		AF3295EB29821DF300BCA1AA /* SearchQueryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQueryUseCase.swift; sourceTree = "<group>"; };
 		AF3295ED2982200500BCA1AA /* SearchQueryResultsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQueryResultsUseCase.swift; sourceTree = "<group>"; };
+		AF465E17298AA1730071A0F3 /* HandleLikedProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleLikedProductUseCase.swift; sourceTree = "<group>"; };
 		AF471C40297E67D900A3ACD6 /* ProductsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepository.swift; sourceTree = "<group>"; };
 		AF471C42297E686300A3ACD6 /* DefaultProductsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProductsRepository.swift; sourceTree = "<group>"; };
 		AF471C44297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNextProductPageUseCase.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 				AF06CEF3298905360004676C /* SearchUserProfileUseCase.swift */,
 				AF3295EB29821DF300BCA1AA /* SearchQueryUseCase.swift */,
 				AF3295ED2982200500BCA1AA /* SearchQueryResultsUseCase.swift */,
+				AF465E17298AA1730071A0F3 /* HandleLikedProductUseCase.swift */,
 				AF71746B2922512F0004FC02 /* APIs */,
 			);
 			path = UseCases;
@@ -1139,6 +1142,7 @@
 				AF11758C29501991002632D2 /* ChatViewController.swift in Sources */,
 				AFC44D53293497C900B01142 /* ProductGridCell.swift in Sources */,
 				AF01661B2976C11E0083DDAD /* LoginViewController.swift in Sources */,
+				AF465E18298AA1730071A0F3 /* HandleLikedProductUseCase.swift in Sources */,
 				AF3295EE2982200500BCA1AA /* SearchQueryResultsUseCase.swift in Sources */,
 				AFF5E0682939C1B5000CC513 /* RegisterView.swift in Sources */,
 				AF0166222976C1710083DDAD /* LabelSeparator.swift in Sources */,

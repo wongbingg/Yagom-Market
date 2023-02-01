@@ -47,6 +47,8 @@ final class SearchSceneDIContainer {
             actions: actions,
             deleteProductUseCase: makeDeleteProductUseCase(),
             fetchProductDetailUseCase: makeFetchProductDetailUseCase(),
+            searchUserProfileUseCase: makeSearchUserProfileUseCase(),
+            handleLikedProductUseCase: makeHandleLikedProductUseCase(),
             productId: productId
         )
     }
@@ -84,6 +86,14 @@ final class SearchSceneDIContainer {
         return SearchQueryResultsUseCase(productsRepository: makeProductsRepository())
     }
     
+    func makeSearchUserProfileUseCase() -> SearchUserProfileUseCase {
+        return SearchUserProfileUseCase(firestoreService: makeFirestoreService())
+    }
+    
+    func makeHandleLikedProductUseCase() -> HandleLikedProductUseCase {
+        return HandleLikedProductUseCase(firestoreService: makeFirestoreService())
+    }
+
     // MARK: - Repositories
     func makeProductsRepository() -> ProductsRepository {
         return DefaultProductsRepository()
@@ -91,6 +101,11 @@ final class SearchSceneDIContainer {
     
     func makeProductsQueryRepository() -> ProductsQueryRepository {
         return DefaultProductsQueryRepository()
+    }
+    
+    // MARK: - Services
+    func makeFirestoreService() -> DefaultFirestoreService<UserProfile> {
+        return DefaultFirestoreService<UserProfile>()
     }
     
     // MARK: - Search Flow Coordinator
