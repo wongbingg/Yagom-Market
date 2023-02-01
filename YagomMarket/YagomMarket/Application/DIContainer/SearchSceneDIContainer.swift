@@ -23,15 +23,15 @@ final class SearchSceneDIContainer {
     }
     
     // MARK: - Result
-    func makeResultViewController(model: ProductListResponseDTO,
+    func makeResultViewController(cells: [ProductCell],
                                   actions: ResultViewModelAction) -> ResultViewController {
-        let viewModel = makeResultViewModel(model: model, actions: actions)
+        let viewModel = makeResultViewModel(model: cells, actions: actions)
         return ResultViewController(viewModel: viewModel)
     }
     
-    func makeResultViewModel(model: ProductListResponseDTO,
+    func makeResultViewModel(model: [ProductCell],
                              actions: ResultViewModelAction) -> ResultViewModel {
-        return DefaultResultViewModel(model: model, actions: actions)
+        return DefaultResultViewModel(cells: model, actions: actions)
     }
     
     // MARK: - Product Detail

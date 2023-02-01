@@ -9,7 +9,7 @@ import UIKit
 
 protocol SearchFlowCoordinatorDependencies: AnyObject {
     func makeSearchViewController(actions: SearchViewModelActions) -> SearchViewController
-    func makeResultViewController(model: ProductListResponseDTO, actions: ResultViewModelAction) -> ResultViewController
+    func makeResultViewController(cells: [ProductCell], actions: ResultViewModelAction) -> ResultViewController
     
     func makeProductDetailViewController(productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewController
     func makeRegisterViewController(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewController
@@ -55,12 +55,12 @@ final class SearchFlowCoordinator {
     }
     
     // MARK: View Transition
-    func goToResultVC(with model: ProductListResponseDTO) {
+    func goToResultVC(with cells: [ProductCell]) {
         let actions = ResultViewModelAction(
             cellTapped: cellTapped(at:)
         )
         let resultVC = dependencies.makeResultViewController(
-            model: model,
+            cells: cells,
             actions: actions
         )
         navigationController?.pushViewController(resultVC, animated: true)
