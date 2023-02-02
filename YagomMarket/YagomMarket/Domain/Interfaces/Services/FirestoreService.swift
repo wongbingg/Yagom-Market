@@ -16,3 +16,23 @@ protocol FirestoreService {
     func update<T: Entity>(collectionId: String, documentId: String, to entity: T) async throws
     func delete(collectionId: String, documentId: String) async throws
 }
+
+enum FirestoreServiceError: LocalizedError {
+    case failToCreate
+    case failToRead
+    case failToUpdate
+    case failToDelete
+    
+    var errorDescription: String? {
+        switch self {
+        case .failToCreate:
+            return "Firestore에 데이터를 생성하는데 실패했습니다."
+        case .failToRead:
+            return "Firestore에서 데이터를 읽어오는데 실패했습니다."
+        case .failToUpdate:
+            return "Firestore에 데이터를 업데이트 하는데 실패했습니다."
+        case .failToDelete:
+            return "Firestore에서 데이터를 삭제하는데 실패했습니다."
+        }
+    }
+}
