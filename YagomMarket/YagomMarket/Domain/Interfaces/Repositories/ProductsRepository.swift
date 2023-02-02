@@ -16,3 +16,14 @@ protocol ProductsRepository {
                            productId: Int) async throws
     func deleteProduct(productId: Int) async throws
 }
+
+enum ProductsRepositoryError: LocalizedError {
+    case noNextPage
+    
+    var errorDescription: String? {
+        switch self {
+        case .noNextPage:
+            return "마지막 페이지 입니다."
+        }
+    }
+}
