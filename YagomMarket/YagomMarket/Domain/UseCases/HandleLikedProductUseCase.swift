@@ -16,7 +16,7 @@ final class HandleLikedProductUseCase {
     
     func execute(with productId: Int, isAdd: Bool) async throws {
         guard let userUID = LoginCacheManager.fetchPreviousInfo() else {
-            throw LoginCacheError.noPreviousInfo
+            throw LoginCacheManagerError.noPreviousInfo
         }
         
         var userProfile = try await firestoreService.read(

@@ -16,13 +16,15 @@ final class SearchUserProfileUseCase {
     
     func execute() async throws -> UserProfile {
         guard let userUID = LoginCacheManager.fetchPreviousInfo() else {
-            throw LoginCacheError.noPreviousInfo
+            throw LoginCacheManagerError.noPreviousInfo
         }
+        
         let response = try await firestoreService.read(
             collectionId: "UserProfile",
             documentId: userUID,
             entity: UserProfile()
         )
+        
         return response
     }
 }
