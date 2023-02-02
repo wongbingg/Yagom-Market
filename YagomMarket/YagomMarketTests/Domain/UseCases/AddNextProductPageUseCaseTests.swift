@@ -48,6 +48,7 @@ final class AddNextProductPageUseCaseTests: XCTestCase {
     
     func test_hasNext가false일때_noHasNext오류를반환하는지() async throws {
         // given
+        let expectationError = ProductsRepositoryError.noNextPage
         let productRepository = ProductRepositoryMock()
         productRepository.hasNext = false
         let useCase = DefaultAddNextProductPageUseCase(productsRepository: productRepository)
@@ -60,7 +61,7 @@ final class AddNextProductPageUseCaseTests: XCTestCase {
             _ = try await useCase.execute()
             XCTFail()
         } catch let error as ProductsRepositoryError {
-            XCTAssertEqual(error, ProductsRepositoryError.noNextPage)
+            XCTAssertEqual(error, expectationError)
         }
     }
 }
