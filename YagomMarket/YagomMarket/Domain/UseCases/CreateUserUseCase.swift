@@ -7,11 +7,11 @@
 
 final class CreateUserUseCase {
     private let firebaseAuthService: FirebaseAuthService
-    private let firestoreService: DefaultFirestoreService<UserProfile>
+    private let firestoreService: any FirestoreService
     
     init(
         firebaseAuthService: FirebaseAuthService,
-        firestoreService: DefaultFirestoreService<UserProfile>
+        firestoreService: any FirestoreService
     ) {
         self.firebaseAuthService = firebaseAuthService
         self.firestoreService = firestoreService

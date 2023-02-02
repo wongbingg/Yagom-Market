@@ -6,10 +6,10 @@
 //
 
 final class HandleLikedProductUseCase {
-    private let firestoreService: DefaultFirestoreService<UserProfile>
+    private let firestoreService: any FirestoreService
     
     init(
-        firestoreService: DefaultFirestoreService<UserProfile>
+        firestoreService: any FirestoreService
     ) {
         self.firestoreService = firestoreService
     }

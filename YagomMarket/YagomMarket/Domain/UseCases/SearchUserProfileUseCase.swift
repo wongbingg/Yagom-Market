@@ -6,11 +6,9 @@
 //
 
 final class SearchUserProfileUseCase {
-    private let firestoreService: DefaultFirestoreService<UserProfile>
+    private let firestoreService: any FirestoreService
     
-    init(
-        firestoreService: DefaultFirestoreService<UserProfile>
-    ) {
+    init(firestoreService: any FirestoreService) {
         self.firestoreService = firestoreService
     }
     
