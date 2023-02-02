@@ -16,8 +16,12 @@ final class DefaultFirestoreService<E: Entity>: FirestoreService {
     typealias T = E
     private let dataBase = Firestore.firestore()
 
-    func create<T>(collectionId: String, documentId: String, entity: T) async throws where T : Entity {
+    func create<T>(collectionId: String,
+                   documentId: String,
+                   entity: T) async throws where T : Entity {
+        
         let dictionary = entity.toDictionary()
+        
         do {
             try await dataBase
                 .collection(collectionId)
@@ -28,7 +32,9 @@ final class DefaultFirestoreService<E: Entity>: FirestoreService {
         }
     }
     
-    func read<T>(collectionId: String, documentId: String, entity: T) async throws -> T where T : Entity {
+    func read<T>(collectionId: String,
+                 documentId: String,
+                 entity: T) async throws -> T where T : Entity {
         do {
             let documentSnapshot = try await dataBase
                 .collection(collectionId)
@@ -40,8 +46,12 @@ final class DefaultFirestoreService<E: Entity>: FirestoreService {
         }
     }
     
-    func update<T>(collectionId: String, documentId: String, to entity: T) async throws where T : Entity {
+    func update<T>(collectionId: String,
+                   documentId: String,
+                   to entity: T) async throws where T : Entity {
+        
         let dictionary = entity.toDictionary()
+        
         do {
             try await dataBase
                 .collection(collectionId)

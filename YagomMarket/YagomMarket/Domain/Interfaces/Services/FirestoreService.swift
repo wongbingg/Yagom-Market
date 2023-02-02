@@ -22,7 +22,7 @@ enum FirestoreServiceError: LocalizedError {
     case failToRead
     case failToUpdate
     case failToDelete
-    
+
     var errorDescription: String? {
         switch self {
         case .failToCreate:
