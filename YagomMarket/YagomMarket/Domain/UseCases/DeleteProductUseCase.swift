@@ -5,8 +5,6 @@
 //  Created by 이원빈 on 2023/01/23.
 //
 
-import Foundation
-
 final class DeleteProductUseCase {
     private let productsRepository: ProductsRepository
     

@@ -5,8 +5,6 @@
 //  Created by 이원빈 on 2023/02/01.
 //
 
-import Foundation
-
 final class HandleLikedProductUseCase {
     private let firestoreService: DefaultFirestoreService<UserProfile>
     
