@@ -5,7 +5,7 @@
 //  Created by 이원빈 on 2023/01/18.
 //
 
-struct ProductDetail {
+struct ProductDetail: Equatable {
     let id: Int
     let imageURLs: [String]
     let price: String
