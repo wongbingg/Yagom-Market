@@ -14,28 +14,22 @@ extension DefaultProductsRepository: ProductsRepository {
     func fetchProductsList(pageNumber: Int,
                            itemPerPage: Int,
                            searchValue: String? = nil) async throws -> ProductListResponseDTO {
+        
         let api = SearchProductListAPI(
             pageNumber: pageNumber,
             itemPerPage: itemPerPage,
             searchValue: searchValue
         )
-        do {
-            let response = try await api.execute()
-            return response
-        } catch {
-            throw ProductsRepositoryError.failToFetch
-        }
+        let response = try await api.execute()
+        
+        return response
     }
     
     func fetchProductDetail(productId: Int) async throws -> ProductDetail {
         let api = SearchProductDetailAPI(productId: productId)
+        let response = try await api.execute()
         
-        do {
-            let response = try await api.execute()
-            return response.toDomain()
-        } catch {
-            throw ProductsRepositoryError.noSuchProductId
-        }
+        return response.toDomain()
     }
     
     func fetchProductsQuery(keyword: String) async throws -> [String] {
@@ -46,37 +40,26 @@ extension DefaultProductsRepository: ProductsRepository {
             searchValue: keyword.lowercased()
         )
         
-        do {
-            let response = try await api.execute()
-            response.pages.forEach { page in
-                list.append(page.name)
-            }
-            return Array(Set(list))
-        } catch {
-            throw ProductsRepositoryError.noSuchKeyword
+        let response = try await api.execute()
+        
+        response.pages.forEach { page in
+            list.append(page.name)
         }
+        
+        return Array(Set(list))
     }
     
     func editProductDetail(with editModel: ProductEditRequestDTO,
                            productId: Int) async throws {
-        let api = EditProductAPI(editModel: editModel, productId: productId)
         
-        do {
-            _ = try await api.execute()
-        } catch {
-            throw ProductsRepositoryError.failToEdit
-        }
+        let api = EditProductAPI(editModel: editModel, productId: productId)
+        _ = try await api.execute()
     }
     
     func deleteProduct(productId: Int) async throws {
         let searchDeleteURIAPI = SearchDeleteURIAPI(productId: productId)
         let deleteProductAPI = DeleteProductAPI()
-        
-        do {
-            let deleteURI = try await searchDeleteURIAPI.execute()
-            _ = try await deleteProductAPI.execute(with: deleteURI)
-        } catch {
-            throw ProductsRepositoryError.failToDelete
-        }
+        let deleteURI = try await searchDeleteURIAPI.execute()
+        _ = try await deleteProductAPI.execute(with: deleteURI)
     }
 }
