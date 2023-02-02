@@ -9,42 +9,33 @@ import XCTest
 @testable import YagomMarket
 
 final class MockURLSessionTest: XCTestCase {
-    var sut: APIClient!
-    
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-        sut = nil
-    }
     
     func test_statusCode가_500일때_APIError_response를_반환하는지() async throws {
         // given
+        let expectationError = APIError.response(500)
+        
         let mockResponse: MockURLSession.Response = {
             let data: Data = Data()
-            let successResponse = HTTPURLResponse(
+            let failResponse = HTTPURLResponse(
                 url: URL(string: "testURL")!,
                 statusCode: 500,
                 httpVersion: nil,
                 headerFields: nil
             )!
-            return (data: data, urlResponse: successResponse)
+            return (data: data, urlResponse: failResponse)
         }()
         
         let mockURLSession = MockURLSession(response: mockResponse)
-        let sut = APIClient(sesseion: mockURLSession)
-        
-        let expectation = APIError.response(500).errorDescription
+        let apiClient = APIClient(sesseion: mockURLSession)
+        let api = MockAPI()
         
         // when
         do {
-            _ = try await sut.requestData(with: URLRequest(url: URL(string: "testURL")!))
+            _ = try await api.execute(using: apiClient)
         } catch let error as APIError {
             
             // then
-            XCTAssertEqual(error.errorDescription, expectation)
+            XCTAssertEqual(error, expectationError)
         }
     }
     
@@ -77,19 +68,55 @@ final class MockURLSessionTest: XCTestCase {
             XCTAssertEqual(error.errorDescription, expectation)
         }
     }
+    
+    func test_URLSession_data메서드가실패했을때_APIError_invalidURLRequest를반환하는지() async throws {
+        // given
+        let expectationError = APIError.invalidURLRequest
+        
+        let mockResponse: MockURLSession.Response = {
+            let data: Data = try! JSONEncoder().encode("abc")
+            let successResponse = HTTPURLResponse(
+                url: URL(string: "testURL")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+            )!
+            return (data: data, urlResponse: successResponse)
+        }()
+        
+        let mockURLSession = MockURLSession(response: mockResponse)
+        mockURLSession.dataMethodFail = true
+        
+        let apiClient = APIClient(sesseion: mockURLSession)
+        let api = MockAPI()
+        
+        // when
+        do {
+            _ = try await api.execute(using: apiClient)
+        } catch let error as APIError {
+            
+            // then
+            XCTAssertEqual(error, expectationError)
+        }
+    }
 }
 
 final class MockURLSession: URLSessionProtocol {
     typealias Response = (data: Data, urlResponse: URLResponse)
     
     let response: Response
+    var dataMethodFail = false
     
     init(response: Response) {
         self.response = response
     }
     
     func data(for request: URLRequest, delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse) {
-        return (response.data, response.urlResponse)
+        if dataMethodFail {
+            throw APIError.unknown
+        } else {
+            return (response.data, response.urlResponse)
+        }
     }
 }
 
