@@ -14,7 +14,7 @@ final class HandleLikedProductUseCaseTests: XCTestCase {
         // given
         let expectationReadCallCount = 1
         let expectationUpdateCallCount = 1
-        let firestoreService = FirestoreServiceMock()
+        let firestoreService = UserProfileFirestoreServiceMock()
         let useCase = HandleLikedProductUseCase(firestoreService: firestoreService)
         
         // when
