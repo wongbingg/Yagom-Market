@@ -19,8 +19,12 @@ extension DefaultProductsRepository: ProductsRepository {
             itemPerPage: itemPerPage,
             searchValue: searchValue
         )
-        let response = try await api.execute()
-        return response
+        do {
+            let response = try await api.execute()
+            return response
+        } catch {
+            throw ProductsRepositoryError.failToFetch
+        }
     }
     
     func fetchProductDetail(productId: Int) async throws -> ProductDetail {
@@ -34,6 +38,25 @@ extension DefaultProductsRepository: ProductsRepository {
         }
     }
     
+    func fetchProductsQuery(keyword: String) async throws -> [String] {
+        var list = [String]()
+        let api = SearchProductListAPI(
+            pageNumber: 1,
+            itemPerPage: 100,
+            searchValue: keyword.lowercased()
+        )
+        
+        do {
+            let response = try await api.execute()
+            response.pages.forEach { page in
+                list.append(page.name)
+            }
+            return Array(Set(list))
+        } catch {
+            throw ProductsRepositoryError.noSuchKeyword
+        }
+    }
+    
     func editProductDetail(with editModel: ProductEditRequestDTO,
                            productId: Int) async throws {
         let api = EditProductAPI(editModel: editModel, productId: productId)
@@ -41,7 +64,7 @@ extension DefaultProductsRepository: ProductsRepository {
         do {
             _ = try await api.execute()
         } catch {
-            throw error
+            throw ProductsRepositoryError.failToEdit
         }
     }
     
@@ -53,7 +76,7 @@ extension DefaultProductsRepository: ProductsRepository {
             let deleteURI = try await searchDeleteURIAPI.execute()
             _ = try await deleteProductAPI.execute(with: deleteURI)
         } catch {
-            throw error
+            throw ProductsRepositoryError.failToDelete
         }
     }
 }
