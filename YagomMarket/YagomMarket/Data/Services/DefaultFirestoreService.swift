@@ -15,10 +15,8 @@ protocol Entity {
 final class DefaultFirestoreService<E: Entity>: FirestoreService {
     typealias T = E
     private let dataBase = Firestore.firestore()
-    
-    func create(collectionId: String,
-                documentId: String,
-                entity: E) async throws {
+
+    func create<T>(collectionId: String, documentId: String, entity: T) async throws where T : Entity {
         let dictionary = entity.toDictionary()
         try await dataBase
             .collection(collectionId)
@@ -26,9 +24,7 @@ final class DefaultFirestoreService<E: Entity>: FirestoreService {
             .setData(dictionary)
     }
     
-    func read(collectionId: String,
-              documentId: String,
-              entity: E) async throws -> E {
+    func read<T>(collectionId: String, documentId: String, entity: T) async throws -> T where T : Entity {
         let documentSnapshot = try await dataBase
             .collection(collectionId)
             .document(documentId)
@@ -36,9 +32,7 @@ final class DefaultFirestoreService<E: Entity>: FirestoreService {
         return documentSnapshot.toEntity(entity)!
     }
     
-    func update(collectionId: String,
-                documentId: String,
-                to entity: E) async throws {
+    func update<T>(collectionId: String, documentId: String, to entity: T) async throws where T : Entity {
         let dictionary = entity.toDictionary()
         try await dataBase
             .collection(collectionId)
