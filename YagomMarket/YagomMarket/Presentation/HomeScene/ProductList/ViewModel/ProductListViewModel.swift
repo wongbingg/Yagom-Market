@@ -27,22 +27,20 @@ protocol ProductListViewModel: ProductListViewModelInput, ProductListViewModelOu
 
 final class DefaultProductListViewModel: ProductListViewModel {
     private let actions: ProductListViewModelActions
-    private let addNextProductPageUseCase: AddNextProductPageUseCase
-    private let resetToFirstProductPageUseCase: ResetToFirstProductPageUseCase
+    private let addNextProductPageUseCase: DefaultAddNextProductPageUseCase
     private(set) var productList: [ProductCell] = []
     
     init(
         actions: ProductListViewModelActions,
-        addNextProductPageUseCase: AddNextProductPageUseCase,
-        resetToFirstProductPageUseCase: ResetToFirstProductPageUseCase
+        addNextProductPageUseCase: DefaultAddNextProductPageUseCase
     ) {
         self.actions = actions
         self.addNextProductPageUseCase = addNextProductPageUseCase
-        self.resetToFirstProductPageUseCase = resetToFirstProductPageUseCase
     }
     
     func resetToFirstPage() async throws {
-        let response = try await resetToFirstProductPageUseCase.execute()
+        addNextProductPageUseCase.resetToFirstPage()
+        let response = try await addNextProductPageUseCase.execute()
         productList = response
     }
     

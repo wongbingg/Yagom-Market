@@ -17,8 +17,7 @@ final class HomeSceneDIContainer {
     func makeProductListViewModel(actions: ProductListViewModelActions) -> ProductListViewModel {
         return DefaultProductListViewModel(
             actions: actions,
-            addNextProductPageUseCase: makeAddNextProductPageUseCase(),
-            resetToFirstProductPageUseCase: makeResetToFirstProductPageUseCase()
+            addNextProductPageUseCase: makeAddNextProductPageUseCase()
         )
     }
     
@@ -63,12 +62,8 @@ final class HomeSceneDIContainer {
     }
     
     // MARK: - UseCase
-    func makeAddNextProductPageUseCase() -> AddNextProductPageUseCase {
-        return AddNextProductPageUseCase(productsRepository: makeProductsRepository())
-    }
-    
-    func makeResetToFirstProductPageUseCase() -> ResetToFirstProductPageUseCase {
-        return ResetToFirstProductPageUseCase(productsRepository: makeProductsRepository())
+    func makeAddNextProductPageUseCase() -> DefaultAddNextProductPageUseCase {
+        return DefaultAddNextProductPageUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeDeleteProductUseCase() -> DeleteProductUseCase {
