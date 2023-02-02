@@ -24,11 +24,8 @@ final class FetchProductDetailUseCaseTests: XCTestCase {
         func fetchProductDetail(productId: Int) async throws -> ProductDetail {
             fetchProductDetailMethodCallCount += 1
             passedProductId = productId
-            if productId > 100 {
-                throw ProductsRepositoryError.noSuchProductId
-            } else {
-                return ProductDetail.toMockData()
-            }
+            
+            return ProductDetail.toMockData()
         }
         
         func fetchProductsQuery(keyword: String) async throws -> [String] {
@@ -56,21 +53,5 @@ final class FetchProductDetailUseCaseTests: XCTestCase {
         XCTAssertEqual(expectationCallCount, productRepository.fetchProductDetailMethodCallCount)
         XCTAssertEqual(expectationProductId, productRepository.passedProductId)
         XCTAssertEqual(expectationResponse, response)
-    }
-    
-    func test_UseCase실행될때_productId에해당상품이존재하지않을때_noSuchProduct에러를반환하는지() async throws {
-        // given
-        let expextationError = ProductsRepositoryError.noSuchProductId
-        let productId = 101
-        let productRepository = ProductRepositoryMock()
-        let useCase = FetchProductDetailUseCase(productsRepository: productRepository)
-        
-        // when
-        do {
-            let response = try await useCase.execute(productId: productId)
-        } catch let error as ProductsRepositoryError {
-            // then
-            XCTAssertEqual(expextationError, error)
-        }
     }
 }

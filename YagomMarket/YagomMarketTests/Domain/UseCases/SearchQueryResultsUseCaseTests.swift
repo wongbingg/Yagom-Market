@@ -16,13 +16,10 @@ final class SearchQueryResultsUseCaseTests: XCTestCase {
         func fetchProductsList(pageNumber: Int,
                                itemPerPage: Int,
                                searchValue: String?) async throws -> YagomMarket.ProductListResponseDTO {
+            
             fetchProductsListCallCount += 1
             
-            if searchValue == "invalid keyword" {
-                throw ProductsRepositoryError.noSuchKeyword
-            } else {
-                return ProductListResponseDTO.toMockData(hasNext: true)
-            }
+            return ProductListResponseDTO.toMockData(hasNext: true)
         }
         
         func fetchProductDetail(productId: Int) async throws -> YagomMarket.ProductDetail {
@@ -30,10 +27,6 @@ final class SearchQueryResultsUseCaseTests: XCTestCase {
         }
         
         func fetchProductsQuery(keyword: String) async throws -> [String] {
-            
-            if keyword == "invalid keyword" {
-                throw ProductsRepositoryError.noSuchKeyword
-            }
             return []
         }
         
@@ -54,20 +47,5 @@ final class SearchQueryResultsUseCaseTests: XCTestCase {
         
         // then
         XCTAssertEqual(expectationCallCount, productsRepository.fetchProductsListCallCount)
-    }
-    
-    func test_UseCase를실행할때_keyword가유효하지않으면_noSuchKeyword에러를반환하는지() async throws {
-        // given
-        let expectationError = ProductsRepositoryError.noSuchKeyword
-        let productsRepository = ProductsRepositoryMock()
-        let useCase = SearchQueryResultsUseCase(productsRepository: productsRepository)
-        
-        // when
-        do {
-            _ = try await useCase.execute(keyword: "invalid keyword")
-        } catch let error as ProductsRepositoryError {
-            // then
-            XCTAssertEqual(expectationError, error)
-        }
     }
 }

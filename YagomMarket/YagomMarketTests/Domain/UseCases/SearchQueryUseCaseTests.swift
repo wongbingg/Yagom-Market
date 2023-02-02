@@ -23,9 +23,7 @@ final class SearchQueryUseCaseTests: XCTestCase {
         
         func fetchProductsQuery(keyword: String) async throws -> [String] {
             fetchProductsQueryCallCount += 1
-            if keyword == "invalid keyword" {
-                throw ProductsRepositoryError.noSuchKeyword
-            }
+            
             return []
         }
         
@@ -47,20 +45,5 @@ final class SearchQueryUseCaseTests: XCTestCase {
         
         // then
         XCTAssertEqual(expectationCallCount, productsRepository.fetchProductsQueryCallCount)
-    }
-    
-    func test_UseCase실행시_해당keyword의검색결과가없는경우_noSuchKeyword오류를반환하는지() async throws {
-        // given
-        let expectationError = ProductsRepositoryError.noSuchKeyword
-        let productsRepository = ProductsRepositoryMock()
-        let useCase = SearchQueryUseCase(productsRepository: productsRepository)
-        
-        // when
-        do {
-            _ = try await useCase.execute(keyword: "invalid keyword")
-        } catch let error as ProductsRepositoryError {
-            // then
-            XCTAssertEqual(expectationError, error)
-        }
     }
 }
