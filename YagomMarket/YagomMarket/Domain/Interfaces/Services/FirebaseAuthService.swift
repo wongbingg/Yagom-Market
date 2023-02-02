@@ -12,4 +12,16 @@ protocol FirebaseAuthService {
     func signIn(email: String, password: String) async throws -> AuthDataResult?
 }
 
-
+enum FirebaseAuthServiceError: LocalizedError {
+    case createUserError
+    case signInError
+    
+    var errorDescription: String? {
+        switch self {
+        case .createUserError:
+            return "사용자 계정을 생성하지 못했습니다."
+        case .signInError:
+            return "사용자를 찾을 수 없습니다."
+        }
+    }
+}

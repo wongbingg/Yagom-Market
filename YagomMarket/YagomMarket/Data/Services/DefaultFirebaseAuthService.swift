@@ -10,8 +10,12 @@ import FirebaseAuth
 final class DefaultFirebaseAuthService: FirebaseAuthService {
     
     func createUser(email: String, password: String) async throws -> AuthDataResult? {
-        let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
-        return authDataResult
+        do {
+            let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
+            return authDataResult
+        } catch {
+            throw FirebaseAuthServiceError.createUserError
+        }
     }
     
     func signIn(email: String, password: String) async throws -> AuthDataResult? {
@@ -19,12 +23,7 @@ final class DefaultFirebaseAuthService: FirebaseAuthService {
             let authDataResult = try await Auth.auth().signIn(withEmail: email, password: password)
             return authDataResult
         } catch {
-            throw LoginError.invalidUser
+            throw FirebaseAuthServiceError.signInError
         }
     }
-}
-
-enum FirebaseAuthServiceError: Error {
-    case createUserError
-    case signInError
 }
