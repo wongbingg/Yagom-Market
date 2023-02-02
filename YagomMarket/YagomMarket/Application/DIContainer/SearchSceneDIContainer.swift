@@ -79,7 +79,7 @@ final class SearchSceneDIContainer {
     }
     
     func makeSearchQueryUseCase() -> SearchQueryUseCase {
-        return SearchQueryUseCase(productsQueryRepository: makeProductsQueryRepository())
+        return SearchQueryUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeSearchQueryResultsUseCase() -> SearchQueryResultsUseCase {
@@ -97,10 +97,6 @@ final class SearchSceneDIContainer {
     // MARK: - Repositories
     func makeProductsRepository() -> ProductsRepository {
         return DefaultProductsRepository()
-    }
-    
-    func makeProductsQueryRepository() -> ProductsQueryRepository {
-        return DefaultProductsQueryRepository()
     }
     
     // MARK: - Services
