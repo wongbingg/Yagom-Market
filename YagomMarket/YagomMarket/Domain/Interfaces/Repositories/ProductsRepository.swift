@@ -19,11 +19,14 @@ protocol ProductsRepository {
 
 enum ProductsRepositoryError: LocalizedError {
     case noNextPage
+    case noSuchProductId
     
     var errorDescription: String? {
         switch self {
         case .noNextPage:
             return "마지막 페이지 입니다."
+        case .noSuchProductId:
+            return "해당 Id의 상품이 없습니다."
         }
     }
 }

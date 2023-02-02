@@ -30,7 +30,7 @@ extension DefaultProductsRepository: ProductsRepository {
             let response = try await api.execute()
             return response.toDomain()
         } catch {
-            throw error
+            throw ProductsRepositoryError.noSuchProductId
         }
     }
     
