@@ -11,6 +11,7 @@ import XCTest
 final class FetchProductDetailUseCaseTests: XCTestCase {
 
     class ProductRepositoryMock: ProductsRepository {
+        
         var fetchProductDetailMethodCallCount = 0
         var passedProductId = 0
         
@@ -30,13 +31,17 @@ final class FetchProductDetailUseCaseTests: XCTestCase {
             }
         }
         
+        func fetchProductsQuery(keyword: String) async throws -> [String] {
+            return []
+        }
+        
         func editProductDetail(with editModel: ProductEditRequestDTO,
                                productId: Int) async throws {}
         
         func deleteProduct(productId: Int) async throws {}
     }
     
-    func test_DeleteProductUseCase실행될때_ProductRepository의fetchProductDetail메서드가실행되는지() async throws {
+    func test_UseCase실행될때_ProductRepository의_fetchProductDetail메서드가실행되는지() async throws {
         // given
         let expectationCallCount = 1
         let expectationProductId = 10
@@ -53,7 +58,7 @@ final class FetchProductDetailUseCaseTests: XCTestCase {
         XCTAssertEqual(expectationResponse, response)
     }
     
-    func test_DeleteProductUseCase실행될때_productId에해당상품이존재하지않을때_noSuchProduct에러를반환하는지() async throws {
+    func test_UseCase실행될때_productId에해당상품이존재하지않을때_noSuchProduct에러를반환하는지() async throws {
         // given
         let expextationError = ProductsRepositoryError.noSuchProductId
         let productId = 101

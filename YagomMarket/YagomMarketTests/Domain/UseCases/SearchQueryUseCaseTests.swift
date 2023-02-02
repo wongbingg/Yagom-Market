@@ -35,7 +35,7 @@ final class SearchQueryUseCaseTests: XCTestCase {
         func deleteProduct(productId: Int) async throws {}
     }
     
-    func test_UseCase실행시_ProductsRepository의fetchProductsQuery를실행하는지() async throws {
+    func test_UseCase실행시_ProductsRepository의_fetchProductsQuery메서드를실행하는지() async throws {
         // given
         let expectationCallCount = 1
         let productsRepository = ProductsRepositoryMock()

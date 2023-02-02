@@ -43,7 +43,7 @@ final class SearchQueryResultsUseCaseTests: XCTestCase {
         func deleteProduct(productId: Int) async throws {}
     }
     
-    func test_UseCase를실행할때_ProductRepository의fetchProductList메서드가실행된다() async throws {
+    func test_UseCase를실행할때_ProductRepository의_fetchProductList메서드가실행되는지() async throws {
         // given
         let expectationCallCount = 1
         let productsRepository = ProductsRepositoryMock()
@@ -56,7 +56,7 @@ final class SearchQueryResultsUseCaseTests: XCTestCase {
         XCTAssertEqual(expectationCallCount, productsRepository.fetchProductsListCallCount)
     }
     
-    func test_UseCase를실행할때_keyword가유효하지않으면_noSuchKeyword에러를반환한다() async throws {
+    func test_UseCase를실행할때_keyword가유효하지않으면_noSuchKeyword에러를반환하는지() async throws {
         // given
         let expectationError = ProductsRepositoryError.noSuchKeyword
         let productsRepository = ProductsRepositoryMock()

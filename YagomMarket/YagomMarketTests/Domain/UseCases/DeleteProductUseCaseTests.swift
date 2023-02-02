@@ -24,6 +24,10 @@ final class DeleteProductUseCaseTests: XCTestCase {
             return ProductDetail.toMockData()
         }
         
+        func fetchProductsQuery(keyword: String) async throws -> [String] {
+            return []
+        }
+        
         func editProductDetail(with editModel: ProductEditRequestDTO,
                                productId: Int) async throws {}
         
@@ -33,7 +37,7 @@ final class DeleteProductUseCaseTests: XCTestCase {
         }
     }
     
-    func test_DeleteProductUseCase실행될때_ProductRepository의deleteProduct메서드가실행되는지() async throws {
+    func test_UseCase실행될때_ProductRepository의deleteProduct메서드가실행되는지() async throws {
         // given
         let expectationCallCount = 1
         let expectationProductId = 10

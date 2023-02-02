@@ -40,7 +40,7 @@ final class HandleLikedProductUseCaseTests: XCTestCase {
                     documentId: String) async throws {}
     }
     
-    func test_UseCase가실행될때_FirestoreService의read와update메서드가실행된다() async throws {
+    func test_UseCase가실행될때_FirestoreService의_read메서드와_update메서드가실행되는지() async throws {
         // given
         let expectationReadCallCount = 1
         let expectationUpdateCallCount = 1

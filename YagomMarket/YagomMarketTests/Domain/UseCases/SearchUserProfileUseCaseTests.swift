@@ -39,7 +39,7 @@ final class SearchUserProfileUseCaseTests: XCTestCase {
                     documentId: String) async throws {}
     }
     
-    func test_UseCase실행시_FirestoreService의read가실행되는지() async throws {
+    func test_UseCase실행시_FirestoreService의_read메서드가실행되는지() async throws {
         // given
         let expectationReadCallCount = 1
         let firestoreService = FirestoreServiceMock<UserProfile>()

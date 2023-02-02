@@ -29,7 +29,7 @@ final class SigninUseCaseTests: XCTestCase {
         }
     }
     
-    func test_SigninUseCase를실행할때_FirebaseAuthService의_signIn메서드가실행되는지() async throws {
+    func test_UseCase를실행할때_FirebaseAuthService의_signIn메서드가실행되는지() async throws {
         // given
         let expectationCallCount = 1
         let firebaseAuthService = FirebaseAuthServiceMock()
@@ -42,7 +42,7 @@ final class SigninUseCaseTests: XCTestCase {
         XCTAssertEqual(expectationCallCount, firebaseAuthService.signInCallCount)
     }
     
-    func test_SigninUseCase를실행할때_FirebaseAuthService에서오류가발생하면_signInError를반환하는지() async throws {
+    func test_UseCase를실행할때_FirebaseAuthService에서오류가발생하면_signInError를반환하는지() async throws {
         // given
         let expectationError = FirebaseAuthServiceError.signInError
         let firebaseAuthService = FirebaseAuthServiceMock()
