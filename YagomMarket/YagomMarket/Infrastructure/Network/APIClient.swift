@@ -16,11 +16,21 @@ struct APIClient {
     }
 
     func requestData(with urlRequest: URLRequest) async throws -> Data {
-        let (data, response) = try await session.data(for: urlRequest, delegate: nil)
+        var result: (data: Data, response: URLResponse)?
+        
+        do {
+            result = try await session.data(for: urlRequest, delegate: nil)
+        } catch {
+            throw APIError.invalidURLRequest
+        }
+        
         let successRange = 200..<300
-        guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { throw APIError.unknown }
+        
+        guard let statusCode = (result?.response as? HTTPURLResponse)?.statusCode else { throw APIError.unknown }
+        
         guard successRange.contains(statusCode) else { throw APIError.response(statusCode) }
-        return data
+        
+        return result!.data
     }
 }
 

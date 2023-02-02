@@ -7,11 +7,13 @@
 
 import Foundation
 
-enum APIError: LocalizedError {
+enum APIError: LocalizedError, Equatable {
     case unknown
     case serverConnectError
     case response(Int)
     case invalidURL
+    case invalidURLRequest
+    case failToEncoding
     case failToParse
     
     var errorDescription: String? {
@@ -24,6 +26,10 @@ enum APIError: LocalizedError {
             return "현재 코드: \(code) \n 서버코드가 200~300 범위를 넘었습니다. 요청이 잘못되었습니다."
         case .invalidURL:
             return "잘못된 URL 입니다."
+        case .invalidURLRequest:
+            return "잘못된 URLRequest 입니다."
+        case .failToEncoding:
+            return "String encoding이 실패했습니다."
         case .failToParse:
             return "JSON decoding에 실패했습니다."
         }
