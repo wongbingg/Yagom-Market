@@ -63,6 +63,19 @@ extension ProductListResponseDTO {
         }
         return result
     }
+    
+    static func toMockData(hasNext: Bool) -> Self {
+        return .init(pageNo: 1, itemsPerPage: 50, totalCount: 1,
+                     offset: 1, limit: 1, lastPage: 1, hasNext: hasNext,
+                     hasPrev: false,
+                     pages: [
+                        .init(id: 1, vendorId: 1, vendorName: "",
+                              name: "", description: "", thumbnail: "",
+                              currency: .KRW, price: 0.0, bargainPrice: 0.0,
+                              discountedPrice: 0.0, stock: 0, createdAt: "", issuedAt: "")
+                     ]
+        )
+    }
 }
 
 extension ProductListResponseDTO.PageDTO {
