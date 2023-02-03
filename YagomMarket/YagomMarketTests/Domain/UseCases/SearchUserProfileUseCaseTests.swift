@@ -16,7 +16,7 @@ final class SearchUserProfileUseCaseTests: XCTestCase {
         // given
         let expectationReadCallCount = 1
         let firestoreService = UserProfileFirestoreServiceMock()
-        let useCase = SearchUserProfileUseCase(firestoreService: firestoreService)
+        let useCase = DefaultSearchUserProfileUseCase(firestoreService: firestoreService)
         
         // when
         _ = try await useCase.execute()

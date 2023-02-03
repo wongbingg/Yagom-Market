@@ -15,7 +15,7 @@ final class DeleteProductUseCaseTests: XCTestCase {
         let expectationCallCount = 1
         let expectationProductId = 10
         let productRepository = ProductsRepositoryMock()
-        let useCase = DeleteProductUseCase(productsRepository: productRepository)
+        let useCase = DefaultDeleteProductUseCase(productsRepository: productRepository)
         
         // when
         try await useCase.execute(productId: expectationProductId)

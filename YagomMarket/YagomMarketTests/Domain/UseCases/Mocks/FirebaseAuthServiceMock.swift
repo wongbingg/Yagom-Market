@@ -17,7 +17,7 @@ class FirebaseAuthServiceMock: FirebaseAuthService {
         return nil
     }
     
-    func signIn(email: String, password: String) async throws -> AuthDataResult? {
+    func logIn(email: String, password: String) async throws -> AuthDataResult? {
         signInCallCount += 1
         
         return nil

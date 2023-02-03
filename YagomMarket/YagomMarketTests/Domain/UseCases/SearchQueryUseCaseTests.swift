@@ -14,7 +14,7 @@ final class SearchQueryUseCaseTests: XCTestCase {
         // given
         let expectationCallCount = 1
         let productsRepository = ProductsRepositoryMock()
-        let useCase = SearchQueryUseCase(productsRepository: productsRepository)
+        let useCase = DefaultSearchQueryUseCase(productsRepository: productsRepository)
         
         // when
         

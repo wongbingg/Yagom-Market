@@ -18,7 +18,7 @@ final class CreateUserUseCaseTests: XCTestCase {
         let expectationCreateCallCount = 1
         let firebaseAuthService = FirebaseAuthServiceMock()
         let firestoreService = FirestoreServiceMock()
-        let useCase = CreateUserUseCase(
+        let useCase = DefaultCreateUserUseCase(
             firebaseAuthService: firebaseAuthService,
             firestoreService: firestoreService
         )

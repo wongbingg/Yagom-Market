@@ -14,9 +14,9 @@ final class FetchProductDetailUseCaseTests: XCTestCase {
         // given
         let expectationCallCount = 1
         let expectationProductId = 10
-        let expectationResponse = ProductDetail.toMockData()
+        let expectationResponse = ProductDetail.stub()
         let productRepository = ProductsRepositoryMock()
-        let useCase = FetchProductDetailUseCase(productsRepository: productRepository)
+        let useCase = DefaultFetchProductDetailUseCase(productsRepository: productRepository)
         
         // when
         let response = try await useCase.execute(productId: expectationProductId)

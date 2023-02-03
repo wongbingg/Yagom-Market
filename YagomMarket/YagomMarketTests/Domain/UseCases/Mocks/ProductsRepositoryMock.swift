@@ -28,7 +28,7 @@ class ProductsRepositoryMock: ProductsRepository {
     func fetchProductDetail(productId: Int) async throws -> ProductDetail {
         fetchProductDetailMethodCallCount += 1
         passedProductId = productId
-        return ProductDetail.toMockData()
+        return ProductDetail.stub()
     }
     
     func fetchProductsQuery(keyword: String) async throws -> [String] {

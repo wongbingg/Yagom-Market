@@ -14,7 +14,7 @@ final class SearchQueryResultsUseCaseTests: XCTestCase {
         // given
         let expectationCallCount = 1
         let productsRepository = ProductsRepositoryMock()
-        let useCase = SearchQueryResultsUseCase(productsRepository: productsRepository)
+        let useCase = DefaultSearchQueryResultsUseCase(productsRepository: productsRepository)
         
         // when
         _ = try await useCase.execute(keyword: "valid keyword")
