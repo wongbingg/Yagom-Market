@@ -62,24 +62,24 @@ final class HomeSceneDIContainer {
     }
     
     // MARK: - UseCase
-    func makeAddNextProductPageUseCase() -> DefaultAddNextProductPageUseCase {
+    func makeAddNextProductPageUseCase() -> AddNextProductPageUseCase {
         return DefaultAddNextProductPageUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeDeleteProductUseCase() -> DeleteProductUseCase {
-        return DeleteProductUseCase(productsRepository: makeProductsRepository())
+        return DefaultDeleteProductUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeFetchProductDetailUseCase() -> FetchProductDetailUseCase {
-        return FetchProductDetailUseCase(productsRepository: makeProductsRepository())
+        return DefaultFetchProductDetailUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeSearchUserProfileUseCase() -> SearchUserProfileUseCase {
-        return SearchUserProfileUseCase(firestoreService: makeFirestoreService())
+        return DefaultSearchUserProfileUseCase(firestoreService: makeFirestoreService())
     }
     
     func makeHandleLikedProductUseCase() -> HandleLikedProductUseCase {
-        return HandleLikedProductUseCase(firestoreService: makeFirestoreService())
+        return DefaultHandleLikedProductUseCase(firestoreService: makeFirestoreService())
     }
     
     

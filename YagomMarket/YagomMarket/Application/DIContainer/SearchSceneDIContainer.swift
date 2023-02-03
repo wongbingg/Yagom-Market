@@ -71,27 +71,27 @@ final class SearchSceneDIContainer {
     }
     // MARK: - UseCase
     func makeDeleteProductUseCase() -> DeleteProductUseCase {
-        return DeleteProductUseCase(productsRepository: makeProductsRepository())
+        return DefaultDeleteProductUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeFetchProductDetailUseCase() -> FetchProductDetailUseCase {
-        return FetchProductDetailUseCase(productsRepository: makeProductsRepository())
+        return DefaultFetchProductDetailUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeSearchQueryUseCase() -> SearchQueryUseCase {
-        return SearchQueryUseCase(productsRepository: makeProductsRepository())
+        return DefaultSearchQueryUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeSearchQueryResultsUseCase() -> SearchQueryResultsUseCase {
-        return SearchQueryResultsUseCase(productsRepository: makeProductsRepository())
+        return DefaultSearchQueryResultsUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeSearchUserProfileUseCase() -> SearchUserProfileUseCase {
-        return SearchUserProfileUseCase(firestoreService: makeFirestoreService())
+        return DefaultSearchUserProfileUseCase(firestoreService: makeFirestoreService())
     }
     
     func makeHandleLikedProductUseCase() -> HandleLikedProductUseCase {
-        return HandleLikedProductUseCase(firestoreService: makeFirestoreService())
+        return DefaultHandleLikedProductUseCase(firestoreService: makeFirestoreService())
     }
 
     // MARK: - Repositories
