@@ -5,7 +5,11 @@
 //  Created by 이원빈 on 2023/01/26.
 //
 
-final class SearchQueryUseCase {
+protocol SearchQueryUseCase {
+    func execute(keyword: String) async throws -> [String]
+}
+
+final class DefaultSearchQueryUseCase: SearchQueryUseCase {
     private let productsRepository: ProductsRepository
     
     init(productsRepository: ProductsRepository) {

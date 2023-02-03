@@ -5,7 +5,11 @@
 //  Created by 이원빈 on 2023/02/01.
 //
 
-final class HandleLikedProductUseCase {
+protocol HandleLikedProductUseCase {
+    func execute(with productId: Int, isAdd: Bool) async throws
+}
+
+final class DefaultHandleLikedProductUseCase: HandleLikedProductUseCase {
     private let firestoreService: any FirestoreService
     
     init(

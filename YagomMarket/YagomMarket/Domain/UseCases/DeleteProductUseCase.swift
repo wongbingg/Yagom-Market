@@ -5,7 +5,11 @@
 //  Created by 이원빈 on 2023/01/23.
 //
 
-final class DeleteProductUseCase {
+protocol DeleteProductUseCase {
+    func execute(productId: Int) async throws
+}
+
+final class DefaultDeleteProductUseCase: DeleteProductUseCase {
     private let productsRepository: ProductsRepository
     
     init(productsRepository: ProductsRepository) {

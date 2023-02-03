@@ -5,7 +5,11 @@
 //  Created by 이원빈 on 2023/01/31.
 //
 
-final class SearchUserProfileUseCase {
+protocol SearchUserProfileUseCase {
+    func execute() async throws -> UserProfile
+}
+
+final class DefaultSearchUserProfileUseCase: SearchUserProfileUseCase {
     private let firestoreService: any FirestoreService
     
     init(firestoreService: any FirestoreService) {
