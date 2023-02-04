@@ -26,13 +26,13 @@ protocol ProductListViewModelOutput {
 protocol ProductListViewModel: ProductListViewModelInput, ProductListViewModelOutput {}
 
 final class DefaultProductListViewModel: ProductListViewModel {
-    private let actions: ProductListViewModelActions
-    private let addNextProductPageUseCase: DefaultAddNextProductPageUseCase
+    private let actions: ProductListViewModelActions?
+    private let addNextProductPageUseCase: AddNextProductPageUseCase
     private(set) var productList: [ProductCell] = []
     
     init(
-        actions: ProductListViewModelActions,
-        addNextProductPageUseCase: DefaultAddNextProductPageUseCase
+        actions: ProductListViewModelActions? = nil,
+        addNextProductPageUseCase: AddNextProductPageUseCase
     ) {
         self.actions = actions
         self.addNextProductPageUseCase = addNextProductPageUseCase
@@ -51,18 +51,18 @@ final class DefaultProductListViewModel: ProductListViewModel {
     
     func didSelectItemAt(indexPath: Int) {
         let id = productList[indexPath].id
-        actions.productTapped(id)
+        actions?.productTapped(id)
     }
     
     func refresh() {
-        // 특정 상품 수정 후 homeview로 나왔을 때 특정 상품의 수정사항이 반영되도록 
+        // TODO: 특정 상품 수정 후 homeview로 나왔을 때 특정 상품의 수정사항이 반영되도록 
     }
     
     func searchTapSelected() {
-        actions.searchTapSelected()
+        actions?.searchTapSelected()
     }
     
     func registerTapSelected() {
-        actions.registerTapSelected()
+        actions?.registerTapSelected()
     }
 }
