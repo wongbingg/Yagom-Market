@@ -38,7 +38,7 @@ extension ProductDetail {
                      currency: currency)
     }
     
-    static func toMockData() -> Self {
+    static func stub() -> Self {
         return .init(id: 0,
                      imageURLs: [],
                      price: "",
