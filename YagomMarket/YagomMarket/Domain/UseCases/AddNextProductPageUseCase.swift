@@ -34,6 +34,6 @@ final class DefaultAddNextProductPageUseCase: AddNextProductPageUseCase {
     }
     
     func resetToFirstPage() {
-        currentPage = 1
+        currentPage = 0
     }
 }
