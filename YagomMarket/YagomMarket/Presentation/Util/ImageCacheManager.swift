@@ -30,7 +30,7 @@ final class DefaultImageCacheManager: ImageCacheManager {
         if let data = self.cache.cachedResponse(for: request)?.data {
             return data
         } else {
-            throw APIError.unknown
+            throw ImageCacheManagerError.failToLoadImageFromCache
         }
     }
     
@@ -46,5 +46,16 @@ final class DefaultImageCacheManager: ImageCacheManager {
         self.cache.storeCachedResponse(cachedData, for: request)
         
         return data
+    }
+}
+
+enum ImageCacheManagerError: LocalizedError {
+    case failToLoadImageFromCache
+    
+    var errorDescription: String? {
+        switch self {
+        case .failToLoadImageFromCache:
+            return "캐시에서 이미지를 불러오는데 실패했습니다."
+        }
     }
 }
