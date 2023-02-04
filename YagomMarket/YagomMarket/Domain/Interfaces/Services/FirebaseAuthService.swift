@@ -9,18 +9,18 @@ import FirebaseAuth
 
 protocol FirebaseAuthService {
     func createUser(email: String, password: String) async throws -> AuthDataResult?
-    func signIn(email: String, password: String) async throws -> AuthDataResult?
+    func logIn(email: String, password: String) async throws -> AuthDataResult?
 }
 
 enum FirebaseAuthServiceError: LocalizedError {
-    case createUserError
-    case signInError
+    case failToCreateUser
+    case failToLogin
     
     var errorDescription: String? {
         switch self {
-        case .createUserError:
+        case .failToCreateUser:
             return "사용자 계정을 생성하지 못했습니다."
-        case .signInError:
+        case .failToLogin:
             return "사용자를 찾을 수 없습니다."
         }
     }

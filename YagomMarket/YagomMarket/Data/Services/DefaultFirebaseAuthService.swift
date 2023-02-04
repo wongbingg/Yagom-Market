@@ -15,17 +15,17 @@ final class DefaultFirebaseAuthService: FirebaseAuthService {
             let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
             return authDataResult
         } catch {
-            throw FirebaseAuthServiceError.createUserError
+            throw FirebaseAuthServiceError.failToCreateUser
         }
     }
     
-    func signIn(email: String,
+    func logIn(email: String,
                 password: String) async throws -> AuthDataResult? {
         do {
             let authDataResult = try await Auth.auth().signIn(withEmail: email, password: password)
             return authDataResult
         } catch {
-            throw FirebaseAuthServiceError.signInError
+            throw FirebaseAuthServiceError.failToLogin
         }
     }
 }
