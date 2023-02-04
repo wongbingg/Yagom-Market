@@ -14,41 +14,41 @@ struct ProductDetailViewModelActions {
 
 protocol ProductDetailViewModelInput {
     func deleteProduct() async throws
-    func showEditView() async
+    func showEditView() async throws
     func showImageViewer(imageURLs: [String], currentPage: Int)
     func addLikeProduct() async throws
     func deleteLikeProduct() async throws
 }
 
 protocol ProductDetailViewModelOutput {
-    var productDetail: ProductDetail? { get async }
-    var isLiked: Bool { get async }
+    var productDetail: ProductDetail { get async throws }
+    var isLiked: Bool { get async throws }
 }
 
 protocol ProductDetailViewModel: ProductDetailViewModelInput, ProductDetailViewModelOutput {}
 
 final class DefaultProductDetailViewModel: ProductDetailViewModel {
-    private let actions: ProductDetailViewModelActions
+    private let actions: ProductDetailViewModelActions?
     private let deleteProductUseCase: DeleteProductUseCase
     private let fetchProductDetailUseCase: FetchProductDetailUseCase
     private let searchUserProfileUseCase: SearchUserProfileUseCase
     private let handleLikedProductUseCase: HandleLikedProductUseCase
     private let productId: Int
     
-    var productDetail: ProductDetail? {
-        get async {
-            await fetchProduct(with: productId)
+    var productDetail: ProductDetail {
+        get async throws {
+            try await fetchProduct()
         }
     }
     
     var isLiked: Bool {
-        get async {
-            await fetchIsLiked()
+        get async throws {
+            try await fetchIsLiked()
         }
     }
     
     init(
-        actions: ProductDetailViewModelActions,
+        actions: ProductDetailViewModelActions? = nil,
         deleteProductUseCase: DeleteProductUseCase,
         fetchProductDetailUseCase: FetchProductDetailUseCase,
         searchUserProfileUseCase: SearchUserProfileUseCase,
@@ -63,28 +63,18 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         self.productId = productId
     }
     
-    private func fetchProduct(with id: Int) async -> ProductDetail? {
-        do {
-            let response = try await fetchProductDetailUseCase.execute(productId: productId)
-            return response
-        } catch let error as ProductsRepositoryError {
-            print(error.errorDescription!)
-            return nil
-        } catch {
-            print(error.localizedDescription)
-            return nil
-        }
+    private func fetchProduct() async throws -> ProductDetail {
+        let response = try await fetchProductDetailUseCase.execute(
+            productId: productId
+        )
+        return response
     }
     
-    private func fetchIsLiked() async -> Bool {
-        do {
-            let userProfile = try await searchUserProfileUseCase.execute()
-            let likedProductIds = userProfile.likedProductIds
-            return likedProductIds.contains(productId)
-        } catch {
-            print(error.localizedDescription)
-            return false
-        }
+    private func fetchIsLiked() async throws -> Bool {
+        let userProfile = try await searchUserProfileUseCase.execute()
+        let likedProductIds = userProfile.likedProductIds
+        
+        return likedProductIds.contains(productId)
     }
     
     func deleteProduct() async throws {
@@ -92,13 +82,13 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     }
     
     @MainActor
-    func showEditView() async {
-        guard let productDetail = await productDetail else { return }
-        actions.showEditView(productDetail)
+    func showEditView() async throws {
+        let productDetail = try await productDetail
+        actions?.showEditView(productDetail)
     }
     
     func showImageViewer(imageURLs: [String], currentPage: Int) {
-        actions.imageTapped(imageURLs, currentPage)
+        actions?.imageTapped(imageURLs, currentPage)
     }
     
     func addLikeProduct() async throws {
