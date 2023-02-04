@@ -12,12 +12,12 @@ import UIKit
 
 struct LoginViewModelActions {
     let successLogin: (String) -> Void
-    let signinButtonTapped: () -> Void
+    let createUserButtonTapped: () -> Void
 }
 
 protocol LoginViewModelInput {
     func loginButtonTapped(with loginInfo: LoginInfo) async throws
-    func signinButtonTapped()
+    func createUserButtonTapped()
 }
 
 protocol LoginViewModelOutput {}
@@ -26,29 +26,26 @@ protocol LoginViewModel: LoginViewModelInput, LoginViewModelOutput {}
 
 final class DefaultLoginViewModel: LoginViewModel {
     private let actions: LoginViewModelActions?
-    private let signinUseCase: SigninUseCase
-    private let loginCacheManager: LoginCacheManager
+    private let loginUseCase: LoginUseCase
     
     init(
         actions: LoginViewModelActions? = nil,
-        signinUseCase: SigninUseCase,
-        loginCacheManager: LoginCacheManager
+        loginUseCase: LoginUseCase
     ) {
         self.actions = actions
-        self.signinUseCase = signinUseCase
-        self.loginCacheManager = loginCacheManager
+        self.loginUseCase = loginUseCase
     }
     
     @MainActor
     func loginButtonTapped(with loginInfo: LoginInfo) async throws {
         try loginInfo.validate()
-        let response = try await signinUseCase.execute(with: loginInfo)
+        let response = try await loginUseCase.execute(with: loginInfo)
         if let response = response {
-            actions?.successLogin(response.user.uid)            
+            actions?.successLogin(response)
         }
     }
     
-    func signinButtonTapped() {
-        actions?.signinButtonTapped()
+    func createUserButtonTapped() {
+        actions?.createUserButtonTapped()
     }
 }
