@@ -11,16 +11,14 @@ protocol HomeFlowCoordinatorDependencies: AnyObject {
     func makeProductListViewController(actions: ProductListViewModelActions) -> ProductListViewController
     func makeProductDetailViewController(productId: Int,
                                          actions: ProductDetailViewModelActions) -> ProductDetailViewController
-    func makeRegisterViewController(model: ProductDetail?,
-                                    actions: RegisterViewModelActions) -> RegisterViewController
-    func makeImageViewerController(imageURLs: [String],
-                                   currentPage: Int) -> ImageViewerViewController
+    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator
 }
 
 final class HomeFlowCoordinator {
-    let userUID: String
-    var navigationController: UINavigationController
-    var dependencies: HomeFlowCoordinatorDependencies
+    private let userUID: String
+    private let modalFlowCoordinator: ModalFlowCoordinator
+    private let navigationController: UINavigationController
+    private let dependencies: HomeFlowCoordinatorDependencies
     
     init(
         userUID: String,
@@ -30,6 +28,9 @@ final class HomeFlowCoordinator {
         self.userUID = userUID
         self.navigationController = navigationController
         self.dependencies = dependencies
+        self.modalFlowCoordinator = dependencies.makeModalFlowCoordinator(
+            navigationController: navigationController
+        )
     }
     
     func generate() -> ProductListViewController {
@@ -42,8 +43,8 @@ final class HomeFlowCoordinator {
         return homeVC
     }
     
-    // MARK: View Transition
-    func productTapped(id: Int) {
+    // MARK: - View Transition
+    private func productTapped(id: Int) {
         let actions = ProductDetailViewModelActions(
             imageTapped: imageTapped(imageURLs:currentPage:),
             showEditView: showEditView(model:)
@@ -55,15 +56,11 @@ final class HomeFlowCoordinator {
         navigationController.pushViewController(productDetailVC, animated: true)
     }
     
-    func registerTapSelected() {
-        let actions = RegisterViewModelActions(registerButtonTapped: registerButtonTapped,
-                                               editButtonTapped: editButtonTapped)
-        let registerVC = dependencies.makeRegisterViewController(model: nil, actions: actions)
-        registerVC.modalPresentationStyle = .overFullScreen
-        navigationController.topViewController?.present(registerVC, animated: true)
+    private func registerTapSelected() {
+        modalFlowCoordinator.presentRegisterVC(with: nil)
     }
     
-    func searchTapSelected() {
+    private func searchTapSelected() {
         let searchSceneDIContainer = SearchSceneDIContainer()
         let coordinator = searchSceneDIContainer.makeSearchFlowCoordinator(
             navigationController: navigationController
@@ -71,34 +68,11 @@ final class HomeFlowCoordinator {
         coordinator.start()
     }
     
-    func imageTapped(imageURLs: [String], currentPage: Int) {
-        let imageViewerVC = dependencies.makeImageViewerController(
-            imageURLs: imageURLs,
-            currentPage: currentPage
-        )
-        // CustomModal 설정
-        navigationController.topViewController?.present(imageViewerVC, animated: true)
+    private func imageTapped(imageURLs: [String], currentPage: Int) {
+        modalFlowCoordinator.presentImageViewerVC(imageURLs: imageURLs, currentPage: currentPage)
     }
     
-    func showEditView(model: ProductDetail) {
-        let actions = RegisterViewModelActions(
-            registerButtonTapped: registerButtonTapped,
-            editButtonTapped: editButtonTapped
-        )
-        let editModalVC = dependencies.makeRegisterViewController(
-            model: model,
-            actions: actions
-        )
-        //        editView.delegate = self
-        editModalVC.modalPresentationStyle = .overFullScreen
-        navigationController.topViewController?.present(editModalVC, animated: true)
-    }
-    
-    func registerButtonTapped() {
-        navigationController.topViewController?.dismiss(animated: true)
-    }
-    
-    func editButtonTapped() {
-        self.navigationController.topViewController?.dismiss(animated: true)
+    private func showEditView(model: ProductDetail) {
+        modalFlowCoordinator.presentRegisterVC(with: model)
     }
 }

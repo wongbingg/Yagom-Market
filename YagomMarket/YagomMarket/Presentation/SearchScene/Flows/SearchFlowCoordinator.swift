@@ -9,38 +9,36 @@ import UIKit
 
 protocol SearchFlowCoordinatorDependencies: AnyObject {
     func makeSearchViewController(actions: SearchViewModelActions) -> SearchViewController
-    func makeResultViewController(cells: [ProductCell], actions: ResultViewModelAction) -> ResultViewController
-    
-    func makeProductDetailViewController(productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewController
-    func makeRegisterViewController(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewController
-    func makeImageViewerController(imageURLs: [String], currentPage: Int) -> ImageViewerViewController
+    func makeResultViewController(cells: [ProductCell],
+                                  actions: ResultViewModelAction) -> ResultViewController
+    func makeProductDetailViewController(productId: Int,
+                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController
+    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator
 }
 
 final class SearchFlowCoordinator {
-    var navigationController: UINavigationController?
-    var dependencies: SearchFlowCoordinatorDependencies
+    private let modalFlowCoordinator: ModalFlowCoordinator
+    private let navigationController: UINavigationController
+    private let dependencies: SearchFlowCoordinatorDependencies
     
-    init(dependencies: SearchFlowCoordinatorDependencies) {
-        self.dependencies = dependencies
-    }
-    
-    // test
     init(
         navCon: UINavigationController,
         dependencies: SearchFlowCoordinatorDependencies
     ) {
         self.navigationController = navCon
         self.dependencies = dependencies
+        self.modalFlowCoordinator = dependencies.makeModalFlowCoordinator(
+            navigationController: navigationController
+        )
     }
     
-    // test
     func start() {
         let actions = SearchViewModelActions(
             goToResultVC: goToResultVC(with:),
             goToHomeTab: goToHomeTab
         )
         let searchVC = dependencies.makeSearchViewController(actions: actions)
-        navigationController?.pushViewController(searchVC, animated: true)
+        navigationController.pushViewController(searchVC, animated: true)
     }
     
     func generate() -> SearchViewController {
@@ -54,8 +52,8 @@ final class SearchFlowCoordinator {
         return searchVC
     }
     
-    // MARK: View Transition
-    func goToResultVC(with cells: [ProductCell]) {
+    // MARK: - View Transition
+    private func goToResultVC(with cells: [ProductCell]) {
         let actions = ResultViewModelAction(
             cellTapped: cellTapped(at:)
         )
@@ -63,52 +61,32 @@ final class SearchFlowCoordinator {
             cells: cells,
             actions: actions
         )
-        navigationController?.pushViewController(resultVC, animated: true)
+        navigationController.pushViewController(resultVC, animated: true)
     }
     
-    func goToHomeTab() {
-        navigationController?.popViewController(animated: true)
-        let tabBarController = navigationController?.topViewController as! TabBarController
+    private func goToHomeTab() {
+        navigationController.popViewController(animated: true)
+        let tabBarController = navigationController.topViewController as! TabBarController
         tabBarController.selectedIndex = 0
-        navigationController?.navigationBar.topItem?.title = "Home"
+        navigationController.navigationBar.topItem?.title = "Home"
     }
     
-    func cellTapped(at id: Int) {
+    private func cellTapped(at id: Int) {
         let actions = ProductDetailViewModelActions(
             imageTapped: imageTapped(imageURLs:currentPage:),
             showEditView: showEditView(model:)
         )
-        let detailVC = dependencies.makeProductDetailViewController(productId: id, actions: actions)
-        navigationController?.pushViewController(detailVC, animated: true)
+        let detailVC = dependencies.makeProductDetailViewController(productId: id,
+                                                                    actions: actions)
+        navigationController.pushViewController(detailVC, animated: true)
     }
     
-    func imageTapped(imageURLs: [String], currentPage: Int) {
-        let imageViewerVC = dependencies.makeImageViewerController(
-            imageURLs: imageURLs,
-            currentPage: currentPage
-        )
-        navigationController?.topViewController?.present(imageViewerVC, animated: true)
+    private func imageTapped(imageURLs: [String], currentPage: Int) {
+        modalFlowCoordinator.presentImageViewerVC(imageURLs: imageURLs,
+                                                  currentPage: currentPage)
     }
     
-    func showEditView(model: ProductDetail) {
-        let actions = RegisterViewModelActions(
-            registerButtonTapped: registerButtonTapped,
-            editButtonTapped: editButtonTapped
-        )
-        let editModalVC = dependencies.makeRegisterViewController(
-            model: model,
-            actions: actions
-        )
-//        editView.delegate = self
-        editModalVC.modalPresentationStyle = .overFullScreen
-        navigationController?.topViewController?.present(editModalVC, animated: true)
-    }
-    
-    func registerButtonTapped() {
-        navigationController?.topViewController?.dismiss(animated: true)
-    }
-    
-    func editButtonTapped() {
-        navigationController?.topViewController?.dismiss(animated: true)
+    private func showEditView(model: ProductDetail) {
+        modalFlowCoordinator.presentRegisterVC(with: model)
     }
 }
