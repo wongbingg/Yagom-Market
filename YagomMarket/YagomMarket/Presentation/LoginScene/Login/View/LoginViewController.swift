@@ -91,7 +91,7 @@ final class LoginViewController: UIViewController {
     }
     
     @objc private func signInButtonTapped() {
-        viewModel.signinButtonTapped()
+        viewModel.createUserButtonTapped()
     }
     
 //    @objc private func kakaoButtonTapped() {

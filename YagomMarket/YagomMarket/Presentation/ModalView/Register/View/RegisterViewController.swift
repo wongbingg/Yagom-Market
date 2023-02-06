@@ -84,8 +84,8 @@ final class RegisterViewController: UIViewController {
         Task {
             do {
                 try await registerView.setupData(with: viewModel.model)
-            } catch {
-                print(error.localizedDescription)
+            } catch let error as LocalizedError{
+                print(error.errorDescription ?? "\(#function) error")
             }
         }
     }
@@ -157,7 +157,11 @@ final class RegisterViewController: UIViewController {
             registerModel = RegisterModel(requestDTO: model, images: nil)
         }
         Task {
-            await viewModel.registerButtonTapped(with: registerModel)
+            do {
+                try await viewModel.registerButtonTapped(with: registerModel)
+            } catch let error as LocalizedError {
+                print(error.errorDescription ?? "\(#function) error")
+            }
         }
     }
     

@@ -203,22 +203,7 @@ final class RegisterView: UIView {
     private func setupKeyboard() {
         priceTextField.keyboardType = .decimalPad
     }
-    
-    private func setProperColor() -> UIColor {
-        if #available(iOS 13, *) {
-            return UIColor { (traitCollection: UITraitCollection) -> UIColor in
-                if traitCollection.userInterfaceStyle == .dark {
-                    return UIColor.white
-                } else {
-                    return UIColor.black
-                }
-            }
-        } else {
-            return UIColor.black
-        }
-    }
 
-    
     @objc func deleteButtonDidTapped(_ sender: UIButton) {
         guard let customView = sender.superview else { return }
         customView.removeFromSuperview()
@@ -232,7 +217,7 @@ extension RegisterView: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if descriptionTextView.text == PlaceHolder.description {
             descriptionTextView.text = nil
-            descriptionTextView.textColor = setProperColor()
+            descriptionTextView.textColor = .label
         } else {
             
         }

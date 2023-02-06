@@ -5,26 +5,28 @@
 //  Created by 이원빈 on 2023/01/31.
 //
 
-import Foundation
+protocol SearchUserProfileUseCase {
+    func execute() async throws -> UserProfile
+}
 
-final class SearchUserProfileUseCase {
-    private let firestoreService: DefaultFirestoreService<UserProfile>
+final class DefaultSearchUserProfileUseCase: SearchUserProfileUseCase {
+    private let firestoreService: any FirestoreService
     
-    init(
-        firestoreService: DefaultFirestoreService<UserProfile>
-    ) {
+    init(firestoreService: any FirestoreService) {
         self.firestoreService = firestoreService
     }
     
     func execute() async throws -> UserProfile {
         guard let userUID = LoginCacheManager.fetchPreviousInfo() else {
-            throw LoginCacheError.noPreviousInfo
+            throw LoginCacheManagerError.noPreviousInfo
         }
+        
         let response = try await firestoreService.read(
             collectionId: "UserProfile",
             documentId: userUID,
             entity: UserProfile()
         )
+        
         return response
     }
 }

@@ -5,9 +5,11 @@
 //  Created by 이원빈 on 2023/01/23.
 //
 
-import Foundation
+protocol FetchProductDetailUseCase {
+    func execute(productId: Int) async throws -> ProductDetail
+}
 
-final class FetchProductDetailUseCase {
+final class DefaultFetchProductDetailUseCase: FetchProductDetailUseCase {
     private let productsRepository: ProductsRepository
     
     init(productsRepository: ProductsRepository) {

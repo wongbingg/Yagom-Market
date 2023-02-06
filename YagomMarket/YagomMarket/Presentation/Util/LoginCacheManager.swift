@@ -21,7 +21,7 @@ struct LoginCacheManager {
     }
 }
 
-enum LoginCacheError: LocalizedError {
+enum LoginCacheManagerError: LocalizedError {
     case noPreviousInfo
     
     var errorDescription: String? {

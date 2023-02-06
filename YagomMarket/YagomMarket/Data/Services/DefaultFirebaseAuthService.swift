@@ -9,22 +9,23 @@ import FirebaseAuth
 
 final class DefaultFirebaseAuthService: FirebaseAuthService {
     
-    func createUser(email: String, password: String) async throws -> AuthDataResult? {
-        let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
-        return authDataResult
+    func createUser(email: String,
+                    password: String) async throws -> AuthDataResult? {
+        do {
+            let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
+            return authDataResult
+        } catch {
+            throw FirebaseAuthServiceError.failToCreateUser
+        }
     }
     
-    func signIn(email: String, password: String) async throws -> AuthDataResult? {
+    func logIn(email: String,
+                password: String) async throws -> AuthDataResult? {
         do {
             let authDataResult = try await Auth.auth().signIn(withEmail: email, password: password)
             return authDataResult
         } catch {
-            throw LoginError.invalidUser
+            throw FirebaseAuthServiceError.failToLogin
         }
     }
-}
-
-enum FirebaseAuthServiceError: Error {
-    case createUserError
-    case signInError
 }

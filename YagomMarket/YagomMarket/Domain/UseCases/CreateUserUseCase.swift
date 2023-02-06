@@ -5,13 +5,17 @@
 //  Created by 이원빈 on 2023/01/24.
 //
 
-final class CreateUserUseCase {
+protocol CreateUserUseCase {
+    func execute(with loginInfo: LoginInfo) async throws
+}
+
+final class DefaultCreateUserUseCase: CreateUserUseCase {
     private let firebaseAuthService: FirebaseAuthService
-    private let firestoreService: DefaultFirestoreService<UserProfile>
+    private let firestoreService: any FirestoreService
     
     init(
         firebaseAuthService: FirebaseAuthService,
-        firestoreService: DefaultFirestoreService<UserProfile>
+        firestoreService: any FirestoreService
     ) {
         self.firebaseAuthService = firebaseAuthService
         self.firestoreService = firestoreService

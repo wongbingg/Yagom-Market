@@ -5,20 +5,22 @@
 //  Created by 이원빈 on 2023/02/01.
 //
 
-import Foundation
+protocol HandleLikedProductUseCase {
+    func execute(with productId: Int, isAdd: Bool) async throws
+}
 
-final class HandleLikedProductUseCase {
-    private let firestoreService: DefaultFirestoreService<UserProfile>
+final class DefaultHandleLikedProductUseCase: HandleLikedProductUseCase {
+    private let firestoreService: any FirestoreService
     
     init(
-        firestoreService: DefaultFirestoreService<UserProfile>
+        firestoreService: any FirestoreService
     ) {
         self.firestoreService = firestoreService
     }
     
     func execute(with productId: Int, isAdd: Bool) async throws {
         guard let userUID = LoginCacheManager.fetchPreviousInfo() else {
-            throw LoginCacheError.noPreviousInfo
+            throw LoginCacheManagerError.noPreviousInfo
         }
         
         var userProfile = try await firestoreService.read(

@@ -16,3 +16,27 @@ struct ProductCell: Equatable {
     let currency: Currency
 }
 
+extension ProductCell {
+    
+    static func stub(
+        id: Int = 1,
+        imageURL: String = "",
+        title: String = "",
+        description: String = "",
+        vendor: String = "",
+        postDate: String = "",
+        price: String = "",
+        currency: Currency = .KRW
+    ) -> ProductCell {
+        
+        return .init(id: id,
+              imageURL: imageURL,
+              title: title,
+              description: description,
+              vendor: vendor,
+              postDate: postDate,
+              price: price,
+              currency: currency)
+    }
+    
+}

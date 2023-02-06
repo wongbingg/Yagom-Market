@@ -73,7 +73,7 @@ final class ProductListViewController: UIViewController {
             do {
                 _ = try await viewModel.resetToFirstPage()
                 collectionView.reloadData()
-            } catch let error as APIError {
+            } catch let error as LocalizedError {
                 DefaultAlertBuilder(
                     title: .error,
                     message: error.errorDescription,
@@ -92,7 +92,7 @@ final class ProductListViewController: UIViewController {
                     _ = try await self.viewModel.resetToFirstPage()
                     self.collectionView.reloadData()
                     sender.endRefreshing()
-                } catch let error as APIError {
+                } catch let error as LocalizedError {
                     DefaultAlertBuilder(
                         title: .error,
                         message: error.errorDescription,

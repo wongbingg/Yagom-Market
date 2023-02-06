@@ -28,9 +28,7 @@ final class ProductDetailViewController: UIViewController {
         layoutInitialView()
         setupInitialView()
         setupButton()
-        Task {
-            await setupNavigationBar()
-        }
+        setupNavigationBar()
         setupGestureRecognizer()
         setupTabBarController()
     }
@@ -43,13 +41,13 @@ final class ProductDetailViewController: UIViewController {
     // MARK: Methods
     private func setupInitialView() {
         Task {
-            guard let model = await viewModel.productDetail else { return }
-            let isLiked = await viewModel.isLiked
-            detailView.setupLikeButton(isLike: isLiked)
             do {
+                let model = try await viewModel.productDetail
+                let isLiked = try await viewModel.isLiked
+                detailView.setupLikeButton(isLike: isLiked)
                 try await detailView.setupData(with: model)
-            } catch {
-                print(error.localizedDescription)
+            } catch let error as LocalizedError {
+                print(error.errorDescription ?? "\(#function) - error")
             }
         }
     }
@@ -74,25 +72,36 @@ final class ProductDetailViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     
-    private func setupNavigationBar() async {
+    private func setupNavigationBar() {
         navigationController?.navigationBar.tintColor = .systemBrown
-        guard await viewModel.productDetail?.vendorName == "wongbing" else { return }
-        let rightBarButton = UIBarButtonItem(
-            image: UIImage(systemName: "ellipsis"),
-            style: .done,
-            target: self, action: #selector(rightBarButtonDidTapped)
-        )
-        navigationItem.rightBarButtonItem = rightBarButton
+        Task {
+            do {
+                guard try await viewModel.productDetail.vendorName == "wongbing" else { return }
+                
+                let rightBarButton = UIBarButtonItem(
+                    image: UIImage(systemName: "ellipsis"),
+                    style: .done,
+                    target: self, action: #selector(rightBarButtonDidTapped)
+                )
+                navigationItem.rightBarButtonItem = rightBarButton
+            } catch let error as LocalizedError {
+                print(error.errorDescription ?? "\(#function) - error")
+            }
+        }
     }
     
     private func showEditView() {
         Task {
-            await viewModel.showEditView()
+            do {
+                try await viewModel.showEditView()
+            } catch let error as LocalizedError {
+                print(error.errorDescription ?? "\(#function) - error")
+            }
         }
-//        let editView = RegisterViewController(with: viewModel)
-//        editView.delegate = self
-//        editView.modalPresentationStyle = .overFullScreen
-//        present(editView, animated: true)
+        //        let editView = RegisterViewController(with: viewModel)
+        //        editView.delegate = self
+        //        editView.modalPresentationStyle = .overFullScreen
+        //        present(editView, animated: true)
     }
     
     private func performDelete() {
@@ -100,8 +109,8 @@ final class ProductDetailViewController: UIViewController {
             do {
                 try await viewModel.deleteProduct()
                 // completion 처리 성공 얼럿 띄우기
-            } catch {
-                print(error)
+            } catch let error as LocalizedError {
+                print(error.errorDescription ?? "\(#function) - error")
             }
         }
     }
@@ -121,8 +130,12 @@ final class ProductDetailViewController: UIViewController {
         if detailView.imageStackView.bounds.contains(point) {
             let currentPage = detailView.imageScrollView.contentOffset.x / UIScreen.main.bounds.maxX
             Task {
-                let urls = await viewModel.productDetail?.imageURLs
-                viewModel.showImageViewer(imageURLs: urls!, currentPage: Int(currentPage))
+                do {
+                    let urls = try await viewModel.productDetail.imageURLs
+                    viewModel.showImageViewer(imageURLs: urls, currentPage: Int(currentPage))
+                } catch let error as LocalizedError {
+                    print(error.errorDescription ?? "\(#function) - error")
+                }
             }
         }
     }
@@ -145,16 +158,16 @@ final class ProductDetailViewController: UIViewController {
             Task {
                 do {
                     try await viewModel.addLikeProduct()
-                } catch {
-                    print(error.localizedDescription) // firestoreError 따로 만들기
+                } catch let error as LocalizedError {
+                    print(error.errorDescription ?? "\(#function) - error")
                 }
             }
         } else {
             Task {
                 do {
                     try await viewModel.deleteLikeProduct()
-                } catch {
-                    print(error.localizedDescription)
+                } catch let error as LocalizedError {
+                    print(error.errorDescription ?? "\(#function) - error")
                 }
             }
         }
@@ -164,7 +177,7 @@ final class ProductDetailViewController: UIViewController {
 // MARK: - RegisterViewDelegate
 extension ProductDetailViewController: RegisterViewControllerDelegate {
     func viewWillDisappear() {
-//        viewModel.search(productID: productId)
+        //        viewModel.search(productID: productId)
     }
 }
 

@@ -29,7 +29,7 @@ final class LoginFlowCoordinator {
     func start() {
         let actions = LoginViewModelActions(
             successLogin: successLogin(_:),
-            signinButtonTapped: signinButtonTapped
+            createUserButtonTapped: signinButtonTapped
         )
         let loginVC = dependencies.makeLoginViewController(actions: actions)
         navigationController.pushViewController(loginVC, animated: true)

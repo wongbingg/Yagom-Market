@@ -5,7 +5,7 @@
 //  Created by 이원빈 on 2023/01/18.
 //
 
-struct ProductDetail {
+struct ProductDetail: Equatable {
     let id: Int
     let imageURLs: [String]
     let price: String
@@ -36,5 +36,16 @@ extension ProductDetail {
                      postDate: time,
                      price: price,
                      currency: currency)
+    }
+    
+    static func stub() -> Self {
+        return .init(id: 0,
+                     imageURLs: [],
+                     price: "",
+                     currency: .KRW,
+                     vendorName: "",
+                     time: "",
+                     description: "",
+                     name: "")
     }
 }

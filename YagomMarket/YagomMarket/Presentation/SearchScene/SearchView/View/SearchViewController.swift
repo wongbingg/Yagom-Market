@@ -101,8 +101,8 @@ extension SearchViewController: UISearchBarDelegate {
                 do {
                     try await viewModel.search(keyword: searchText)
                     resultTableView.reloadData()
-                } catch {
-                    print(error.localizedDescription)
+                } catch let error as LocalizedError {
+                    print(error.errorDescription ?? "\(#function) - error")
                 }
             }
         }
@@ -113,8 +113,8 @@ extension SearchViewController: UISearchBarDelegate {
         Task {
             do {
                 try await viewModel.goToResultVC(with: searchValue)
-            } catch {
-                print(error.localizedDescription)
+            } catch let error as LocalizedError {
+                print(error.errorDescription ?? "\(#function) - error")
             }
         }
     }
@@ -170,8 +170,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         Task {
             do {
                 try await viewModel.goToResultVC(with: searchValue)
-            } catch {
-                print(error.localizedDescription)
+            } catch let error as LocalizedError {
+                print(error.errorDescription ?? "\(#function) - error")
             }
         }
     }

@@ -23,13 +23,13 @@ protocol SearchViewModelOutput {
 protocol SearchViewModel: SearchViewModelInput, SearchViewModelOutput {}
 
 final class DefaultSearchViewModel: SearchViewModel {
-    private let actions: SearchViewModelActions
+    private let actions: SearchViewModelActions?
     private let searchQueryUseCase: SearchQueryUseCase
     private let searchQueryResultsUseCase: SearchQueryResultsUseCase
     var searchedResults: [String] = []
     
     init(
-        actions: SearchViewModelActions,
+        actions: SearchViewModelActions? = nil,
         searchQueryUseCase: SearchQueryUseCase,
         searchQueryResultsUseCase: SearchQueryResultsUseCase
     ) {
@@ -46,10 +46,10 @@ final class DefaultSearchViewModel: SearchViewModel {
     @MainActor
     func goToResultVC(with keyword: String) async throws {
         let response = try await searchQueryResultsUseCase.execute(keyword: keyword)
-        actions.goToResultVC(response.toDomain())
+        actions?.goToResultVC(response.toDomain())
     }
     
     func goToHomeTab() {
-        actions.goToHomeTab()
+        actions?.goToHomeTab()
     }
 }

@@ -17,8 +17,7 @@ final class HomeSceneDIContainer {
     func makeProductListViewModel(actions: ProductListViewModelActions) -> ProductListViewModel {
         return DefaultProductListViewModel(
             actions: actions,
-            addNextProductPageUseCase: makeAddNextProductPageUseCase(),
-            resetToFirstProductPageUseCase: makeResetToFirstProductPageUseCase()
+            addNextProductPageUseCase: makeAddNextProductPageUseCase()
         )
     }
     
@@ -51,7 +50,12 @@ final class HomeSceneDIContainer {
     
     func makeRegisterViewModel(model: ProductDetail?,
                                actions: RegisterViewModelActions) -> RegisterViewModel {
-        return DefaultRegisterViewModel(model: model, actions: actions)
+        return DefaultRegisterViewModel(
+            model: model,
+            actions: actions,
+            registerProductUseCase: makeRegisterProductUseCase(),
+            editProductUseCase: makeEditProductUseCase()
+        )
     }
     
     func makeImageViewerController(imageURLs: [String],
@@ -64,27 +68,31 @@ final class HomeSceneDIContainer {
     
     // MARK: - UseCase
     func makeAddNextProductPageUseCase() -> AddNextProductPageUseCase {
-        return AddNextProductPageUseCase(productsRepository: makeProductsRepository())
-    }
-    
-    func makeResetToFirstProductPageUseCase() -> ResetToFirstProductPageUseCase {
-        return ResetToFirstProductPageUseCase(productsRepository: makeProductsRepository())
+        return DefaultAddNextProductPageUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeDeleteProductUseCase() -> DeleteProductUseCase {
-        return DeleteProductUseCase(productsRepository: makeProductsRepository())
+        return DefaultDeleteProductUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeFetchProductDetailUseCase() -> FetchProductDetailUseCase {
-        return FetchProductDetailUseCase(productsRepository: makeProductsRepository())
+        return DefaultFetchProductDetailUseCase(productsRepository: makeProductsRepository())
     }
     
     func makeSearchUserProfileUseCase() -> SearchUserProfileUseCase {
-        return SearchUserProfileUseCase(firestoreService: makeFirestoreService())
+        return DefaultSearchUserProfileUseCase(firestoreService: makeFirestoreService())
     }
     
     func makeHandleLikedProductUseCase() -> HandleLikedProductUseCase {
-        return HandleLikedProductUseCase(firestoreService: makeFirestoreService())
+        return DefaultHandleLikedProductUseCase(firestoreService: makeFirestoreService())
+    }
+    
+    func makeRegisterProductUseCase() -> RegisterProductUseCase {
+        return DefaultRegisterProductUseCase(productsRepository: makeProductsRepository())
+    }
+    
+    func makeEditProductUseCase() -> EditProductUseCase {
+        return DefaultEditProductUseCase(productsRepository: makeProductsRepository())
     }
     
     

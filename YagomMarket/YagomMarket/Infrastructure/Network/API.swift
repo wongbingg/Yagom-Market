@@ -18,10 +18,12 @@ extension API {
         guard let urlRequest = configuration?.makeURLRequest() else { throw APIError.invalidURL }
         
         let data = try await client.requestData(with: urlRequest)
+        
         if ResponseType.self == String.self {
-            let result = String(data: data, encoding: .utf8)!
+            guard let result = String(data: data, encoding: .utf8) else { throw APIError.failToEncoding }
             return result as! Self.ResponseType
         }
+        
         do {
             let result = try JSONDecoder().decode(ResponseType.self, from: data)
             return result

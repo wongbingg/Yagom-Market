@@ -19,8 +19,7 @@ final class LoginSceneDIContainer {
     func makeLoginViewModel(actions: LoginViewModelActions) -> LoginViewModel {
         return DefaultLoginViewModel(
             actions: actions,
-            signinUseCase: makeSigninUseCase(),
-            loginCacheManager: LoginCacheManager()
+            loginUseCase: makeLoginUseCase()
         )
     }
     
@@ -77,12 +76,12 @@ final class LoginSceneDIContainer {
     }
     
     // MARK: - UseCase
-    func makeSigninUseCase() -> SigninUseCase {
-        return SigninUseCase(firebaseAuthService: makeFirebaseAuthService())
+    func makeLoginUseCase() -> DefaultLoginUseCase {
+        return DefaultLoginUseCase(firebaseAuthService: makeFirebaseAuthService())
     }
     
-    func makeCreateUserUseCase() -> CreateUserUseCase {
-        return CreateUserUseCase(
+    func makeCreateUserUseCase() -> DefaultCreateUserUseCase {
+        return DefaultCreateUserUseCase(
             firebaseAuthService: makeFirebaseAuthService(),
             firestoreService: makeFirestoreService()
         )
