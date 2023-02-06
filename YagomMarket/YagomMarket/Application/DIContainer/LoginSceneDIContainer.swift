@@ -40,27 +40,29 @@ final class LoginSceneDIContainer {
     func makeTabBarController(navigationController: UINavigationController,
                               userUID: String) -> TabBarController {
         let homeSceneDIContainer = appDIContainer.makeHomeSceneDIContainer()
-        let flow1 = homeSceneDIContainer.makeHomeFlowCoordinator(
+        let homeFlowCoordinator = homeSceneDIContainer.makeHomeFlowCoordinator(
             navigationController: navigationController,
             userUID: userUID
         )
-        let homeVC = flow1.generate()
+        let homeVC = homeFlowCoordinator.generate()
         
         let searchSceneDIContainer = appDIContainer.makeSearchSceneDIContainer()
-        let flow2 = searchSceneDIContainer.makeSearchFlowCoordinator()
-        let searchVC = flow2.generate()
+        let searchFlowCoordinator = searchSceneDIContainer.makeSearchFlowCoordinator(
+            navigationController: navigationController
+        )
+        let searchVC = searchFlowCoordinator.generate()
         
         let chatSceneDIContainer = appDIContainer.makeChatSceneDIContainer()
-        let flow3 = chatSceneDIContainer.makeChatFlowCoordinator(
+        let chatFlowCoordinator = chatSceneDIContainer.makeChatFlowCoordinator(
             navigationController: navigationController
         )
-        let chatVC = flow3.generate()
+        let chatVC = chatFlowCoordinator.generate()
         
         let myPageSceneDIContainer = appDIContainer.makeMyPageSceneDIContainer()
-        let flow4 = myPageSceneDIContainer.makeMyPageFlowCoordinator(
+        let myPageFlowCoordinator = myPageSceneDIContainer.makeMyPageFlowCoordinator(
             navigationController: navigationController
         )
-        let myPageVC = flow4.generate()
+        let myPageVC = myPageFlowCoordinator.generate()
         
         let registerVC = RegisterViewController(with: DefaultRegisterViewModel())
         
