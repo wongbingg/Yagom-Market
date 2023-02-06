@@ -8,7 +8,7 @@
 import UIKit
 
 final class ModalSceneDIContainer {
-    // MARK: - Modal View
+    // MARK: - Register
     func makeRegisterViewController(model: ProductDetail?,
                                     actions: RegisterViewModelActions) -> RegisterViewController {
         let viewModel = makeRegisterViewModel(model: model, actions: actions)
@@ -25,6 +25,7 @@ final class ModalSceneDIContainer {
         )
     }
     
+    // MARK: - ImageViewer
     func makeImageViewerController(imageURLs: [String],
                                    currentPage: Int) -> ImageViewerViewController {
         return ImageViewerViewController(imageURLs: imageURLs, currentPage: currentPage)
@@ -55,4 +56,3 @@ final class ModalSceneDIContainer {
 }
 
 extension ModalSceneDIContainer: ModalFlowCoordinatorDependencies { }
-
