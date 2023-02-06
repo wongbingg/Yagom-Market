@@ -23,14 +23,14 @@ protocol RegisterViewModel: RegisterViewModelInput, RegisterViewModelOutput {}
 final class DefaultRegisterViewModel: RegisterViewModel {
     private(set) var model: ProductDetail?
     private let actions: RegisterViewModelActions?
-    private let registerProductUseCase: RegisterProductUseCase
-    private let editProductUseCase: EditProductUseCase
+    private let registerProductUseCase: RegisterProductUseCase?
+    private let editProductUseCase: EditProductUseCase?
     
     init(
         model: ProductDetail? = nil,
         actions: RegisterViewModelActions? = nil,
-        registerProductUseCase: RegisterProductUseCase,
-        editProductUseCase: EditProductUseCase
+        registerProductUseCase: RegisterProductUseCase? = nil,
+        editProductUseCase: EditProductUseCase? = nil
     ) {
         self.model = model
         self.actions = actions
@@ -39,12 +39,12 @@ final class DefaultRegisterViewModel: RegisterViewModel {
     }
     
     private func requestPost(with registerModel: RegisterModel) async throws {
-        try await registerProductUseCase.execute(with: registerModel)
+        try await registerProductUseCase?.execute(with: registerModel)
     }
     
     private func requestPatch(with registerModel: RegisterModel) async throws {
         let editModel = registerModel.requestDTO.toEditRequestDTO()
-        try await editProductUseCase.execute(with: editModel, productId: model?.id ?? 0)
+        try await editProductUseCase?.execute(with: editModel, productId: model?.id ?? 0)
     }
     
     @MainActor

@@ -50,7 +50,12 @@ final class HomeSceneDIContainer {
     
     func makeRegisterViewModel(model: ProductDetail?,
                                actions: RegisterViewModelActions) -> RegisterViewModel {
-        return DefaultRegisterViewModel(model: model, actions: actions)
+        return DefaultRegisterViewModel(
+            model: model,
+            actions: actions,
+            registerProductUseCase: makeRegisterProductUseCase(),
+            editProductUseCase: makeEditProductUseCase()
+        )
     }
     
     func makeImageViewerController(imageURLs: [String],
@@ -80,6 +85,14 @@ final class HomeSceneDIContainer {
     
     func makeHandleLikedProductUseCase() -> HandleLikedProductUseCase {
         return DefaultHandleLikedProductUseCase(firestoreService: makeFirestoreService())
+    }
+    
+    func makeRegisterProductUseCase() -> RegisterProductUseCase {
+        return DefaultRegisterProductUseCase(productsRepository: makeProductsRepository())
+    }
+    
+    func makeEditProductUseCase() -> EditProductUseCase {
+        return DefaultEditProductUseCase(productsRepository: makeProductsRepository())
     }
     
     
