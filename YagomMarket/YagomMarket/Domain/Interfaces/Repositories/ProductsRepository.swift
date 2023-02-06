@@ -16,6 +16,8 @@ protocol ProductsRepository {
     
     func fetchProductsQuery(keyword: String) async throws -> [String]
     
+    func requestPost(with registerModel: RegisterModel) async throws
+    
     func editProductDetail(with editModel: ProductEditRequestDTO,
                            productId: Int) async throws
     

@@ -49,6 +49,11 @@ extension DefaultProductsRepository: ProductsRepository {
         return Array(Set(list))
     }
     
+    func requestPost(with registerModel: RegisterModel) async throws {
+        let api = RegisterProductAPI(model: registerModel)
+        _ = try await api.execute()
+    }
+    
     func editProductDetail(with editModel: ProductEditRequestDTO,
                            productId: Int) async throws {
         
