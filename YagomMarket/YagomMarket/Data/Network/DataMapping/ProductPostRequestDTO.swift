@@ -38,4 +38,20 @@ struct ProductPostRequestDTO: BodyType {
             secret: URLCommand.secretKey
         )
     }
+    
+    static func stub(name: String = "",
+              description: String = "",
+              price: Double = 0.0,
+              currency: Currency = .KRW,
+              discountedPrice: Double? = nil,
+              stock: Int? = nil,
+              secret: String = "") -> Self {
+        .init(name: name,
+              description: description,
+              price: price,
+              currency: currency,
+              discountedPrice: discountedPrice,
+              stock: stock,
+              secret: secret)
+    }
 }

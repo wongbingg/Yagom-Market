@@ -18,15 +18,25 @@ struct ProductCell: Equatable {
 
 extension ProductCell {
     
-    static func stub() -> ProductCell {
-        .init(id: 123,
-              imageURL: "",
-              title: "",
-              description: "",
-              vendor: "",
-              postDate: "",
-              price: "",
-              currency: .KRW)
+    static func stub(
+        id: Int = 1,
+        imageURL: String = "",
+        title: String = "",
+        description: String = "",
+        vendor: String = "",
+        postDate: String = "",
+        price: String = "",
+        currency: Currency = .KRW
+    ) -> ProductCell {
+        
+        return .init(id: id,
+              imageURL: imageURL,
+              title: title,
+              description: description,
+              vendor: vendor,
+              postDate: postDate,
+              price: price,
+              currency: currency)
     }
     
 }
