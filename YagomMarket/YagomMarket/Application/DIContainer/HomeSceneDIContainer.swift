@@ -8,6 +8,8 @@
 import UIKit
 
 final class HomeSceneDIContainer {
+    private let modalSceneDIContainer = ModalSceneDIContainer()
+    
     // MARK: - Product List
     func makeProductListViewController(actions: ProductListViewModelActions) -> ProductListViewController {
         let viewModel = makeProductListViewModel(actions: actions)
@@ -41,31 +43,6 @@ final class HomeSceneDIContainer {
             productId: productId)
     }
     
-    // MARK: - Modal View
-    func makeRegisterViewController(model: ProductDetail?,
-                                    actions: RegisterViewModelActions) -> RegisterViewController {
-        let viewModel = makeRegisterViewModel(model: model, actions: actions)
-        return RegisterViewController(with: viewModel)
-    }
-    
-    func makeRegisterViewModel(model: ProductDetail?,
-                               actions: RegisterViewModelActions) -> RegisterViewModel {
-        return DefaultRegisterViewModel(
-            model: model,
-            actions: actions,
-            registerProductUseCase: makeRegisterProductUseCase(),
-            editProductUseCase: makeEditProductUseCase()
-        )
-    }
-    
-    func makeImageViewerController(imageURLs: [String],
-                                   currentPage: Int) -> ImageViewerViewController {
-        return ImageViewerViewController(
-            imageURLs: imageURLs,
-            currentPage: currentPage
-        )
-    }
-    
     // MARK: - UseCase
     func makeAddNextProductPageUseCase() -> AddNextProductPageUseCase {
         return DefaultAddNextProductPageUseCase(productsRepository: makeProductsRepository())
@@ -87,15 +64,6 @@ final class HomeSceneDIContainer {
         return DefaultHandleLikedProductUseCase(firestoreService: makeFirestoreService())
     }
     
-    func makeRegisterProductUseCase() -> RegisterProductUseCase {
-        return DefaultRegisterProductUseCase(productsRepository: makeProductsRepository())
-    }
-    
-    func makeEditProductUseCase() -> EditProductUseCase {
-        return DefaultEditProductUseCase(productsRepository: makeProductsRepository())
-    }
-    
-    
     // MARK: - Repositories
     func makeProductsRepository() -> ProductsRepository {
         return DefaultProductsRepository()
@@ -116,6 +84,11 @@ final class HomeSceneDIContainer {
         return HomeFlowCoordinator(userUID: userUID,
                                    navigationController: navigationController,
                                    dependencies: self)
+    }
+    
+    // MARK: - Modal Flow Coordinator
+    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator {
+        return modalSceneDIContainer.makeModalFlowCoordinator(navigationController: navigationController)
     }
 }
 
