@@ -8,6 +8,8 @@
 import UIKit
 
 final class SearchSceneDIContainer {
+    private let modalSceneDIContainer = ModalSceneDIContainer()
+    
     // MARK: - Search
     func makeSearchViewController(actions: SearchViewModelActions) -> SearchViewController {
         let viewModel = makeSearchViewModel(actions: actions)
@@ -53,27 +55,6 @@ final class SearchSceneDIContainer {
         )
     }
     
-    // MARK: - Modal View
-    func makeRegisterViewController(model: ProductDetail?,
-                                    actions: RegisterViewModelActions) -> RegisterViewController {
-        let viewModel = makeRegisterViewModel(model: model, actions: actions)
-        return RegisterViewController(with: viewModel)
-    }
-    
-    func makeRegisterViewModel(model: ProductDetail?,
-                               actions: RegisterViewModelActions) -> RegisterViewModel {
-        return DefaultRegisterViewModel(
-            model: model,
-            actions: actions,
-            registerProductUseCase: makeRegisterProductUseCase(),
-            editProductUseCase: makeEditProductUseCase()
-        )
-    }
-    
-    func makeImageViewerController(imageURLs: [String],
-                                   currentPage: Int) -> ImageViewerViewController {
-        return ImageViewerViewController(imageURLs: imageURLs, currentPage: currentPage)
-    }
     // MARK: - UseCase
     func makeDeleteProductUseCase() -> DeleteProductUseCase {
         return DefaultDeleteProductUseCase(productsRepository: makeProductsRepository())
@@ -99,14 +80,6 @@ final class SearchSceneDIContainer {
         return DefaultHandleLikedProductUseCase(firestoreService: makeFirestoreService())
     }
     
-    func makeRegisterProductUseCase() -> RegisterProductUseCase {
-        return DefaultRegisterProductUseCase(productsRepository: makeProductsRepository())
-    }
-    
-    func makeEditProductUseCase() -> EditProductUseCase {
-        return DefaultEditProductUseCase(productsRepository: makeProductsRepository())
-    }
-    
     // MARK: - Repositories
     func makeProductsRepository() -> ProductsRepository {
         return DefaultProductsRepository()
@@ -118,17 +91,17 @@ final class SearchSceneDIContainer {
     }
     
     // MARK: - Search Flow Coordinator
-    func makeSearchFlowCoordinator() -> SearchFlowCoordinator {
-        return SearchFlowCoordinator(dependencies: self)
-    }
-    
-    // Test
     func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator {
         
         return SearchFlowCoordinator(
             navCon: navigationController,
             dependencies: self
         )
+    }
+    
+    // MARK: - Modal Flow Coordinator
+    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator {
+        return modalSceneDIContainer.makeModalFlowCoordinator(navigationController: navigationController)
     }
 }
 

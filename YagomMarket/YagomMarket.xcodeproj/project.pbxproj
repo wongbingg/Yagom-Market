@@ -56,6 +56,8 @@
 		AF471C45297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C44297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift */; };
 		AF471C49297E76DB00A3ACD6 /* DeleteProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C48297E76DB00A3ACD6 /* DeleteProductUseCase.swift */; };
 		AF471C4B297E779900A3ACD6 /* FetchProductDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C4A297E779900A3ACD6 /* FetchProductDetailUseCase.swift */; };
+		AF5A3D1229910DAF00A4A79F /* ModalSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5A3D1129910DAF00A4A79F /* ModalSceneDIContainer.swift */; };
+		AF5A3D162991147500A4A79F /* ModalFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5A3D152991147500A4A79F /* ModalFlowCoordinator.swift */; };
 		AF5BB777292210E20013BFC1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB776292210E20013BFC1 /* AppDelegate.swift */; };
 		AF5BB779292210E20013BFC1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB778292210E20013BFC1 /* SceneDelegate.swift */; };
 		AF5BB77B292210E20013BFC1 /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB77A292210E20013BFC1 /* ProductListViewController.swift */; };
@@ -197,6 +199,8 @@
 		AF471C44297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNextProductPageUseCase.swift; sourceTree = "<group>"; };
 		AF471C48297E76DB00A3ACD6 /* DeleteProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductUseCase.swift; sourceTree = "<group>"; };
 		AF471C4A297E779900A3ACD6 /* FetchProductDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProductDetailUseCase.swift; sourceTree = "<group>"; };
+		AF5A3D1129910DAF00A4A79F /* ModalSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalSceneDIContainer.swift; sourceTree = "<group>"; };
+		AF5A3D152991147500A4A79F /* ModalFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalFlowCoordinator.swift; sourceTree = "<group>"; };
 		AF5BB773292210E20013BFC1 /* YagomMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YagomMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF5BB776292210E20013BFC1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF5BB778292210E20013BFC1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -319,6 +323,7 @@
 				AF0166372976DA830083DDAD /* SearchSceneDIContainer.swift */,
 				AF5EEC2D297BFE5000162DC9 /* ChatSceneDIContainer.swift */,
 				AF5EEC3A297C04A200162DC9 /* MyPageSceneDIContainer.swift */,
+				AF5A3D13299112C900A4A79F /* SubDIContainer */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -371,6 +376,7 @@
 		AF0165E72976B2F00083DDAD /* ModalView */ = {
 			isa = PBXGroup;
 			children = (
+				AF5A3D142991146900A4A79F /* Flow */,
 				AFCD3E01297A64A900DC0154 /* ImageViewer */,
 				AF0166042976B8590083DDAD /* Register */,
 			);
@@ -738,6 +744,22 @@
 				AF5EEC33297C041400162DC9 /* View */,
 			);
 			path = MyPage;
+			sourceTree = "<group>";
+		};
+		AF5A3D13299112C900A4A79F /* SubDIContainer */ = {
+			isa = PBXGroup;
+			children = (
+				AF5A3D1129910DAF00A4A79F /* ModalSceneDIContainer.swift */,
+			);
+			path = SubDIContainer;
+			sourceTree = "<group>";
+		};
+		AF5A3D142991146900A4A79F /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				AF5A3D152991147500A4A79F /* ModalFlowCoordinator.swift */,
+			);
+			path = Flow;
 			sourceTree = "<group>";
 		};
 		AF5BB76A292210E20013BFC1 = {
@@ -1214,6 +1236,8 @@
 				AF01194C293E07EB00FD2D1C /* CustomTextField.swift in Sources */,
 				AF0165DF2976AD880083DDAD /* Bundle+.swift in Sources */,
 				AF0796992924A8E7002E876C /* SearchDeleteURIAPI.swift in Sources */,
+				AF5A3D1229910DAF00A4A79F /* ModalSceneDIContainer.swift in Sources */,
+				AF5A3D162991147500A4A79F /* ModalFlowCoordinator.swift in Sources */,
 				AFB7FFBB297FBDF8003290EE /* DefaultFirebaseAuthService.swift in Sources */,
 				AFCD3DFF297A419600DC0154 /* ProductDeleteKeyRequestDTO.swift in Sources */,
 				AF5BB77B292210E20013BFC1 /* ProductListViewController.swift in Sources */,

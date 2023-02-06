@@ -8,6 +8,8 @@
 import UIKit
 
 final class MyPageSceneDIContainer {
+    private let modalSceneDIContainer = ModalSceneDIContainer()
+    
     // MARK: - MyPage
     func makeMyPageViewController(actions: MyPageViewModelActions) -> MyPageViewController {
         let viewModel = makeMyPageViewModel(actions: actions)
@@ -21,28 +23,6 @@ final class MyPageSceneDIContainer {
             searchUserProfileUseCase: makeSearchUserProfileUseCase(),
             fetchProductDetailUseCase: makeFetchProductDetailUseCase()
         )
-    }
-    
-    // MARK: - Modal View
-    func makeRegisterViewController(model: ProductDetail?,
-                                    actions: RegisterViewModelActions) -> RegisterViewController {
-        let viewModel = makeRegisterViewModel(model: model, actions: actions)
-        return RegisterViewController(with: viewModel)
-    }
-    
-    func makeRegisterViewModel(model: ProductDetail?,
-                               actions: RegisterViewModelActions) -> RegisterViewModel {
-        return DefaultRegisterViewModel(
-            model: model,
-            actions: actions,
-            registerProductUseCase: makeRegisterProductUseCase(),
-            editProductUseCase: makeEditProductUseCase()
-        )
-    }
-    
-    func makeImageViewerController(imageURLs: [String],
-                                   currentPage: Int) -> ImageViewerViewController {
-        return ImageViewerViewController(imageURLs: imageURLs, currentPage: currentPage)
     }
     
     // MARK: - Result
@@ -75,6 +55,7 @@ final class MyPageSceneDIContainer {
             productId: productId
         )
     }
+    
     // MARK: - UseCase
     func makeDeleteProductUseCase() -> DeleteProductUseCase {
         return DefaultDeleteProductUseCase(productsRepository: makeProductsRepository())
@@ -96,15 +77,6 @@ final class MyPageSceneDIContainer {
         return DefaultHandleLikedProductUseCase(firestoreService: makeFirestoreService())
     }
     
-    func makeRegisterProductUseCase() -> RegisterProductUseCase {
-        return DefaultRegisterProductUseCase(productsRepository: makeProductsRepository())
-    }
-    
-    func makeEditProductUseCase() -> EditProductUseCase {
-        return DefaultEditProductUseCase(productsRepository: makeProductsRepository())
-    }
-
-    
     // MARK: - Repositories
     func makeProductsRepository() -> ProductsRepository {
         return DefaultProductsRepository()
@@ -122,6 +94,11 @@ final class MyPageSceneDIContainer {
             navigationController: navigationController,
             dependencies: self
         )
+    }
+    
+    // MARK: - Modal Flow Coordinator
+    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator {
+        return modalSceneDIContainer.makeModalFlowCoordinator(navigationController: navigationController)
     }
 }
 
