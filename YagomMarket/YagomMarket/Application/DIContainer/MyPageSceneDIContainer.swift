@@ -34,7 +34,12 @@ final class MyPageSceneDIContainer {
     
     func makeResultViewModel(model: [ProductCell],
                              actions: ResultViewModelAction) -> ResultViewModel {
-        return DefaultResultViewModel(cells: model, actions: actions)
+        return DefaultResultViewModel(
+            cells: model,
+            actions: actions,
+            handleLikedProductUseCase: makeHandleLikedProductUseCase(),
+            searchUserProfileUseCase: makeSearchUserProfileUseCase()
+        )
     }
     
     // MARK: - Product Detail
