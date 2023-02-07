@@ -9,6 +9,7 @@ import UIKit
 
 final class HomeSceneDIContainer {
     private let modalSceneDIContainer = ModalSceneDIContainer()
+    private let searchSceneDIContainer = SearchSceneDIContainer()
     
     // MARK: - Product List
     func makeProductListViewController(actions: ProductListViewModelActions) -> ProductListViewController {
@@ -86,6 +87,11 @@ final class HomeSceneDIContainer {
         return HomeFlowCoordinator(userUID: userUID,
                                    navigationController: navigationController,
                                    dependencies: self)
+    }
+    
+    // MARK: - Search Flow Coordinator
+    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator {
+        return searchSceneDIContainer.makeSearchFlowCoordinator(navigationController: navigationController)
     }
     
     // MARK: - Modal Flow Coordinator

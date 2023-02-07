@@ -9,6 +9,7 @@ import UIKit
 
 final class MyPageSceneDIContainer {
     private let modalSceneDIContainer = ModalSceneDIContainer()
+    private let searchSceneDIContainer = SearchSceneDIContainer()
     
     // MARK: - MyPage
     func makeMyPageViewController(actions: MyPageViewModelActions) -> MyPageViewController {
@@ -99,6 +100,11 @@ final class MyPageSceneDIContainer {
             navigationController: navigationController,
             dependencies: self
         )
+    }
+    
+    // MARK: - Search Flow Coordinator
+    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator {
+        return searchSceneDIContainer.makeSearchFlowCoordinator(navigationController: navigationController)
     }
     
     // MARK: - Modal Flow Coordinator

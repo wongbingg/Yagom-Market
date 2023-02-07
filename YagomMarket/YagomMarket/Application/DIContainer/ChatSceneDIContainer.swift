@@ -8,6 +8,9 @@
 import UIKit
 
 final class ChatSceneDIContainer {
+    private let modalSceneDIContainer = ModalSceneDIContainer()
+    private let searchSceneDIContainer = SearchSceneDIContainer()
+    
     // MARK: - Chat
     func makeChatViewController(actions: ChatViewModelActions) -> ChatViewController {
         let viewModel = makeChatViewModel(actions: actions)
@@ -54,6 +57,15 @@ final class ChatSceneDIContainer {
 //
 //        return ChatFlowCoordinator(navCon: navigationController, dependencies: self)
 //    }
+    // MARK: - Search Flow Coordinator
+    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator {
+        return searchSceneDIContainer.makeSearchFlowCoordinator(navigationController: navigationController)
+    }
+    
+    // MARK: - Modal Flow Coordinator
+    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator {
+        return modalSceneDIContainer.makeModalFlowCoordinator(navigationController: navigationController)
+    }
 }
 
 extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {}

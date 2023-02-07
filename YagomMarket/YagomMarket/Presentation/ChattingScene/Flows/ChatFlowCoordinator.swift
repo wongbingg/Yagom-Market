@@ -11,11 +11,15 @@ protocol ChatFlowCoordinatorDependencies: AnyObject {
     func makeChatViewController(actions: ChatViewModelActions) -> ChatViewController
     func makeRegisterViewController(model: ProductDetail?,
                                     actions: RegisterViewModelActions) -> RegisterViewController
+    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator
+    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator
 }
 
 final class ChatFlowCoordinator {
-    var navigationController: UINavigationController
-    var dependencies: ChatFlowCoordinatorDependencies
+    private let modalFlowCoordinator: ModalFlowCoordinator
+    private let searchFlowCoordinator: SearchFlowCoordinator
+    private let navigationController: UINavigationController
+    private let dependencies: ChatFlowCoordinatorDependencies
     
     init(
         navigationController: UINavigationController,
@@ -23,6 +27,12 @@ final class ChatFlowCoordinator {
     ) {
         self.navigationController = navigationController
         self.dependencies = dependencies
+        self.modalFlowCoordinator = dependencies.makeModalFlowCoordinator(
+            navigationController: navigationController
+        )
+        self.searchFlowCoordinator = dependencies.makeSearchFlowCoordinator(
+            navigationController: navigationController
+        )
     }
     
     func generate() -> ChatViewController {
@@ -36,26 +46,10 @@ final class ChatFlowCoordinator {
     
     // MARK: View Transition
     func registerTapSelected() {
-        let actions = RegisterViewModelActions(registerButtonTapped: registerButtonTapped,
-                                               editButtonTapped: editButtonTapped)
-        let registerVC = dependencies.makeRegisterViewController(model: nil, actions: actions)
-        registerVC.modalPresentationStyle = .overFullScreen
-        navigationController.topViewController?.present(registerVC, animated: true)
+        modalFlowCoordinator.presentRegisterVC(with: nil)
     }
     
     func searchTapSelected() {
-        let searchSceneDIContainer = SearchSceneDIContainer()
-        let coordinator = searchSceneDIContainer.makeSearchFlowCoordinator(
-            navigationController: navigationController
-        )
-        coordinator.start()
-    }
-    
-    func registerButtonTapped() {
-        navigationController.topViewController?.dismiss(animated: true)
-    }
-    
-    func editButtonTapped() {
-        navigationController.topViewController?.dismiss(animated: true)
+        searchFlowCoordinator.start()
     }
 }

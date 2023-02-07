@@ -14,10 +14,12 @@ protocol MyPageFlowCoordinatorDependencies: AnyObject {
     func makeProductDetailViewController(productId: Int,
                                          actions: ProductDetailViewModelActions) -> ProductDetailViewController
     func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator
+    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator
 }
 
 final class MyPageFlowCoordinator {
     private let modalFlowCoordinator: ModalFlowCoordinator
+    private let searchFlowCoordinator: SearchFlowCoordinator
     private let navigationController: UINavigationController
     private let dependencies: MyPageFlowCoordinatorDependencies
     
@@ -28,6 +30,9 @@ final class MyPageFlowCoordinator {
         self.navigationController = navigationController
         self.dependencies = dependencies
         self.modalFlowCoordinator = dependencies.makeModalFlowCoordinator(
+            navigationController: navigationController
+        )
+        self.searchFlowCoordinator = dependencies.makeSearchFlowCoordinator(
             navigationController: navigationController
         )
     }
@@ -50,11 +55,7 @@ final class MyPageFlowCoordinator {
     }
     
     private func searchTapSelected() {
-        let searchSceneDIContainer = SearchSceneDIContainer()
-        let coordinator = searchSceneDIContainer.makeSearchFlowCoordinator(
-            navigationController: navigationController
-        )
-        coordinator.start()
+        searchFlowCoordinator.start()
     }
     
     private func logoutCellTapped() {
