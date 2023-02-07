@@ -116,7 +116,7 @@ final class ProductDetailViewController: UIViewController {
     }
     
     private func showDeleteAction() {
-        DefaultAlertBuilder(title: .alert, message: "정말 삭제 하시겠습니까?", preferredStyle: .alert)
+        DefaultAlertBuilder(message: "정말 삭제 하시겠습니까?")
             .setButton(name: .yes, style: .default) { [self] in
                 performDelete()
                 self.navigationController?.popViewController(animated: true)

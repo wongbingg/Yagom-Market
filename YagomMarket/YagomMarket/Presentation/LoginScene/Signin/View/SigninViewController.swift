@@ -123,9 +123,7 @@ final class SigninViewController: UIViewController {
     
     private func successAlert(with id: String) {
         DefaultAlertBuilder(
-            title: .alert,
-            message: "\(id) 등록 완료 !",
-            preferredStyle: .alert
+            message: "\(id) 등록 완료 !"
         ).setButton(name: .confirm, style: .default) {
             _ = self.navigationController?.popViewController(animated: true)
         }.showAlert(on: self)
@@ -134,8 +132,7 @@ final class SigninViewController: UIViewController {
     private func failAlert(with error: LoginError) {
         DefaultAlertBuilder(
             title: .warning,
-            message: error.description,
-            preferredStyle: .alert
+            message: error.description
         ).setButton(name: .yes, style: .default)
             .showAlert(on: self)
     }

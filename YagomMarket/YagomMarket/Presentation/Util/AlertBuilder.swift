@@ -25,22 +25,36 @@ enum AlertButton: String {
 protocol AlertBuilder {
     var alertController: UIAlertController { get }
     
-    func setButton(name: AlertButton, style: UIAlertAction.Style, _ completion: (() -> Void)?) -> Self
+    func setButton(name: AlertButton,
+                   style: UIAlertAction.Style,
+                   _ completion: (() -> Void)?) -> Self
     func showAlert(on viewController: UIViewController)
 }
 
 final class DefaultAlertBuilder: AlertBuilder {
     var alertController: UIAlertController
     
-    init(title: AlertTitle = .alert, message: String? = nil, preferredStyle: UIAlertController.Style) {
-        alertController = UIAlertController(title: title.rawValue, message: message, preferredStyle: preferredStyle)
+    init(
+        title: AlertTitle = .alert,
+        message: String? = nil,
+        preferredStyle: UIAlertController.Style = .alert
+    ) {
+        alertController = UIAlertController(
+            title: title.rawValue,
+            message: message,
+            preferredStyle: preferredStyle
+        )
     }
     
-    func setButton(name: AlertButton, style: UIAlertAction.Style, _ completion: (() -> Void)? = nil) -> DefaultAlertBuilder {
+    func setButton(name: AlertButton,
+                   style: UIAlertAction.Style,
+                   _ completion: (() -> Void)? = nil) -> DefaultAlertBuilder {
+        
         let button = UIAlertAction(title: name.rawValue, style: style) { alertAction in
             completion?()
         }
         alertController.addAction(button)
+        
         return self
     }
     

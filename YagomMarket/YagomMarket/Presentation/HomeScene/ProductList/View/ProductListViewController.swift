@@ -76,8 +76,7 @@ final class ProductListViewController: UIViewController {
             } catch let error as LocalizedError {
                 DefaultAlertBuilder(
                     title: .error,
-                    message: error.errorDescription,
-                    preferredStyle: .alert
+                    message: error.errorDescription
                 )
                 .setButton(name: .confirm, style: .default)
                 .showAlert(on: self)
@@ -95,8 +94,7 @@ final class ProductListViewController: UIViewController {
                 } catch let error as LocalizedError {
                     DefaultAlertBuilder(
                         title: .error,
-                        message: error.errorDescription,
-                        preferredStyle: .alert
+                        message: error.errorDescription
                     )
                     .setButton(name: .confirm, style: .default)
                     .showAlert(on: self)

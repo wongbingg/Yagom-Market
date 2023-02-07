@@ -237,8 +237,7 @@ extension RegisterViewController: UIGestureRecognizerDelegate {
             guard registerView.isFullImages == false else {
                 DefaultAlertBuilder(
                     title: .error,
-                    message: "더 이상 사진이 들어갈 수 없습니다",
-                    preferredStyle: .alert
+                    message: "더 이상 사진이 들어갈 수 없습니다"
                 ).setButton(
                     name: .confirm,
                     style: .default, nil

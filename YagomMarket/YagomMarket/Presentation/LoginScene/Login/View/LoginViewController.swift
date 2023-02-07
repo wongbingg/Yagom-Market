@@ -83,7 +83,7 @@ final class LoginViewController: UIViewController {
             do {
                 try await viewModel.loginButtonTapped(with: loginInfo)
             } catch let error as LoginError {
-                DefaultAlertBuilder(title: .warning, message: error.description, preferredStyle: .alert)
+                DefaultAlertBuilder(title: .warning, message: error.description)
                     .setButton(name: .yes, style: .default)
                     .showAlert(on: self)
             }
