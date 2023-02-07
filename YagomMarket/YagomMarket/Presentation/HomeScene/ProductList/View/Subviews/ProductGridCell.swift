@@ -10,6 +10,7 @@ import UIKit
 final class ProductGridCell: UICollectionViewCell {
     // MARK: Properties
     private var task: Task<Sendable, Error>?
+    private(set) var productId: Int = 0
     
     // MARK: UI Component
     private let mainStackView: UIStackView = {
@@ -74,6 +75,16 @@ final class ProductGridCell: UICollectionViewCell {
         return view
     }()
     
+    let likeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
+        button.transform = .init(scaleX: 1.5, y: 1.5)
+        button.tintColor = .systemRed
+        return button
+    }()
+    
     // MARK: Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -81,6 +92,7 @@ final class ProductGridCell: UICollectionViewCell {
         layoutProductImageView()
         layoutLabelStackView()
         layoutLowerStackView()
+        layoutLikeButton()
     }
     
     required init?(coder: NSCoder) {
@@ -88,18 +100,29 @@ final class ProductGridCell: UICollectionViewCell {
     }
     
     // MARK: Methods
-    func setupUIComponents(with data: ProductCell?) {
+    func setupUIComponents(with data: ProductCell?, isLike: Bool) {
         guard let data = data else { return }
+        productId = data.id
         titleLabel.text = data.title
         setupPrice(with: data)
         setupVendorName(with: data)
         setupImage(with: data.imageURL)
+        likeButton.isSelected = isLike
     }
     
     func resultViewSetup() {
         priceLabel.font = UIFont.boldSystemFont(ofSize: 15)
         titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         vendorNameLabel.text = nil
+    }
+    
+    func addTargetForLikeButton(_ selector: Selector,
+                                in viewController: UIViewController) {
+        likeButton.addTarget(
+            viewController,
+            action: selector,
+            for: .touchUpInside
+        )
     }
     
     private func setupInitialView() {
@@ -129,7 +152,7 @@ final class ProductGridCell: UICollectionViewCell {
             do {
                 try await productImageView.setImage(with: imagePath)
             } catch let error as APIError {
-                print(error.errorDescription)
+                print(error.errorDescription ?? "\(#function) error")
             }
             return Sendable.self
         }
@@ -176,6 +199,14 @@ private extension ProductGridCell {
             lowerStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             lowerStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             fakeView.heightAnchor.constraint(lessThanOrEqualToConstant: 100)
+        ])
+    }
+    
+    func layoutLikeButton() {
+        addSubview(likeButton)
+        NSLayoutConstraint.activate([
+            likeButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            likeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         ])
     }
 }
