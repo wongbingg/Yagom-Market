@@ -32,7 +32,9 @@ final class DefaultHandleLikedProductUseCase: HandleLikedProductUseCase {
         if isAdd {
             userProfile.likedProductIds.append(productId)
         } else {
-            let index = userProfile.likedProductIds.firstIndex(of: productId)!
+            guard let index = userProfile.likedProductIds.firstIndex(of: productId) else {
+                throw FirestoreServiceError.noSuchId(productId)
+            }
             userProfile.likedProductIds.remove(at: index)
         }
         
