@@ -19,7 +19,9 @@ final class HomeSceneDIContainer {
     func makeProductListViewModel(actions: ProductListViewModelActions) -> ProductListViewModel {
         return DefaultProductListViewModel(
             actions: actions,
-            addNextProductPageUseCase: makeAddNextProductPageUseCase()
+            addNextProductPageUseCase: makeAddNextProductPageUseCase(),
+            handleLikedProductUseCase: makeHandleLikedProductUseCase(),
+            searchUserProfileUseCase: makeSearchUserProfileUseCase()
         )
     }
     

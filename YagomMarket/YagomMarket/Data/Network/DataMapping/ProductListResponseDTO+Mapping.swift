@@ -87,6 +87,6 @@ extension ProductListResponseDTO.PageDTO {
                      vendor: vendorName,
                      postDate: createdAt,
                      price: String(price),
-                     currency: currency) // 날짜 몇일전 처리
+                     currency: currency)
     }
 }
