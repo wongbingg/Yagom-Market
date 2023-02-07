@@ -47,6 +47,8 @@ final class ImageViewerViewController: UIViewController {
     ) {
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
+        setupModalStyle()
+        adoptScrollViewDelegate()
         setupInitialData(
             with: imageURLs,
             index: currentPage
@@ -60,10 +62,7 @@ final class ImageViewerViewController: UIViewController {
     // MARK: View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        layoutInitialView()
-        setupModalStyle()
-        adoptScrollViewDelegate()
-        
+        layoutInitialView()   
     }
     
     override func viewDidLayoutSubviews() {
