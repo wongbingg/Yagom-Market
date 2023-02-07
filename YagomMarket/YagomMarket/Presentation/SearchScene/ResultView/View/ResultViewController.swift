@@ -27,7 +27,14 @@ final class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutCollectionView()
-        setupCollectionView()
+        Task {
+            do {
+                try await viewModel.fetchUserLikeList()
+                setupCollectionView()
+            } catch let error as LocalizedError {
+                print(error.errorDescription ?? "\(#function) error")
+            }
+        }
     }
     
     private func setupCollectionView() {
@@ -35,6 +42,21 @@ final class ResultViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.register(ProductGridCell.self,
                                 forCellWithReuseIdentifier: "Cell")
+    }
+    
+    @objc private func likeButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        guard let cell = sender.superview as? ProductGridCell else { return }
+        Task {
+            do {
+                try await viewModel.likeButtonTapped(
+                    id: cell.productId,
+                    isSelected: sender.isSelected
+                )
+            } catch let error as LocalizedError {
+                print(error.errorDescription ?? "\(#function) error")
+            }
+        }
     }
 }
 
@@ -65,8 +87,12 @@ extension ResultViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ProductGridCell else {
             return UICollectionViewCell()
         }
-        cell.setupUIComponents(with: viewModel.productCells[indexPath.row])
+        let data = viewModel.productCells[indexPath.row]
+        let isLike = viewModel.userLikeList.contains(data.id)
+        cell.setupUIComponents(with: data, isLike: isLike)
         cell.resultViewSetup()
+        cell.addTargetForLikeButton(#selector(likeButtonTapped),
+                                    in: self)
         return cell
     }
 }

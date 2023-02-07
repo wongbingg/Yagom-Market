@@ -180,7 +180,6 @@ final class RegisterView: UIView {
         addPhotoButton.removeFromSuperview()
         nameTextField.text = model.name
         descriptionTextView.text = model.description
-        descriptionTextView.textColor = .black
         let price = model.price.replacingOccurrences(of: "원", with: "")
         priceTextField.text = price
         for imageURL in model.imageURLs {
