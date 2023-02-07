@@ -7,11 +7,16 @@
 
 import UIKit
 
+protocol ImageViewerViewControllerDelegate: AnyObject {
+    func dismiss(_ viewController: UIViewController, at currentPage: Int)
+}
+
 final class ImageViewerViewController: UIViewController {
     // MARK: Properties
     private var originSize = CGSize(width: 0, height: 0)
     private var originalPosition = CGPoint(x: 0, y: 0)
     private let customTransitioningDelegate = ImageViewerTransitioningDelegate()
+    weak var delegate: ImageViewerViewControllerDelegate?
     
     // MARK: UI Components
     private let mainScrollView: UIScrollView = {
@@ -34,21 +39,18 @@ final class ImageViewerViewController: UIViewController {
         return pageControl
     }()
     
-    
     // MARK: Initializers
-    init(imageURLs: [String], currentPage: Int) {
+    init(
+        imageURLs: [String],
+        currentPage: Int,
+        delegate: ImageViewerViewControllerDelegate
+    ) {
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
-        setupModalStyle()
-        setupPageControl(total: imageURLs.count,
-                         index: currentPage)
-        setupScrollView()
-        Task {
-            do {
-                try await setImages(imageURLs: imageURLs)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
+        setupInitialData(
+            with: imageURLs,
+            index: currentPage
+        )
     }
     
     required init?(coder: NSCoder) {
@@ -59,24 +61,46 @@ final class ImageViewerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutInitialView()
+        setupModalStyle()
+        adoptScrollViewDelegate()
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.mainScrollView.contentOffset.x = (UIScreen.main.bounds.maxX) * CGFloat(pageControl.currentPage)
+        layoutInitialXPosition()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        // TODO: 페이지 인덱스 정보를 DetailViewController 에 전달해주기
+        delegate?.dismiss(self, at: pageControl.currentPage)
     }
     
     // MARK: Methods
-    private func setupModalStyle() {    
+    private func setupInitialData(with imageURLs: [String], index: Int) {
+        Task {
+            do {
+                try await setImages(imageURLs: imageURLs)
+                setupPageControl(total: imageURLs.count,
+                                 index: index)
+            } catch let error as LocalizedError {
+                print(error.errorDescription ?? "\(#function) error")
+            }
+        }
+    }
+    
+    private func layoutInitialXPosition() {
+        let maxX = UIScreen.main.bounds.maxX
+        let pageNumber = CGFloat(pageControl.currentPage)
+        self.mainScrollView.contentOffset.x =  maxX * pageNumber
+    }
+    
+    private func setupModalStyle() {
         modalPresentationStyle = .custom
         modalTransitionStyle = .crossDissolve
         transitioningDelegate = customTransitioningDelegate
     }
     
+    @MainActor
     private func setImages(imageURLs: [String]) async throws {
         for url in imageURLs {
             let imageView = UIImageView.generate()
@@ -100,7 +124,7 @@ final class ImageViewerViewController: UIViewController {
         )
     }
     
-    private func setupScrollView() {
+    private func adoptScrollViewDelegate() {
         mainScrollView.delegate = self
     }
     
@@ -113,8 +137,11 @@ final class ImageViewerViewController: UIViewController {
     }
     
     @objc func pageValueDidChanged(_ sender: UIPageControl) {
+        let maxX = UIScreen.main.bounds.maxX
+        let page = CGFloat(sender.currentPage)
+        
         UIView.animate(withDuration: 0.3, delay: 0) {
-            self.mainScrollView.contentOffset.x = (UIScreen.main.bounds.maxX) * CGFloat(sender.currentPage)
+            self.mainScrollView.contentOffset.x =  maxX * page
         }
     }
     
@@ -167,10 +194,10 @@ extension ImageViewerViewController: UIScrollViewDelegate {
 // MARK: - Layout Constraints
 private extension ImageViewerViewController {
     
-     func layoutInitialView() {
+    func layoutInitialView() {
         view.addSubview(pageControl)
-         view.addSubview(mainScrollView)
-         mainScrollView.addSubview(imageStackView)
+        view.addSubview(mainScrollView)
+        mainScrollView.addSubview(imageStackView)
         NSLayoutConstraint.activate([
             pageControl.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor),
