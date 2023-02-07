@@ -13,6 +13,7 @@ struct ProductDetailViewModelActions {
 }
 
 protocol ProductDetailViewModelInput {
+    func fetchProduct() async throws
     func deleteProduct() async throws
     func showEditView() async throws
     func showImageViewer(imageURLs: [String], currentPage: Int)
@@ -21,8 +22,7 @@ protocol ProductDetailViewModelInput {
 }
 
 protocol ProductDetailViewModelOutput {
-    var productDetail: ProductDetail { get async throws }
-    var isLiked: Bool { get async throws }
+    var productDetail: ProductDetail? { get }
 }
 
 protocol ProductDetailViewModel: ProductDetailViewModelInput, ProductDetailViewModelOutput {}
@@ -35,17 +35,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     private let handleLikedProductUseCase: HandleLikedProductUseCase
     private let productId: Int
     
-    var productDetail: ProductDetail {
-        get async throws {
-            try await fetchProduct()
-        }
-    }
-    
-    var isLiked: Bool {
-        get async throws {
-            try await fetchIsLiked()
-        }
-    }
+    var productDetail: ProductDetail?
     
     init(
         actions: ProductDetailViewModelActions? = nil,
@@ -63,11 +53,12 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         self.productId = productId
     }
     
-    private func fetchProduct() async throws -> ProductDetail {
-        let response = try await fetchProductDetailUseCase.execute(
+    func fetchProduct() async throws {
+        var fetchedProduct = try await fetchProductDetailUseCase.execute(
             productId: productId
         )
-        return response
+        fetchedProduct.isLiked = try await fetchIsLiked()
+        productDetail = fetchedProduct
     }
     
     private func fetchIsLiked() async throws -> Bool {
@@ -83,7 +74,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     
     @MainActor
     func showEditView() async throws {
-        let productDetail = try await productDetail
+        guard let productDetail = productDetail else { return }
         actions?.showEditView(productDetail)
     }
     
