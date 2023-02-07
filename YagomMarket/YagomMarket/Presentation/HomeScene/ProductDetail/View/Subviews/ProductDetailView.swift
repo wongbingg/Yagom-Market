@@ -115,6 +115,7 @@ final class ProductDetailView: UIView {
         button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
         button.tintColor = .red
         button.transform = CGAffineTransform(scaleX: 2, y: 2)
+        button.isHidden = true
         return button
     }()
     
@@ -142,16 +143,14 @@ final class ProductDetailView: UIView {
         vendorNameLabel.text = model.vendorName.appending(" •")
         setupPrice(with: model)
         timeLabel.text = model.time.split(separator: "T").compactMap { String($0) }[0]
+        likeButton.isHidden = false
+        likeButton.isSelected = model.isLiked
         guard imageStackView.arrangedSubviews.isEmpty else { return }
         for imageURL in model.imageURLs {
             let imageView = UIImageView.generate()
             try await imageView.setImage(with: imageURL)
             imageStackView.addArrangedSubview(imageView)
         }
-    }
-    
-    func setupLikeButton(isLike: Bool) {
-        likeButton.isSelected = isLike
     }
     
     private func setupPrice(with data: ProductDetail) {
@@ -189,6 +188,14 @@ final class ProductDetailView: UIView {
                     && imageScrollView.contentOffset.x < (width*4)+halfWidth {
             pagingLabel.text = "5 / \(imageCount)"
         }
+    }
+    
+    func scrollToPassedPage(_ number: Int) {
+        let width = UIScreen.main.bounds.width
+        imageScrollView.setContentOffset(
+            CGPoint(x: Int(width)*number, y: 0),
+            animated: false
+        )
     }
     
     private func adopScrollViewDelegate() {
