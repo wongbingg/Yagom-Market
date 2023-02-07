@@ -67,7 +67,8 @@ extension ProductDetailResponseDTO {
                      vendorName: vendors.toDomain(),
                      time: createdAt,
                      description: description,
-                     name: name)
+                     name: name,
+                     isLiked: false)
     }
 }
 

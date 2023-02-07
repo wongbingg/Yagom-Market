@@ -14,6 +14,7 @@ struct ProductDetail: Equatable {
     let time: String
     let description: String
     let name: String
+    var isLiked: Bool
 }
 
 extension ProductDetail {
@@ -38,14 +39,23 @@ extension ProductDetail {
                      currency: currency)
     }
     
-    static func stub() -> Self {
-        return .init(id: 0,
-                     imageURLs: [],
-                     price: "",
-                     currency: .KRW,
-                     vendorName: "",
-                     time: "",
-                     description: "",
-                     name: "")
+    static func stub(id: Int = 0,
+                     imageURLs: [String] = [],
+                     price: String = "",
+                     currency: Currency = .KRW,
+                     vendorName: String = "",
+                     time: String = "",
+                     description: String = "",
+                     name: String = "",
+                     isLiked: Bool = false) -> Self {
+        return .init(id: id,
+                     imageURLs: imageURLs,
+                     price: price,
+                     currency: currency,
+                     vendorName: vendorName,
+                     time: time,
+                     description: description,
+                     name: name,
+                     isLiked: isLiked)
     }
 }
