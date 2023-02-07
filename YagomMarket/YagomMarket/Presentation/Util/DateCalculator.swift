@@ -20,7 +20,12 @@ final class DateCalculator {
     
     func calculatePostedDay(with createdAt: String) -> String {
         guard let postedDate = dateFormatter.date(from: createdAt),
-              let distanceDay = Calendar.current.dateComponents([.day], from: postedDate, to: Date()).day else { return "" }
+              let distanceDay = Calendar.current.dateComponents(
+                [.day],
+                from: postedDate,
+                to: Date()
+              ).day else { return "" }
+        
         if distanceDay == 0 {
             return "오늘"
         } else if distanceDay < 30 {
