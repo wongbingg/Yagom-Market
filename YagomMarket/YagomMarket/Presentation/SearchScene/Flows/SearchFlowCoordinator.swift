@@ -82,8 +82,12 @@ final class SearchFlowCoordinator {
     }
     
     private func imageTapped(imageURLs: [String], currentPage: Int) {
-        modalFlowCoordinator.presentImageViewerVC(imageURLs: imageURLs,
-                                                  currentPage: currentPage)
+        guard let productDetailVC = navigationController.topViewController as? ProductDetailViewController else { return }
+        modalFlowCoordinator.presentImageViewerVC(
+            imageURLs: imageURLs,
+            currentPage: currentPage,
+            delegate: productDetailVC
+        )
     }
     
     private func showEditView(model: ProductDetail) {

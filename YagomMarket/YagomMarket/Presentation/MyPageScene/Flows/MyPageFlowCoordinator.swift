@@ -101,9 +101,11 @@ final class MyPageFlowCoordinator {
     }
     
     private func imageTapped(imageURLs: [String], currentPage: Int) {
+        guard let productDetailVC = navigationController.topViewController as? ProductDetailViewController else { return }
         modalFlowCoordinator.presentImageViewerVC(
             imageURLs: imageURLs,
-            currentPage: currentPage
+            currentPage: currentPage,
+            delegate: productDetailVC
         )
     }
     

@@ -11,7 +11,8 @@ protocol ModalFlowCoordinatorDependencies {
     func makeRegisterViewController(model: ProductDetail?,
                                     actions: RegisterViewModelActions) -> RegisterViewController
     func makeImageViewerController(imageURLs: [String],
-                                   currentPage: Int) -> ImageViewerViewController
+                                   currentPage: Int,
+                                   delegate: ImageViewerViewControllerDelegate) -> ImageViewerViewController
 }
 
 final class ModalFlowCoordinator {
@@ -43,10 +44,13 @@ final class ModalFlowCoordinator {
         )
     }
     
-    func presentImageViewerVC(imageURLs: [String], currentPage: Int) {
+    func presentImageViewerVC(imageURLs: [String],
+                              currentPage: Int,
+                              delegate: ImageViewerViewControllerDelegate) {
         let imageViewerVC = dependencies.makeImageViewerController(
             imageURLs: imageURLs,
-            currentPage: currentPage
+            currentPage: currentPage,
+            delegate: delegate
         )
         imageViewerVC.modalPresentationStyle = .custom
         

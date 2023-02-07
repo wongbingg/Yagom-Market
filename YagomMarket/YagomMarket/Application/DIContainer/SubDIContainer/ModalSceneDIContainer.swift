@@ -27,8 +27,13 @@ final class ModalSceneDIContainer {
     
     // MARK: - ImageViewer
     func makeImageViewerController(imageURLs: [String],
-                                   currentPage: Int) -> ImageViewerViewController {
-        return ImageViewerViewController(imageURLs: imageURLs, currentPage: currentPage)
+                                   currentPage: Int,
+                                   delegate: ImageViewerViewControllerDelegate) -> ImageViewerViewController {
+        return ImageViewerViewController(
+            imageURLs: imageURLs,
+            currentPage: currentPage,
+            delegate: delegate
+        )
     }
     
     // MARK: - UseCase

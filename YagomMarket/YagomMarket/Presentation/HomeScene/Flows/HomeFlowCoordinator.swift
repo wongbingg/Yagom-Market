@@ -69,7 +69,12 @@ final class HomeFlowCoordinator {
     }
     
     private func imageTapped(imageURLs: [String], currentPage: Int) {
-        modalFlowCoordinator.presentImageViewerVC(imageURLs: imageURLs, currentPage: currentPage)
+        guard let productDetailVC = navigationController.topViewController as? ProductDetailViewController else { return }
+        self.modalFlowCoordinator.presentImageViewerVC(
+            imageURLs: imageURLs,
+            currentPage: currentPage,
+            delegate: productDetailVC
+        )
     }
     
     private func showEditView(model: ProductDetail) {
