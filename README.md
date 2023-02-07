@@ -19,7 +19,7 @@
     - URLSession
 - **`비동기처리`**
     - Async/await
-- **`의존성`**
+- **`라이브러리`**
     - Firebase
 
 ## 프로젝트 구조
@@ -63,7 +63,10 @@
     - createUser: 사용자 계정을 등록합니다.
     - signIn: 사용자 계정으로 로그인을 시도합니다.
 - `FirestoreService`
-    - 
+    - create : 새로운 entity를 생성합니다.
+    - read : 파라미터에 해당하는 entity를 읽어옵니다.
+    - update : 파라미터에 해당하는 entity를 수정합니다
+    - delete : 파라미터에 해당하는 entity를 삭제합니다
 
 ## 📱 실행화면
 
@@ -83,7 +86,7 @@
     </tr>
     <tr>
         <td valign="top" width="30%">
-            <img src="https://i.imgur.com/ahueArW.gif"/>
+            <img src="https://i.imgur.com/KhpxkX4.gif"/>
         </td>
         <td valign="top" width="30%">
             <img src="https://i.imgur.com/79iOA4A.gif"/>
@@ -111,7 +114,7 @@
             <img src="https://i.imgur.com/adszzF6.gif"/>
         </td>
         <td valign="top" width="30%">
-            기능 추가예정
+            <img src="https://i.imgur.com/dYfiPHA.gif"/>
         </td>
         <td valign="top" width="30%">
             기능 추가예정
@@ -119,6 +122,8 @@
     </tr>
 </table>
 </details>
+
+
 
 ## 🔭 시각 자료
 
@@ -141,9 +146,7 @@
 
 ### ✅ Unit Test
 
-#### ☑️ API 종류별 네트워킹 테스트 진행
-<img src="https://i.imgur.com/T3nwUwL.png" width=200>
-<br>
+#### ☑️ MockURLSession Test
 
 ```
 API 문서에 주어진 7개의 기능에 대한 단위테스트를 진행하였습니다. 하지만, 테스트 시간이 오래걸리고
@@ -151,11 +154,19 @@ API 문서에 주어진 7개의 기능에 대한 단위테스트를 진행하였
 ```
 
 ```
-API 객체가 요청에 대한 오류 처리를 잘 하는지 확인하기 위해 MockURLSessionTest 를 진행했습니다. 
+API 객체가 요청에 대한 오류 처리를 잘 하는지 확인하기 위해 MockURLSession을 생성하여
+테스트를 진행했습니다. 
 ```
-    
+
+#### ☑️ UseCase Test
 ```
-FirestoreService 에 대한 단위테스트를 진행하였습니다.
+FirestoreServiceMock 과 FirebaseAuthServiceMock, ProductsRepositoryMock 객체
+를 만들어 각 UseCase에 대한 테스트를 진행했습니다.
+```
+
+#### ☑️ ViewModel Test
+```
+각 UseCase를 추상화해 UseCaseMock을 만들어 ViewModel 테스트를 진행했습니다.
 ```
 
 
