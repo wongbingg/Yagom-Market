@@ -14,7 +14,6 @@ struct ProductDetail: Equatable {
     let time: String
     let description: String
     let name: String
-    var isLiked: Bool
 }
 
 extension ProductDetail {
@@ -46,8 +45,7 @@ extension ProductDetail {
                      vendorName: String = "",
                      time: String = "",
                      description: String = "",
-                     name: String = "",
-                     isLiked: Bool = false) -> Self {
+                     name: String = "") -> Self {
         return .init(id: id,
                      imageURLs: imageURLs,
                      price: price,
@@ -55,7 +53,6 @@ extension ProductDetail {
                      vendorName: vendorName,
                      time: time,
                      description: description,
-                     name: name,
-                     isLiked: isLiked)
+                     name: name)
     }
 }
