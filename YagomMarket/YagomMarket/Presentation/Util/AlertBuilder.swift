@@ -46,8 +46,8 @@ final class DefaultAlertBuilder: AlertBuilder {
         )
     }
     
-    func setButton(name: AlertButton,
-                   style: UIAlertAction.Style,
+    func setButton(name: AlertButton = .confirm,
+                   style: UIAlertAction.Style = .default,
                    _ completion: (() -> Void)? = nil) -> DefaultAlertBuilder {
         
         let button = UIAlertAction(title: name.rawValue, style: style) { alertAction in
