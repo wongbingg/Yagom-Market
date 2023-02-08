@@ -12,7 +12,8 @@ protocol FirestoreService {
     associatedtype T
 
     func create<T: Entity>(collectionId: String, documentId: String, entity: T) async throws
-    func read<T: Entity>(collectionId: String, documentId: String, entity: T) async throws -> T
+    func read(collectionId: String, documentId: String) async throws -> T
+    func readDocuments(collectionId: String) async throws -> [T]
     func update<T: Entity>(collectionId: String, documentId: String, to entity: T) async throws
     func delete(collectionId: String, documentId: String) async throws
 }
@@ -23,6 +24,7 @@ enum FirestoreServiceError: LocalizedError {
     case failToUpdate
     case failToDelete
     case noSuchId(Int)
+    case noSuchChattingUUID(String)
 
     var errorDescription: String? {
         switch self {
@@ -36,6 +38,8 @@ enum FirestoreServiceError: LocalizedError {
             return "Firestore에서 데이터를 삭제하는데 실패했습니다."
         case .noSuchId(let num):
             return "상품 아이디 \(num) 는 좋아요 목록에 없습니다."
+        case .noSuchChattingUUID(let uuid):
+            return "\(uuid) 채팅이 존재하지 않습니다."
         }
     }
 }
