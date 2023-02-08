@@ -25,9 +25,8 @@ final class DefaultHandleLikedProductUseCase: HandleLikedProductUseCase {
         
         var userProfile = try await firestoreService.read(
             collectionId: "UserProfile",
-            documentId: userUID,
-            entity: UserProfile()
-        )
+            documentId: userUID
+        ) as! UserProfile
         
         if isAdd {
             userProfile.likedProductIds.append(productId)
