@@ -18,7 +18,11 @@ final class ChatSceneDIContainer {
     }
     
     func makeChatViewModel(actions: ChattingListViewModelActions) -> ChattingListViewModel {
-        return DefaultChattingListViewModel(actions: actions)
+        return DefaultChattingListViewModel(
+            actions: actions,
+            searchUserProfileUseCase: makeSearchUserProfileUseCase(),
+            searchChattingUseCase: makeSearchChattingUseCase()
+        )
     }
     
     // MARK: - Chat Detail
@@ -41,7 +45,28 @@ final class ChatSceneDIContainer {
     func makeRegisterViewModel(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewModel {
         return DefaultRegisterViewModel(model: model, actions: actions)
     }
+    
     // MARK: - UseCase
+    func makeSearchUserProfileUseCase() -> SearchUserProfileUseCase {
+        return DefaultSearchUserProfileUseCase(
+            firestoreService: makeUserProfileFirestoreService()
+        )
+    }
+    
+    func makeSearchChattingUseCase() -> SearchChattingUseCase {
+        return DefaultSearchChattingUseCase(
+            firestoreService: makeMessageFirestoreService()
+        )
+    }
+    
+    // MARK: - Services
+    func makeUserProfileFirestoreService() -> DefaultFirestoreService<UserProfile> {
+        return DefaultFirestoreService<UserProfile>()
+    }
+    
+    func makeMessageFirestoreService() -> DefaultFirestoreService<Message> {
+        return DefaultFirestoreService<Message>()
+    }
     
     // MARK: - Chat Flow Coordinator
     func makeChatFlowCoordinator(navigationController: UINavigationController) -> ChatFlowCoordinator {
@@ -51,12 +76,7 @@ final class ChatSceneDIContainer {
             dependencies: self
         )
     }
-    
-    // Test
-//    func makeChatFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator {
-//
-//        return ChatFlowCoordinator(navCon: navigationController, dependencies: self)
-//    }
+
     // MARK: - Search Flow Coordinator
     func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator {
         return searchSceneDIContainer.makeSearchFlowCoordinator(navigationController: navigationController)
