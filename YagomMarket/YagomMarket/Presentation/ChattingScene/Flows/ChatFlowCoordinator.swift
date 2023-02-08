@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ChatFlowCoordinatorDependencies: AnyObject {
-    func makeChatViewController(actions: ChatViewModelActions) -> ChatViewController
+    func makeChatViewController(actions: ChattingListViewModelActions) -> ChattingListViewController
     func makeRegisterViewController(model: ProductDetail?,
                                     actions: RegisterViewModelActions) -> RegisterViewController
     func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator
@@ -35,8 +35,8 @@ final class ChatFlowCoordinator {
         )
     }
     
-    func generate() -> ChatViewController {
-        let actions = ChatViewModelActions(
+    func generate() -> ChattingListViewController {
+        let actions = ChattingListViewModelActions(
             registerTapSelected: registerTapSelected,
             searchTapSelected: searchTapSelected
         )

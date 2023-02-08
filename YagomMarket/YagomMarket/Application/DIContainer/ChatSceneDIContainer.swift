@@ -12,13 +12,13 @@ final class ChatSceneDIContainer {
     private let searchSceneDIContainer = SearchSceneDIContainer()
     
     // MARK: - Chat
-    func makeChatViewController(actions: ChatViewModelActions) -> ChatViewController {
+    func makeChatViewController(actions: ChattingListViewModelActions) -> ChattingListViewController {
         let viewModel = makeChatViewModel(actions: actions)
-        return ChatViewController(with: viewModel)
+        return ChattingListViewController(with: viewModel)
     }
     
-    func makeChatViewModel(actions: ChatViewModelActions) -> ChatViewModel {
-        return DefaultChatViewModel(actions: actions)
+    func makeChatViewModel(actions: ChattingListViewModelActions) -> ChattingListViewModel {
+        return DefaultChattingListViewModel(actions: actions)
     }
     
     // MARK: - Chat Detail

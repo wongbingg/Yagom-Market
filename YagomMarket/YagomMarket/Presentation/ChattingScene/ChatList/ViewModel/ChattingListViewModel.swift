@@ -1,24 +1,24 @@
 //
-//  ChatViewModel.swift
+//  ChattingListViewModel.swift
 //  YagomMarket
 //
 //  Created by 이원빈 on 2023/01/21.
 //
-struct ChatViewModelActions {
+struct ChattingListViewModelActions {
     let registerTapSelected: () -> Void
     let searchTapSelected: () -> Void
 }
-protocol ChatViewModelInput {
+protocol ChattingListViewModelInput {
     func searchTapSelected()
     func registerTapSelected()
 }
-protocol ChatViewModelOutput {}
-protocol ChatViewModel: ChatViewModelInput, ChatViewModelOutput {}
+protocol ChattingListViewModelOutput {}
+protocol ChattingListViewModel: ChattingListViewModelInput, ChattingListViewModelOutput {}
 
-final class DefaultChatViewModel: ChatViewModel {
-    private let actions: ChatViewModelActions
+final class DefaultChattingListViewModel: ChattingListViewModel {
+    private let actions: ChattingListViewModelActions
     
-    init(actions: ChatViewModelActions) {
+    init(actions: ChattingListViewModelActions) {
         self.actions = actions
     }
     

@@ -1,5 +1,5 @@
 //
-//  ChatViewController.swift
+//  ChattingListViewController.swift
 //  YagomMarket
 //
 //  Created by 이원빈 on 2022/12/19.
@@ -7,13 +7,13 @@
 
 import UIKit
 
-final class ChatViewController: UIViewController {
+final class ChattingListViewController: UIViewController {
     // MARK: Properties
-    private let chatView = ChatView()
-    private let viewModel: ChatViewModel
+    private let chattingListView = ChattingListView()
+    private let viewModel: ChattingListViewModel
     
     // MARK: Initializers
-    init(with viewModel: ChatViewModel) {
+    init(with viewModel: ChattingListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -44,19 +44,17 @@ final class ChatViewController: UIViewController {
     }
 }
 
-extension ChatViewController: UITabBarControllerDelegate {
+extension ChattingListViewController: UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController,
                           shouldSelect viewController: UIViewController) -> Bool {
         if viewController is RegisterViewController {
             viewModel.registerTapSelected()
-            print("챗뷰에서 등록뷰 탭")
             return false
         }
 
         if viewController == tabBarController.children[1] {
             viewModel.searchTapSelected()
-            print("챗뷰에서 서치뷰 탭")
             return false
         }
         return true
@@ -64,17 +62,17 @@ extension ChatViewController: UITabBarControllerDelegate {
 }
 
 // MARK: - Layout Constraints
-private extension ChatViewController {
+private extension ChattingListViewController {
     
     func layoutInitialView() {
         view.backgroundColor = .systemBackground
-        view.addSubview(chatView)
-        chatView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(chattingListView)
+        chattingListView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            chatView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            chatView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            chatView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            chatView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            chattingListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            chattingListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            chattingListView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            chattingListView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
 }

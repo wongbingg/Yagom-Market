@@ -1,5 +1,5 @@
 //
-//  ChatView.swift
+//  ChattingListView.swift
 //  YagomMarket
 //
 //  Created by 이원빈 on 2022/12/19.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ChatView: UIView {
+final class ChattingListView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
