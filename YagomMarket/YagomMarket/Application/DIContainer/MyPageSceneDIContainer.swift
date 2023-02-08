@@ -58,6 +58,7 @@ final class MyPageSceneDIContainer {
             fetchProductDetailUseCase: makeFetchProductDetailUseCase(),
             searchUserProfileUseCase: makeSearchUserProfileUseCase(),
             handleLikedProductUseCase: makeHandleLikedProductUseCase(),
+            handleChattingUseCase: makeHandleChattingUseCase(),
             productId: productId
         )
     }
@@ -80,7 +81,15 @@ final class MyPageSceneDIContainer {
     }
     
     func makeHandleLikedProductUseCase() -> HandleLikedProductUseCase {
-        return DefaultHandleLikedProductUseCase(firestoreService: makeFirestoreService())
+        return DefaultHandleLikedProductUseCase(
+            firestoreService: makeFirestoreService()
+        )
+    }
+    
+    func makeHandleChattingUseCase() -> HandleChattingUseCase {
+        return DefaultHandleChattingUseCase(
+            firestoreService: makeChattingFirestoreService()
+        )
     }
     
     // MARK: - Repositories
@@ -91,6 +100,10 @@ final class MyPageSceneDIContainer {
     // MARK: - Services
     func makeFirestoreService() -> DefaultFirestoreService<UserProfile> {
         return DefaultFirestoreService<UserProfile>()
+    }
+    
+    func makeChattingFirestoreService() -> DefaultFirestoreService<Message> {
+        return DefaultFirestoreService<Message>()
     }
     
     // MARK: - MyPage Flow Coordinator
