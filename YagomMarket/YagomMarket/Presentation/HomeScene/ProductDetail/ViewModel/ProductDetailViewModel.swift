@@ -62,7 +62,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     }
     
     private func fetchIsLiked() async throws -> Bool {
-        let userProfile = try await searchUserProfileUseCase.execute()
+        let userProfile = try await searchUserProfileUseCase.execute(userUID: nil)
         let likedProductIds = userProfile.likedProductIds
         
         return likedProductIds.contains(productId)
