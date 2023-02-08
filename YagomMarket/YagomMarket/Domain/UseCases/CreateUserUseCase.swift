@@ -34,7 +34,8 @@ final class DefaultCreateUserUseCase: CreateUserUseCase {
         let userInfo = UserProfile(
             vendorName: vendorName,
             email: email,
-            likedProductIds: []
+            likedProductIds: [],
+            chattingUUIDList: []
         )
         
         try await firestoreService.create(
