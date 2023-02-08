@@ -28,6 +28,7 @@ final class ProductDetailViewController: UIViewController {
         layoutInitialView()
         setupInitialView()
         setupLikeButton()
+        setupChattingButton()
         setupGestureRecognizer()
         setupTabBarController()
     }
@@ -56,6 +57,14 @@ final class ProductDetailViewController: UIViewController {
         detailView.likeButton.addTarget(
             self,
             action: #selector(likeButtonTapped),
+            for: .touchUpInside
+        )
+    }
+    
+    private func setupChattingButton() {
+        detailView.chattingButton.addTarget(
+            self,
+            action: #selector(chattingButtonTapped),
             for: .touchUpInside
         )
     }
@@ -155,6 +164,10 @@ final class ProductDetailViewController: UIViewController {
             }
         }
     }
+    
+    @objc private func chattingButtonTapped() {
+        print(#function)
+    }
 }
 
 // MARK: - RegisterViewDelegate
@@ -172,6 +185,7 @@ extension ProductDetailViewController: ImageViewerViewControllerDelegate {
 
 // MARK: - Layout Constraints
 private extension ProductDetailViewController {
+    
     func layoutInitialView() {
         view.backgroundColor = .systemBackground
         view.addSubview(detailView)

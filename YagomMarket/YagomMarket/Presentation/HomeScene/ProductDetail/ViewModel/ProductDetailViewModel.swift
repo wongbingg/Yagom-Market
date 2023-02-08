@@ -33,6 +33,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     private let fetchProductDetailUseCase: FetchProductDetailUseCase
     private let searchUserProfileUseCase: SearchUserProfileUseCase
     private let handleLikedProductUseCase: HandleLikedProductUseCase
+    private let handleChattingUseCase: HandleChattingUseCase
     private let productId: Int
     
     var productDetail: ProductDetail?
@@ -43,6 +44,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         fetchProductDetailUseCase: FetchProductDetailUseCase,
         searchUserProfileUseCase: SearchUserProfileUseCase,
         handleLikedProductUseCase: HandleLikedProductUseCase,
+        handleChattingUseCase: HandleChattingUseCase,
         productId: Int
     ) {
         self.actions = actions
@@ -50,6 +52,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         self.fetchProductDetailUseCase = fetchProductDetailUseCase
         self.searchUserProfileUseCase = searchUserProfileUseCase
         self.handleLikedProductUseCase = handleLikedProductUseCase
+        self.handleChattingUseCase = handleChattingUseCase
         self.productId = productId
     }
     
@@ -70,6 +73,10 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     
     func deleteProduct() async throws {
         try await deleteProductUseCase.execute(productId: productId)
+    }
+    
+    func chattingButtonTapped() {
+        
     }
     
     @MainActor

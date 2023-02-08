@@ -108,13 +108,31 @@ final class ProductDetailView: UIView {
         return textView
     }()
     
+    private let toolBar: UIToolbar = {
+        let toolBar = UIToolbar()
+        toolBar.translatesAutoresizingMaskIntoConstraints = false
+        toolBar.backgroundColor = .systemGray2
+        return toolBar
+    }()
+    
+    let chattingButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("채팅", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBrown
+        button.layer.cornerRadius = 5
+        return button
+    }()
+    
     let likeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "heart"), for: .normal)
         button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
         button.tintColor = .red
-        button.transform = CGAffineTransform(scaleX: 2, y: 2)
+        button.transform = CGAffineTransform(scaleX: 3, y: 3)
         button.isHidden = true
         return button
     }()
@@ -128,6 +146,7 @@ final class ProductDetailView: UIView {
         layoutMainStackView()
         layoutBackgroundView()
         layoutPagingLabel()
+        layoutToolBar()
 
         adopScrollViewDelegate()
     }
@@ -250,7 +269,6 @@ private extension ProductDetailView {
     }
     
     func layoutMainStackView() {
-        mainStackView.addArrangedSubview(likeButton)
         mainStackView.addArrangedSubview(priceLabel)
         mainStackView.addArrangedSubview(nameLabel)
         mainStackView.addArrangedSubview(lowerStackView)
@@ -281,6 +299,28 @@ private extension ProductDetailView {
         NSLayoutConstraint.activate([
             pagingLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
             pagingLabel.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
+        ])
+    }
+    
+    func layoutToolBar() {
+        addSubview(toolBar)
+        toolBar.addSubview(chattingButton)
+        toolBar.addSubview(likeButton)
+        NSLayoutConstraint.activate([
+            toolBar.topAnchor.constraint(equalTo: bottomAnchor, constant: -70),
+            toolBar.bottomAnchor.constraint(equalTo: bottomAnchor),
+            toolBar.leadingAnchor.constraint(equalTo: leadingAnchor),
+            toolBar.trailingAnchor.constraint(equalTo: trailingAnchor),
+        ])
+        NSLayoutConstraint.activate([
+            chattingButton.topAnchor.constraint(equalTo: toolBar.topAnchor, constant: 20),
+            chattingButton.trailingAnchor.constraint(equalTo: toolBar.trailingAnchor, constant: -20),
+            chattingButton.heightAnchor.constraint(equalToConstant: 50),
+            chattingButton.widthAnchor.constraint(equalToConstant: 70)
+        ])
+        NSLayoutConstraint.activate([
+            likeButton.topAnchor.constraint(equalTo: toolBar.topAnchor, constant: 30),
+            likeButton.leadingAnchor.constraint(equalTo: toolBar.leadingAnchor, constant: 40),
         ])
     }
 }
