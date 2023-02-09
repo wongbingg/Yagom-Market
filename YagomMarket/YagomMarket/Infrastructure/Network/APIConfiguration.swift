@@ -20,8 +20,8 @@ enum URLCommand {
     static let host = "https://openmarket.yagom-academy.kr"
     static let healthChecker = "/healthChecker"
     static let products = "/api/products"
-    static let identifier = Bundle.main.identifier
-    static let secretKey = Bundle.main.secretKey
+    static let identifier = LoginCacheManager.fetchPreviousInfo()?.identifier ?? Bundle.main.identifier
+    static let secretKey = LoginCacheManager.fetchPreviousInfo()?.secret ?? Bundle.main.secretKey
     static let json = "application/json"
     
     static func productId(search id: Int) -> String {
