@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class ChattingListView: UIView {
+final class ChattingListView: UITableView {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .gray
+    override init(frame: CGRect, style: UITableView.Style) {
+        super.init(frame: frame, style: style)
+        backgroundColor = .systemBackground
     }
     
     required init?(coder: NSCoder) {
