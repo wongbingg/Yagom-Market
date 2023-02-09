@@ -5,11 +5,13 @@
 //  Created by 이원빈 on 2023/01/17.
 //
 
-enum LoginError: Error, Equatable {
+import Foundation
+
+enum LoginError: LocalizedError, Equatable {
     case invalidEmail
     case invalidPassword(number: Int)
     
-    var description: String {
+    var errorDescription: String? {
         switch self {
         case .invalidEmail:
             return "이메일 형식이 잘못되었습니다."
