@@ -33,6 +33,8 @@ final class DefaultCreateUserUseCase: CreateUserUseCase {
         let userInfo = UserProfile(
             vendorName: vendorName ?? "empty vendorName",
             email: email,
+            identifier: loginInfo.identifier,
+            secret: loginInfo.secret,
             likedProductIds: [],
             chattingUUIDList: []
         )
