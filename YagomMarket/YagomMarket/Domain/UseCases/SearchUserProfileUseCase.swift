@@ -18,17 +18,24 @@ final class DefaultSearchUserProfileUseCase: SearchUserProfileUseCase {
     
     func execute(othersUID: String?) async throws -> UserProfile {
         
-        guard let userUID = LoginCacheManager.fetchPreviousInfo() else {
-            throw LoginCacheManagerError.noPreviousInfo
+        if let othersUID = othersUID {
+            let response = try await firestoreService.read(
+                collectionId: "UserProfile",
+                documentId: othersUID
+            )
+            
+            return response as! UserProfile
+        } else {
+            guard let loginInfo = LoginCacheManager.fetchPreviousInfo() else {
+                throw LoginCacheManagerError.noPreviousInfo
+            }
+            
+            let response = try await firestoreService.read(
+                collectionId: "UserProfile",
+                documentId: loginInfo.userUID
+            )
+            
+            return response as! UserProfile
         }
-        let validUID = othersUID ?? userUID
-        
-        let response = try await firestoreService.read(
-            collectionId: "UserProfile",
-            documentId: validUID
-        )
-        
-        return response as! UserProfile
-        
     }
 }
