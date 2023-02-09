@@ -26,33 +26,102 @@ final class ChattingListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutInitialView()
+        setupTableView()
+        setupInitialData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = false
-        adoptTabBarDelegate()
         setupNavigationBar()
+        setupTabBar()
+        adoptTabBarDelegate()
+    }
+    
+    // MARK: Methods
+    private func setupTableView() {
+        chattingListView.delegate = self
+        chattingListView.dataSource = self
+        chattingListView.register(ChattingListCell.self, forCellReuseIdentifier: "ChattingListCell")
+    }
+    
+    private func setupInitialData() {
+        Task {
+            do {
+                try await viewModel.fetchChattingList()
+                chattingListView.reloadData()
+            } catch let error as LocalizedError {
+                DefaultAlertBuilder(
+                    title: .error,
+                    message: error.errorDescription ?? "\(#function) error"
+                )
+                .setButton()
+                .showAlert(on: self)
+            }
+        }
     }
     
     private func setupNavigationBar() {
         navigationController?.navigationBar.topItem?.title = "Chat"
     }
     
+    private func setupTabBar() {
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    
     private func adoptTabBarDelegate() {
         tabBarController?.delegate = self
     }
+    
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
+extension ChattingListViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
+        return viewModel.chattingCells.count
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat(80.0)
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: "ChattingListCell",
+            for: indexPath
+        ) as? ChattingListCell else {
+            return UITableViewCell()
+        }
+        
+        let model = viewModel.chattingCells[indexPath.row]
+        cell.setupData(with: model)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath) {
+        // TODO: 셀이 탭 되었을 때 액션정의
+        tableView.deselectRow(at: indexPath, animated: true)
+        viewModel.didSelectRowAt()
+    }
+}
+
+// MARK: - UITabBarControllerDelegate
 extension ChattingListViewController: UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController,
                           shouldSelect viewController: UIViewController) -> Bool {
+        
         if viewController is RegisterViewController {
             viewModel.registerTapSelected()
             return false
         }
-
+        
         if viewController == tabBarController.children[1] {
             viewModel.searchTapSelected()
             return false
