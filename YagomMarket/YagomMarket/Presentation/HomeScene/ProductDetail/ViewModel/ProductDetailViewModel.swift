@@ -34,6 +34,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     private let searchUserProfileUseCase: SearchUserProfileUseCase
     private let handleLikedProductUseCase: HandleLikedProductUseCase
     private let handleChattingUseCase: HandleChattingUseCase
+    private let searchOthersUIDUseCase: SearchOthersUIDUseCase
     private let productId: Int
     
     var productDetail: ProductDetail?
@@ -45,6 +46,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         searchUserProfileUseCase: SearchUserProfileUseCase,
         handleLikedProductUseCase: HandleLikedProductUseCase,
         handleChattingUseCase: HandleChattingUseCase,
+        searchOthersUIDUseCase: SearchOthersUIDUseCase,
         productId: Int
     ) {
         self.actions = actions
@@ -53,6 +55,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         self.searchUserProfileUseCase = searchUserProfileUseCase
         self.handleLikedProductUseCase = handleLikedProductUseCase
         self.handleChattingUseCase = handleChattingUseCase
+        self.searchOthersUIDUseCase = searchOthersUIDUseCase
         self.productId = productId
     }
     
@@ -75,7 +78,10 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         try await deleteProductUseCase.execute(productId: productId)
     }
     
-    func chattingButtonTapped() {
+    func chattingButtonTapped() async throws {
+        guard let userUID = LoginCacheManager.fetchPreviousInfo() else { return }
+        let othersUID = try await searchOthersUIDUseCase.execute(with: "vendorName") // vendorName을 넣어준다
+        let chattingUUID = userUID + "%" + othersUID.userUID + "%" + UUID().uuidString
         
     }
     
