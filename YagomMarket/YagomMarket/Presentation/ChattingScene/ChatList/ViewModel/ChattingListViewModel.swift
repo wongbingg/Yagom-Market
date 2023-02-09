@@ -20,7 +20,7 @@ final class DefaultChattingListViewModel: ChattingListViewModel {
     
     init(actions: ChattingListViewModelActions) {
         self.actions = actions
-        let userProfile = try await searchUserProfileUseCase.execute(userUID: nil)
+        let userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
     }
     
     func searchTapSelected() {
