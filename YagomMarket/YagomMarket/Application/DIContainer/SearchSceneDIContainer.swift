@@ -42,14 +42,23 @@ final class SearchSceneDIContainer {
     }
     
     // MARK: - Product Detail
-    func makeProductDetailViewController(productId: Int,
-                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController {
-        let viewModel = makeProductDetailViewModel(productId: productId, actions: actions)
+    func makeProductDetailViewController(
+        productId: Int,
+                                         actions: ProductDetailViewModelActions
+    ) -> ProductDetailViewController {
+        
+        let viewModel = makeProductDetailViewModel(
+            productId: productId,
+            actions: actions
+        )
         return ProductDetailViewController(viewModel: viewModel )
     }
     
-    func makeProductDetailViewModel(productId: Int,
-                                    actions: ProductDetailViewModelActions) -> ProductDetailViewModel {
+    func makeProductDetailViewModel(
+        productId: Int,
+                                    actions: ProductDetailViewModelActions
+    ) -> ProductDetailViewModel {
+        
         return DefaultProductDetailViewModel(
             actions: actions,
             deleteProductUseCase: makeDeleteProductUseCase(),
@@ -63,31 +72,46 @@ final class SearchSceneDIContainer {
     
     // MARK: - UseCase
     func makeDeleteProductUseCase() -> DeleteProductUseCase {
-        return DefaultDeleteProductUseCase(productsRepository: makeProductsRepository())
+        return DefaultDeleteProductUseCase(
+            productsRepository: makeProductsRepository()
+        )
     }
     
     func makeFetchProductDetailUseCase() -> FetchProductDetailUseCase {
-        return DefaultFetchProductDetailUseCase(productsRepository: makeProductsRepository())
+        return DefaultFetchProductDetailUseCase(
+            productsRepository: makeProductsRepository()
+        )
     }
     
     func makeSearchQueryUseCase() -> SearchQueryUseCase {
-        return DefaultSearchQueryUseCase(productsRepository: makeProductsRepository())
+        return DefaultSearchQueryUseCase(
+            productsRepository: makeProductsRepository()
+        )
     }
     
     func makeSearchQueryResultsUseCase() -> SearchQueryResultsUseCase {
-        return DefaultSearchQueryResultsUseCase(productsRepository: makeProductsRepository())
+        return DefaultSearchQueryResultsUseCase(
+            productsRepository: makeProductsRepository()
+        )
     }
     
     func makeSearchUserProfileUseCase() -> SearchUserProfileUseCase {
-        return DefaultSearchUserProfileUseCase(firestoreService: makeFirestoreService())
+        return DefaultSearchUserProfileUseCase(
+            firestoreService: makeFirestoreService()
+        )
     }
     
     func makeHandleLikedProductUseCase() -> HandleLikedProductUseCase {
-        return DefaultHandleLikedProductUseCase(firestoreService: makeFirestoreService())
+        return DefaultHandleLikedProductUseCase(
+            firestoreService: makeFirestoreService()
+        )
+    }
     }
     
     func makeHandleChattingUseCase() -> HandleChattingUseCase {
-        return DefaultHandleChattingUseCase(firestoreService: makeChattingFirestoreService())
+        return DefaultHandleChattingUseCase(
+            firestoreService: makeChattingFirestoreService()
+        )
     }
     
     // MARK: - Repositories
@@ -105,7 +129,9 @@ final class SearchSceneDIContainer {
     }
     
     // MARK: - Search Flow Coordinator
-    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator {
+    func makeSearchFlowCoordinator(
+        navigationController: UINavigationController
+    ) -> SearchFlowCoordinator {
         
         return SearchFlowCoordinator(
             navCon: navigationController,
@@ -114,8 +140,12 @@ final class SearchSceneDIContainer {
     }
     
     // MARK: - Modal Flow Coordinator
-    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator {
-        return modalSceneDIContainer.makeModalFlowCoordinator(navigationController: navigationController)
+    func makeModalFlowCoordinator(
+        navigationController: UINavigationController
+    ) -> ModalFlowCoordinator {
+        return modalSceneDIContainer.makeModalFlowCoordinator(
+            navigationController: navigationController
+        )
     }
 }
 

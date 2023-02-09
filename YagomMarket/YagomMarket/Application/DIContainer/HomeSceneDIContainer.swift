@@ -12,12 +12,18 @@ final class HomeSceneDIContainer {
     private let searchSceneDIContainer = SearchSceneDIContainer()
     
     // MARK: - Product List
-    func makeProductListViewController(actions: ProductListViewModelActions) -> ProductListViewController {
+    func makeProductListViewController(
+        actions: ProductListViewModelActions
+    ) -> ProductListViewController {
+        
         let viewModel = makeProductListViewModel(actions: actions)
         return ProductListViewController(with: viewModel)
     }
     
-    func makeProductListViewModel(actions: ProductListViewModelActions) -> ProductListViewModel {
+    func makeProductListViewModel(
+        actions: ProductListViewModelActions
+    ) -> ProductListViewModel {
+        
         return DefaultProductListViewModel(
             actions: actions,
             addNextProductPageUseCase: makeAddNextProductPageUseCase(),
@@ -27,16 +33,25 @@ final class HomeSceneDIContainer {
     }
     
     // MARK: - Product Detail
-    func makeProductDetailViewController(productId: Int,
-                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController {
-        let viewModel = makeProductDetailViewModel(productId: productId, actions: actions)
+    func makeProductDetailViewController(
+        productId: Int,
+        actions: ProductDetailViewModelActions
+    ) -> ProductDetailViewController {
+        
+        let viewModel = makeProductDetailViewModel(
+            productId: productId,
+            actions: actions
+        )
         return ProductDetailViewController(
             viewModel: viewModel
         )
     }
     
-    func makeProductDetailViewModel(productId: Int,
-                                    actions: ProductDetailViewModelActions) -> ProductDetailViewModel {
+    func makeProductDetailViewModel(
+        productId: Int,
+        actions: ProductDetailViewModelActions
+    ) -> ProductDetailViewModel {
+        
         return DefaultProductDetailViewModel(
             actions: actions,
             deleteProductUseCase: makeDeleteProductUseCase(),
@@ -49,27 +64,40 @@ final class HomeSceneDIContainer {
     
     // MARK: - UseCase
     func makeAddNextProductPageUseCase() -> AddNextProductPageUseCase {
-        return DefaultAddNextProductPageUseCase(productsRepository: makeProductsRepository())
+        return DefaultAddNextProductPageUseCase(
+            productsRepository: makeProductsRepository()
+        )
     }
     
     func makeDeleteProductUseCase() -> DeleteProductUseCase {
-        return DefaultDeleteProductUseCase(productsRepository: makeProductsRepository())
+        return DefaultDeleteProductUseCase(
+            productsRepository: makeProductsRepository()
+        )
     }
     
     func makeFetchProductDetailUseCase() -> FetchProductDetailUseCase {
-        return DefaultFetchProductDetailUseCase(productsRepository: makeProductsRepository())
+        return DefaultFetchProductDetailUseCase(
+            productsRepository: makeProductsRepository()
+        )
     }
     
     func makeSearchUserProfileUseCase() -> SearchUserProfileUseCase {
-        return DefaultSearchUserProfileUseCase(firestoreService: makeFirestoreService())
+        return DefaultSearchUserProfileUseCase(
+            firestoreService: makeFirestoreService()
+        )
     }
     
     func makeHandleLikedProductUseCase() -> HandleLikedProductUseCase {
-        return DefaultHandleLikedProductUseCase(firestoreService: makeFirestoreService())
+        return DefaultHandleLikedProductUseCase(
+            firestoreService: makeFirestoreService()
+        )
     }
     
     func makeHandleChattingUseCase() -> HandleChattingUseCase {
-        return DefaultHandleChattingUseCase(firestoreService: makeChattingFirestoreService())
+        return DefaultHandleChattingUseCase(
+            firestoreService: makeChattingFirestoreService()
+        )
+    }
     }
     
     // MARK: - Repositories
@@ -78,7 +106,9 @@ final class HomeSceneDIContainer {
     }
     
     func makeImageRepository() -> ImageRepository {
-        return DefaultImageRepository(imageCacheManager: DefaultImageCacheManager())
+        return DefaultImageRepository(
+            imageCacheManager: DefaultImageCacheManager()
+        )
     }
     
     func makeFirestoreService() -> DefaultFirestoreService<UserProfile> {
@@ -99,13 +129,23 @@ final class HomeSceneDIContainer {
     }
     
     // MARK: - Search Flow Coordinator
-    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator {
-        return searchSceneDIContainer.makeSearchFlowCoordinator(navigationController: navigationController)
+    func makeSearchFlowCoordinator(
+        navigationController: UINavigationController
+    ) -> SearchFlowCoordinator {
+        
+        return searchSceneDIContainer.makeSearchFlowCoordinator(
+            navigationController: navigationController
+        )
     }
     
     // MARK: - Modal Flow Coordinator
-    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator {
-        return modalSceneDIContainer.makeModalFlowCoordinator(navigationController: navigationController)
+    func makeModalFlowCoordinator(
+        navigationController: UINavigationController
+    ) -> ModalFlowCoordinator {
+        
+        return modalSceneDIContainer.makeModalFlowCoordinator(
+            navigationController: navigationController
+        )
     }
 }
 
