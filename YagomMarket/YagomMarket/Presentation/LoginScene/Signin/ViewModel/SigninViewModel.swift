@@ -18,18 +18,22 @@ protocol SigninViewModel: SigninViewModelInput, SigninViewModelOutput {}
 final class DefaultSigninViewModel: SigninViewModel {
     private let actions: SigninViewModelActions?
     private let createUserUseCase: CreateUserUseCase
+    private let recordVendorNameUseCase: RecordVendorNameUseCase
 
     init(
         actions: SigninViewModelActions? = nil,
-        createUserUseCase: CreateUserUseCase
+        createUserUseCase: CreateUserUseCase,
+        recordVendorNameUseCase: RecordVendorNameUseCase
 
     ) {
         self.actions = actions
         self.createUserUseCase = createUserUseCase
+        self.recordVendorNameUseCase = recordVendorNameUseCase
     }
 
     func registerButtonTapped(_ loginInfo: LoginInfo) async throws {
         try loginInfo.validate()
-        _ = try await createUserUseCase.execute(with: loginInfo)
+        try await createUserUseCase.execute(with: loginInfo)
+        try await recordVendorNameUseCase.execute(with: loginInfo.vendorName)
     }
 }

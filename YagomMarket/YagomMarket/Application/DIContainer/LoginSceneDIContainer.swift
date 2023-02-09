@@ -32,7 +32,8 @@ final class LoginSceneDIContainer {
     func makeSigninViewModel(actions: SigninViewModelActions) -> SigninViewModel {
         return DefaultSigninViewModel(
             actions: actions,
-            createUserUseCase: makeCreateUserUseCase()
+            createUserUseCase: makeCreateUserUseCase(),
+            recordVendorNameUseCase: makeRecordVendorNameUseCase()
         )
     }
     
@@ -89,6 +90,13 @@ final class LoginSceneDIContainer {
         )
     }
     
+    func makeRecordVendorNameUseCase() -> RecordVendorNameUseCase {
+        return DefaultRecordVendorNameUseCase(
+            firebaseAuthService: makeFirebaseAuthService(),
+            firestoreService: makeOtherUIDFirestoreService()
+        )
+    }
+    
     // MARK: - Services
     func makeFirebaseAuthService() -> FirebaseAuthService {
         return DefaultFirebaseAuthService()
@@ -96,6 +104,10 @@ final class LoginSceneDIContainer {
     
     func makeFirestoreService() -> DefaultFirestoreService<UserProfile> {
         return DefaultFirestoreService<UserProfile>()
+    }
+    
+    func makeOtherUIDFirestoreService() -> DefaultFirestoreService<UserUID> {
+        return DefaultFirestoreService<UserUID>()
     }
     
     // MARK: - Login Flow Coordinator
