@@ -26,7 +26,7 @@ final class AppFlowCoordinator {
             navigationController: navigationController
         )
         if let loginInfo = LoginCacheManager.fetchPreviousInfo() {
-            flow.successLogin(loginInfo)
+            flow.successLogin(loginInfo.userUID, loginInfo.identifier, loginInfo.secret)
         } else {
             flow.start()
         }

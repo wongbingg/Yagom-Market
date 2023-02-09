@@ -68,7 +68,7 @@ final class DefaultChattingListViewModel: ChattingListViewModel {
         // buddyUID%userUID%UUID
         var uuidArr = chattingUUID.split(separator: "%")
         uuidArr.removeLast()
-        let myUID = LoginCacheManager.fetchPreviousInfo()!
+        let myUID = LoginCacheManager.fetchPreviousInfo()!.userUID
         let buddyUID = String(uuidArr.filter { $0 != myUID }[0])
         let buddyProfile = try await searchUserProfileUseCase.execute(othersUID: buddyUID)
         let buddyEmail = buddyProfile.email
