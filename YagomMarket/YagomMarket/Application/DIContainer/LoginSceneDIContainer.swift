@@ -19,7 +19,8 @@ final class LoginSceneDIContainer {
     func makeLoginViewModel(actions: LoginViewModelActions) -> LoginViewModel {
         return DefaultLoginViewModel(
             actions: actions,
-            loginUseCase: makeLoginUseCase()
+            loginUseCase: makeLoginUseCase(),
+            searchUserProfileUseCase: makeSearchUserProfileUseCase()
         )
     }
     
@@ -94,6 +95,12 @@ final class LoginSceneDIContainer {
         return DefaultRecordVendorNameUseCase(
             firebaseAuthService: makeFirebaseAuthService(),
             firestoreService: makeOtherUIDFirestoreService()
+        )
+    }
+    
+    func makeSearchUserProfileUseCase() -> SearchUserProfileUseCase {
+        return DefaultSearchUserProfileUseCase(
+            firestoreService: makeFirestoreService()
         )
     }
     
