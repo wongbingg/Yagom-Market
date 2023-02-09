@@ -82,7 +82,8 @@ final class ProductDetailViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        guard viewModel.productDetail?.vendorName == LoginCacheManager.fetchPreviousInfo()?.vendorName else { return }
+        guard viewModel.productDetail?.vendorName ==
+        LoginCacheManager.fetchPreviousInfo()?.vendorName else { return }
         
         let rightBarButton = UIBarButtonItem(
             image: UIImage(systemName: "ellipsis"),
@@ -166,7 +167,17 @@ final class ProductDetailViewController: UIViewController {
     }
     
     @objc private func chattingButtonTapped() {
-        print(#function)
+        Task {
+            do {
+                try await viewModel.chattingButtonTapped()
+            } catch let error as LocalizedError {
+                DefaultAlertBuilder(
+                    message: error.errorDescription ?? "\(#function) error"
+                )
+                .setButton()
+                .showAlert(on: self)
+            }
+        }
     }
 }
 

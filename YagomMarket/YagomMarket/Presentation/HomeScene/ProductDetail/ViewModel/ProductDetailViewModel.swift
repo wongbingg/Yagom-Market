@@ -19,7 +19,7 @@ protocol ProductDetailViewModelInput {
     func showImageViewer(imageURLs: [String], currentPage: Int)
     func addLikeProduct() async throws
     func deleteLikeProduct() async throws
-    func chattingButtonTapped(with vendorName: String) async throws
+    func chattingButtonTapped() async throws
 }
 
 protocol ProductDetailViewModelOutput {
@@ -79,8 +79,11 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         try await deleteProductUseCase.execute(productId: productId)
     }
     
-    func chattingButtonTapped(with vendorName: String) async throws {
-        guard let loginInfo = LoginCacheManager.fetchPreviousInfo() else { return }
+    func chattingButtonTapped() async throws {
+        guard let loginInfo = LoginCacheManager.fetchPreviousInfo(),
+              let vendorName = productDetail?.vendorName else { return }
+        
+        try await checkValidUser(with: vendorName)
         let othersUID = try await searchOthersUIDUseCase.execute(with: vendorName)
         let chattingUUID = loginInfo.userUID + "%" + othersUID.userUID + "%" + UUID().uuidString
         
@@ -94,6 +97,10 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
             isAdded: true,
             othersUID: othersUID.userUID
         )
+    }
+    
+    func checkValidUser(with vendorName: String) async throws {
+        let response = try await searchOthersUIDUseCase.execute(with: vendorName)
     }
     
     @MainActor

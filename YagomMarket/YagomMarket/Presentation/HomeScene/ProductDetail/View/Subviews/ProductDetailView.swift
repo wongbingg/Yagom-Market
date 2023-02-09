@@ -157,6 +157,7 @@ final class ProductDetailView: UIView {
     
     // MARK: Methods
     func setupData(with model: ProductDetail) async throws {
+        chattingButton.isHidden = model.vendorName == LoginCacheManager.fetchPreviousInfo()?.vendorName
         nameLabel.text = model.name
         descriptionTextView.text = model.description
         vendorNameLabel.text = model.vendorName.appending(" •")
