@@ -27,12 +27,11 @@ final class DefaultCreateUserUseCase: CreateUserUseCase {
             password: loginInfo.password
         )
         
-        let userUID = response?.user.uid ?? "empty userUID"
-        
+        let userUID = response.user.uid
         let email = loginInfo.id
-        let vendorName = loginInfo.vendorName ?? "empty vendorName"
+        let vendorName = loginInfo.vendorName
         let userInfo = UserProfile(
-            vendorName: vendorName,
+            vendorName: vendorName ?? "empty vendorName",
             email: email,
             likedProductIds: [],
             chattingUUIDList: []

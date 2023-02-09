@@ -23,6 +23,6 @@ final class DefaultLoginUseCase: LoginUseCase {
             email: loginInfo.id,
             password: loginInfo.password
         )
-        return response?.user.uid
+        return response.user.uid
     }
 }
