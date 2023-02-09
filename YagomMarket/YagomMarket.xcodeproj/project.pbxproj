@@ -38,8 +38,6 @@
 		AF06CEF4298905360004676C /* SearchUserProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06CEF3298905360004676C /* SearchUserProfileUseCase.swift */; };
 		AF0796992924A8E7002E876C /* SearchDeleteURIAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796982924A8E7002E876C /* SearchDeleteURIAPI.swift */; };
 		AF0796A12924BE62002E876C /* DeleteProductAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796A02924BE62002E876C /* DeleteProductAPI.swift */; };
-		AF11758C29501991002632D2 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF11758B29501991002632D2 /* ChatViewController.swift */; };
-		AF11758E295019A4002632D2 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF11758D295019A4002632D2 /* ChatView.swift */; };
 		AF11759129501A04002632D2 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF11759029501A04002632D2 /* MyPageViewController.swift */; };
 		AF13E5B52935C90E00F92C89 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13E5B42935C90E00F92C89 /* RegisterViewModel.swift */; };
 		AF13E5B72935C93B00F92C89 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13E5B62935C93B00F92C89 /* ProductDetailViewController.swift */; };
@@ -56,6 +54,9 @@
 		AF471C45297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C44297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift */; };
 		AF471C49297E76DB00A3ACD6 /* DeleteProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C48297E76DB00A3ACD6 /* DeleteProductUseCase.swift */; };
 		AF471C4B297E779900A3ACD6 /* FetchProductDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C4A297E779900A3ACD6 /* FetchProductDetailUseCase.swift */; };
+		AF598F0329929BE600BC4FD6 /* ChattingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF598F0229929BE600BC4FD6 /* ChattingListViewController.swift */; };
+		AF598F0529929BF800BC4FD6 /* ChattingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF598F0429929BF800BC4FD6 /* ChattingListViewModel.swift */; };
+		AF598F0729929C2200BC4FD6 /* ChattingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF598F0629929C2200BC4FD6 /* ChattingListView.swift */; };
 		AF5A3D1229910DAF00A4A79F /* ModalSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5A3D1129910DAF00A4A79F /* ModalSceneDIContainer.swift */; };
 		AF5A3D162991147500A4A79F /* ModalFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5A3D152991147500A4A79F /* ModalFlowCoordinator.swift */; };
 		AF5BB777292210E20013BFC1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB776292210E20013BFC1 /* AppDelegate.swift */; };
@@ -63,7 +64,6 @@
 		AF5BB77B292210E20013BFC1 /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB77A292210E20013BFC1 /* ProductListViewController.swift */; };
 		AF5BB780292210E30013BFC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF5BB77F292210E30013BFC1 /* Assets.xcassets */; };
 		AF5BB783292210E30013BFC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF5BB781292210E30013BFC1 /* LaunchScreen.storyboard */; };
-		AF5EEC2C297BFD7100162DC9 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EEC2B297BFD7100162DC9 /* ChatViewModel.swift */; };
 		AF5EEC2E297BFE5000162DC9 /* ChatSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EEC2D297BFE5000162DC9 /* ChatSceneDIContainer.swift */; };
 		AF5EEC31297BFEE100162DC9 /* ChatFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EEC30297BFEE100162DC9 /* ChatFlowCoordinator.swift */; };
 		AF5EEC37297C042C00162DC9 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EEC36297C042C00162DC9 /* MyPageViewModel.swift */; };
@@ -94,6 +94,14 @@
 		AFA2FB28298BE73E005C44D4 /* ProductsRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA2FB27298BE73E005C44D4 /* ProductsRepositoryMock.swift */; };
 		AFA2FB2A298C0099005C44D4 /* FirebaseAuthServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA2FB29298C0099005C44D4 /* FirebaseAuthServiceMock.swift */; };
 		AFA2FB2C298C0113005C44D4 /* FirestoreServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA2FB2B298C0113005C44D4 /* FirestoreServiceMock.swift */; };
+		AFB0D8E929933A0500A7AF8B /* ChattingListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8E829933A0500A7AF8B /* ChattingListCell.swift */; };
+		AFB0D8EF2993508300A7AF8B /* SearchChattingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8EE2993508300A7AF8B /* SearchChattingUseCase.swift */; };
+		AFB0D8F32993753F00A7AF8B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8F22993753F00A7AF8B /* Message.swift */; };
+		AFB0D8F5299384B200A7AF8B /* ChattingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8F4299384B200A7AF8B /* ChattingCell.swift */; };
+		AFB0D8F72993929300A7AF8B /* HandleChattingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8F62993929300A7AF8B /* HandleChattingUseCase.swift */; };
+		AFB0D8F92993E03A00A7AF8B /* SearchOthersUIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8F82993E03A00A7AF8B /* SearchOthersUIDUseCase.swift */; };
+		AFB0D8FB29947B2F00A7AF8B /* UserUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8FA29947B2F00A7AF8B /* UserUID.swift */; };
+		AFB0D8FD29947BF900A7AF8B /* RecordVendorNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8FC29947BF900A7AF8B /* RecordVendorNameUseCase.swift */; };
 		AFB4C3F92980089C00D6749E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AFB4C3F82980089C00D6749E /* FirebaseAuth */; };
 		AFB4C3FB2980089C00D6749E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AFB4C3FA2980089C00D6749E /* FirebaseFirestore */; };
 		AFB4C3FD29800A5900D6749E /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB4C3FC29800A5900D6749E /* UserProfile.swift */; };
@@ -181,8 +189,6 @@
 		AF06CEF3298905360004676C /* SearchUserProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserProfileUseCase.swift; sourceTree = "<group>"; };
 		AF0796982924A8E7002E876C /* SearchDeleteURIAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDeleteURIAPI.swift; sourceTree = "<group>"; };
 		AF0796A02924BE62002E876C /* DeleteProductAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductAPI.swift; sourceTree = "<group>"; };
-		AF11758B29501991002632D2 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		AF11758D295019A4002632D2 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		AF11759029501A04002632D2 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		AF13E5B42935C90E00F92C89 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		AF13E5B62935C93B00F92C89 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
@@ -199,6 +205,9 @@
 		AF471C44297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNextProductPageUseCase.swift; sourceTree = "<group>"; };
 		AF471C48297E76DB00A3ACD6 /* DeleteProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductUseCase.swift; sourceTree = "<group>"; };
 		AF471C4A297E779900A3ACD6 /* FetchProductDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProductDetailUseCase.swift; sourceTree = "<group>"; };
+		AF598F0229929BE600BC4FD6 /* ChattingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChattingListViewController.swift; path = YagomMarket/Presentation/ChattingScene/ChatList/View/ChattingListViewController.swift; sourceTree = SOURCE_ROOT; };
+		AF598F0429929BF800BC4FD6 /* ChattingListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChattingListViewModel.swift; path = YagomMarket/Presentation/ChattingScene/ChatList/ViewModel/ChattingListViewModel.swift; sourceTree = SOURCE_ROOT; };
+		AF598F0629929C2200BC4FD6 /* ChattingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChattingListView.swift; path = YagomMarket/Presentation/ChattingScene/ChatList/View/ChattingListView.swift; sourceTree = SOURCE_ROOT; };
 		AF5A3D1129910DAF00A4A79F /* ModalSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalSceneDIContainer.swift; sourceTree = "<group>"; };
 		AF5A3D152991147500A4A79F /* ModalFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalFlowCoordinator.swift; sourceTree = "<group>"; };
 		AF5BB773292210E20013BFC1 /* YagomMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YagomMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,7 +217,6 @@
 		AF5BB77F292210E30013BFC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF5BB782292210E30013BFC1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AF5BB784292210E30013BFC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AF5EEC2B297BFD7100162DC9 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		AF5EEC2D297BFE5000162DC9 /* ChatSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSceneDIContainer.swift; sourceTree = "<group>"; };
 		AF5EEC30297BFEE100162DC9 /* ChatFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFlowCoordinator.swift; sourceTree = "<group>"; };
 		AF5EEC36297C042C00162DC9 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
@@ -240,6 +248,14 @@
 		AFA2FB27298BE73E005C44D4 /* ProductsRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepositoryMock.swift; sourceTree = "<group>"; };
 		AFA2FB29298C0099005C44D4 /* FirebaseAuthServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthServiceMock.swift; sourceTree = "<group>"; };
 		AFA2FB2B298C0113005C44D4 /* FirestoreServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreServiceMock.swift; sourceTree = "<group>"; };
+		AFB0D8E829933A0500A7AF8B /* ChattingListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListCell.swift; sourceTree = "<group>"; };
+		AFB0D8EE2993508300A7AF8B /* SearchChattingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchChattingUseCase.swift; sourceTree = "<group>"; };
+		AFB0D8F22993753F00A7AF8B /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		AFB0D8F4299384B200A7AF8B /* ChattingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingCell.swift; sourceTree = "<group>"; };
+		AFB0D8F62993929300A7AF8B /* HandleChattingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleChattingUseCase.swift; sourceTree = "<group>"; };
+		AFB0D8F82993E03A00A7AF8B /* SearchOthersUIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOthersUIDUseCase.swift; sourceTree = "<group>"; };
+		AFB0D8FA29947B2F00A7AF8B /* UserUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUID.swift; sourceTree = "<group>"; };
+		AFB0D8FC29947BF900A7AF8B /* RecordVendorNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordVendorNameUseCase.swift; sourceTree = "<group>"; };
 		AFB4C3FC29800A5900D6749E /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		AFB7FFAC297FB514003290EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AFB7FFB4297FBB06003290EE /* FirebaseAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
@@ -387,7 +403,8 @@
 			isa = PBXGroup;
 			children = (
 				AF5EEC2F297BFED000162DC9 /* Flows */,
-				AF5EEC2A297BFD5B00162DC9 /* Chatting */,
+				AF5EEC2A297BFD5B00162DC9 /* ChattingList */,
+				AFA047CD2992966600145B23 /* ChatDetail */,
 			);
 			path = ChattingScene;
 			sourceTree = "<group>";
@@ -415,10 +432,13 @@
 			isa = PBXGroup;
 			children = (
 				AF0166102976BEAF0083DDAD /* ProductCell.swift */,
+				AFB0D8F4299384B200A7AF8B /* ChattingCell.swift */,
 				AFE85D0E2977996B009CBB56 /* ProductDetail.swift */,
 				AF0166292976C20C0083DDAD /* LoginInfo.swift */,
 				AF01662B2976C21A0083DDAD /* LoginError.swift */,
 				AFB4C3FC29800A5900D6749E /* UserProfile.swift */,
+				AFB0D8F22993753F00A7AF8B /* Message.swift */,
+				AFB0D8FA29947B2F00A7AF8B /* UserUID.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -433,10 +453,14 @@
 				AF471C4A297E779900A3ACD6 /* FetchProductDetailUseCase.swift */,
 				AFB7FFBE297FC4DC003290EE /* LoginUseCase.swift */,
 				AFB7FFC0297FC901003290EE /* CreateUserUseCase.swift */,
+				AFB0D8FC29947BF900A7AF8B /* RecordVendorNameUseCase.swift */,
 				AF06CEF3298905360004676C /* SearchUserProfileUseCase.swift */,
+				AFB0D8F82993E03A00A7AF8B /* SearchOthersUIDUseCase.swift */,
+				AFB0D8EE2993508300A7AF8B /* SearchChattingUseCase.swift */,
 				AF3295EB29821DF300BCA1AA /* SearchQueryUseCase.swift */,
 				AF3295ED2982200500BCA1AA /* SearchQueryResultsUseCase.swift */,
 				AF465E17298AA1730071A0F3 /* HandleLikedProductUseCase.swift */,
+				AFB0D8F62993929300A7AF8B /* HandleChattingUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -731,8 +755,9 @@
 		AF11758F295019D5002632D2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AF11758B29501991002632D2 /* ChatViewController.swift */,
-				AF11758D295019A4002632D2 /* ChatView.swift */,
+				AF598F0229929BE600BC4FD6 /* ChattingListViewController.swift */,
+				AF598F0629929C2200BC4FD6 /* ChattingListView.swift */,
+				AFB0D8E7299339F500A7AF8B /* Subviews */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -820,18 +845,18 @@
 		AF5EEC29297BFD3600162DC9 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				AF5EEC2B297BFD7100162DC9 /* ChatViewModel.swift */,
+				AF598F0429929BF800BC4FD6 /* ChattingListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		AF5EEC2A297BFD5B00162DC9 /* Chatting */ = {
+		AF5EEC2A297BFD5B00162DC9 /* ChattingList */ = {
 			isa = PBXGroup;
 			children = (
 				AF5EEC29297BFD3600162DC9 /* ViewModel */,
 				AF11758F295019D5002632D2 /* View */,
 			);
-			path = Chatting;
+			path = ChattingList;
 			sourceTree = "<group>";
 		};
 		AF5EEC2F297BFED000162DC9 /* Flows */ = {
@@ -930,6 +955,29 @@
 			path = SearchScene;
 			sourceTree = "<group>";
 		};
+		AFA047CD2992966600145B23 /* ChatDetail */ = {
+			isa = PBXGroup;
+			children = (
+				AFA047CE299296B400145B23 /* ViewModel */,
+				AFA047CF299296B900145B23 /* View */,
+			);
+			path = ChatDetail;
+			sourceTree = "<group>";
+		};
+		AFA047CE299296B400145B23 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AFA047CF299296B900145B23 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		AFA2FB26298BE713005C44D4 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -938,6 +986,14 @@
 				AFA2FB2B298C0113005C44D4 /* FirestoreServiceMock.swift */,
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		AFB0D8E7299339F500A7AF8B /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				AFB0D8E829933A0500A7AF8B /* ChattingListCell.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		AFB4C400298023D700D6749E /* Frameworks */ = {
@@ -1233,6 +1289,7 @@
 				AF8ED162293040750070D55C /* URLRequest+.swift in Sources */,
 				AF01660E2976BCC90083DDAD /* HomeSceneDIContainer.swift in Sources */,
 				AF0166322976C6B10083DDAD /* HomeFlowCoordinator.swift in Sources */,
+				AFB0D8F5299384B200A7AF8B /* ChattingCell.swift in Sources */,
 				AF01194C293E07EB00FD2D1C /* CustomTextField.swift in Sources */,
 				AF0165DF2976AD880083DDAD /* Bundle+.swift in Sources */,
 				AF0796992924A8E7002E876C /* SearchDeleteURIAPI.swift in Sources */,
@@ -1247,7 +1304,9 @@
 				AFE911D829517B7E004A1D1B /* ResultViewController.swift in Sources */,
 				AFB7FFB7297FBB16003290EE /* FirestoreService.swift in Sources */,
 				AF1520DB2926035F004957E7 /* Data+.swift in Sources */,
+				AFB0D8F72993929300A7AF8B /* HandleChattingUseCase.swift in Sources */,
 				AFB7FFC1297FC901003290EE /* CreateUserUseCase.swift in Sources */,
+				AFB0D8E929933A0500A7AF8B /* ChattingListCell.swift in Sources */,
 				AFEFB638294898B3008D2CC4 /* AlertBuilder.swift in Sources */,
 				AFB4C3FD29800A5900D6749E /* UserProfile.swift in Sources */,
 				AF71745F29222EF90004FC02 /* ServerCheckAPI.swift in Sources */,
@@ -1262,14 +1321,16 @@
 				AF01662A2976C20C0083DDAD /* LoginInfo.swift in Sources */,
 				AF5BB777292210E20013BFC1 /* AppDelegate.swift in Sources */,
 				AF5BB779292210E20013BFC1 /* SceneDelegate.swift in Sources */,
+				AF598F0529929BF800BC4FD6 /* ChattingListViewModel.swift in Sources */,
 				AF6881B129486CF000842212 /* Handler.swift in Sources */,
 				AF0166382976DA830083DDAD /* SearchSceneDIContainer.swift in Sources */,
-				AF11758C29501991002632D2 /* ChatViewController.swift in Sources */,
 				AFC44D53293497C900B01142 /* ProductGridCell.swift in Sources */,
 				AF01661B2976C11E0083DDAD /* LoginViewController.swift in Sources */,
 				AF465E18298AA1730071A0F3 /* HandleLikedProductUseCase.swift in Sources */,
+				AF598F0729929C2200BC4FD6 /* ChattingListView.swift in Sources */,
 				AF3295EE2982200500BCA1AA /* SearchQueryResultsUseCase.swift in Sources */,
 				AFF5E0682939C1B5000CC513 /* RegisterView.swift in Sources */,
+				AFB0D8F92993E03A00A7AF8B /* SearchOthersUIDUseCase.swift in Sources */,
 				AF0166222976C1710083DDAD /* LabelSeparator.swift in Sources */,
 				AF0166262976C1AB0083DDAD /* SigninViewController.swift in Sources */,
 				AF7174642922375B0004FC02 /* APIClient.swift in Sources */,
@@ -1282,6 +1343,7 @@
 				AFC44D472934836400B01142 /* ProductDetailView.swift in Sources */,
 				AF5EEC39297C046100162DC9 /* MyPageFlowCoordinator.swift in Sources */,
 				AF160EC82934DFE80014C385 /* UIImageView+.swift in Sources */,
+				AFB0D8F32993753F00A7AF8B /* Message.swift in Sources */,
 				AFDD9A382944A287004D4DE1 /* ImageViewerViewController.swift in Sources */,
 				AF0166342976D9190083DDAD /* SearchFlowCoordinator.swift in Sources */,
 				AF717471292252000004FC02 /* ProductListResponseDTO+Mapping.swift in Sources */,
@@ -1292,7 +1354,9 @@
 				AF471C45297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift in Sources */,
 				AF71746829224A010004FC02 /* API.swift in Sources */,
 				AF471C49297E76DB00A3ACD6 /* DeleteProductUseCase.swift in Sources */,
+				AFB0D8EF2993508300A7AF8B /* SearchChattingUseCase.swift in Sources */,
 				AF06CEF4298905360004676C /* SearchUserProfileUseCase.swift in Sources */,
+				AFB0D8FB29947B2F00A7AF8B /* UserUID.swift in Sources */,
 				AF5EEC37297C042C00162DC9 /* MyPageViewModel.swift in Sources */,
 				AF738E25294771DC008F60CE /* ImageHandler.swift in Sources */,
 				AF01662E2976C2530083DDAD /* LoginViewModel.swift in Sources */,
@@ -1301,7 +1365,6 @@
 				AF738E23294751FC008F60CE /* CustomImageView.swift in Sources */,
 				AF13E5BA2935CC6500F92C89 /* ProductDetailViewModel.swift in Sources */,
 				AF18750F29824D1D00BFE50D /* DefaultImageRepository.swift in Sources */,
-				AF11758E295019A4002632D2 /* ChatView.swift in Sources */,
 				AF13E5B72935C93B00F92C89 /* ProductDetailViewController.swift in Sources */,
 				AF7174662922383A0004FC02 /* APIError.swift in Sources */,
 				AF01662C2976C21A0083DDAD /* LoginError.swift in Sources */,
@@ -1312,9 +1375,11 @@
 				AF71746D292251510004FC02 /* SearchProductListAPI.swift in Sources */,
 				AFC44D4B2934855300B01142 /* TabBarController.swift in Sources */,
 				AFD41D732937230D008E36C0 /* DateCalculator.swift in Sources */,
+				AFB0D8FD29947BF900A7AF8B /* RecordVendorNameUseCase.swift in Sources */,
 				AFCD3DFD297A40E600DC0154 /* ProductEditRequestDTO.swift in Sources */,
 				AF471C43297E686300A3ACD6 /* DefaultProductsRepository.swift in Sources */,
 				AFD9AB4C2923101F009A67AB /* ProductDetailResponseDTO+Mapping.swift in Sources */,
+				AF598F0329929BE600BC4FD6 /* ChattingListViewController.swift in Sources */,
 				AF6690EA2943242B002AC838 /* ImageCacheManager.swift in Sources */,
 				AFF9693F292EF555009AB014 /* EditProductAPI.swift in Sources */,
 				AF9BCC0A2980FFC3003218D9 /* ImageViewerTransitioningDelegate.swift in Sources */,
@@ -1322,7 +1387,6 @@
 				AF01D3802990ED0500ACACB1 /* EditProductUseCase.swift in Sources */,
 				AFC44D4D2934860A00B01142 /* RegisterViewController.swift in Sources */,
 				AF5EEC3B297C04A200162DC9 /* MyPageSceneDIContainer.swift in Sources */,
-				AF5EEC2C297BFD7100162DC9 /* ChatViewModel.swift in Sources */,
 				AF0166202976C1590083DDAD /* LogoImageButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
