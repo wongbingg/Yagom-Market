@@ -7,7 +7,9 @@
 
 import Foundation
 protocol HandleChattingUseCase {
-    func execute(chattingUUID: String, isAdd: Bool) async throws
+    func execute(chattingUUID: String,
+                 isAdded: Bool,
+                 othersUID: String?) async throws
 }
 
 final class DefaultHandleChattingUseCase: HandleChattingUseCase {
@@ -19,17 +21,21 @@ final class DefaultHandleChattingUseCase: HandleChattingUseCase {
         self.firestoreService = firestoreService
     }
     
-    func execute(chattingUUID: String, isAdd: Bool) async throws {
+    func execute(chattingUUID: String,
+                 isAdded: Bool,
+                 othersUID: String?) async throws {
         guard let userUID = LoginCacheManager.fetchPreviousInfo() else {
             throw LoginCacheManagerError.noPreviousInfo
         }
         
+        let validUID = othersUID ?? userUID
+        
         var userProfile = try await firestoreService.read(
             collectionId: "UserProfile",
-            documentId: userUID
+            documentId: validUID
         ) as! UserProfile
         
-        if isAdd {
+        if isAdded {
             userProfile.chattingUUIDList.append(chattingUUID)
         } else {
             guard let index = userProfile.chattingUUIDList.firstIndex(of: chattingUUID) else {
@@ -40,7 +46,7 @@ final class DefaultHandleChattingUseCase: HandleChattingUseCase {
         
         try await firestoreService.update(
             collectionId: "UserProfile",
-            documentId: userUID,
+            documentId: validUID,
             to: userProfile
         )
     }

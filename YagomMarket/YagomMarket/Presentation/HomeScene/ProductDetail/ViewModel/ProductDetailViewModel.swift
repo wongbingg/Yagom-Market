@@ -83,6 +83,16 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         let othersUID = try await searchOthersUIDUseCase.execute(with: "vendorName") // vendorName을 넣어준다
         let chattingUUID = userUID + "%" + othersUID.userUID + "%" + UUID().uuidString
         
+        try await handleChattingUseCase.execute(
+            chattingUUID: chattingUUID,
+            isAdded: true,
+            othersUID: nil
+        )
+        try await handleChattingUseCase.execute(
+            chattingUUID: chattingUUID,
+            isAdded: true,
+            othersUID: othersUID.userUID
+        )
     }
     
     @MainActor
