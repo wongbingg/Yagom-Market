@@ -28,15 +28,15 @@ final class LoginFlowCoordinator {
     
     func start() {
         let actions = LoginViewModelActions(
-            successLogin: successLogin(_:),
+            successLogin: successLogin,
             createUserButtonTapped: signinButtonTapped
         )
         let loginVC = dependencies.makeLoginViewController(actions: actions)
         navigationController.pushViewController(loginVC, animated: true)
     }
     
-    func successLogin(_ userUID: String) {
-        LoginCacheManager.setNewLoginInfo(userUID)
+    func successLogin(_ userUID: String, _ identifier: String, _ secret: String) {
+        LoginCacheManager.setNewLoginInfo(userUID: userUID, identifier: identifier, secret: secret)
         let tabBarController = dependencies.makeTabBarController(
             navigationController: navigationController,
             userUID: userUID
