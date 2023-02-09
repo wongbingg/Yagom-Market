@@ -24,11 +24,11 @@ final class DefaultHandleChattingUseCase: HandleChattingUseCase {
     func execute(chattingUUID: String,
                  isAdded: Bool,
                  othersUID: String?) async throws {
-        guard let userUID = LoginCacheManager.fetchPreviousInfo() else {
+        guard let loginInfo = LoginCacheManager.fetchPreviousInfo() else {
             throw LoginCacheManagerError.noPreviousInfo
         }
         
-        let validUID = othersUID ?? userUID
+        let validUID = othersUID ?? loginInfo.userUID
         
         var userProfile = try await firestoreService.read(
             collectionId: "UserProfile",

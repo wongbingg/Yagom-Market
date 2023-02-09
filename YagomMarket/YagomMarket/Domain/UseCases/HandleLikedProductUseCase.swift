@@ -19,13 +19,13 @@ final class DefaultHandleLikedProductUseCase: HandleLikedProductUseCase {
     }
     
     func execute(with productId: Int, isAdd: Bool) async throws {
-        guard let userUID = LoginCacheManager.fetchPreviousInfo() else {
+        guard let loginInfo = LoginCacheManager.fetchPreviousInfo() else {
             throw LoginCacheManagerError.noPreviousInfo
         }
         
         var userProfile = try await firestoreService.read(
             collectionId: "UserProfile",
-            documentId: userUID
+            documentId: loginInfo.userUID
         ) as! UserProfile
         
         if isAdd {
@@ -39,7 +39,7 @@ final class DefaultHandleLikedProductUseCase: HandleLikedProductUseCase {
         
         try await firestoreService.update(
             collectionId: "UserProfile",
-            documentId: userUID,
+            documentId: loginInfo.userUID,
             to: userProfile
         )
     }
