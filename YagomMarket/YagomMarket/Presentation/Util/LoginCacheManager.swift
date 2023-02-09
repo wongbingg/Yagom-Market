@@ -8,17 +8,26 @@
 import Foundation
 
 struct LoginCacheManager {
-    static func setNewLoginInfo(userUID: String, identifier: String, secret: String) {
-        let info = userUID + "%" + identifier + "%" + secret
+    static func setNewLoginInfo(userUID: String,
+                                identifier: String,
+                                secret: String,
+                                vendorName: String) {
+        
+        let info = userUID + "%" + identifier + "%" + secret + "%" + vendorName
         UserDefaults.standard.set(info, forKey: "loginInfo")
     }
     
-    static func fetchPreviousInfo() -> (userUID: String, identifier: String, secret: String)? {
+    static func fetchPreviousInfo() -> (userUID: String,
+                                        identifier: String,
+                                        secret: String,
+                                        vendorName: String)? {
+        
         guard let loginInfo = UserDefaults.standard.string(forKey: "loginInfo") else { return nil }
         let userUID = String(loginInfo.split(separator: "%")[0])
         let identifier = String(loginInfo.split(separator: "%")[1])
         let secret = String(loginInfo.split(separator: "%")[2])
-        return (userUID, identifier, secret)
+        let vendorName = String(loginInfo.split(separator: "%")[3])
+        return (userUID, identifier, secret, vendorName)
     }
     
     static func removeLoginInfo() {

@@ -82,7 +82,7 @@ final class ProductDetailViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        guard viewModel.productDetail?.vendorName == "wongbing" else { return } // vendorName 매직리터럴 해결
+        guard viewModel.productDetail?.vendorName == LoginCacheManager.fetchPreviousInfo()?.vendorName else { return }
         
         let rightBarButton = UIBarButtonItem(
             image: UIImage(systemName: "ellipsis"),

@@ -11,7 +11,7 @@ import FirebaseAuth
 import UIKit
 
 struct LoginViewModelActions {
-    let successLogin: (String, String, String) -> Void
+    let successLogin: (String, String, String, String) -> Void
     let createUserButtonTapped: () -> Void
 }
 
@@ -47,7 +47,8 @@ final class DefaultLoginViewModel: LoginViewModel {
             let userProfile = try await searchUserProfileUseCase.execute(othersUID: userUID)
             let identifier = userProfile.identifier
             let secret = userProfile.secret
-            actions?.successLogin(userUID, identifier, secret)
+            let vendorName = userProfile.vendorName
+            actions?.successLogin(userUID, identifier, secret, vendorName)
         }
     }
     
