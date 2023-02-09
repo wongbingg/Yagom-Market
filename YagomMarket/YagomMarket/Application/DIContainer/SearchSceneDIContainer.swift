@@ -66,6 +66,7 @@ final class SearchSceneDIContainer {
             searchUserProfileUseCase: makeSearchUserProfileUseCase(),
             handleLikedProductUseCase: makeHandleLikedProductUseCase(),
             handleChattingUseCase: makeHandleChattingUseCase(),
+            searchOthersUIDUseCase: makeSearchOthersUIDUseCase(),
             productId: productId
         )
     }
@@ -106,6 +107,11 @@ final class SearchSceneDIContainer {
             firestoreService: makeFirestoreService()
         )
     }
+    
+    func makeSearchOthersUIDUseCase() -> SearchOthersUIDUseCase {
+        return DefaultSearchOthersUIDUseCase(
+            firestoreService: makeOthersUIDFirestoreService()
+        )
     }
     
     func makeHandleChattingUseCase() -> HandleChattingUseCase {
@@ -126,6 +132,10 @@ final class SearchSceneDIContainer {
     
     func makeChattingFirestoreService() -> DefaultFirestoreService<Message> {
         return DefaultFirestoreService<Message>()
+    }
+    
+    func makeOthersUIDFirestoreService() -> DefaultFirestoreService<UserUID> {
+        return DefaultFirestoreService<UserUID>()
     }
     
     // MARK: - Search Flow Coordinator

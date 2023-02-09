@@ -59,6 +59,7 @@ final class HomeSceneDIContainer {
             searchUserProfileUseCase: makeSearchUserProfileUseCase(),
             handleLikedProductUseCase: makeHandleLikedProductUseCase(),
             handleChattingUseCase: makeHandleChattingUseCase(),
+            searchOthersUIDUseCase: makeSearchOthersUIDUseCase(),
             productId: productId)
     }
     
@@ -98,6 +99,11 @@ final class HomeSceneDIContainer {
             firestoreService: makeChattingFirestoreService()
         )
     }
+    
+    func makeSearchOthersUIDUseCase() -> SearchOthersUIDUseCase {
+        return DefaultSearchOthersUIDUseCase(
+            firestoreService: makeOthersUIDFirestoreService()
+        )
     }
     
     // MARK: - Repositories
@@ -117,6 +123,10 @@ final class HomeSceneDIContainer {
     
     func makeChattingFirestoreService() -> DefaultFirestoreService<Message> {
         return DefaultFirestoreService<Message>()
+    }
+    
+    func makeOthersUIDFirestoreService() -> DefaultFirestoreService<UserUID> {
+        return DefaultFirestoreService<UserUID>()
     }
     
     // MARK: - Home Flow Coordinator

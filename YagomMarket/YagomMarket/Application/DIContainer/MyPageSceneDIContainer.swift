@@ -59,6 +59,7 @@ final class MyPageSceneDIContainer {
             searchUserProfileUseCase: makeSearchUserProfileUseCase(),
             handleLikedProductUseCase: makeHandleLikedProductUseCase(),
             handleChattingUseCase: makeHandleChattingUseCase(),
+            searchOthersUIDUseCase: makeSearchOthersUIDUseCase(),
             productId: productId
         )
     }
@@ -82,6 +83,12 @@ final class MyPageSceneDIContainer {
     
     func makeHandleLikedProductUseCase() -> HandleLikedProductUseCase {
         return DefaultHandleLikedProductUseCase(
+            firestoreService: makeFirestoreService()
+        )
+    }
+    
+    func makeSearchOthersUIDUseCase() -> SearchOthersUIDUseCase {
+        return DefaultSearchOthersUIDUseCase(
             firestoreService: makeFirestoreService()
         )
     }
