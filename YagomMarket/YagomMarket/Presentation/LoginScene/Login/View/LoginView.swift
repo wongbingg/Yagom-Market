@@ -141,7 +141,6 @@ final class LoginView: UIView {
         radius: 30
     )
     
-    
     init() {
         super.init(frame: .zero)
         setupInitialView()
