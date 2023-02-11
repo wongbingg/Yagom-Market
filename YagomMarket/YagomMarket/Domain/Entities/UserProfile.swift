@@ -44,4 +44,18 @@ struct UserProfile: Entity {
                      likedProductIds: likedProductIds,
                      chattingUUIDList: chattingUUIDList)
     }
+    
+    static func stub(vendorName: String = "",
+                     email: String = "",
+                     identifier: String = "",
+                     secret: String = "",
+                     likedProductIds: [Int] = [],
+                     chattingUUIDList: [String] = []) -> UserProfile {
+        .init(vendorName: vendorName,
+              email: email,
+              identifier: identifier,
+              secret: secret,
+              likedProductIds: likedProductIds,
+              chattingUUIDList: chattingUUIDList)
+    }
 }
