@@ -10,6 +10,7 @@ import Foundation
 struct ProductDetailViewModelActions {
     let imageTapped: ([String], Int) -> Void
     let showEditView: (ProductDetail) -> Void
+    let showChattingDetail: (String) -> Void
 }
 
 protocol ProductDetailViewModelInput {
@@ -96,6 +97,8 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
             isAdded: true,
             othersUID: othersUID.userUID
         )
+        
+        actions?.showChattingDetail(chattingUUID) // test
     }
 
     @MainActor
