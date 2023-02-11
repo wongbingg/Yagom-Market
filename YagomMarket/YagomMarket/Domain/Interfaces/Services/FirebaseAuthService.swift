@@ -8,8 +8,8 @@
 import FirebaseAuth
 
 protocol FirebaseAuthService {
-    func createUser(email: String, password: String) async throws -> AuthDataResult
-    func logIn(email: String, password: String) async throws -> AuthDataResult
+    func createUser(email: String, password: String) async throws -> String
+    func logIn(email: String, password: String) async throws -> String
     func fetchUserUID() throws -> String
 }
 
