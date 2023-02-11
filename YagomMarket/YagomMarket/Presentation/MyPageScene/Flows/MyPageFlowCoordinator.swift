@@ -98,7 +98,8 @@ final class MyPageFlowCoordinator {
     private func cellTapped(at id: Int) {
         let actions = ProductDetailViewModelActions(
             imageTapped: imageTapped(imageURLs:currentPage:),
-            showEditView: showEditView(model:)
+            showEditView: showEditView(model:),
+            showChattingDetail: showChattingDetail
         )
         let detailVC = dependencies.makeProductDetailViewController(
             productId: id,
@@ -121,6 +122,10 @@ final class MyPageFlowCoordinator {
     
     private func showEditView(model: ProductDetail) {
         modalFlowCoordinator.presentRegisterVC(with: model)
+    }
+    
+    private func showChattingDetail(with chattingUUID: String) {
+        // TODO: 채팅 디테일뷰컨으로 이동
     }
 }
 
