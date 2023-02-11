@@ -12,10 +12,11 @@ final class ProductListViewModelTests: XCTestCase {
     var sut: ProductListViewModel!
 
     override func setUpWithError() throws {
-        let useCase = AddNextProductPageUseCaseMock()
         
         sut = DefaultProductListViewModel(
-            addNextProductPageUseCase: useCase
+            addNextProductPageUseCase: AddNextProductPageUseCaseMock(),
+            handleLikedProductUseCase: HandleLikedProductUseCaseMock(),
+            searchUserProfileUseCase: SearchUserProfileUseCaseMock()
         )
     }
 
@@ -31,7 +32,9 @@ final class ProductListViewModelTests: XCTestCase {
         useCase.hasNext = false
         
         sut = DefaultProductListViewModel(
-            addNextProductPageUseCase: useCase
+            addNextProductPageUseCase: useCase,
+            handleLikedProductUseCase: HandleLikedProductUseCaseMock(),
+            searchUserProfileUseCase: SearchUserProfileUseCaseMock()
         )
         
         // when
@@ -58,5 +61,4 @@ class AddNextProductPageUseCaseMock: AddNextProductPageUseCase {
     func resetToFirstPage() {
         hasNext = true
     }
-    
 }
