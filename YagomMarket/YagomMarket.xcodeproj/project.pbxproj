@@ -102,6 +102,9 @@
 		AFB0D8F92993E03A00A7AF8B /* SearchOthersUIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8F82993E03A00A7AF8B /* SearchOthersUIDUseCase.swift */; };
 		AFB0D8FB29947B2F00A7AF8B /* UserUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8FA29947B2F00A7AF8B /* UserUID.swift */; };
 		AFB0D8FD29947BF900A7AF8B /* RecordVendorNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8FC29947BF900A7AF8B /* RecordVendorNameUseCase.swift */; };
+		AFB0D8FF2994BD9B00A7AF8B /* ChattingDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D8FE2994BD9B00A7AF8B /* ChattingDetailViewModel.swift */; };
+		AFB0D9012994BDA800A7AF8B /* ChattingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D9002994BDA800A7AF8B /* ChattingDetailViewController.swift */; };
+		AFB0D9042994BE6900A7AF8B /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB0D9032994BE6900A7AF8B /* MessageCell.swift */; };
 		AFB4C3F92980089C00D6749E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AFB4C3F82980089C00D6749E /* FirebaseAuth */; };
 		AFB4C3FB2980089C00D6749E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AFB4C3FA2980089C00D6749E /* FirebaseFirestore */; };
 		AFB4C3FD29800A5900D6749E /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB4C3FC29800A5900D6749E /* UserProfile.swift */; };
@@ -256,6 +259,9 @@
 		AFB0D8F82993E03A00A7AF8B /* SearchOthersUIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOthersUIDUseCase.swift; sourceTree = "<group>"; };
 		AFB0D8FA29947B2F00A7AF8B /* UserUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUID.swift; sourceTree = "<group>"; };
 		AFB0D8FC29947BF900A7AF8B /* RecordVendorNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordVendorNameUseCase.swift; sourceTree = "<group>"; };
+		AFB0D8FE2994BD9B00A7AF8B /* ChattingDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingDetailViewModel.swift; sourceTree = "<group>"; };
+		AFB0D9002994BDA800A7AF8B /* ChattingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingDetailViewController.swift; sourceTree = "<group>"; };
+		AFB0D9032994BE6900A7AF8B /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		AFB4C3FC29800A5900D6749E /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		AFB7FFAC297FB514003290EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AFB7FFB4297FBB06003290EE /* FirebaseAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
@@ -404,7 +410,7 @@
 			children = (
 				AF5EEC2F297BFED000162DC9 /* Flows */,
 				AF5EEC2A297BFD5B00162DC9 /* ChattingList */,
-				AFA047CD2992966600145B23 /* ChatDetail */,
+				AFA047CD2992966600145B23 /* ChattingDetail */,
 			);
 			path = ChattingScene;
 			sourceTree = "<group>";
@@ -955,18 +961,19 @@
 			path = SearchScene;
 			sourceTree = "<group>";
 		};
-		AFA047CD2992966600145B23 /* ChatDetail */ = {
+		AFA047CD2992966600145B23 /* ChattingDetail */ = {
 			isa = PBXGroup;
 			children = (
 				AFA047CE299296B400145B23 /* ViewModel */,
 				AFA047CF299296B900145B23 /* View */,
 			);
-			path = ChatDetail;
+			path = ChattingDetail;
 			sourceTree = "<group>";
 		};
 		AFA047CE299296B400145B23 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				AFB0D8FE2994BD9B00A7AF8B /* ChattingDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -974,6 +981,8 @@
 		AFA047CF299296B900145B23 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AFB0D9002994BDA800A7AF8B /* ChattingDetailViewController.swift */,
+				AFB0D9022994BE6100A7AF8B /* Subviews */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -992,6 +1001,14 @@
 			isa = PBXGroup;
 			children = (
 				AFB0D8E829933A0500A7AF8B /* ChattingListCell.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		AFB0D9022994BE6100A7AF8B /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				AFB0D9032994BE6900A7AF8B /* MessageCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -1344,6 +1361,7 @@
 				AF5EEC39297C046100162DC9 /* MyPageFlowCoordinator.swift in Sources */,
 				AF160EC82934DFE80014C385 /* UIImageView+.swift in Sources */,
 				AFB0D8F32993753F00A7AF8B /* Message.swift in Sources */,
+				AFB0D8FF2994BD9B00A7AF8B /* ChattingDetailViewModel.swift in Sources */,
 				AFDD9A382944A287004D4DE1 /* ImageViewerViewController.swift in Sources */,
 				AF0166342976D9190083DDAD /* SearchFlowCoordinator.swift in Sources */,
 				AF717471292252000004FC02 /* ProductListResponseDTO+Mapping.swift in Sources */,
@@ -1375,10 +1393,12 @@
 				AF71746D292251510004FC02 /* SearchProductListAPI.swift in Sources */,
 				AFC44D4B2934855300B01142 /* TabBarController.swift in Sources */,
 				AFD41D732937230D008E36C0 /* DateCalculator.swift in Sources */,
+				AFB0D9042994BE6900A7AF8B /* MessageCell.swift in Sources */,
 				AFB0D8FD29947BF900A7AF8B /* RecordVendorNameUseCase.swift in Sources */,
 				AFCD3DFD297A40E600DC0154 /* ProductEditRequestDTO.swift in Sources */,
 				AF471C43297E686300A3ACD6 /* DefaultProductsRepository.swift in Sources */,
 				AFD9AB4C2923101F009A67AB /* ProductDetailResponseDTO+Mapping.swift in Sources */,
+				AFB0D9012994BDA800A7AF8B /* ChattingDetailViewController.swift in Sources */,
 				AF598F0329929BE600BC4FD6 /* ChattingListViewController.swift in Sources */,
 				AF6690EA2943242B002AC838 /* ImageCacheManager.swift in Sources */,
 				AFF9693F292EF555009AB014 /* EditProductAPI.swift in Sources */,
