@@ -11,15 +11,20 @@ import FirebaseAuth
 class FirebaseAuthServiceMock: FirebaseAuthService {
     var createUserCallCount = 0
     var signInCallCount = 0
+    var fetchUserUIDCallCount = 0
     
-    func createUser(email: String, password: String) async throws -> AuthDataResult? {
+    func createUser(email: String, password: String) async throws -> String {
         createUserCallCount += 1
-        return nil
+        return "userUID"
     }
     
-    func logIn(email: String, password: String) async throws -> AuthDataResult? {
+    func logIn(email: String, password: String) async throws -> String {
         signInCallCount += 1
-        
-        return nil
+        return "userUID"
+    }
+    
+    func fetchUserUID() throws -> String {
+        fetchUserUIDCallCount += 1
+        return "userUID"
     }
 }
