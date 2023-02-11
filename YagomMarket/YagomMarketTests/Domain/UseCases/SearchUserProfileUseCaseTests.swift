@@ -19,7 +19,7 @@ final class SearchUserProfileUseCaseTests: XCTestCase {
         let useCase = DefaultSearchUserProfileUseCase(firestoreService: firestoreService)
         
         // when
-        _ = try await useCase.execute()
+        _ = try await useCase.execute(othersUID: nil)
         
         // then
         XCTAssertEqual(expectationReadCallCount, firestoreService.readCallCount)
