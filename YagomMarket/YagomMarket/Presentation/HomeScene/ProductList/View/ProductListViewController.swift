@@ -110,7 +110,8 @@ final class ProductListViewController: UIViewController {
         guard let cell = sender.superview as? ProductGridCell else { return }
         Task {
             do {
-                try await viewModel.likeButtonTapped(id: cell.productId, isSelected: sender.isSelected)
+                try await viewModel.likeButtonTapped(id: cell.productId,
+                                                     isSelected: sender.isSelected)
             } catch let error as LocalizedError {
                 print(error.errorDescription ?? "\(#function) error")
             }
@@ -141,11 +142,14 @@ extension ProductListViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ProductGridCell else {
+        
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "Cell", for: indexPath) as? ProductGridCell else {
             return UICollectionViewCell()
         }
         let data = viewModel.productList[indexPath.row]
         let isLike = viewModel.userLikeList.contains(data.id)
+        
         cell.setupUIComponents(with: viewModel.productList[indexPath.row], isLike: isLike)
         cell.addTargetForLikeButton(#selector(likeButtonTapped), in: self)
         return cell

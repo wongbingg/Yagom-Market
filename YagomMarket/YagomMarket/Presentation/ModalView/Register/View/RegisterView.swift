@@ -98,7 +98,14 @@ final class RegisterView: UIView {
     }()
     
     private let accessoryView: UIView = {
-        let uiview = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 50))
+        let uiview = UIView(
+            frame: CGRect(
+                x: 0.0,
+                y: 0.0,
+                width: UIScreen.main.bounds.width,
+                height: 50
+            )
+        )
         uiview.layer.borderWidth = 1
         uiview.layer.borderColor = UIColor.systemGray6.cgColor
         uiview.layer.backgroundColor = UIColor.systemBackground.cgColor

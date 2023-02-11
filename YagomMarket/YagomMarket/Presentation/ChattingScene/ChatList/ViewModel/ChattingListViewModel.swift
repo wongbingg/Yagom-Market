@@ -27,9 +27,8 @@ final class DefaultChattingListViewModel: ChattingListViewModel {
     private let actions: ChattingListViewModelActions
     private let searchUserProfileUseCase: SearchUserProfileUseCase
     private let searchChattingUseCase: SearchChattingUseCase
-    private(set) var chattingCells: [ChattingCell] = [ChattingCell(buddyId: "123@naver.com", lastMessage: "안녕하세요"),
-                                                      ChattingCell(buddyId: "111@naver.com", lastMessage: "이거 얼마인가요"),
-                                                      ChattingCell(buddyId: "222@naver.com", lastMessage: "네고가능한가요")]
+    private(set) var chattingCells: [ChattingCell] = []
+    
     init(
         actions: ChattingListViewModelActions,
         searchUserProfileUseCase: SearchUserProfileUseCase,

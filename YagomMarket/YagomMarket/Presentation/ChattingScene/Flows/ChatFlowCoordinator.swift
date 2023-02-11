@@ -11,8 +11,12 @@ protocol ChatFlowCoordinatorDependencies: AnyObject {
     func makeChatViewController(actions: ChattingListViewModelActions) -> ChattingListViewController
     func makeRegisterViewController(model: ProductDetail?,
                                     actions: RegisterViewModelActions) -> RegisterViewController
-    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator
-    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator
+    
+    func makeModalFlowCoordinator(
+        navigationController: UINavigationController) -> ModalFlowCoordinator
+    
+    func makeSearchFlowCoordinator(
+        navigationController: UINavigationController) -> SearchFlowCoordinator
 }
 
 final class ChatFlowCoordinator {

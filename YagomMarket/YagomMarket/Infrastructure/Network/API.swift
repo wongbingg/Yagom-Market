@@ -15,12 +15,18 @@ protocol API {
 extension API {
     
     func execute(using client: APIClient = APIClient.shared) async throws -> ResponseType {
-        guard let urlRequest = configuration?.makeURLRequest() else { throw APIError.invalidURL }
+        
+        guard let urlRequest = configuration?.makeURLRequest() else {
+            throw APIError.invalidURL
+        }
         
         let data = try await client.requestData(with: urlRequest)
         
         if ResponseType.self == String.self {
-            guard let result = String(data: data, encoding: .utf8) else { throw APIError.failToEncoding }
+            
+            guard let result = String(data: data, encoding: .utf8) else {
+                throw APIError.failToEncoding
+            }
             return result as! Self.ResponseType
         }
         

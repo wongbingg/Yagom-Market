@@ -9,12 +9,18 @@ import UIKit
 
 protocol MyPageFlowCoordinatorDependencies: AnyObject {
     func makeMyPageViewController(actions: MyPageViewModelActions) -> MyPageViewController
+    
     func makeResultViewController(cells: [ProductCell],
                                   actions: ResultViewModelAction) -> ResultViewController
-    func makeProductDetailViewController(productId: Int,
-                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController
-    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator
-    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator
+    
+    func makeProductDetailViewController(
+        productId: Int,actions: ProductDetailViewModelActions) -> ProductDetailViewController
+    
+    func makeModalFlowCoordinator(
+        navigationController: UINavigationController) -> ModalFlowCoordinator
+    
+    func makeSearchFlowCoordinator(
+        navigationController: UINavigationController) -> SearchFlowCoordinator
 }
 
 final class MyPageFlowCoordinator {
@@ -102,7 +108,10 @@ final class MyPageFlowCoordinator {
     }
     
     private func imageTapped(imageURLs: [String], currentPage: Int) {
-        guard let productDetailVC = navigationController.topViewController as? ProductDetailViewController else { return }
+        
+        guard let productDetailVC = navigationController.topViewController as?
+                ProductDetailViewController else { return }
+        
         modalFlowCoordinator.presentImageViewerVC(
             imageURLs: imageURLs,
             currentPage: currentPage,

@@ -12,7 +12,9 @@ final class ChatSceneDIContainer {
     private let searchSceneDIContainer = SearchSceneDIContainer()
     
     // MARK: - Chat
-    func makeChatViewController(actions: ChattingListViewModelActions) -> ChattingListViewController {
+    func makeChatViewController(
+        actions: ChattingListViewModelActions) -> ChattingListViewController {
+            
         let viewModel = makeChatViewModel(actions: actions)
         return ChattingListViewController(with: viewModel)
     }
@@ -37,12 +39,14 @@ final class ChatSceneDIContainer {
 //    }
     
     // MARK: - Modal View
-    func makeRegisterViewController(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewController {
+    func makeRegisterViewController(model: ProductDetail?,
+                                    actions: RegisterViewModelActions) -> RegisterViewController {
         let viewModel = makeRegisterViewModel(model: model, actions: actions)
         return RegisterViewController(with: viewModel)
     }
     
-    func makeRegisterViewModel(model: ProductDetail?, actions: RegisterViewModelActions) -> RegisterViewModel {
+    func makeRegisterViewModel(model: ProductDetail?,
+                               actions: RegisterViewModelActions) -> RegisterViewModel {
         return DefaultRegisterViewModel(model: model, actions: actions)
     }
     
@@ -69,7 +73,8 @@ final class ChatSceneDIContainer {
     }
     
     // MARK: - Chat Flow Coordinator
-    func makeChatFlowCoordinator(navigationController: UINavigationController) -> ChatFlowCoordinator {
+    func makeChatFlowCoordinator(
+        navigationController: UINavigationController) -> ChatFlowCoordinator {
         
         return ChatFlowCoordinator(
             navigationController: navigationController,
@@ -78,13 +83,21 @@ final class ChatSceneDIContainer {
     }
 
     // MARK: - Search Flow Coordinator
-    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator {
-        return searchSceneDIContainer.makeSearchFlowCoordinator(navigationController: navigationController)
+    func makeSearchFlowCoordinator(
+        navigationController: UINavigationController) -> SearchFlowCoordinator {
+            
+        return searchSceneDIContainer.makeSearchFlowCoordinator(
+            navigationController: navigationController
+        )
     }
     
     // MARK: - Modal Flow Coordinator
-    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator {
-        return modalSceneDIContainer.makeModalFlowCoordinator(navigationController: navigationController)
+    func makeModalFlowCoordinator(
+        navigationController: UINavigationController) -> ModalFlowCoordinator {
+            
+        return modalSceneDIContainer.makeModalFlowCoordinator(
+            navigationController: navigationController
+        )
     }
 }
 

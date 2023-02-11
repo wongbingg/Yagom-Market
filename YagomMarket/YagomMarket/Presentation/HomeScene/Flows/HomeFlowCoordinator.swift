@@ -8,11 +8,18 @@
 import UIKit
 
 protocol HomeFlowCoordinatorDependencies: AnyObject {
-    func makeProductListViewController(actions: ProductListViewModelActions) -> ProductListViewController
-    func makeProductDetailViewController(productId: Int,
-                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController
-    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator
-    func makeSearchFlowCoordinator(navigationController: UINavigationController) -> SearchFlowCoordinator
+    func makeProductListViewController(
+        actions: ProductListViewModelActions) -> ProductListViewController
+    
+    func makeProductDetailViewController(
+        productId: Int,
+        actions: ProductDetailViewModelActions) -> ProductDetailViewController
+    
+    func makeModalFlowCoordinator(
+        navigationController: UINavigationController) -> ModalFlowCoordinator
+    
+    func makeSearchFlowCoordinator(
+        navigationController: UINavigationController) -> SearchFlowCoordinator
 }
 
 final class HomeFlowCoordinator {
@@ -70,7 +77,10 @@ final class HomeFlowCoordinator {
     }
     
     private func imageTapped(imageURLs: [String], currentPage: Int) {
-        guard let productDetailVC = navigationController.topViewController as? ProductDetailViewController else { return }
+        
+        guard let productDetailVC = navigationController.topViewController as?
+                ProductDetailViewController else { return }
+        
         self.modalFlowCoordinator.presentImageViewerVC(
             imageURLs: imageURLs,
             currentPage: currentPage,

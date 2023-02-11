@@ -231,7 +231,9 @@ extension RegisterViewController: PHPickerViewControllerDelegate {
 // MARK: - UIGestureRecognizerDelegate
 extension RegisterViewController: UIGestureRecognizerDelegate {
     
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldReceive touch: UITouch) -> Bool {
+        
         let position = touch.location(in: registerView)
         if registerView.addPhotoButton.bounds.contains(position) {
             guard registerView.isFullImages == false else {
