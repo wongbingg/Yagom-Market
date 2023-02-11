@@ -24,7 +24,7 @@ final class LoginViewModelTests: XCTestCase {
             createUserButtonTapped: createUserButtonTapped
         )
         
-        func successLogin(loginInfo: String) {
+        func successLogin(_ a: String, _ b: String, _ c: String, _ d: String) {
             successLoginCallCount += 1
         }
         
@@ -33,7 +33,11 @@ final class LoginViewModelTests: XCTestCase {
         }
 
         let useCase = LoginUseCaseMock()
-        sut = DefaultLoginViewModel(actions: viewModelActions, loginUseCase: useCase)
+        sut = DefaultLoginViewModel(
+            actions: viewModelActions,
+            loginUseCase: useCase,
+            searchUserProfileUseCase: SearchUserProfileUseCaseMock()
+        )
     }
     
     override func tearDownWithError() throws {
@@ -45,7 +49,11 @@ final class LoginViewModelTests: XCTestCase {
         // given
         let expectationError = LoginError.invalidEmail
         
-        let loginInfo = LoginInfo(id: "12", password: "123456", vendorName: "")
+        let loginInfo = LoginInfo(id: "12",
+                                  password: "123456",
+                                  vendorName: "",
+                                  identifier: "",
+                                  secret: "")
         
         // when
         do {
@@ -60,7 +68,11 @@ final class LoginViewModelTests: XCTestCase {
         // given
         let expectationError = LoginError.invalidPassword(number: 3)
         
-        let loginInfo = LoginInfo(id: "test@naver.com", password: "123", vendorName: "")
+        let loginInfo = LoginInfo(id: "test@naver.com",
+                                  password: "123",
+                                  vendorName: "",
+                                  identifier: "",
+                                  secret: "")
         
         // when
         do {
@@ -76,7 +88,11 @@ final class LoginViewModelTests: XCTestCase {
         let expectationSuccessLoginCallCount = 1
         let expectationCreateUserButtonTappedCallCount = 0
         
-        let loginInfo = LoginInfo(id: "test@naver.com", password: "123456", vendorName: "")
+        let loginInfo = LoginInfo(id: "test@naver.com",
+                                  password: "123456",
+                                  vendorName: "",
+                                  identifier: "",
+                                  secret: "")
         
         // when
         try await sut.loginButtonTapped(with: loginInfo)
@@ -103,7 +119,11 @@ final class LoginViewModelTests: XCTestCase {
         // given
         let expectationError = FirebaseAuthServiceError.failToLogin
 
-        let loginInfo = LoginInfo(id: "test@naver.com", password: "123456", vendorName: "invalid")
+        let loginInfo = LoginInfo(id: "test@naver.com",
+                                  password: "123456",
+                                  vendorName: "invalid",
+                                  identifier: "",
+                                  secret: "")
         
         // when
         do {
