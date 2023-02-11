@@ -38,7 +38,7 @@ final class ProductListViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         adoptTabBarDelegate()
         setupNavigationBar()
-        requestInitialData()
+//        requestInitialData()
     }
     
     // MARK: Methods
