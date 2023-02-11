@@ -19,10 +19,10 @@ final class DefaultLoginUseCase: LoginUseCase {
     }
     
     func execute(with loginInfo: LoginInfo) async throws -> String? {
-        let response = try await firebaseAuthService.logIn(
+        let userUID = try await firebaseAuthService.logIn(
             email: loginInfo.id,
             password: loginInfo.password
         )
-        return response.user.uid
+        return userUID
     }
 }
