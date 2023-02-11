@@ -80,12 +80,11 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     }
     
     func chattingButtonTapped() async throws {
-        guard let loginInfo = LoginCacheManager.fetchPreviousInfo(),
-              let vendorName = productDetail?.vendorName else { return }
         
-        try await checkValidUser(with: vendorName)
+        guard let vendorName = productDetail?.vendorName else { return }
+        
         let othersUID = try await searchOthersUIDUseCase.execute(with: vendorName)
-        let chattingUUID = loginInfo.userUID + "%" + othersUID.userUID + "%" + UUID().uuidString
+        let chattingUUID = UUID().uuidString
         
         try await handleChattingUseCase.execute(
             chattingUUID: chattingUUID,
@@ -98,11 +97,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
             othersUID: othersUID.userUID
         )
     }
-    
-    func checkValidUser(with vendorName: String) async throws {
-        let response = try await searchOthersUIDUseCase.execute(with: vendorName)
-    }
-    
+
     @MainActor
     func showEditView() async throws {
         guard let productDetail = productDetail else { return }
