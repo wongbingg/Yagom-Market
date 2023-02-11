@@ -48,7 +48,7 @@ final class ProductDetailViewController: UIViewController {
                 try await detailView.setupData(with: productDetail)
                 setupNavigationBar()
             } catch let error as LocalizedError {
-                print(error.errorDescription ?? "\(#function) error")
+                showErrorAlert(with: error.errorDescription ?? "\(#function) error")
             }
         }
     }
@@ -98,7 +98,7 @@ final class ProductDetailViewController: UIViewController {
             do {
                 try await viewModel.showEditView()
             } catch let error as LocalizedError {
-                print(error.errorDescription ?? "\(#function) - error")
+                showErrorAlert(with: error.errorDescription ?? "\(#function) error")
             }
         }
     }
@@ -109,7 +109,7 @@ final class ProductDetailViewController: UIViewController {
                 try await viewModel.deleteProduct()
                 // TODO: completion 처리 성공 얼럿 띄우기
             } catch let error as LocalizedError {
-                print(error.errorDescription ?? "\(#function) - error")
+                showErrorAlert(with: error.errorDescription ?? "\(#function) error")
             }
         }
     }
@@ -124,10 +124,23 @@ final class ProductDetailViewController: UIViewController {
             .showAlert(on: self)
     }
     
+    private func showErrorAlert(with errorMessage: String) {
+        DefaultAlertBuilder(
+            title: .error,
+            message: errorMessage
+        )
+        .setButton()
+        .showAlert(on: self)
+    }
+    
+    // MARK: @objc Methods
     @objc private func imageDidTapped(_ sender: UITouch) {
         let point = sender.location(in: view)
+        
         if detailView.imageStackView.bounds.contains(point) {
-            let currentPage = detailView.imageScrollView.contentOffset.x / UIScreen.main.bounds.maxX
+            let currentPage = detailView.imageScrollView.contentOffset.x /
+            UIScreen.main.bounds.maxX
+            
             guard let urls = viewModel.productDetail?.imageURLs else { return }
             viewModel.showImageViewer(imageURLs: urls, currentPage: Int(currentPage))
         }
@@ -152,7 +165,7 @@ final class ProductDetailViewController: UIViewController {
                 do {
                     try await viewModel.addLikeProduct()
                 } catch let error as LocalizedError {
-                    print(error.errorDescription ?? "\(#function) - error")
+                    showErrorAlert(with: error.errorDescription ?? "\(#function) error")
                 }
             }
         } else {
@@ -160,7 +173,7 @@ final class ProductDetailViewController: UIViewController {
                 do {
                     try await viewModel.deleteLikeProduct()
                 } catch let error as LocalizedError {
-                    print(error.errorDescription ?? "\(#function) - error")
+                    showErrorAlert(with: error.errorDescription ?? "\(#function) error")
                 }
             }
         }
@@ -171,11 +184,7 @@ final class ProductDetailViewController: UIViewController {
             do {
                 try await viewModel.chattingButtonTapped()
             } catch let error as LocalizedError {
-                DefaultAlertBuilder(
-                    message: error.errorDescription ?? "\(#function) error"
-                )
-                .setButton()
-                .showAlert(on: self)
+                showErrorAlert(with: error.errorDescription ?? "\(#function) error")
             }
         }
     }
