@@ -20,12 +20,16 @@ protocol HomeFlowCoordinatorDependencies: AnyObject {
     
     func makeSearchFlowCoordinator(
         navigationController: UINavigationController) -> SearchFlowCoordinator
+    
+    func makeChattingFlowCoordinator(
+        navigationController: UINavigationController) -> ChattingFlowCoordinator
 }
 
 final class HomeFlowCoordinator {
     private let userUID: String
     private let modalFlowCoordinator: ModalFlowCoordinator
     private let searchFlowCoordinator: SearchFlowCoordinator
+    private let chattingFlowCoordinator: ChattingFlowCoordinator
     private let navigationController: UINavigationController
     private let dependencies: HomeFlowCoordinatorDependencies
     
@@ -41,6 +45,9 @@ final class HomeFlowCoordinator {
             navigationController: navigationController
         )
         self.searchFlowCoordinator = dependencies.makeSearchFlowCoordinator(
+            navigationController: navigationController
+        )
+        self.chattingFlowCoordinator = dependencies.makeChattingFlowCoordinator(
             navigationController: navigationController
         )
     }
@@ -94,6 +101,8 @@ final class HomeFlowCoordinator {
     }
     
     private func showChattingDetail(with chattingUUID: String) {
-        // TODO: 채팅 디테일뷰컨으로 이동
+        self.chattingFlowCoordinator.chattingCellTapped(
+            chattingUUID: chattingUUID
+        )
     }
 }
