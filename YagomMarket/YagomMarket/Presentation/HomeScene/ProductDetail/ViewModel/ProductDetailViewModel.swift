@@ -38,6 +38,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     private let handleChattingUseCase: HandleChattingUseCase
     private let searchOthersUIDUseCase: SearchOthersUIDUseCase
     private let productId: Int
+    private var userProfile = UserProfile.stub()
     
     var productDetail: ProductDetail?
     
@@ -70,7 +71,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     }
     
     private func fetchIsLiked() async throws -> Bool {
-        let userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
+        userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
         let likedProductIds = userProfile.likedProductIds
         
         return likedProductIds.contains(productId)
@@ -83,13 +84,36 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     @MainActor
     func chattingButtonTapped() async throws {
         
-        guard let vendorName = productDetail?.vendorName,
-              let myVendorName = LoginCacheManager.fetchPreviousInfo()?.vendorName else {
+        guard let sellerVendorName = productDetail?.vendorName else {
             return
         }
         
-        let othersUID = try await searchOthersUIDUseCase.execute(with: vendorName)
-        let chattingUUID = "\(myVendorName)%\(vendorName)%" + UUID().uuidString
+        if let chattingUUID = findExistChatting(sellerVendorName: sellerVendorName) {
+            actions?.showChattingDetail(chattingUUID)
+        } else {
+            try await createNewChatting(with: sellerVendorName)
+        }
+    }
+    
+    private func findExistChatting(sellerVendorName: String) -> String? {
+        
+        let myVendorName = userProfile.vendorName
+        
+        for chattingUUID in userProfile.chattingUUIDList {
+            var splitedUUID = chattingUUID.split(separator: "%").map { String($0) }
+            _ = splitedUUID.popLast()
+            
+            if splitedUUID.contains(sellerVendorName) && splitedUUID.contains(myVendorName) {
+                return chattingUUID
+            }
+        }
+        return nil
+    }
+    
+    @MainActor
+    private func createNewChatting(with seller: String) async throws {
+        let chattingUUID = "\(userProfile.vendorName)%\(seller)%" + UUID().uuidString
+        let othersUID = try await searchOthersUIDUseCase.execute(with: seller)
         
         try await handleChattingUseCase.execute(
             chattingUUID: chattingUUID,
@@ -102,6 +126,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
             othersUID: othersUID.userUID
         )
         
+        userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
         actions?.showChattingDetail(chattingUUID)
     }
     
