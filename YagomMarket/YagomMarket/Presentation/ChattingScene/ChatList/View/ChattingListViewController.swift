@@ -107,7 +107,7 @@ extension ChattingListViewController: UITableViewDataSource, UITableViewDelegate
                    didSelectRowAt indexPath: IndexPath) {
         // TODO: 셀이 탭 되었을 때 액션정의
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.didSelectRowAt()
+        viewModel.didSelectRowAt(index: indexPath.row)
     }
 }
 

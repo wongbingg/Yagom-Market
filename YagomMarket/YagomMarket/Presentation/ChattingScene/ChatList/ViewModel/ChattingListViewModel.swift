@@ -8,13 +8,14 @@
 struct ChattingListViewModelActions {
     let registerTapSelected: () -> Void
     let searchTapSelected: () -> Void
+    let chattingCellTapped: (String) -> Void
 }
 
 protocol ChattingListViewModelInput {
     func fetchChattingList() async throws
     func searchTapSelected()
     func registerTapSelected()
-    func didSelectRowAt()
+    func didSelectRowAt(index: Int)
 }
 
 protocol ChattingListViewModelOutput {
@@ -27,6 +28,7 @@ final class DefaultChattingListViewModel: ChattingListViewModel {
     private let actions: ChattingListViewModelActions
     private let searchUserProfileUseCase: SearchUserProfileUseCase
     private let searchChattingUseCase: SearchChattingUseCase
+    private var userProfile: UserProfile = UserProfile.stub()
     private(set) var chattingCells: [ChattingCell] = []
     
     init(
@@ -41,7 +43,7 @@ final class DefaultChattingListViewModel: ChattingListViewModel {
     
     func fetchChattingList() async throws {
         var chattings = [ChattingCell]()
-        let userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
+        userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
         for chattingUUID in userProfile.chattingUUIDList {
             let buddyId = try await pickBuddyEmail(in: chattingUUID)
             let response = try await searchChattingUseCase.execute(with: chattingUUID)
@@ -51,8 +53,9 @@ final class DefaultChattingListViewModel: ChattingListViewModel {
         chattingCells = chattings
     }
     
-    func didSelectRowAt() {
-        
+    func didSelectRowAt(index: Int) {
+        let chattingUUID = userProfile.chattingUUIDList[index]
+        actions.chattingCellTapped(chattingUUID)
     }
     
     func searchTapSelected() {
