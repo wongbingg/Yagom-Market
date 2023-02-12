@@ -10,6 +10,7 @@ import UIKit
 final class HomeSceneDIContainer {
     private let modalSceneDIContainer = ModalSceneDIContainer()
     private let searchSceneDIContainer = SearchSceneDIContainer()
+    private let chattingSceneDIContainer = ChattingSceneDIContainer()
     
     // MARK: - Product List
     func makeProductListViewController(
@@ -96,7 +97,7 @@ final class HomeSceneDIContainer {
     
     func makeHandleChattingUseCase() -> HandleChattingUseCase {
         return DefaultHandleChattingUseCase(
-            firestoreService: makeChattingFirestoreService()
+            firestoreService: makeFirestoreService()
         )
     }
     
@@ -140,18 +141,25 @@ final class HomeSceneDIContainer {
     
     // MARK: - Search Flow Coordinator
     func makeSearchFlowCoordinator(
-        navigationController: UINavigationController
-    ) -> SearchFlowCoordinator {
+        navigationController: UINavigationController) -> SearchFlowCoordinator {
         
         return searchSceneDIContainer.makeSearchFlowCoordinator(
             navigationController: navigationController
         )
     }
     
+    // MARK: - Chatting Flow Coordinator
+    func makeChattingFlowCoordinator(
+        navigationController: UINavigationController) -> ChattingFlowCoordinator {
+        
+        return chattingSceneDIContainer.makeChattingFlowCoordinator(
+            navigationController: navigationController
+        )
+    }
+    
     // MARK: - Modal Flow Coordinator
     func makeModalFlowCoordinator(
-        navigationController: UINavigationController
-    ) -> ModalFlowCoordinator {
+        navigationController: UINavigationController) -> ModalFlowCoordinator {
         
         return modalSceneDIContainer.makeModalFlowCoordinator(
             navigationController: navigationController
