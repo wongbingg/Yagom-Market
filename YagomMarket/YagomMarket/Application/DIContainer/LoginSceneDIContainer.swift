@@ -54,11 +54,11 @@ final class LoginSceneDIContainer {
         )
         let searchVC = searchFlowCoordinator.generate()
         
-        let chatSceneDIContainer = appDIContainer.makeChatSceneDIContainer()
-        let chatFlowCoordinator = chatSceneDIContainer.makeChatFlowCoordinator(
+        let chattingSceneDIContainer = appDIContainer.makeChattingSceneDIContainer()
+        let chattingFlowCoordinator = chattingSceneDIContainer.makeChattingFlowCoordinator(
             navigationController: navigationController
         )
-        let chatVC = chatFlowCoordinator.generate()
+        let chatVC = chattingFlowCoordinator.generate()
         
         let myPageSceneDIContainer = appDIContainer.makeMyPageSceneDIContainer()
         let myPageFlowCoordinator = myPageSceneDIContainer.makeMyPageFlowCoordinator(

@@ -1,5 +1,5 @@
 //
-//  ChatFlowCoordinator.swift
+//  ChattingFlowCoordinator.swift
 //  YagomMarket
 //
 //  Created by 이원빈 on 2023/01/21.
@@ -7,10 +7,16 @@
 
 import UIKit
 
-protocol ChatFlowCoordinatorDependencies: AnyObject {
-    func makeChatViewController(actions: ChattingListViewModelActions) -> ChattingListViewController
-    func makeRegisterViewController(model: ProductDetail?,
-                                    actions: RegisterViewModelActions) -> RegisterViewController
+protocol ChattingFlowCoordinatorDependencies: AnyObject {
+    func makeChattingListViewController(
+        actions: ChattingListViewModelActions) -> ChattingListViewController
+    
+    func makeChattingDetailViewController(
+        chattingUUID: String) -> ChattingDetailViewController
+    
+    func makeRegisterViewController(
+        model: ProductDetail?,
+        actions: RegisterViewModelActions) -> RegisterViewController
     
     func makeModalFlowCoordinator(
         navigationController: UINavigationController) -> ModalFlowCoordinator
@@ -19,15 +25,15 @@ protocol ChatFlowCoordinatorDependencies: AnyObject {
         navigationController: UINavigationController) -> SearchFlowCoordinator
 }
 
-final class ChatFlowCoordinator {
+final class ChattingFlowCoordinator {
     private let modalFlowCoordinator: ModalFlowCoordinator
     private let searchFlowCoordinator: SearchFlowCoordinator
     private let navigationController: UINavigationController
-    private let dependencies: ChatFlowCoordinatorDependencies
+    private let dependencies: ChattingFlowCoordinatorDependencies
     
     init(
         navigationController: UINavigationController,
-        dependencies: ChatFlowCoordinatorDependencies
+        dependencies: ChattingFlowCoordinatorDependencies
     ) {
         self.navigationController = navigationController
         self.dependencies = dependencies
@@ -42,10 +48,11 @@ final class ChatFlowCoordinator {
     func generate() -> ChattingListViewController {
         let actions = ChattingListViewModelActions(
             registerTapSelected: registerTapSelected,
-            searchTapSelected: searchTapSelected
+            searchTapSelected: searchTapSelected,
+            chattingCellTapped: chattingCellTapped
         )
-        let chatVC = dependencies.makeChatViewController(actions: actions)
-        return chatVC
+        let chattingListVC = dependencies.makeChattingListViewController(actions: actions)
+        return chattingListVC
     }
     
     // MARK: View Transition
@@ -55,5 +62,12 @@ final class ChatFlowCoordinator {
     
     func searchTapSelected() {
         searchFlowCoordinator.start()
+    }
+    
+    func chattingCellTapped(chattingUUID: String) {
+        let chattingDetailVC = dependencies.makeChattingDetailViewController(
+            chattingUUID: chattingUUID
+        )
+        navigationController.pushViewController(chattingDetailVC, animated: true)
     }
 }

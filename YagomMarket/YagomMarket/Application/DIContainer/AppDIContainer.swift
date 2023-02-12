@@ -22,8 +22,8 @@ final class AppDIContainer {
         return SearchSceneDIContainer()
     }
     
-    func makeChatSceneDIContainer() -> ChatSceneDIContainer {
-        return ChatSceneDIContainer()
+    func makeChattingSceneDIContainer() -> ChattingSceneDIContainer {
+        return ChattingSceneDIContainer()
     }
     
     func makeMyPageSceneDIContainer() -> MyPageSceneDIContainer {

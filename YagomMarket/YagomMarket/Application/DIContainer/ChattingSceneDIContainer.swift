@@ -1,5 +1,5 @@
 //
-//  ChatSceneDIContainer.swift
+//  ChattingSceneDIContainer.swift
 //  YagomMarket
 //
 //  Created by 이원빈 on 2023/01/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ChatSceneDIContainer {
+final class ChattingSceneDIContainer {
     private let modalSceneDIContainer = ModalSceneDIContainer()
     private let searchSceneDIContainer = SearchSceneDIContainer()
     
@@ -36,7 +36,8 @@ final class ChatSceneDIContainer {
     func makeChattingDetailViewModel(chattingUUID: String) -> ChattingDetailViewModel {
         return DefaultChattingDetailViewModel(
             chattingUUID: chattingUUID,
-            searchChattingUseCase: makeSearchChattingUseCase()
+            searchChattingUseCase: makeSearchChattingUseCase(),
+            sendMessageUseCase: makeSendMessageUseCase()
         )
     }
     
@@ -65,6 +66,12 @@ final class ChatSceneDIContainer {
         )
     }
     
+    func makeSendMessageUseCase() -> SendMessageUseCase {
+        return DefaultSendMessageUseCase(
+            firestoreService: makeMessageFirestoreService()
+        )
+    }
+    
     // MARK: - Services
     func makeUserProfileFirestoreService() -> DefaultFirestoreService<UserProfile> {
         return DefaultFirestoreService<UserProfile>()
@@ -74,11 +81,11 @@ final class ChatSceneDIContainer {
         return DefaultFirestoreService<Message>()
     }
     
-    // MARK: - Chat Flow Coordinator
-    func makeChatFlowCoordinator(
-        navigationController: UINavigationController) -> ChatFlowCoordinator {
+    // MARK: - Chatting Flow Coordinator
+    func makeChattingFlowCoordinator(
+        navigationController: UINavigationController) -> ChattingFlowCoordinator {
         
-        return ChatFlowCoordinator(
+        return ChattingFlowCoordinator(
             navigationController: navigationController,
             dependencies: self
         )
@@ -103,4 +110,4 @@ final class ChatSceneDIContainer {
     }
 }
 
-extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {}
+extension ChattingSceneDIContainer: ChattingFlowCoordinatorDependencies {}
