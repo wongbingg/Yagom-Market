@@ -80,12 +80,16 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         try await deleteProductUseCase.execute(productId: productId)
     }
     
+    @MainActor
     func chattingButtonTapped() async throws {
         
-        guard let vendorName = productDetail?.vendorName else { return }
+        guard let vendorName = productDetail?.vendorName,
+              let myVendorName = LoginCacheManager.fetchPreviousInfo()?.vendorName else {
+            return
+        }
         
         let othersUID = try await searchOthersUIDUseCase.execute(with: vendorName)
-        let chattingUUID = UUID().uuidString
+        let chattingUUID = "\(myVendorName)%\(vendorName)%" + UUID().uuidString
         
         try await handleChattingUseCase.execute(
             chattingUUID: chattingUUID,
@@ -98,9 +102,9 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
             othersUID: othersUID.userUID
         )
         
-        actions?.showChattingDetail(chattingUUID) // test
+        actions?.showChattingDetail(chattingUUID)
     }
-
+    
     @MainActor
     func showEditView() async throws {
         guard let productDetail = productDetail else { return }

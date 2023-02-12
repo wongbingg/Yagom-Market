@@ -10,6 +10,7 @@ import UIKit
 final class ProductListViewController: UIViewController {
     // MARK: Properties
     private let viewModel: ProductListViewModel
+    
     private let collectionView = ProductCollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
