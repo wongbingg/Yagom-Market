@@ -9,11 +9,10 @@ import Foundation
 
 protocol ChattingDetailViewModelInput {
     func fetchMessages() async throws
-    func sendMessage(message: Message) async throws
+    func sendMessage(body: String) async throws
 }
 
 protocol ChattingDetailViewModelOutput {
-    var testModel: [Message] { get }
     var messages: [Message] { get }
 }
 
@@ -22,22 +21,6 @@ protocol ChattingDetailViewModel: ChattingDetailViewModelInput, ChattingDetailVi
 final class DefaultChattingDetailViewModel: ChattingDetailViewModel {
     private(set) var messages: [Message] = []
     private let chattingUUID: String
-    var testModel = [Message(body: "안녕하세요", sender: "bory", time: ""),
-                     Message(body: "네 안녕하세요", sender: "derrick", time: ""),
-                     Message(body: "물건관심있어 연락드려요", sender: "bory", time: ""),
-                     Message(body: "네 얼마 생각하세요?", sender: "derrick", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: ""),
-                     Message(body: "공짜여", sender: "bory", time: "")]
     
     private let searchChattingUseCase: SearchChattingUseCase
     private let sendMessageUseCase: SendMessageUseCase
@@ -56,11 +39,20 @@ final class DefaultChattingDetailViewModel: ChattingDetailViewModel {
         messages = try await searchChattingUseCase.execute(with: chattingUUID)
     }
     
-    func sendMessage(message: Message) async throws {
+    func sendMessage(body: String) async throws {
+        
+        guard let vendorName = LoginCacheManager.fetchPreviousInfo()?.vendorName else {
+            return
+        }
+        let message = Message(
+            body: body,
+            sender: vendorName,
+            time: DateCalculator.shared.currentTime()
+        )
         try await sendMessageUseCase.execute(
             chattingUUID: chattingUUID,
             message: message
         )
+        try await fetchMessages()
     }
-    
 }
