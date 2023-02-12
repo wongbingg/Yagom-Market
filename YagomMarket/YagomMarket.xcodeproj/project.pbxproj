@@ -54,6 +54,7 @@
 		AF471C45297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C44297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift */; };
 		AF471C49297E76DB00A3ACD6 /* DeleteProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C48297E76DB00A3ACD6 /* DeleteProductUseCase.swift */; };
 		AF471C4B297E779900A3ACD6 /* FetchProductDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C4A297E779900A3ACD6 /* FetchProductDetailUseCase.swift */; };
+		AF56AB132998E2A60033CD3F /* SendMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF56AB122998E2A60033CD3F /* SendMessageUseCase.swift */; };
 		AF598F0329929BE600BC4FD6 /* ChattingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF598F0229929BE600BC4FD6 /* ChattingListViewController.swift */; };
 		AF598F0529929BF800BC4FD6 /* ChattingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF598F0429929BF800BC4FD6 /* ChattingListViewModel.swift */; };
 		AF598F0729929C2200BC4FD6 /* ChattingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF598F0629929C2200BC4FD6 /* ChattingListView.swift */; };
@@ -64,8 +65,8 @@
 		AF5BB77B292210E20013BFC1 /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5BB77A292210E20013BFC1 /* ProductListViewController.swift */; };
 		AF5BB780292210E30013BFC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF5BB77F292210E30013BFC1 /* Assets.xcassets */; };
 		AF5BB783292210E30013BFC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF5BB781292210E30013BFC1 /* LaunchScreen.storyboard */; };
-		AF5EEC2E297BFE5000162DC9 /* ChatSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EEC2D297BFE5000162DC9 /* ChatSceneDIContainer.swift */; };
-		AF5EEC31297BFEE100162DC9 /* ChatFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EEC30297BFEE100162DC9 /* ChatFlowCoordinator.swift */; };
+		AF5EEC2E297BFE5000162DC9 /* ChattingSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EEC2D297BFE5000162DC9 /* ChattingSceneDIContainer.swift */; };
+		AF5EEC31297BFEE100162DC9 /* ChattingFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EEC30297BFEE100162DC9 /* ChattingFlowCoordinator.swift */; };
 		AF5EEC37297C042C00162DC9 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EEC36297C042C00162DC9 /* MyPageViewModel.swift */; };
 		AF5EEC39297C046100162DC9 /* MyPageFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EEC38297C046100162DC9 /* MyPageFlowCoordinator.swift */; };
 		AF5EEC3B297C04A200162DC9 /* MyPageSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EEC3A297C04A200162DC9 /* MyPageSceneDIContainer.swift */; };
@@ -208,6 +209,7 @@
 		AF471C44297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNextProductPageUseCase.swift; sourceTree = "<group>"; };
 		AF471C48297E76DB00A3ACD6 /* DeleteProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductUseCase.swift; sourceTree = "<group>"; };
 		AF471C4A297E779900A3ACD6 /* FetchProductDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProductDetailUseCase.swift; sourceTree = "<group>"; };
+		AF56AB122998E2A60033CD3F /* SendMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageUseCase.swift; sourceTree = "<group>"; };
 		AF598F0229929BE600BC4FD6 /* ChattingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChattingListViewController.swift; path = YagomMarket/Presentation/ChattingScene/ChatList/View/ChattingListViewController.swift; sourceTree = SOURCE_ROOT; };
 		AF598F0429929BF800BC4FD6 /* ChattingListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChattingListViewModel.swift; path = YagomMarket/Presentation/ChattingScene/ChatList/ViewModel/ChattingListViewModel.swift; sourceTree = SOURCE_ROOT; };
 		AF598F0629929C2200BC4FD6 /* ChattingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChattingListView.swift; path = YagomMarket/Presentation/ChattingScene/ChatList/View/ChattingListView.swift; sourceTree = SOURCE_ROOT; };
@@ -220,8 +222,8 @@
 		AF5BB77F292210E30013BFC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF5BB782292210E30013BFC1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AF5BB784292210E30013BFC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AF5EEC2D297BFE5000162DC9 /* ChatSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSceneDIContainer.swift; sourceTree = "<group>"; };
-		AF5EEC30297BFEE100162DC9 /* ChatFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFlowCoordinator.swift; sourceTree = "<group>"; };
+		AF5EEC2D297BFE5000162DC9 /* ChattingSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingSceneDIContainer.swift; sourceTree = "<group>"; };
+		AF5EEC30297BFEE100162DC9 /* ChattingFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingFlowCoordinator.swift; sourceTree = "<group>"; };
 		AF5EEC36297C042C00162DC9 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		AF5EEC38297C046100162DC9 /* MyPageFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageFlowCoordinator.swift; sourceTree = "<group>"; };
 		AF5EEC3A297C04A200162DC9 /* MyPageSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageSceneDIContainer.swift; sourceTree = "<group>"; };
@@ -343,7 +345,7 @@
 				AF01660B2976BCBC0083DDAD /* LoginSceneDIContainer.swift */,
 				AF01660D2976BCC90083DDAD /* HomeSceneDIContainer.swift */,
 				AF0166372976DA830083DDAD /* SearchSceneDIContainer.swift */,
-				AF5EEC2D297BFE5000162DC9 /* ChatSceneDIContainer.swift */,
+				AF5EEC2D297BFE5000162DC9 /* ChattingSceneDIContainer.swift */,
 				AF5EEC3A297C04A200162DC9 /* MyPageSceneDIContainer.swift */,
 				AF5A3D13299112C900A4A79F /* SubDIContainer */,
 			);
@@ -467,6 +469,7 @@
 				AF3295ED2982200500BCA1AA /* SearchQueryResultsUseCase.swift */,
 				AF465E17298AA1730071A0F3 /* HandleLikedProductUseCase.swift */,
 				AFB0D8F62993929300A7AF8B /* HandleChattingUseCase.swift */,
+				AF56AB122998E2A60033CD3F /* SendMessageUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -868,7 +871,7 @@
 		AF5EEC2F297BFED000162DC9 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				AF5EEC30297BFEE100162DC9 /* ChatFlowCoordinator.swift */,
+				AF5EEC30297BFEE100162DC9 /* ChattingFlowCoordinator.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -1298,7 +1301,7 @@
 			files = (
 				AF9BCC0C2980FFED003218D9 /* ImageViewerPresentationController.swift in Sources */,
 				AF471C4B297E779900A3ACD6 /* FetchProductDetailUseCase.swift in Sources */,
-				AF5EEC31297BFEE100162DC9 /* ChatFlowCoordinator.swift in Sources */,
+				AF5EEC31297BFEE100162DC9 /* ChattingFlowCoordinator.swift in Sources */,
 				AF0166282976C1D50083DDAD /* UITextField+.swift in Sources */,
 				AFC44D4F29348CD600B01142 /* SearchViewController.swift in Sources */,
 				AFD9AB4A29231000009A67AB /* SearchProductDetailAPI.swift in Sources */,
@@ -1334,7 +1337,7 @@
 				AF01D3822990ED2C00ACACB1 /* RegisterProductUseCase.swift in Sources */,
 				AFB7FFBF297FC4DC003290EE /* LoginUseCase.swift in Sources */,
 				AFCD3DF9297A39A000DC0154 /* ProductPostRequestDTO.swift in Sources */,
-				AF5EEC2E297BFE5000162DC9 /* ChatSceneDIContainer.swift in Sources */,
+				AF5EEC2E297BFE5000162DC9 /* ChattingSceneDIContainer.swift in Sources */,
 				AF01662A2976C20C0083DDAD /* LoginInfo.swift in Sources */,
 				AF5BB777292210E20013BFC1 /* AppDelegate.swift in Sources */,
 				AF5BB779292210E20013BFC1 /* SceneDelegate.swift in Sources */,
@@ -1364,6 +1367,7 @@
 				AFB0D8FF2994BD9B00A7AF8B /* ChattingDetailViewModel.swift in Sources */,
 				AFDD9A382944A287004D4DE1 /* ImageViewerViewController.swift in Sources */,
 				AF0166342976D9190083DDAD /* SearchFlowCoordinator.swift in Sources */,
+				AF56AB132998E2A60033CD3F /* SendMessageUseCase.swift in Sources */,
 				AF717471292252000004FC02 /* ProductListResponseDTO+Mapping.swift in Sources */,
 				AF0166302976C2EA0083DDAD /* LoginCacheManager.swift in Sources */,
 				AF0166362976D9B20083DDAD /* SearchViewModel.swift in Sources */,
