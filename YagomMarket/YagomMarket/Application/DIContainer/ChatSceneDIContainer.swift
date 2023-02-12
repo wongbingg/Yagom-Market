@@ -11,8 +11,8 @@ final class ChatSceneDIContainer {
     private let modalSceneDIContainer = ModalSceneDIContainer()
     private let searchSceneDIContainer = SearchSceneDIContainer()
     
-    // MARK: - Chat
-    func makeChatViewController(
+    // MARK: - Chatting List
+    func makeChattingListViewController(
         actions: ChattingListViewModelActions) -> ChattingListViewController {
             
         let viewModel = makeChatViewModel(actions: actions)
@@ -27,16 +27,18 @@ final class ChatSceneDIContainer {
         )
     }
     
-    // MARK: - Chat Detail
-//    func makeProductDetailViewController(productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewController {
-//        let viewModel = makeProductDetailViewModel(productId: productId, actions: actions)
-//        return ProductDetailViewController(viewModel: viewModel)
-//    }
-//
-//    func makeProductDetailViewModel(productId: Int,
-//                                    actions: ProductDetailViewModelActions) -> ProductDetailViewModel {
-//        return DefaultProductDetailViewModel(actions: actions, productId: productId)
-//    }
+    // MARK: - Chatting Detail
+    func makeChattingDetailViewController(chattingUUID: String) -> ChattingDetailViewController {
+        let viewModel = makeChattingDetailViewModel(chattingUUID: chattingUUID)
+        return ChattingDetailViewController(viewModel: viewModel)
+    }
+
+    func makeChattingDetailViewModel(chattingUUID: String) -> ChattingDetailViewModel {
+        return DefaultChattingDetailViewModel(
+            chattingUUID: chattingUUID,
+            searchChattingUseCase: makeSearchChattingUseCase()
+        )
+    }
     
     // MARK: - Modal View
     func makeRegisterViewController(model: ProductDetail?,
