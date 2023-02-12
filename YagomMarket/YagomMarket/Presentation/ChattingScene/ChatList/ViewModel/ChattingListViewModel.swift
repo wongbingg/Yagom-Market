@@ -45,7 +45,7 @@ final class DefaultChattingListViewModel: ChattingListViewModel {
         var chattings = [ChattingCell]()
         userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
         for chattingUUID in userProfile.chattingUUIDList {
-            let buddyId = try await pickBuddyEmail(in: chattingUUID)
+            let buddyId = try await picksellerVendorName(in: chattingUUID)
             let response = try await searchChattingUseCase.execute(with: chattingUUID)
             let lastMessage = response.last?.body ?? "대화가 없습니다."
             chattings.append(ChattingCell(buddyId: buddyId, lastMessage: lastMessage))
@@ -66,14 +66,11 @@ final class DefaultChattingListViewModel: ChattingListViewModel {
         actions.registerTapSelected()
     }
     
-    private func pickBuddyEmail(in chattingUUID: String) async throws -> String {
-        // buddyUID%userUID%UUID
+    private func picksellerVendorName(in chattingUUID: String) async throws -> String {
         var uuidArr = chattingUUID.split(separator: "%")
         uuidArr.removeLast()
-        let myUID = LoginCacheManager.fetchPreviousInfo()!.userUID
-        let buddyUID = String(uuidArr.filter { $0 != myUID }[0])
-        let buddyProfile = try await searchUserProfileUseCase.execute(othersUID: buddyUID)
-        let buddyEmail = buddyProfile.email
-        return buddyEmail
+        let myVendorName = LoginCacheManager.fetchPreviousInfo()!.vendorName
+        let sellerVendorName = String(uuidArr.filter { $0 != myVendorName }[0])
+        return sellerVendorName
     }
 }

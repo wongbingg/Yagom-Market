@@ -13,6 +13,8 @@ final class ChattingListCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 8, left: 10, bottom: 5, right: 0)
         return stackView
     }()
     
@@ -57,7 +59,6 @@ final class ChattingListCell: UITableViewCell {
     func setupData(with model: ChattingCell) {
         titleLabel.text = model.buddyId
         subTitleLabel.text = model.lastMessage
-        
     }
 }
 

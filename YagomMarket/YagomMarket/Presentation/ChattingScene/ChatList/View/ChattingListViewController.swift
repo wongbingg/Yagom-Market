@@ -35,6 +35,7 @@ final class ChattingListViewController: UIViewController {
         setupNavigationBar()
         setupTabBar()
         adoptTabBarDelegate()
+        setupInitialData()
     }
     
     // MARK: Methods
