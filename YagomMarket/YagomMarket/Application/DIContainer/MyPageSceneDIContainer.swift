@@ -44,14 +44,16 @@ final class MyPageSceneDIContainer {
     }
     
     // MARK: - Product Detail
-    func makeProductDetailViewController(productId: Int,
-                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController {
+    func makeProductDetailViewController(
+        productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewController {
+            
         let viewModel = makeProductDetailViewModel(productId: productId, actions: actions)
-        return ProductDetailViewController(viewModel: viewModel )
+        return ProductDetailViewController(viewModel: viewModel)
     }
     
-    func makeProductDetailViewModel(productId: Int,
-                                    actions: ProductDetailViewModelActions) -> ProductDetailViewModel {
+    func makeProductDetailViewModel(
+        productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewModel {
+            
         return DefaultProductDetailViewModel(
             actions: actions,
             deleteProductUseCase: makeDeleteProductUseCase(),
