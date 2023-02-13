@@ -46,7 +46,7 @@ final class DefaultMyPageViewModel: MyPageViewModel {
     
     func fetchVendorName() async throws -> String {
         do {
-            let userProfile = try await searchUserProfileUseCase.execute()
+            let userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
             return userProfile.vendorName
         } catch {
             print(error.localizedDescription)
@@ -68,7 +68,7 @@ final class DefaultMyPageViewModel: MyPageViewModel {
     
     @MainActor
     func likedListCellTapped() async throws {
-        let userProfile = try await searchUserProfileUseCase.execute()
+        let userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
         let ids = userProfile.likedProductIds
         var productCells = [ProductCell]()
         for id in ids {
@@ -81,7 +81,7 @@ final class DefaultMyPageViewModel: MyPageViewModel {
     
     @MainActor
     func myProductListCellTapped() async throws {
-        let userProfile = try await searchUserProfileUseCase.execute()
+        let userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
         let searchKeyword = userProfile.vendorName
         let response = try await searchQueryResultsUseCase.execute(keyword: searchKeyword)
         actions.myProductListCellTapped(response.toDomain())

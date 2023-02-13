@@ -8,11 +8,14 @@
 import UIKit
 
 protocol ModalFlowCoordinatorDependencies {
+    
     func makeRegisterViewController(model: ProductDetail?,
                                     actions: RegisterViewModelActions) -> RegisterViewController
-    func makeImageViewerController(imageURLs: [String],
-                                   currentPage: Int,
-                                   delegate: ImageViewerViewControllerDelegate) -> ImageViewerViewController
+    
+    func makeImageViewerController(
+        imageURLs: [String],
+        currentPage: Int,
+        delegate: ImageViewerViewControllerDelegate) -> ImageViewerViewController
 }
 
 final class ModalFlowCoordinator {

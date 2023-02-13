@@ -34,4 +34,8 @@ final class DateCalculator {
             return "\(distanceDay/30)달 전"
         }
     }
+    
+    func currentTime() -> String {
+        return dateFormatter.string(from: Date())
+    }
 }

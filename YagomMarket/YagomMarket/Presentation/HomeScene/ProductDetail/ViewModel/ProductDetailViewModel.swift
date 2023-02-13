@@ -10,6 +10,7 @@ import Foundation
 struct ProductDetailViewModelActions {
     let imageTapped: ([String], Int) -> Void
     let showEditView: (ProductDetail) -> Void
+    let showChattingDetail: (String) -> Void
 }
 
 protocol ProductDetailViewModelInput {
@@ -19,6 +20,7 @@ protocol ProductDetailViewModelInput {
     func showImageViewer(imageURLs: [String], currentPage: Int)
     func addLikeProduct() async throws
     func deleteLikeProduct() async throws
+    func chattingButtonTapped() async throws
 }
 
 protocol ProductDetailViewModelOutput {
@@ -33,7 +35,10 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     private let fetchProductDetailUseCase: FetchProductDetailUseCase
     private let searchUserProfileUseCase: SearchUserProfileUseCase
     private let handleLikedProductUseCase: HandleLikedProductUseCase
+    private let handleChattingUseCase: HandleChattingUseCase
+    private let searchOthersUIDUseCase: SearchOthersUIDUseCase
     private let productId: Int
+    private var userProfile = UserProfile.stub()
     
     var productDetail: ProductDetail?
     
@@ -43,6 +48,8 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         fetchProductDetailUseCase: FetchProductDetailUseCase,
         searchUserProfileUseCase: SearchUserProfileUseCase,
         handleLikedProductUseCase: HandleLikedProductUseCase,
+        handleChattingUseCase: HandleChattingUseCase,
+        searchOthersUIDUseCase: SearchOthersUIDUseCase,
         productId: Int
     ) {
         self.actions = actions
@@ -50,6 +57,8 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
         self.fetchProductDetailUseCase = fetchProductDetailUseCase
         self.searchUserProfileUseCase = searchUserProfileUseCase
         self.handleLikedProductUseCase = handleLikedProductUseCase
+        self.handleChattingUseCase = handleChattingUseCase
+        self.searchOthersUIDUseCase = searchOthersUIDUseCase
         self.productId = productId
     }
     
@@ -62,7 +71,7 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     }
     
     private func fetchIsLiked() async throws -> Bool {
-        let userProfile = try await searchUserProfileUseCase.execute()
+        userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
         let likedProductIds = userProfile.likedProductIds
         
         return likedProductIds.contains(productId)
@@ -70,6 +79,55 @@ final class DefaultProductDetailViewModel: ProductDetailViewModel {
     
     func deleteProduct() async throws {
         try await deleteProductUseCase.execute(productId: productId)
+    }
+    
+    @MainActor
+    func chattingButtonTapped() async throws {
+        
+        guard let sellerVendorName = productDetail?.vendorName else {
+            return
+        }
+        
+        if let chattingUUID = findExistChatting(sellerVendorName: sellerVendorName) {
+            actions?.showChattingDetail(chattingUUID)
+        } else {
+            try await createNewChatting(with: sellerVendorName)
+        }
+    }
+    
+    private func findExistChatting(sellerVendorName: String) -> String? {
+        
+        let myVendorName = userProfile.vendorName
+        
+        for chattingUUID in userProfile.chattingUUIDList {
+            var splitedUUID = chattingUUID.split(separator: "%").map { String($0) }
+            _ = splitedUUID.popLast()
+            
+            if splitedUUID.contains(sellerVendorName) && splitedUUID.contains(myVendorName) {
+                return chattingUUID
+            }
+        }
+        return nil
+    }
+    
+    @MainActor
+    private func createNewChatting(with seller: String) async throws {
+        let chattingUUID = "\(userProfile.vendorName)%\(seller)%" + UUID().uuidString
+        let othersUID = try await searchOthersUIDUseCase.execute(with: seller)
+        
+        try await handleChattingUseCase.execute(
+            chattingUUID: chattingUUID,
+            isAdded: true,
+            othersUID: nil
+        )
+        try await handleChattingUseCase.execute(
+            chattingUUID: chattingUUID,
+            isAdded: true,
+            othersUID: othersUID.userUID
+        )
+        
+        userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
+        actions?.showChattingDetail(chattingUUID)
     }
     
     @MainActor

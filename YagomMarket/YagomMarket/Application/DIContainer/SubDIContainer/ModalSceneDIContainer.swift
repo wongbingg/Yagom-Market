@@ -11,12 +11,14 @@ final class ModalSceneDIContainer {
     // MARK: - Register
     func makeRegisterViewController(model: ProductDetail?,
                                     actions: RegisterViewModelActions) -> RegisterViewController {
+        
         let viewModel = makeRegisterViewModel(model: model, actions: actions)
         return RegisterViewController(with: viewModel)
     }
     
     func makeRegisterViewModel(model: ProductDetail?,
                                actions: RegisterViewModelActions) -> RegisterViewModel {
+        
         return DefaultRegisterViewModel(
             model: model,
             actions: actions,
@@ -26,9 +28,11 @@ final class ModalSceneDIContainer {
     }
     
     // MARK: - ImageViewer
-    func makeImageViewerController(imageURLs: [String],
-                                   currentPage: Int,
-                                   delegate: ImageViewerViewControllerDelegate) -> ImageViewerViewController {
+    func makeImageViewerController(
+        imageURLs: [String],
+        currentPage: Int,
+        delegate: ImageViewerViewControllerDelegate) -> ImageViewerViewController {
+        
         return ImageViewerViewController(
             imageURLs: imageURLs,
             currentPage: currentPage,
@@ -51,7 +55,8 @@ final class ModalSceneDIContainer {
     }
     
     // MARK: - Modal Flow Coordinator
-    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator {
+    func makeModalFlowCoordinator(
+        navigationController: UINavigationController) -> ModalFlowCoordinator {
         
         return ModalFlowCoordinator(
             navigationController: navigationController,

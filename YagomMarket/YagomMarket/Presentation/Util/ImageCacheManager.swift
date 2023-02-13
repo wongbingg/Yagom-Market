@@ -39,8 +39,12 @@ final class DefaultImageCacheManager: ImageCacheManager {
         let (data, response) = try await URLSession.shared.data(for: request)
         let successRange = (200..<300)
         
-        guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { throw APIError.unknown }
-        guard successRange.contains(statusCode) else { throw APIError.response(statusCode) }
+        guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+            throw APIError.unknown
+        }
+        guard successRange.contains(statusCode) else {
+            throw APIError.response(statusCode)
+        }
         
         let cachedData = CachedURLResponse(response: response, data: data)
         self.cache.storeCachedResponse(cachedData, for: request)

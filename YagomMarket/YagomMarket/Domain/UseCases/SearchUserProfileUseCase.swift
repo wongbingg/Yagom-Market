@@ -6,7 +6,7 @@
 //
 
 protocol SearchUserProfileUseCase {
-    func execute() async throws -> UserProfile
+    func execute(othersUID: String?) async throws -> UserProfile
 }
 
 final class DefaultSearchUserProfileUseCase: SearchUserProfileUseCase {
@@ -16,17 +16,26 @@ final class DefaultSearchUserProfileUseCase: SearchUserProfileUseCase {
         self.firestoreService = firestoreService
     }
     
-    func execute() async throws -> UserProfile {
-        guard let userUID = LoginCacheManager.fetchPreviousInfo() else {
-            throw LoginCacheManagerError.noPreviousInfo
+    func execute(othersUID: String?) async throws -> UserProfile {
+        
+        if let othersUID = othersUID {
+            let response = try await firestoreService.read(
+                collectionId: "UserProfile",
+                documentId: othersUID
+            )
+            
+            return response as! UserProfile
+        } else {
+            guard let loginInfo = LoginCacheManager.fetchPreviousInfo() else {
+                throw LoginCacheManagerError.noPreviousInfo
+            }
+            
+            let response = try await firestoreService.read(
+                collectionId: "UserProfile",
+                documentId: loginInfo.userUID
+            )
+            
+            return response as! UserProfile
         }
-        
-        let response = try await firestoreService.read(
-            collectionId: "UserProfile",
-            documentId: userUID,
-            entity: UserProfile()
-        )
-        
-        return response
     }
 }

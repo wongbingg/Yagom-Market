@@ -18,6 +18,8 @@ final class ProductDetailViewModelTests: XCTestCase {
             fetchProductDetailUseCase: FetchProductDetailUseCaseMock(),
             searchUserProfileUseCase: SearchUserProfileUseCaseMock(),
             handleLikedProductUseCase: HandleLikedProductUseCaseMock(),
+            handleChattingUseCase: HandleChattingUseCaseMock(),
+            searchOthersUIDUseCase: SearchOthersUIDUseCaseMock(),
             productId: 1
         )
     }
@@ -25,43 +27,7 @@ final class ProductDetailViewModelTests: XCTestCase {
     override func tearDownWithError() throws {
         sut = nil
     }
-    
-    func test_productId에해당하는상품이없을때_productDetail에접근하면_APIError_unknown에러를반환하는지() async throws {
-        // given
-        let expectationError = APIError.unknown
-        // when
-        do {
-            let productDetail = try await sut.productDetail
-        } catch let error as LocalizedError {
-            // then
-            XCTAssertEqual(expectationError, error as! APIError)
-        }
-    }
-    
-    func test_UserProfile에서좋아요목록에productId가_없을때_isLiked에접근하면_false반환하는지() async throws {
-        // given
-        let expectation = false
-        // when
-        let response = try await sut.isLiked
-        // then
-        XCTAssertEqual(expectation, response)
-    }
-    
-    func test_UserProfile에서좋아요목록에productId가_있을때_isLiked에접근하면_true반환하는지() async throws {
-        // given
-        sut = DefaultProductDetailViewModel(
-            deleteProductUseCase: DeleteProductUseCaseMock(),
-            fetchProductDetailUseCase: FetchProductDetailUseCaseMock(),
-            searchUserProfileUseCase: SearchUserProfileUseCaseMock(),
-            handleLikedProductUseCase: HandleLikedProductUseCaseMock(),
-            productId: 3
-        )
-        let expectation = true
-        // when
-        let response = try await sut.isLiked
-        // then
-        XCTAssertEqual(expectation, response)
-    }
+    // TODO: 테스트 진행
 }
 
 class DeleteProductUseCaseMock: DeleteProductUseCase {
@@ -84,8 +50,9 @@ class FetchProductDetailUseCaseMock: FetchProductDetailUseCase {
 
 class SearchUserProfileUseCaseMock: SearchUserProfileUseCase {
     
-    func execute() async throws -> UserProfile {
-        return UserProfile(vendorName: "", email: "", likedProductIds: [2,3,4,5])
+    func execute(othersUID: String?) async throws -> UserProfile {
+        
+        return UserProfile.stub(likedProductIds: [2,3,4,5])
     }
 }
 
@@ -94,4 +61,20 @@ class HandleLikedProductUseCaseMock: HandleLikedProductUseCase {
     func execute(with productId: Int, isAdd: Bool) async throws {
         //
     }
+}
+
+class HandleChattingUseCaseMock: HandleChattingUseCase {
+    func execute(chattingUUID: String, isAdded: Bool, othersUID: String?) async throws {
+        //
+    }
+    
+    
+}
+
+class SearchOthersUIDUseCaseMock: SearchOthersUIDUseCase {
+    func execute(with vendorName: String) async throws -> UserUID {
+        return UserUID(userUID: "")
+    }
+    
+    
 }

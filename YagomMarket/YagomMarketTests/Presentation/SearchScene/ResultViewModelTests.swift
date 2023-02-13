@@ -23,7 +23,9 @@ final class ResultViewModelTests: XCTestCase {
         
         sut = DefaultResultViewModel(
             cells: [ProductCell.stub(id: 123)],
-            actions: viewModelAction
+            actions: viewModelAction,
+            handleLikedProductUseCase: HandleLikedProductUseCaseMock(),
+            searchUserProfileUseCase: SearchUserProfileUseCaseMock()
         )
     }
 

@@ -9,10 +9,12 @@ import Foundation
 @testable import YagomMarket
 
 class ProductsRepositoryMock: ProductsRepository {
+    
     var fetchProductDetailMethodCallCount = 0
     var fetchProductsListCallCount = 0
     var fetchProductsQueryCallCount = 0
     var deleteMethodCallCount = 0
+    var requestPostCallCount = 0
     var passedProductId = 0
     var hasNext: Bool = true
     
@@ -35,6 +37,10 @@ class ProductsRepositoryMock: ProductsRepository {
         fetchProductsQueryCallCount += 1
         
         return []
+    }
+    
+    func requestPost(with registerModel: YagomMarket.RegisterModel) async throws {
+        requestPostCallCount += 1
     }
     
     func editProductDetail(with editModel: ProductEditRequestDTO,

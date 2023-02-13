@@ -46,7 +46,8 @@ extension UIImage {
             kCGImageSourceThumbnailMaxPixelSize: maxPixel
         ] as CFDictionary
 
-        let downSampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downSampleOptions)!
+        let downSampledImage = CGImageSourceCreateThumbnailAtIndex(
+            imageSource, 0, downSampleOptions)!
 
         let newImage = UIImage(cgImage: downSampledImage)
         return newImage

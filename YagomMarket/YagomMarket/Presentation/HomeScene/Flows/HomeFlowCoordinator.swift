@@ -8,15 +8,28 @@
 import UIKit
 
 protocol HomeFlowCoordinatorDependencies: AnyObject {
-    func makeProductListViewController(actions: ProductListViewModelActions) -> ProductListViewController
-    func makeProductDetailViewController(productId: Int,
-                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController
-    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator
+    func makeProductListViewController(
+        actions: ProductListViewModelActions) -> ProductListViewController
+    
+    func makeProductDetailViewController(
+        productId: Int,
+        actions: ProductDetailViewModelActions) -> ProductDetailViewController
+    
+    func makeModalFlowCoordinator(
+        navigationController: UINavigationController) -> ModalFlowCoordinator
+    
+    func makeSearchFlowCoordinator(
+        navigationController: UINavigationController) -> SearchFlowCoordinator
+    
+    func makeChattingFlowCoordinator(
+        navigationController: UINavigationController) -> ChattingFlowCoordinator
 }
 
 final class HomeFlowCoordinator {
     private let userUID: String
     private let modalFlowCoordinator: ModalFlowCoordinator
+    private let searchFlowCoordinator: SearchFlowCoordinator
+    private let chattingFlowCoordinator: ChattingFlowCoordinator
     private let navigationController: UINavigationController
     private let dependencies: HomeFlowCoordinatorDependencies
     
@@ -29,6 +42,12 @@ final class HomeFlowCoordinator {
         self.navigationController = navigationController
         self.dependencies = dependencies
         self.modalFlowCoordinator = dependencies.makeModalFlowCoordinator(
+            navigationController: navigationController
+        )
+        self.searchFlowCoordinator = dependencies.makeSearchFlowCoordinator(
+            navigationController: navigationController
+        )
+        self.chattingFlowCoordinator = dependencies.makeChattingFlowCoordinator(
             navigationController: navigationController
         )
     }
@@ -47,7 +66,8 @@ final class HomeFlowCoordinator {
     private func productTapped(id: Int) {
         let actions = ProductDetailViewModelActions(
             imageTapped: imageTapped(imageURLs:currentPage:),
-            showEditView: showEditView(model:)
+            showEditView: showEditView(model:),
+            showChattingDetail: showChattingDetail
         )
         let productDetailVC = dependencies.makeProductDetailViewController(
             productId: id,
@@ -61,15 +81,14 @@ final class HomeFlowCoordinator {
     }
     
     private func searchTapSelected() {
-        let searchSceneDIContainer = SearchSceneDIContainer()
-        let coordinator = searchSceneDIContainer.makeSearchFlowCoordinator(
-            navigationController: navigationController
-        )
-        coordinator.start()
+        searchFlowCoordinator.start()
     }
     
     private func imageTapped(imageURLs: [String], currentPage: Int) {
-        guard let productDetailVC = navigationController.topViewController as? ProductDetailViewController else { return }
+        
+        guard let productDetailVC = navigationController.topViewController as?
+                ProductDetailViewController else { return }
+        
         self.modalFlowCoordinator.presentImageViewerVC(
             imageURLs: imageURLs,
             currentPage: currentPage,
@@ -79,5 +98,11 @@ final class HomeFlowCoordinator {
     
     private func showEditView(model: ProductDetail) {
         modalFlowCoordinator.presentRegisterVC(with: model)
+    }
+    
+    private func showChattingDetail(with chattingUUID: String) {
+        self.chattingFlowCoordinator.chattingCellTapped(
+            chattingUUID: chattingUUID
+        )
     }
 }

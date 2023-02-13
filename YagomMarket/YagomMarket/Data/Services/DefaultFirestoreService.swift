@@ -9,7 +9,7 @@ import FirebaseFirestore
 
 protocol Entity {
     func toDictionary() -> Dictionary<String, Any>
-    func toEntity(with documentSnapshot: DocumentSnapshot) -> Self
+    static func toEntity(with documentSnapshot: DocumentSnapshot) throws -> Self
 }
 
 final class DefaultFirestoreService<E: Entity>: FirestoreService {
@@ -33,14 +33,29 @@ final class DefaultFirestoreService<E: Entity>: FirestoreService {
     }
     
     func read<T>(collectionId: String,
-                 documentId: String,
-                 entity: T) async throws -> T where T : Entity {
+                 documentId: String) async throws -> T where T : Entity {
         do {
             let documentSnapshot = try await dataBase
                 .collection(collectionId)
                 .document(documentId)
                 .getDocument()
-            return documentSnapshot.toEntity(entity)!
+            return try documentSnapshot.toEntity()
+        } catch {
+            throw FirestoreServiceError.failToRead
+        }
+    }
+    
+    func readDocuments(collectionId: String) async throws -> [E] {
+        var list = [E]()
+        do {
+            let documentSnapshot = try await dataBase
+                .collection(collectionId)
+                .getDocuments()
+            try documentSnapshot.documents.forEach { document in
+                let elementE = try E.toEntity(with: document)
+                list.append(elementE)
+            }
+            return list
         } catch {
             throw FirestoreServiceError.failToRead
         }
@@ -75,7 +90,7 @@ final class DefaultFirestoreService<E: Entity>: FirestoreService {
 
 extension DocumentSnapshot {
 
-    func toEntity<E: Entity>(_ e: E) -> E? {
-        e.toEntity(with: self)
+    func toEntity<E: Entity>() throws -> E {
+        try E.toEntity(with: self)
     }
 }

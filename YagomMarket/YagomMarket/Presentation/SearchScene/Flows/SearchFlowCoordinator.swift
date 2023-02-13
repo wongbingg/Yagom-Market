@@ -11,9 +11,13 @@ protocol SearchFlowCoordinatorDependencies: AnyObject {
     func makeSearchViewController(actions: SearchViewModelActions) -> SearchViewController
     func makeResultViewController(cells: [ProductCell],
                                   actions: ResultViewModelAction) -> ResultViewController
-    func makeProductDetailViewController(productId: Int,
-                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController
-    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator
+    
+    func makeProductDetailViewController(
+        productId: Int,
+        actions: ProductDetailViewModelActions) -> ProductDetailViewController
+    
+    func makeModalFlowCoordinator(
+        navigationController: UINavigationController) -> ModalFlowCoordinator
 }
 
 final class SearchFlowCoordinator {
@@ -74,7 +78,8 @@ final class SearchFlowCoordinator {
     private func cellTapped(at id: Int) {
         let actions = ProductDetailViewModelActions(
             imageTapped: imageTapped(imageURLs:currentPage:),
-            showEditView: showEditView(model:)
+            showEditView: showEditView(model:),
+            showChattingDetail: showChattingDetail
         )
         let detailVC = dependencies.makeProductDetailViewController(productId: id,
                                                                     actions: actions)
@@ -82,7 +87,10 @@ final class SearchFlowCoordinator {
     }
     
     private func imageTapped(imageURLs: [String], currentPage: Int) {
-        guard let productDetailVC = navigationController.topViewController as? ProductDetailViewController else { return }
+        
+        guard let productDetailVC = navigationController.topViewController as?
+                ProductDetailViewController else { return }
+        
         modalFlowCoordinator.presentImageViewerVC(
             imageURLs: imageURLs,
             currentPage: currentPage,
@@ -92,5 +100,9 @@ final class SearchFlowCoordinator {
     
     private func showEditView(model: ProductDetail) {
         modalFlowCoordinator.presentRegisterVC(with: model)
+    }
+    
+    private func showChattingDetail(with chattingUUID: String) {
+        // TODO: 채팅 디테일뷰컨으로 이동
     }
 }

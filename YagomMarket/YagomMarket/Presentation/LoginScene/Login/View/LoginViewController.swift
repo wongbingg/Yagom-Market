@@ -82,10 +82,13 @@ final class LoginViewController: UIViewController {
         Task {
             do {
                 try await viewModel.loginButtonTapped(with: loginInfo)
-            } catch let error as LoginError {
-                DefaultAlertBuilder(title: .warning, message: error.description)
-                    .setButton(name: .yes, style: .default)
-                    .showAlert(on: self)
+            } catch let error as LocalizedError {
+                DefaultAlertBuilder(
+                    title: .warning,
+                    message: error.errorDescription ?? "\(#function) error"
+                )
+                .setButton(name: .yes, style: .default)
+                .showAlert(on: self)
             }
         }
     }

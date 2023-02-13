@@ -120,30 +120,6 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
-// MARK: - Layout Constraints
-private extension SearchViewController {
-    
-    func layoutSearchView() {
-        view.addSubview(searchDefaultView)
-        NSLayoutConstraint.activate([
-            searchDefaultView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            searchDefaultView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            searchDefaultView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            searchDefaultView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        ])
-    }
-    
-    func layoutResultView() {
-        view.addSubview(resultTableView)
-        NSLayoutConstraint.activate([
-            resultTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            resultTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            resultTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            resultTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        ])
-    }
-}
-
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -178,5 +154,29 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.endEditing(true)
+    }
+}
+
+// MARK: - Layout Constraints
+private extension SearchViewController {
+    
+    func layoutSearchView() {
+        view.addSubview(searchDefaultView)
+        NSLayoutConstraint.activate([
+            searchDefaultView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchDefaultView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            searchDefaultView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchDefaultView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+    }
+    
+    func layoutResultView() {
+        view.addSubview(resultTableView)
+        NSLayoutConstraint.activate([
+            resultTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            resultTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            resultTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            resultTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
     }
 }

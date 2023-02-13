@@ -19,7 +19,8 @@ final class LoginSceneDIContainer {
     func makeLoginViewModel(actions: LoginViewModelActions) -> LoginViewModel {
         return DefaultLoginViewModel(
             actions: actions,
-            loginUseCase: makeLoginUseCase()
+            loginUseCase: makeLoginUseCase(),
+            searchUserProfileUseCase: makeSearchUserProfileUseCase()
         )
     }
     
@@ -32,7 +33,8 @@ final class LoginSceneDIContainer {
     func makeSigninViewModel(actions: SigninViewModelActions) -> SigninViewModel {
         return DefaultSigninViewModel(
             actions: actions,
-            createUserUseCase: makeCreateUserUseCase()
+            createUserUseCase: makeCreateUserUseCase(),
+            recordVendorNameUseCase: makeRecordVendorNameUseCase()
         )
     }
     
@@ -52,11 +54,11 @@ final class LoginSceneDIContainer {
         )
         let searchVC = searchFlowCoordinator.generate()
         
-        let chatSceneDIContainer = appDIContainer.makeChatSceneDIContainer()
-        let chatFlowCoordinator = chatSceneDIContainer.makeChatFlowCoordinator(
+        let chattingSceneDIContainer = appDIContainer.makeChattingSceneDIContainer()
+        let chattingFlowCoordinator = chattingSceneDIContainer.makeChattingFlowCoordinator(
             navigationController: navigationController
         )
-        let chatVC = chatFlowCoordinator.generate()
+        let chatVC = chattingFlowCoordinator.generate()
         
         let myPageSceneDIContainer = appDIContainer.makeMyPageSceneDIContainer()
         let myPageFlowCoordinator = myPageSceneDIContainer.makeMyPageFlowCoordinator(
@@ -89,6 +91,19 @@ final class LoginSceneDIContainer {
         )
     }
     
+    func makeRecordVendorNameUseCase() -> RecordVendorNameUseCase {
+        return DefaultRecordVendorNameUseCase(
+            firebaseAuthService: makeFirebaseAuthService(),
+            firestoreService: makeOtherUIDFirestoreService()
+        )
+    }
+    
+    func makeSearchUserProfileUseCase() -> SearchUserProfileUseCase {
+        return DefaultSearchUserProfileUseCase(
+            firestoreService: makeFirestoreService()
+        )
+    }
+    
     // MARK: - Services
     func makeFirebaseAuthService() -> FirebaseAuthService {
         return DefaultFirebaseAuthService()
@@ -98,8 +113,14 @@ final class LoginSceneDIContainer {
         return DefaultFirestoreService<UserProfile>()
     }
     
+    func makeOtherUIDFirestoreService() -> DefaultFirestoreService<UserUID> {
+        return DefaultFirestoreService<UserUID>()
+    }
+    
     // MARK: - Login Flow Coordinator
-    func makeLoginFlowCoordinator(navigationController: UINavigationController) -> LoginFlowCoordinator {
+    func makeLoginFlowCoordinator(
+        navigationController: UINavigationController) -> LoginFlowCoordinator {
+            
         return LoginFlowCoordinator(
             navigationController: navigationController,
             dependencies: self

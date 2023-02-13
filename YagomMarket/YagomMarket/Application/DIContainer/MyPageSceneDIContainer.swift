@@ -9,6 +9,7 @@ import UIKit
 
 final class MyPageSceneDIContainer {
     private let modalSceneDIContainer = ModalSceneDIContainer()
+    private let searchSceneDIContainer = SearchSceneDIContainer()
     
     // MARK: - MyPage
     func makeMyPageViewController(actions: MyPageViewModelActions) -> MyPageViewController {
@@ -43,20 +44,24 @@ final class MyPageSceneDIContainer {
     }
     
     // MARK: - Product Detail
-    func makeProductDetailViewController(productId: Int,
-                                         actions: ProductDetailViewModelActions) -> ProductDetailViewController {
+    func makeProductDetailViewController(
+        productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewController {
+            
         let viewModel = makeProductDetailViewModel(productId: productId, actions: actions)
-        return ProductDetailViewController(viewModel: viewModel )
+        return ProductDetailViewController(viewModel: viewModel)
     }
     
-    func makeProductDetailViewModel(productId: Int,
-                                    actions: ProductDetailViewModelActions) -> ProductDetailViewModel {
+    func makeProductDetailViewModel(
+        productId: Int, actions: ProductDetailViewModelActions) -> ProductDetailViewModel {
+            
         return DefaultProductDetailViewModel(
             actions: actions,
             deleteProductUseCase: makeDeleteProductUseCase(),
             fetchProductDetailUseCase: makeFetchProductDetailUseCase(),
             searchUserProfileUseCase: makeSearchUserProfileUseCase(),
             handleLikedProductUseCase: makeHandleLikedProductUseCase(),
+            handleChattingUseCase: makeHandleChattingUseCase(),
+            searchOthersUIDUseCase: makeSearchOthersUIDUseCase(),
             productId: productId
         )
     }
@@ -79,7 +84,21 @@ final class MyPageSceneDIContainer {
     }
     
     func makeHandleLikedProductUseCase() -> HandleLikedProductUseCase {
-        return DefaultHandleLikedProductUseCase(firestoreService: makeFirestoreService())
+        return DefaultHandleLikedProductUseCase(
+            firestoreService: makeFirestoreService()
+        )
+    }
+    
+    func makeSearchOthersUIDUseCase() -> SearchOthersUIDUseCase {
+        return DefaultSearchOthersUIDUseCase(
+            firestoreService: makeFirestoreService()
+        )
+    }
+    
+    func makeHandleChattingUseCase() -> HandleChattingUseCase {
+        return DefaultHandleChattingUseCase(
+            firestoreService: makeChattingFirestoreService()
+        )
     }
     
     // MARK: - Repositories
@@ -92,8 +111,13 @@ final class MyPageSceneDIContainer {
         return DefaultFirestoreService<UserProfile>()
     }
     
+    func makeChattingFirestoreService() -> DefaultFirestoreService<Message> {
+        return DefaultFirestoreService<Message>()
+    }
+    
     // MARK: - MyPage Flow Coordinator
-    func makeMyPageFlowCoordinator(navigationController: UINavigationController) -> MyPageFlowCoordinator {
+    func makeMyPageFlowCoordinator(
+        navigationController: UINavigationController) -> MyPageFlowCoordinator {
         
         return MyPageFlowCoordinator(
             navigationController: navigationController,
@@ -101,9 +125,22 @@ final class MyPageSceneDIContainer {
         )
     }
     
+    // MARK: - Search Flow Coordinator
+    func makeSearchFlowCoordinator(
+        navigationController: UINavigationController) -> SearchFlowCoordinator {
+            
+        return searchSceneDIContainer.makeSearchFlowCoordinator(
+            navigationController: navigationController
+        )
+    }
+    
     // MARK: - Modal Flow Coordinator
-    func makeModalFlowCoordinator(navigationController: UINavigationController) -> ModalFlowCoordinator {
-        return modalSceneDIContainer.makeModalFlowCoordinator(navigationController: navigationController)
+    func makeModalFlowCoordinator(
+        navigationController: UINavigationController) -> ModalFlowCoordinator {
+            
+        return modalSceneDIContainer.makeModalFlowCoordinator(
+            navigationController: navigationController
+        )
     }
 }
 

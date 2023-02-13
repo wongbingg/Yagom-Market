@@ -10,7 +10,12 @@ import UIKit
 final class LogoImageButton: UIButton {
     
     init(image: UIImage, radius: CGFloat) {
-        super.init(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: radius*2, height: radius*2)))
+        super.init(
+            frame: CGRect(
+                origin: CGPoint(x: 0, y: 0),
+                size: CGSize(width: radius*2, height: radius*2)
+            )
+        )
         setSize(radius: radius)
         renderImage(image: image)
     }

@@ -141,7 +141,6 @@ final class LoginView: UIView {
         radius: 30
     )
     
-    
     init() {
         super.init(frame: .zero)
         setupInitialView()
@@ -160,7 +159,11 @@ final class LoginView: UIView {
     func retrieveLoginInfo() -> LoginInfo? {
         guard let id = idTextField.text,
               let password = passwordTextField.text else { return nil }
-        return LoginInfo(id: id, password: password, vendorName: nil)
+        return LoginInfo(id: id,
+                         password: password,
+                         vendorName: "",
+                         identifier: "",
+                         secret: "")
     }
 }
 

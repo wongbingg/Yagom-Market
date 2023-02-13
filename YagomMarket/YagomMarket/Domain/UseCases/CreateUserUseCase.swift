@@ -22,19 +22,20 @@ final class DefaultCreateUserUseCase: CreateUserUseCase {
     }
     
     func execute(with loginInfo: LoginInfo) async throws {
-        let response = try await firebaseAuthService.createUser(
+        let userUID = try await firebaseAuthService.createUser(
             email: loginInfo.id,
             password: loginInfo.password
         )
         
-        let userUID = response?.user.uid ?? "empty userUID"
-        
         let email = loginInfo.id
-        let vendorName = loginInfo.vendorName ?? "empty vendorName"
+        let vendorName = loginInfo.vendorName
         let userInfo = UserProfile(
             vendorName: vendorName,
             email: email,
-            likedProductIds: []
+            identifier: loginInfo.identifier,
+            secret: loginInfo.secret,
+            likedProductIds: [],
+            chattingUUIDList: []
         )
         
         try await firestoreService.create(

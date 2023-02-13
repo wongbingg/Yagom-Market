@@ -24,7 +24,15 @@ final class CreateUserUseCaseTests: XCTestCase {
         )
         
         // when
-        _ = try await useCase.execute(with: LoginInfo(id: "testId", password: "testPassword", vendorName: ""))
+        _ = try await useCase.execute(
+            with: LoginInfo(
+                id: "testId",
+                password: "testPassword",
+                vendorName: "",
+                identifier: "",
+                secret: ""
+            )
+        )
         
         // then
         XCTAssertEqual(expectationCreateUserCallCount, firebaseAuthService.createUserCallCount)

@@ -18,7 +18,15 @@ final class LoginUseCaseTests: XCTestCase {
         let useCase = DefaultLoginUseCase(firebaseAuthService: firebaseAuthService)
         
         // when
-        _ = try await useCase.execute(with: LoginInfo(id: "", password: "", vendorName: ""))
+        _ = try await useCase.execute(
+            with: LoginInfo(
+                id: "",
+                password: "",
+                vendorName: "",
+                identifier: "",
+                secret: ""
+            )
+        )
         
         // then
         XCTAssertEqual(expectationCallCount, firebaseAuthService.signInCallCount)

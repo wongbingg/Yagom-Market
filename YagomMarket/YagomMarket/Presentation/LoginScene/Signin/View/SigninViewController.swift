@@ -15,7 +15,7 @@ final class SigninViewController: UIViewController {
         stackView.axis = .vertical
         stackView.spacing = 50
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 100, left: 40, bottom: 300, right: 40)
+        stackView.layoutMargins = UIEdgeInsets(top: 100, left: 40, bottom: 200, right: 40)
         return stackView
     }()
     
@@ -83,6 +83,30 @@ final class SigninViewController: UIViewController {
         return textField
     }()
     
+    private let identifierTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addLeftPadding()
+        textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.systemGray3.cgColor
+        textField.layer.cornerRadius = 5
+        textField.placeholder = "identifier을 입력하세요"
+        return textField
+    }()
+    
+    private let secretTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addLeftPadding()
+        textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.systemGray3.cgColor
+        textField.layer.cornerRadius = 5
+        textField.placeholder = "secret을 입력하세요"
+        return textField
+    }()
+    
     private let viewModel: SigninViewModel
     
     init(with viewModel: SigninViewModel) {
@@ -117,8 +141,14 @@ final class SigninViewController: UIViewController {
     private func retrieveInfo() -> LoginInfo? {
         guard let id = idTextField.text,
               let password = passwordTextField.text,
-              let vendorName = vendorNameTextField.text else { return nil }
-        return LoginInfo(id: id, password: password, vendorName: vendorName)
+              let vendorName = vendorNameTextField.text,
+              let identifier = identifierTextField.text,
+              let secret = secretTextField.text else { return nil }
+        return LoginInfo(id: id,
+                         password: password,
+                         vendorName: vendorName,
+                         identifier: identifier,
+                         secret: secret)
     }
     
     private func successAlert(with id: String) {
@@ -129,10 +159,10 @@ final class SigninViewController: UIViewController {
         }.showAlert(on: self)
     }
     
-    private func failAlert(with error: LoginError) {
+    private func failAlert(with error: LocalizedError) {
         DefaultAlertBuilder(
             title: .warning,
-            message: error.description
+            message: error.errorDescription ?? "\(#function) error"
         ).setButton(name: .yes, style: .default)
             .showAlert(on: self)
     }
@@ -145,7 +175,7 @@ final class SigninViewController: UIViewController {
             do {
                 try await viewModel.registerButtonTapped(loginInfo)
                 successAlert(with: loginInfo.id)
-            } catch let error as LoginError {
+            } catch let error as LocalizedError {
                 failAlert(with: error)
             }
         }
@@ -161,6 +191,8 @@ private extension SigninViewController {
         textFieldStackView.addArrangedSubview(idTextField)
         textFieldStackView.addArrangedSubview(passwordTextField)
         textFieldStackView.addArrangedSubview(vendorNameTextField)
+        textFieldStackView.addArrangedSubview(identifierTextField)
+        textFieldStackView.addArrangedSubview(secretTextField)
         mainStackView.addArrangedSubview(registerButton)
     }
     

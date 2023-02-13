@@ -40,7 +40,7 @@ final class DefaultResultViewModel: ResultViewModel {
     }
     
     func fetchUserLikeList() async throws {
-        let userProfile = try await searchUserProfileUseCase.execute()
+        let userProfile = try await searchUserProfileUseCase.execute(othersUID: nil)
         userLikeList = userProfile.likedProductIds
     }
     

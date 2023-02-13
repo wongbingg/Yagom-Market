@@ -21,7 +21,10 @@ final class SigninViewModelTests: XCTestCase {
             firestoreService: firestoreService
         )
         
-        sut = DefaultSigninViewModel(createUserUseCase: useCase)
+        sut = DefaultSigninViewModel(
+            createUserUseCase: useCase,
+            recordVendorNameUseCase: RecordVendorNameUseCaseMock()
+        )
     }
     
     override func tearDownWithError() throws {
@@ -31,7 +34,11 @@ final class SigninViewModelTests: XCTestCase {
     func test_이메일이유효하지않을때_LoginError_invalidEmail에러를반환하는지() async throws {
         // given
         let expectationError = LoginError.invalidEmail
-        let loginInfo = LoginInfo(id: "123", password: "123", vendorName: "")
+        let loginInfo = LoginInfo(id: "123",
+                                  password: "123",
+                                  vendorName: "",
+                                  identifier: "",
+                                  secret: "")
         
         // when
         do {
@@ -45,7 +52,11 @@ final class SigninViewModelTests: XCTestCase {
     func test_비밀번호가유효하지않을때_LoginError_invalidPassword에러를반환하는지() async throws {
         // given
         let expectationError = LoginError.invalidPassword(number: 2)
-        let loginInfo = LoginInfo(id: "test@naver.com", password: "12", vendorName: "")
+        let loginInfo = LoginInfo(id: "test@naver.com",
+                                  password: "12",
+                                  vendorName: "",
+                                  identifier: "",
+                                  secret: "")
         
         // when
         do {
@@ -59,7 +70,11 @@ final class SigninViewModelTests: XCTestCase {
     func test_useCase에서오류를반환했을때_viewModel에서도같은오류를반환하는지() async throws {
         // given
         let expectationError = FirebaseAuthServiceError.failToCreateUser
-        let loginInfo = LoginInfo(id: "test@naver.com", password: "123456", vendorName: "invalid")
+        let loginInfo = LoginInfo(id: "test@naver.com",
+                                  password: "123456",
+                                  vendorName: "invalid",
+                                  identifier: "",
+                                  secret: "")
         
         // when
         do {
@@ -89,4 +104,10 @@ class CreateUserUseCaseMock: CreateUserUseCase {
         }
     }
     
+}
+
+class RecordVendorNameUseCaseMock: RecordVendorNameUseCase {
+    func execute(with vendorName: String?) async throws {
+        //
+    }
 }

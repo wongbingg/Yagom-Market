@@ -16,13 +16,14 @@ struct DummyEntity: Entity {
         return ["name": name]
     }
     
-    func toEntity(with documentSnapshot: DocumentSnapshot) -> DummyEntity {
-        return self
+    static func toEntity(with documentSnapshot: DocumentSnapshot) -> DummyEntity {
+        return DummyEntity(name: "")
     }
 }
 
 class FirestoreServiceMock: FirestoreService {
     typealias T = DummyEntity
+    
     var firestore: [Entity] = []
     var createCallCount = 0
     var readCallCount = 0
@@ -35,13 +36,16 @@ class FirestoreServiceMock: FirestoreService {
         createCallCount += 1
     }
 
-    func read<T>(collectionId: String,
-                 documentId: String,
-                 entity: T) async throws -> T where T : YagomMarket.Entity {
+    func read(collectionId: String,
+                 documentId: String) async throws -> T {
 
         readCallCount += 1
 
-        return DummyEntity(name: "") as! T
+        return DummyEntity(name: "")
+    }
+    
+    func readDocuments(collectionId: String) async throws -> [DummyEntity] {
+        return [DummyEntity(name: "")]
     }
 
     func update<T>(collectionId: String,
@@ -67,13 +71,16 @@ class UserProfileFirestoreServiceMock: FirestoreService {
         createCallCount += 1
     }
 
-    func read<T>(collectionId: String,
-                 documentId: String,
-                 entity: T) async throws -> T where T : YagomMarket.Entity {
+    func read(collectionId: String,
+                 documentId: String) async throws -> T {
 
         readCallCount += 1
 
-        return UserProfile() as! T
+        return UserProfile.stub()
+    }
+    
+    func readDocuments(collectionId: String) async throws -> [T] {
+        return [UserProfile.stub()]
     }
 
     func update<T>(collectionId: String,

@@ -15,6 +15,7 @@ final class ResultViewController: UIViewController {
         collectionViewLayout: UICollectionViewFlowLayout()
     )
     
+    // MARK: Initializers
     init(viewModel: ResultViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -24,6 +25,7 @@ final class ResultViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutCollectionView()
@@ -37,6 +39,7 @@ final class ResultViewController: UIViewController {
         }
     }
     
+    // MARK: Methods
     private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -84,15 +87,17 @@ extension ResultViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ProductGridCell else {
+        
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "Cell", for: indexPath) as? ProductGridCell else {
             return UICollectionViewCell()
         }
         let data = viewModel.productCells[indexPath.row]
         let isLike = viewModel.userLikeList.contains(data.id)
+        
         cell.setupUIComponents(with: data, isLike: isLike)
         cell.resultViewSetup()
-        cell.addTargetForLikeButton(#selector(likeButtonTapped),
-                                    in: self)
+        cell.addTargetForLikeButton(#selector(likeButtonTapped), in: self)
         return cell
     }
 }

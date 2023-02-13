@@ -28,6 +28,7 @@ final class ProductDetailViewController: UIViewController {
         layoutInitialView()
         setupInitialView()
         setupLikeButton()
+        setupChattingButton()
         setupGestureRecognizer()
         setupTabBarController()
     }
@@ -47,7 +48,7 @@ final class ProductDetailViewController: UIViewController {
                 try await detailView.setupData(with: productDetail)
                 setupNavigationBar()
             } catch let error as LocalizedError {
-                print(error.errorDescription ?? "\(#function) error")
+                showErrorAlert(with: error.errorDescription ?? "\(#function) error")
             }
         }
     }
@@ -56,6 +57,14 @@ final class ProductDetailViewController: UIViewController {
         detailView.likeButton.addTarget(
             self,
             action: #selector(likeButtonTapped),
+            for: .touchUpInside
+        )
+    }
+    
+    private func setupChattingButton() {
+        detailView.chattingButton.addTarget(
+            self,
+            action: #selector(chattingButtonTapped),
             for: .touchUpInside
         )
     }
@@ -73,7 +82,8 @@ final class ProductDetailViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        guard viewModel.productDetail?.vendorName == "wongbing" else { return } // vendorName 매직리터럴 해결
+        guard viewModel.productDetail?.vendorName ==
+        LoginCacheManager.fetchPreviousInfo()?.vendorName else { return }
         
         let rightBarButton = UIBarButtonItem(
             image: UIImage(systemName: "ellipsis"),
@@ -88,7 +98,7 @@ final class ProductDetailViewController: UIViewController {
             do {
                 try await viewModel.showEditView()
             } catch let error as LocalizedError {
-                print(error.errorDescription ?? "\(#function) - error")
+                showErrorAlert(with: error.errorDescription ?? "\(#function) error")
             }
         }
     }
@@ -99,7 +109,7 @@ final class ProductDetailViewController: UIViewController {
                 try await viewModel.deleteProduct()
                 // TODO: completion 처리 성공 얼럿 띄우기
             } catch let error as LocalizedError {
-                print(error.errorDescription ?? "\(#function) - error")
+                showErrorAlert(with: error.errorDescription ?? "\(#function) error")
             }
         }
     }
@@ -114,10 +124,23 @@ final class ProductDetailViewController: UIViewController {
             .showAlert(on: self)
     }
     
+    private func showErrorAlert(with errorMessage: String) {
+        DefaultAlertBuilder(
+            title: .error,
+            message: errorMessage
+        )
+        .setButton()
+        .showAlert(on: self)
+    }
+    
+    // MARK: @objc Methods
     @objc private func imageDidTapped(_ sender: UITouch) {
         let point = sender.location(in: view)
+        
         if detailView.imageStackView.bounds.contains(point) {
-            let currentPage = detailView.imageScrollView.contentOffset.x / UIScreen.main.bounds.maxX
+            let currentPage = detailView.imageScrollView.contentOffset.x /
+            UIScreen.main.bounds.maxX
+            
             guard let urls = viewModel.productDetail?.imageURLs else { return }
             viewModel.showImageViewer(imageURLs: urls, currentPage: Int(currentPage))
         }
@@ -142,7 +165,7 @@ final class ProductDetailViewController: UIViewController {
                 do {
                     try await viewModel.addLikeProduct()
                 } catch let error as LocalizedError {
-                    print(error.errorDescription ?? "\(#function) - error")
+                    showErrorAlert(with: error.errorDescription ?? "\(#function) error")
                 }
             }
         } else {
@@ -150,8 +173,18 @@ final class ProductDetailViewController: UIViewController {
                 do {
                     try await viewModel.deleteLikeProduct()
                 } catch let error as LocalizedError {
-                    print(error.errorDescription ?? "\(#function) - error")
+                    showErrorAlert(with: error.errorDescription ?? "\(#function) error")
                 }
+            }
+        }
+    }
+    
+    @objc private func chattingButtonTapped() {
+        Task {
+            do {
+                try await viewModel.chattingButtonTapped()
+            } catch let error as LocalizedError {
+                showErrorAlert(with: error.errorDescription ?? "\(#function) error")
             }
         }
     }
@@ -172,6 +205,7 @@ extension ProductDetailViewController: ImageViewerViewControllerDelegate {
 
 // MARK: - Layout Constraints
 private extension ProductDetailViewController {
+    
     func layoutInitialView() {
         view.backgroundColor = .systemBackground
         view.addSubview(detailView)
