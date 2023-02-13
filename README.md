@@ -4,7 +4,7 @@
 
 ## 📄 소개
 - 야곰아카데미 오픈마켓 서버와 통신을 통해 상품을 조회,수정,게시,삭제할 수 있는 앱 입니다.
-- `번개장터`와 `당근마켓` iOS 앱 UI를 참고하여 프로젝트를 진행했습니다.
+- `번개장터` iOS 앱 UI를 참고하여 프로젝트를 진행했습니다.
 
 ## 🔑 핵심기술
 - **`아키텍쳐`**
@@ -24,22 +24,56 @@
 
 ## 프로젝트 구조
 
-#### Domain Layer
-- `Entity`
-    - ProductCell: 컬렉션뷰에서 셀이 보여줄 상품정보 도메인 모델입니다.
-    - ProductDetail: 상세보기 화면에서 보여줄 상품정보 도메인 모델입니다.
-    - LoginInfo: 로그인 정보가 담긴 모델입니다.
-    - LoginError: 로그인 시 발생할 수 있는 에러 열거형 입니다.
-- `UseCase`
-    - AddNextProductPageUseCase: 홈뷰에서 페이지네이션 기능을 하는 UseCase입니다.
-    - ResetToFirstProductPageUseCase: 홈뷰에서 아래로 당겼을 때 새로고침 UseCase 입니다.
-    - DeleteProductUseCase: 디테일뷰 에서 상품삭제 UseCase 입니다.
-    - FetchProductDetailUseCase: 디테일뷰로 들어갈 때 상세 데이터요청 UseCase 입니다.
-    - SigninUseCase: 로그인을 시도하는 UseCase 입니다.
-    - CreateUserUseCase: 계정등록을 하는 UseCase 입니다.
-    - SearchQueryUseCase: 검색 keyword에 대한 결과 이름 리스트를 보여주는 query를 찾는 UseCase 입니다.
-    - SearchQueryResultsUseCase: 검색 keyword에 대한 결과 ProductListResponseDTO를 반환하는 UseCase 입니다.
-#### Presentation Layer
+### Domain Layer
+
+<details>
+    <summary>Entity</summary>
+    
+<br>
+    
+- `ProductCell`: 컬렉션뷰에서 셀이 보여줄 상품정보
+- `ChattingCell`: 채팅리스트에서 셀이 보여줄 채팅정보
+- `ProductDetail`: 상세보기 화면에서 보여줄 상품정보
+- `LoginInfo`: 로그인 정보
+- `UserProfile`: Firestore에 저장되는 유저정보
+- `Message`: Firestore에 저장되는 메세지
+- `UserUID`: Firestore에 저장되는 UserUID
+    
+</details>
+
+<details>
+    <summary>UseCase</summary>
+        
+<br>
+  
+- `AddNextProductPageUseCase`: 홈뷰 페이지네이션 UseCase
+- `EditProductUseCase`: 상품수정 UseCase 
+- `RegisterProductUseCase`: 상품등록 UseCase
+- `DeleteProductUseCase`: 상품삭제 UseCase 
+- `FetchProductDetailUseCase`: 상세 데이터요청 UseCase 
+- `LoginUseCase`: 로그인 실행 UseCase
+- `CreateUserUseCase`: 계정등록 UseCase 
+- `SearchQueryUseCase`: 검색 keyword에 대한 결과 리스트 요청 UseCase 
+- `SearchUserProfileUseCase`: 나의 유저정보 요청 UseCase
+- `SearchOthersUIDUseCase`: 상대방 유저정보 요청 UseCase
+- `SearchChattingUseCase`: 채팅목록 요청 UseCase
+- `RecordVendorNameUseCase`: VendorName 등록 UseCase
+- `HandleLikedProductUseCase`: 좋아요 목록관리(추가/삭제) UseCase
+- `HandleChattingUseCase`: 채팅 목록관리(추가/삭제) UseCase
+- `SendMessageUseCase`: 메세지 전송 UseCase
+    
+</details>
+
+   
+
+### Presentation Layer
+
+
+<details>
+    <summary>Scene</summary>
+    
+<br>
+    
 > 각 scene은 FlowCoordinator와 하나 이상의 view를 가집니다. 
 - `LoginScene` : 로그인 화면을 담당합니다.
 - `HomeScene` : 홈탭 화면을 담당합니다.
@@ -49,9 +83,20 @@
 - `MyPageScene` : 마이페이지 화면을 담당합니다.
 - `ModalView` : 모달뷰를 정의해줍니다.(RegisterView, ImageViewerView)
     - `RegisterView`의 경우 탭에 존재하지만, Modal Present 방식을 이용하여 화면을 띄워줍니다. 
+    
+</details>
 
 
-#### Data Layer
+
+
+
+### Data Layer
+
+<details>
+    <summary>Repository</summary>
+    
+<br>
+    
 - `ProductsRepository`
     - fetchList : 상품 리스트를 받아옵니다. 
     - fetchDetail : 상품 상세정보를 받아옵니다. 
@@ -59,6 +104,15 @@
     - delete : 상품을 삭제합니다. 
 - `ProductQueryRepository`
     - fetch : 서치 keyword에 해당하는 검색결과 이름 리스트를 받아옵니다.
+    
+</details>
+
+
+<details>
+    <summary>Service</summary>
+    
+<br>
+    
 - `FirebaseAuthService`
     - createUser: 사용자 계정을 등록합니다.
     - signIn: 사용자 계정으로 로그인을 시도합니다.
@@ -67,6 +121,12 @@
     - read : 파라미터에 해당하는 entity를 읽어옵니다.
     - update : 파라미터에 해당하는 entity를 수정합니다
     - delete : 파라미터에 해당하는 entity를 삭제합니다
+    
+</details>
+
+
+
+
 
 ## 📱 실행화면
 
@@ -86,7 +146,7 @@
     </tr>
     <tr>
         <td valign="top" width="30%">
-            <img src="https://i.imgur.com/KhpxkX4.gif"/>
+            <img src="https://i.imgur.com/nLhJP5n.gif"/>
         </td>
         <td valign="top" width="30%">
             <img src="https://i.imgur.com/79iOA4A.gif"/>
@@ -117,11 +177,14 @@
             <img src="https://i.imgur.com/dYfiPHA.gif"/>
         </td>
         <td valign="top" width="30%">
-            기능 추가예정
+            <img src="https://i.imgur.com/n7Z1nrK.gif"/>
         </td>
     </tr>
 </table>
 </details>
+
+
+
 
 
 
@@ -130,17 +193,6 @@
 ### - 의존성 주입
 ![](https://i.imgur.com/DGSaa7d.png)
 
-### - File Tree
-
-<details>
-    <summary>펼쳐보기</summary>
-    
-<span style = "color:gray">작성 예정</span>    
-```
-
-```
-    
-</details>
 
 ## ⚙️ 새롭게 적용한 기술
 
@@ -410,5 +462,6 @@ onDisk 와 onMemory 방식 둘다 가능한 URLCache를 이용하여 캐싱작�
 - [UITabBarControllerDelegate](https://developer.apple.com/documentation/uikit/uitabbarcontrollerdelegate/)
 #### 블로그
 - [SearchBar 참고 블로그](https://zeddios.tistory.com/1196)
+
 
 
