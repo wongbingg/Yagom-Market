@@ -54,6 +54,8 @@
 		AF471C45297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C44297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift */; };
 		AF471C49297E76DB00A3ACD6 /* DeleteProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C48297E76DB00A3ACD6 /* DeleteProductUseCase.swift */; };
 		AF471C4B297E779900A3ACD6 /* FetchProductDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF471C4A297E779900A3ACD6 /* FetchProductDetailUseCase.swift */; };
+		AF4F32C4299A26F400BB740E /* DefaultFirestoreStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4F32C3299A26F400BB740E /* DefaultFirestoreStream.swift */; };
+		AF4F32C6299A271B00BB740E /* FirestoreStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4F32C5299A271B00BB740E /* FirestoreStream.swift */; };
 		AF56AB132998E2A60033CD3F /* SendMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF56AB122998E2A60033CD3F /* SendMessageUseCase.swift */; };
 		AF598F0329929BE600BC4FD6 /* ChattingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF598F0229929BE600BC4FD6 /* ChattingListViewController.swift */; };
 		AF598F0529929BF800BC4FD6 /* ChattingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF598F0429929BF800BC4FD6 /* ChattingListViewModel.swift */; };
@@ -209,6 +211,8 @@
 		AF471C44297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNextProductPageUseCase.swift; sourceTree = "<group>"; };
 		AF471C48297E76DB00A3ACD6 /* DeleteProductUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductUseCase.swift; sourceTree = "<group>"; };
 		AF471C4A297E779900A3ACD6 /* FetchProductDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProductDetailUseCase.swift; sourceTree = "<group>"; };
+		AF4F32C3299A26F400BB740E /* DefaultFirestoreStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFirestoreStream.swift; sourceTree = "<group>"; };
+		AF4F32C5299A271B00BB740E /* FirestoreStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreStream.swift; sourceTree = "<group>"; };
 		AF56AB122998E2A60033CD3F /* SendMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageUseCase.swift; sourceTree = "<group>"; };
 		AF598F0229929BE600BC4FD6 /* ChattingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChattingListViewController.swift; path = YagomMarket/Presentation/ChattingScene/ChatList/View/ChattingListViewController.swift; sourceTree = SOURCE_ROOT; };
 		AF598F0429929BF800BC4FD6 /* ChattingListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChattingListViewModel.swift; path = YagomMarket/Presentation/ChattingScene/ChatList/ViewModel/ChattingListViewModel.swift; sourceTree = SOURCE_ROOT; };
@@ -1037,6 +1041,7 @@
 			children = (
 				AFB7FFB4297FBB06003290EE /* FirebaseAuthService.swift */,
 				AFB7FFB6297FBB16003290EE /* FirestoreService.swift */,
+				AF4F32C5299A271B00BB740E /* FirestoreStream.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1055,6 +1060,7 @@
 			children = (
 				AFB7FFBA297FBDF8003290EE /* DefaultFirebaseAuthService.swift */,
 				AFB7FFBC297FBE07003290EE /* DefaultFirestoreService.swift */,
+				AF4F32C3299A26F400BB740E /* DefaultFirestoreStream.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1323,6 +1329,7 @@
 				AF11759129501A04002632D2 /* MyPageViewController.swift in Sources */,
 				AFE911D829517B7E004A1D1B /* ResultViewController.swift in Sources */,
 				AFB7FFB7297FBB16003290EE /* FirestoreService.swift in Sources */,
+				AF4F32C6299A271B00BB740E /* FirestoreStream.swift in Sources */,
 				AF1520DB2926035F004957E7 /* Data+.swift in Sources */,
 				AFB0D8F72993929300A7AF8B /* HandleChattingUseCase.swift in Sources */,
 				AFB7FFC1297FC901003290EE /* CreateUserUseCase.swift in Sources */,
@@ -1372,6 +1379,7 @@
 				AF0166302976C2EA0083DDAD /* LoginCacheManager.swift in Sources */,
 				AF0166362976D9B20083DDAD /* SearchViewModel.swift in Sources */,
 				AFF96945292F05C5009AB014 /* BodyType.swift in Sources */,
+				AF4F32C4299A26F400BB740E /* DefaultFirestoreStream.swift in Sources */,
 				AFC44D512934975300B01142 /* ProductCollectionView.swift in Sources */,
 				AF471C45297E6E4700A3ACD6 /* AddNextProductPageUseCase.swift in Sources */,
 				AF71746829224A010004FC02 /* API.swift in Sources */,
