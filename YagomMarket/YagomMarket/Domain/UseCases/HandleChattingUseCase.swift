@@ -41,7 +41,7 @@ final class DefaultHandleChattingUseCase: HandleChattingUseCase {
             guard let index = userProfile.chattingUUIDList.firstIndex(of: chattingUUID) else {
                 throw FirestoreServiceError.noSuchChattingUUID(chattingUUID)
             }
-            userProfile.likedProductIds.remove(at: index)
+            userProfile.chattingUUIDList.remove(at: index)
         }
         
         try await firestoreService.update(
