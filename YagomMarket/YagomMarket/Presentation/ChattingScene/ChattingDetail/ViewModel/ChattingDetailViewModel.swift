@@ -10,6 +10,8 @@ import Foundation
 protocol ChattingDetailViewModelInput {
     func fetchMessages() async throws
     func sendMessage(body: String) async throws
+    func subscribe(_ completion: @escaping () -> Void)
+    func removeListener()
 }
 
 protocol ChattingDetailViewModelOutput {
@@ -24,6 +26,7 @@ final class DefaultChattingDetailViewModel: ChattingDetailViewModel {
     
     private let searchChattingUseCase: SearchChattingUseCase
     private let sendMessageUseCase: SendMessageUseCase
+    private let firestoreStream: DefaultFirestoreStream
     
     init(
         chattingUUID: String,
@@ -33,6 +36,17 @@ final class DefaultChattingDetailViewModel: ChattingDetailViewModel {
         self.chattingUUID = chattingUUID
         self.searchChattingUseCase = searchChattingUseCase
         self.sendMessageUseCase = sendMessageUseCase
+        self.firestoreStream = DefaultFirestoreStream(chattingUUID: chattingUUID)
+    }
+    
+    func subscribe(_ completion: @escaping () -> Void) {
+        firestoreStream.subscribe { result in
+            completion()
+        }
+    }
+    
+    func removeListener() {
+        firestoreStream.removeListener()
     }
     
     func fetchMessages() async throws {
