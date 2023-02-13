@@ -42,7 +42,10 @@ final class ChattingListViewController: UIViewController {
     private func setupTableView() {
         chattingListView.delegate = self
         chattingListView.dataSource = self
-        chattingListView.register(ChattingListCell.self, forCellReuseIdentifier: "ChattingListCell")
+        chattingListView.register(
+            ChattingListCell.self,
+            forCellReuseIdentifier: "ChattingListCell"
+        )
     }
     
     private func setupInitialData() {
@@ -109,6 +112,29 @@ extension ChattingListViewController: UITableViewDataSource, UITableViewDelegate
         // TODO: 셀이 탭 되었을 때 액션정의
         tableView.deselectRow(at: indexPath, animated: true)
         viewModel.didSelectRowAt(index: indexPath.row)
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "delete") { [self] _, _, _ in
+            Task {
+                do {
+                    try await viewModel.deleteChatting(index: indexPath.row)
+                    tableView.reloadData()
+                } catch let error as LocalizedError {
+                    DefaultAlertBuilder(
+                        title: .error,
+                        message: error.errorDescription ?? "\(#function) error"
+                    )
+                    .setButton()
+                    .showAlert(on: self)
+                }
+            }
+        }
+        let swipeAction = UISwipeActionsConfiguration(actions: [action])
+        return swipeAction
     }
 }
 
