@@ -16,6 +16,7 @@ protocol ChattingListViewModelInput {
     func searchTapSelected()
     func registerTapSelected()
     func didSelectRowAt(index: Int)
+    func deleteChatting(index: Int) async throws
 }
 
 protocol ChattingListViewModelOutput {
@@ -28,17 +29,20 @@ final class DefaultChattingListViewModel: ChattingListViewModel {
     private let actions: ChattingListViewModelActions
     private let searchUserProfileUseCase: SearchUserProfileUseCase
     private let searchChattingUseCase: SearchChattingUseCase
+    private let handleChattingUseCase: HandleChattingUseCase
     private var userProfile: UserProfile = UserProfile.stub()
     private(set) var chattingCells: [ChattingCell] = []
     
     init(
         actions: ChattingListViewModelActions,
         searchUserProfileUseCase: SearchUserProfileUseCase,
-        searchChattingUseCase: SearchChattingUseCase
+        searchChattingUseCase: SearchChattingUseCase,
+        handleChattingUseCase: HandleChattingUseCase
     ) {
         self.actions = actions
         self.searchUserProfileUseCase = searchUserProfileUseCase
         self.searchChattingUseCase = searchChattingUseCase
+        self.handleChattingUseCase = handleChattingUseCase
     }
     
     func fetchChattingList() async throws {
@@ -64,6 +68,16 @@ final class DefaultChattingListViewModel: ChattingListViewModel {
     
     func registerTapSelected() {
         actions.registerTapSelected()
+    }
+    
+    func deleteChatting(index: Int) async throws {
+        let chattingUUID = userProfile.chattingUUIDList[index]
+
+        try await handleChattingUseCase.execute(
+            chattingUUID: chattingUUID,
+            isAdded: false,
+            othersUID: nil
+        )
     }
     
     private func picksellerVendorName(in chattingUUID: String) async throws -> String {
