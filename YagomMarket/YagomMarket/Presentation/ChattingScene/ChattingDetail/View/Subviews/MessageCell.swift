@@ -23,7 +23,26 @@ final class MessageCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .label
         label.font = UIFont.preferredFont(forTextStyle: .title3)
+        label.layer.borderColor = UIColor.systemBrown.cgColor
+        label.layer.borderWidth = 3
+        label.layer.cornerRadius = 5
         return label
+    }()
+    
+    private let leftFakeView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.setContentHuggingPriority(UILayoutPriority(230), for: .horizontal)
+        view.widthAnchor.constraint(greaterThanOrEqualToConstant: 0).isActive = true
+        return view
+    }()
+    
+    private let rightFakeView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.setContentHuggingPriority(UILayoutPriority(230), for: .horizontal)
+        view.widthAnchor.constraint(greaterThanOrEqualToConstant: 0).isActive = true
+        return view
     }()
     
     private let profileImageView: UIImageView = {
@@ -55,15 +74,15 @@ final class MessageCell: UITableViewCell {
     }
     
     func setupData(with model: Message) {
-        messageLabel.text = model.body
+        messageLabel.text = "  \(model.body)  "
         if model.sender == LoginCacheManager.fetchPreviousInfo()?.vendorName {
-            // 오른쪽 정렬
+            leftFakeView.isHidden = false
             profileImageView.isHidden = true
-            messageLabel.textAlignment = .right
+            rightFakeView.isHidden = true
         } else {
-            // 왼쪽정렬에 프로필사진 적용
+            leftFakeView.isHidden = true
             profileImageView.isHidden = false
-            messageLabel.textAlignment = .left
+            rightFakeView.isHidden = false
         }
     }
 }
@@ -74,7 +93,9 @@ private extension MessageCell {
     func addSubviews() {
         contentView.addSubview(mainStackView)
         mainStackView.addArrangedSubview(profileImageView)
+        mainStackView.addArrangedSubview(leftFakeView)
         mainStackView.addArrangedSubview(messageLabel)
+        mainStackView.addArrangedSubview(rightFakeView)
     }
     
     func setupConstraints() {
