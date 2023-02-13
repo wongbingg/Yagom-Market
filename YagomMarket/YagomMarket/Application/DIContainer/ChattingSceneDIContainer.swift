@@ -23,7 +23,8 @@ final class ChattingSceneDIContainer {
         return DefaultChattingListViewModel(
             actions: actions,
             searchUserProfileUseCase: makeSearchUserProfileUseCase(),
-            searchChattingUseCase: makeSearchChattingUseCase()
+            searchChattingUseCase: makeSearchChattingUseCase(),
+            handleChattingUseCase: makeHandleChattingUseCase()
         )
     }
     
@@ -69,6 +70,12 @@ final class ChattingSceneDIContainer {
     func makeSendMessageUseCase() -> SendMessageUseCase {
         return DefaultSendMessageUseCase(
             firestoreService: makeMessageFirestoreService()
+        )
+    }
+    
+    func makeHandleChattingUseCase() -> HandleChattingUseCase {
+        return DefaultHandleChattingUseCase(
+            firestoreService: makeUserProfileFirestoreService()
         )
     }
     
