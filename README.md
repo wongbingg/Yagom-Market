@@ -75,14 +75,12 @@
 <br>
     
 > 각 scene은 FlowCoordinator와 하나 이상의 view를 가집니다. 
-- `LoginScene` : 로그인 화면을 담당합니다.
-- `HomeScene` : 홈탭 화면을 담당합니다.
-- `SearchScene` : 서치탭 화면을 담당합니다.
-    - `SearchScene`의 경우 탭에 존재하지만, 탭이 눌리기 이전 탭의 NavigationController를 기반하여 화면을 전환합니다. 
-- `ChatScene` : 채팅탭 화면을 담당합니다.
-- `MyPageScene` : 마이페이지 화면을 담당합니다.
-- `ModalView` : 모달뷰를 정의해줍니다.(RegisterView, ImageViewerView)
-    - `RegisterView`의 경우 탭에 존재하지만, Modal Present 방식을 이용하여 화면을 띄워줍니다. 
+- `LoginScene` : 로그인 화면
+- `HomeScene` : 홈탭 화면
+- `SearchScene` : 서치탭 화면
+- `ChatScene` : 채팅탭 화면
+- `MyPageScene` : 마이페이지 화면
+- `ModalView` : 모달뷰 (RegisterView, ImageViewerView)
     
 </details>
 
@@ -98,12 +96,12 @@
 <br>
     
 - `ProductsRepository`
-    - fetchList : 상품 리스트를 받아옵니다. 
-    - fetchDetail : 상품 상세정보를 받아옵니다. 
-    - edit : 상품 상세정보를 수정합니다.
-    - delete : 상품을 삭제합니다. 
+    - fetchList : 상품 리스트 요청
+    - fetchDetail : 상품 상세정보 요청
+    - edit : 상품 상세정보를 수정
+    - delete : 상품을 삭제 
 - `ProductQueryRepository`
-    - fetch : 서치 keyword에 해당하는 검색결과 이름 리스트를 받아옵니다.
+    - fetch : 서치 keyword에 해당하는 검색결과 요청
     
 </details>
 
@@ -114,13 +112,13 @@
 <br>
     
 - `FirebaseAuthService`
-    - createUser: 사용자 계정을 등록합니다.
-    - signIn: 사용자 계정으로 로그인을 시도합니다.
+    - createUser: 사용자 계정등록
+    - logIn: 사용자 계정으로 로그인
 - `FirestoreService`
-    - create : 새로운 entity를 생성합니다.
-    - read : 파라미터에 해당하는 entity를 읽어옵니다.
-    - update : 파라미터에 해당하는 entity를 수정합니다
-    - delete : 파라미터에 해당하는 entity를 삭제합니다
+    - create : 새로운 entity 생성
+    - read : 파라미터에 해당하는 entity 요청
+    - update : 파라미터에 해당하는 entity를 수정
+    - delete : 파라미터에 해당하는 entity를 삭제
     
 </details>
 
