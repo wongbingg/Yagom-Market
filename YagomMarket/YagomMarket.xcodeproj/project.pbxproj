@@ -24,7 +24,6 @@
 		AF0166262976C1AB0083DDAD /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0166252976C1AB0083DDAD /* SigninViewController.swift */; };
 		AF0166282976C1D50083DDAD /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0166272976C1D50083DDAD /* UITextField+.swift */; };
 		AF01662A2976C20C0083DDAD /* LoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0166292976C20C0083DDAD /* LoginInfo.swift */; };
-		AF01662C2976C21A0083DDAD /* LoginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF01662B2976C21A0083DDAD /* LoginError.swift */; };
 		AF01662E2976C2530083DDAD /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF01662D2976C2530083DDAD /* LoginViewModel.swift */; };
 		AF0166302976C2EA0083DDAD /* LoginCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF01662F2976C2EA0083DDAD /* LoginCacheManager.swift */; };
 		AF0166322976C6B10083DDAD /* HomeFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0166312976C6B10083DDAD /* HomeFlowCoordinator.swift */; };
@@ -181,7 +180,6 @@
 		AF0166252976C1AB0083DDAD /* SigninViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninViewController.swift; sourceTree = "<group>"; };
 		AF0166272976C1D50083DDAD /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		AF0166292976C20C0083DDAD /* LoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
-		AF01662B2976C21A0083DDAD /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
 		AF01662D2976C2530083DDAD /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		AF01662F2976C2EA0083DDAD /* LoginCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCacheManager.swift; sourceTree = "<group>"; };
 		AF0166312976C6B10083DDAD /* HomeFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlowCoordinator.swift; sourceTree = "<group>"; };
@@ -447,7 +445,6 @@
 				AFB0D8F4299384B200A7AF8B /* ChattingCell.swift */,
 				AFE85D0E2977996B009CBB56 /* ProductDetail.swift */,
 				AF0166292976C20C0083DDAD /* LoginInfo.swift */,
-				AF01662B2976C21A0083DDAD /* LoginError.swift */,
 				AFB4C3FC29800A5900D6749E /* UserProfile.swift */,
 				AFB0D8F22993753F00A7AF8B /* Message.swift */,
 				AFB0D8FA29947B2F00A7AF8B /* UserUID.swift */,
@@ -1397,7 +1394,6 @@
 				AF18750F29824D1D00BFE50D /* DefaultImageRepository.swift in Sources */,
 				AF13E5B72935C93B00F92C89 /* ProductDetailViewController.swift in Sources */,
 				AF7174662922383A0004FC02 /* APIError.swift in Sources */,
-				AF01662C2976C21A0083DDAD /* LoginError.swift in Sources */,
 				AF471C41297E67D900A3ACD6 /* ProductsRepository.swift in Sources */,
 				AFEE294D292613FD008028C2 /* UIImage+.swift in Sources */,
 				AF0166082976BC3D0083DDAD /* AppFlowCoordinator.swift in Sources */,
