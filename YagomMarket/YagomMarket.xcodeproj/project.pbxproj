@@ -125,6 +125,26 @@
 		AFC44D4F29348CD600B01142 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC44D4E29348CD600B01142 /* SearchViewController.swift */; };
 		AFC44D512934975300B01142 /* ProductCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC44D502934975300B01142 /* ProductCollectionView.swift */; };
 		AFC44D53293497C900B01142 /* ProductGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC44D52293497C900B01142 /* ProductGridCell.swift */; };
+		AFCAFD6C29A3648F00BF153E /* LoginUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD6B29A3648F00BF153E /* LoginUseCaseMock.swift */; };
+		AFCAFD6E29A364CF00BF153E /* CreateUserUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD6D29A364CF00BF153E /* CreateUserUseCaseMock.swift */; };
+		AFCAFD7029A364FA00BF153E /* RecordVendorNameUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD6F29A364FA00BF153E /* RecordVendorNameUseCaseMock.swift */; };
+		AFCAFD7229A3651700BF153E /* AddNextProductPageUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD7129A3651700BF153E /* AddNextProductPageUseCaseMock.swift */; };
+		AFCAFD7429A3654A00BF153E /* DeleteProductUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD7329A3654A00BF153E /* DeleteProductUseCaseMock.swift */; };
+		AFCAFD7629A3656800BF153E /* FetchProductDetailUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD7529A3656800BF153E /* FetchProductDetailUseCaseMock.swift */; };
+		AFCAFD7829A3658400BF153E /* SearchUserProfileUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD7729A3658400BF153E /* SearchUserProfileUseCaseMock.swift */; };
+		AFCAFD7A29A3659E00BF153E /* HandleLikedProductUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD7929A3659E00BF153E /* HandleLikedProductUseCaseMock.swift */; };
+		AFCAFD7C29A365B600BF153E /* HandleChattingUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD7B29A365B600BF153E /* HandleChattingUseCaseMock.swift */; };
+		AFCAFD7E29A365D700BF153E /* SearchOthersUIDUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD7D29A365D700BF153E /* SearchOthersUIDUseCaseMock.swift */; };
+		AFCAFD8029A3660C00BF153E /* SearchQueryUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD7F29A3660C00BF153E /* SearchQueryUseCaseMock.swift */; };
+		AFCAFD8229A3662200BF153E /* SearchQueryResultsUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD8129A3662200BF153E /* SearchQueryResultsUseCaseMock.swift */; };
+		AFCAFD8429A3664F00BF153E /* RegisterProductUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD8329A3664F00BF153E /* RegisterProductUseCaseMock.swift */; };
+		AFCAFD8629A3666700BF153E /* EditProductUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD8529A3666700BF153E /* EditProductUseCaseMock.swift */; };
+		AFCAFD8829A371C200BF153E /* EditProductUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD8729A371C200BF153E /* EditProductUseCaseTests.swift */; };
+		AFCAFD8A29A374B100BF153E /* RegisterProductUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD8929A374B100BF153E /* RegisterProductUseCaseTests.swift */; };
+		AFCAFD8C29A3769100BF153E /* SearchOthersUIDUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD8B29A3769100BF153E /* SearchOthersUIDUseCaseTests.swift */; };
+		AFCAFD8E29A37DBD00BF153E /* SearchChattingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD8D29A37DBD00BF153E /* SearchChattingUseCaseTests.swift */; };
+		AFCAFD9029A37F2D00BF153E /* RecordVendorNameUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD8F29A37F2D00BF153E /* RecordVendorNameUseCaseTests.swift */; };
+		AFCAFD9229A380F600BF153E /* HandleChattingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAFD9129A380F600BF153E /* HandleChattingUseCaseTests.swift */; };
 		AFCD3DF4297A34D900DC0154 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCD3DF3297A34D900DC0154 /* ImageRepository.swift */; };
 		AFCD3DF9297A39A000DC0154 /* ProductPostRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCD3DF8297A39A000DC0154 /* ProductPostRequestDTO.swift */; };
 		AFCD3DFD297A40E600DC0154 /* ProductEditRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCD3DFC297A40E600DC0154 /* ProductEditRequestDTO.swift */; };
@@ -280,6 +300,26 @@
 		AFC44D4E29348CD600B01142 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		AFC44D502934975300B01142 /* ProductCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionView.swift; sourceTree = "<group>"; };
 		AFC44D52293497C900B01142 /* ProductGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductGridCell.swift; sourceTree = "<group>"; };
+		AFCAFD6B29A3648F00BF153E /* LoginUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD6D29A364CF00BF153E /* CreateUserUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD6F29A364FA00BF153E /* RecordVendorNameUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordVendorNameUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD7129A3651700BF153E /* AddNextProductPageUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNextProductPageUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD7329A3654A00BF153E /* DeleteProductUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD7529A3656800BF153E /* FetchProductDetailUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProductDetailUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD7729A3658400BF153E /* SearchUserProfileUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserProfileUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD7929A3659E00BF153E /* HandleLikedProductUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleLikedProductUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD7B29A365B600BF153E /* HandleChattingUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleChattingUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD7D29A365D700BF153E /* SearchOthersUIDUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOthersUIDUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD7F29A3660C00BF153E /* SearchQueryUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQueryUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD8129A3662200BF153E /* SearchQueryResultsUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQueryResultsUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD8329A3664F00BF153E /* RegisterProductUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterProductUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD8529A3666700BF153E /* EditProductUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProductUseCaseMock.swift; sourceTree = "<group>"; };
+		AFCAFD8729A371C200BF153E /* EditProductUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProductUseCaseTests.swift; sourceTree = "<group>"; };
+		AFCAFD8929A374B100BF153E /* RegisterProductUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterProductUseCaseTests.swift; sourceTree = "<group>"; };
+		AFCAFD8B29A3769100BF153E /* SearchOthersUIDUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOthersUIDUseCaseTests.swift; sourceTree = "<group>"; };
+		AFCAFD8D29A37DBD00BF153E /* SearchChattingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchChattingUseCaseTests.swift; sourceTree = "<group>"; };
+		AFCAFD8F29A37F2D00BF153E /* RecordVendorNameUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordVendorNameUseCaseTests.swift; sourceTree = "<group>"; };
+		AFCAFD9129A380F600BF153E /* HandleChattingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleChattingUseCaseTests.swift; sourceTree = "<group>"; };
 		AFCD3DF3297A34D900DC0154 /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
 		AFCD3DF8297A39A000DC0154 /* ProductPostRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductPostRequestDTO.swift; sourceTree = "<group>"; };
 		AFCD3DFC297A40E600DC0154 /* ProductEditRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditRequestDTO.swift; sourceTree = "<group>"; };
@@ -462,12 +502,12 @@
 				AF471C4A297E779900A3ACD6 /* FetchProductDetailUseCase.swift */,
 				AFB7FFBE297FC4DC003290EE /* LoginUseCase.swift */,
 				AFB7FFC0297FC901003290EE /* CreateUserUseCase.swift */,
+				AFB0D8FC29947BF900A7AF8B /* RecordVendorNameUseCase.swift */,
 				AF3295EB29821DF300BCA1AA /* SearchQueryUseCase.swift */,
 				AF3295ED2982200500BCA1AA /* SearchQueryResultsUseCase.swift */,
 				AF06CEF3298905360004676C /* SearchUserProfileUseCase.swift */,
 				AFB0D8F82993E03A00A7AF8B /* SearchOthersUIDUseCase.swift */,
 				AFB0D8EE2993508300A7AF8B /* SearchChattingUseCase.swift */,
-				AFB0D8FC29947BF900A7AF8B /* RecordVendorNameUseCase.swift */,
 				AF465E17298AA1730071A0F3 /* HandleLikedProductUseCase.swift */,
 				AFB0D8F62993929300A7AF8B /* HandleChattingUseCase.swift */,
 				AF56AB122998E2A60033CD3F /* SendMessageUseCase.swift */,
@@ -1062,6 +1102,27 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		AFCAFD6A29A3648300BF153E /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				AFCAFD6B29A3648F00BF153E /* LoginUseCaseMock.swift */,
+				AFCAFD6D29A364CF00BF153E /* CreateUserUseCaseMock.swift */,
+				AFCAFD6F29A364FA00BF153E /* RecordVendorNameUseCaseMock.swift */,
+				AFCAFD7129A3651700BF153E /* AddNextProductPageUseCaseMock.swift */,
+				AFCAFD7329A3654A00BF153E /* DeleteProductUseCaseMock.swift */,
+				AFCAFD7529A3656800BF153E /* FetchProductDetailUseCaseMock.swift */,
+				AFCAFD7729A3658400BF153E /* SearchUserProfileUseCaseMock.swift */,
+				AFCAFD7929A3659E00BF153E /* HandleLikedProductUseCaseMock.swift */,
+				AFCAFD7B29A365B600BF153E /* HandleChattingUseCaseMock.swift */,
+				AFCAFD7D29A365D700BF153E /* SearchOthersUIDUseCaseMock.swift */,
+				AFCAFD7F29A3660C00BF153E /* SearchQueryUseCaseMock.swift */,
+				AFCAFD8129A3662200BF153E /* SearchQueryResultsUseCaseMock.swift */,
+				AFCAFD8329A3664F00BF153E /* RegisterProductUseCaseMock.swift */,
+				AFCAFD8529A3666700BF153E /* EditProductUseCaseMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		AFCD3DF7297A391D00DC0154 /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
@@ -1137,6 +1198,7 @@
 		AFDE2434298B3662004F20DD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				AFCAFD6A29A3648300BF153E /* Mocks */,
 				AF879B5F298C9A0300F7237A /* LoginScene */,
 				AF879B64298CAD4100F7237A /* HomeScene */,
 				AF879B69298CDCFD00F7237A /* SearchScene */,
@@ -1158,14 +1220,20 @@
 			children = (
 				AFA2FB26298BE713005C44D4 /* Mocks */,
 				AFDE2437298B36A4004F20DD /* AddNextProductPageUseCaseTests.swift */,
+				AFCAFD8729A371C200BF153E /* EditProductUseCaseTests.swift */,
+				AFCAFD8929A374B100BF153E /* RegisterProductUseCaseTests.swift */,
 				AFDE243A298B52B1004F20DD /* DeleteProductUseCaseTests.swift */,
-				AFDE2444298B8462004F20DD /* SearchQueryUseCaseTests.swift */,
-				AFA2FB22298BC4D4005C44D4 /* SearchQueryResultsUseCaseTests.swift */,
 				AFDE243C298B549A004F20DD /* FetchProductDetailUseCaseTests.swift */,
 				AFDE243E298B5B1E004F20DD /* LoginUseCaseTests.swift */,
 				AFDE2440298B5F0D004F20DD /* CreateUserUseCaseTests.swift */,
+				AFCAFD8F29A37F2D00BF153E /* RecordVendorNameUseCaseTests.swift */,
+				AFDE2444298B8462004F20DD /* SearchQueryUseCaseTests.swift */,
+				AFA2FB22298BC4D4005C44D4 /* SearchQueryResultsUseCaseTests.swift */,
 				AFDE2442298B802D004F20DD /* SearchUserProfileUseCaseTests.swift */,
+				AFCAFD8B29A3769100BF153E /* SearchOthersUIDUseCaseTests.swift */,
+				AFCAFD8D29A37DBD00BF153E /* SearchChattingUseCaseTests.swift */,
 				AFA2FB24298BC890005C44D4 /* HandleLikedProductUseCaseTests.swift */,
+				AFCAFD9129A380F600BF153E /* HandleChattingUseCaseTests.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1425,25 +1493,45 @@
 			files = (
 				AF879B61298C9A2C00F7237A /* LoginViewModelTests.swift in Sources */,
 				AFDE2445298B8462004F20DD /* SearchQueryUseCaseTests.swift in Sources */,
+				AFCAFD8A29A374B100BF153E /* RegisterProductUseCaseTests.swift in Sources */,
 				AFA2FB28298BE73E005C44D4 /* ProductsRepositoryMock.swift in Sources */,
 				AF01D37E2990EC2700ACACB1 /* RegisterViewModelTests.swift in Sources */,
+				AFCAFD7229A3651700BF153E /* AddNextProductPageUseCaseMock.swift in Sources */,
 				AF06CEF22988CA5D0004676C /* MockURLSessionTest.swift in Sources */,
 				AFDE243D298B549A004F20DD /* FetchProductDetailUseCaseTests.swift in Sources */,
+				AFCAFD8829A371C200BF153E /* EditProductUseCaseTests.swift in Sources */,
 				AFDE2438298B36A4004F20DD /* AddNextProductPageUseCaseTests.swift in Sources */,
+				AFCAFD7029A364FA00BF153E /* RecordVendorNameUseCaseMock.swift in Sources */,
 				AFDE243F298B5B1E004F20DD /* LoginUseCaseTests.swift in Sources */,
+				AFCAFD7429A3654A00BF153E /* DeleteProductUseCaseMock.swift in Sources */,
 				AFDE243B298B52B1004F20DD /* DeleteProductUseCaseTests.swift in Sources */,
 				AFDE2441298B5F0D004F20DD /* CreateUserUseCaseTests.swift in Sources */,
+				AFCAFD7C29A365B600BF153E /* HandleChattingUseCaseMock.swift in Sources */,
 				AFA2FB23298BC4D4005C44D4 /* SearchQueryResultsUseCaseTests.swift in Sources */,
 				AFD9AB50292313BA009A67AB /* APIConfigurationTest.swift in Sources */,
 				AF879B68298CC29E00F7237A /* ProductDetailViewModelTests.swift in Sources */,
+				AFCAFD8C29A3769100BF153E /* SearchOthersUIDUseCaseTests.swift in Sources */,
 				AFDE2443298B802D004F20DD /* SearchUserProfileUseCaseTests.swift in Sources */,
+				AFCAFD8629A3666700BF153E /* EditProductUseCaseMock.swift in Sources */,
 				AF879B63298CA82A00F7237A /* SigninViewModelTests.swift in Sources */,
+				AFCAFD7829A3658400BF153E /* SearchUserProfileUseCaseMock.swift in Sources */,
+				AFCAFD7E29A365D700BF153E /* SearchOthersUIDUseCaseMock.swift in Sources */,
+				AFCAFD7A29A3659E00BF153E /* HandleLikedProductUseCaseMock.swift in Sources */,
+				AFCAFD8029A3660C00BF153E /* SearchQueryUseCaseMock.swift in Sources */,
+				AFCAFD9029A37F2D00BF153E /* RecordVendorNameUseCaseTests.swift in Sources */,
 				AF879B6B298CDD1A00F7237A /* SearchViewModelTests.swift in Sources */,
 				AFA2FB25298BC890005C44D4 /* HandleLikedProductUseCaseTests.swift in Sources */,
 				AF879B66298CAD5F00F7237A /* ProductListViewModelTests.swift in Sources */,
 				AFA2FB2A298C0099005C44D4 /* FirebaseAuthServiceMock.swift in Sources */,
+				AFCAFD6E29A364CF00BF153E /* CreateUserUseCaseMock.swift in Sources */,
+				AFCAFD9229A380F600BF153E /* HandleChattingUseCaseTests.swift in Sources */,
+				AFCAFD8229A3662200BF153E /* SearchQueryResultsUseCaseMock.swift in Sources */,
+				AFCAFD7629A3656800BF153E /* FetchProductDetailUseCaseMock.swift in Sources */,
+				AFCAFD8E29A37DBD00BF153E /* SearchChattingUseCaseTests.swift in Sources */,
+				AFCAFD8429A3664F00BF153E /* RegisterProductUseCaseMock.swift in Sources */,
 				AFA2FB2C298C0113005C44D4 /* FirestoreServiceMock.swift in Sources */,
 				AF879B6D298CE68700F7237A /* ResultViewModelTests.swift in Sources */,
+				AFCAFD6C29A3648F00BF153E /* LoginUseCaseMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
