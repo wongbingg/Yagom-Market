@@ -15,6 +15,7 @@ class ProductsRepositoryMock: ProductsRepository {
     var fetchProductsQueryCallCount = 0
     var deleteMethodCallCount = 0
     var requestPostCallCount = 0
+    var editProductDetailCallCount = 0
     var passedProductId = 0
     var hasNext: Bool = true
     
@@ -39,12 +40,15 @@ class ProductsRepositoryMock: ProductsRepository {
         return []
     }
     
-    func requestPost(with registerModel: YagomMarket.RegisterModel) async throws {
+    func requestPost(with registerModel: RegisterModel) async throws {
         requestPostCallCount += 1
     }
     
     func editProductDetail(with editModel: ProductEditRequestDTO,
-                           productId: Int) async throws {}
+                           productId: Int) async throws {
+        editProductDetailCallCount += 1
+        passedProductId = productId
+    }
     
     func deleteProduct(productId: Int) async throws {
         deleteMethodCallCount += 1
