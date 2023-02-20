@@ -22,4 +22,8 @@ struct UserUID: Entity {
         
         return .init(userUID: userUID)
     }
+    
+    static func stub(userUID: String = "") -> Self {
+        .init(userUID: userUID)
+    }
 }

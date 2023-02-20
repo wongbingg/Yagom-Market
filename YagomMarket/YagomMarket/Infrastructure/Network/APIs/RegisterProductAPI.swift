@@ -26,4 +26,10 @@ struct RegisterProductAPI: API {
 struct RegisterModel {
     let requestDTO: ProductPostRequestDTO
     let images: [UIImage]?
+    
+    static func stub(requestDTO: ProductPostRequestDTO = .stub(),
+                     images: [UIImage]? = nil) -> Self {
+        .init(requestDTO: requestDTO,
+              images: images)
+    }
 }

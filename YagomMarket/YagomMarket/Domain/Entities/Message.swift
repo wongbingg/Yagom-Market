@@ -27,4 +27,12 @@ struct Message: Entity {
         
         return .init(body: body, sender: sender, time: time)
     }
+    
+    static func stub(body: String = "",
+                     sender: String = "",
+                     time: String = "") -> Self {
+        .init(body: body,
+              sender: sender,
+              time: time)
+    }
 }

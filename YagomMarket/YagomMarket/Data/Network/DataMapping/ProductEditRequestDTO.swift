@@ -27,4 +27,22 @@ struct ProductEditRequestDTO: BodyType {
         case stock
         case secret
     }
+    
+    static func stub(name: String? = nil,
+              description: String? = nil,
+              thumbnailId: Int? = nil,
+              price: Double? = nil,
+              currency: Currency? = nil,
+              discountedPrice: Double? = nil,
+              stock: Int? = nil,
+              secret: String = "") -> Self {
+        .init(name: name,
+              description: description,
+              thumbnailId: thumbnailId,
+              price: price,
+              currency: currency,
+              discountedPrice: discountedPrice,
+              stock: stock,
+              secret: secret)
+    }
 }
