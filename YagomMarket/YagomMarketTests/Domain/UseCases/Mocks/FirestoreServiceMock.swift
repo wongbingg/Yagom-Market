@@ -21,7 +21,7 @@ struct DummyEntity: Entity {
     }
 }
 
-class FirestoreServiceMock: FirestoreService {
+final class FirestoreServiceMock: FirestoreService {
     typealias T = DummyEntity
     
     var firestore: [Entity] = []
@@ -57,12 +57,13 @@ class FirestoreServiceMock: FirestoreService {
                 documentId: String) async throws {}
 }
 
-class UserProfileFirestoreServiceMock: FirestoreService {
+final class UserProfileFirestoreServiceMock: FirestoreService {
     typealias T = UserProfile
     var firestore: [Entity] = []
     var createCallCount = 0
     var readCallCount = 0
     var updateCallCount = 0
+    var deleteCallCount = 0
     
     func create<T>(collectionId: String,
                    documentId: String,
@@ -76,7 +77,7 @@ class UserProfileFirestoreServiceMock: FirestoreService {
 
         readCallCount += 1
 
-        return UserProfile.stub()
+        return UserProfile.stub(chattingUUIDList: ["chattingUUID"])
     }
     
     func readDocuments(collectionId: String) async throws -> [T] {
@@ -89,5 +90,75 @@ class UserProfileFirestoreServiceMock: FirestoreService {
     }
 
     func delete(collectionId: String,
-                documentId: String) async throws {}
+                documentId: String) async throws {
+        deleteCallCount += 1
+    }
+}
+
+final class UserUIDFirestoreServiceMock: FirestoreService {
+    typealias T = UserUID
+    var readCallCount = 0
+    var createCallCount = 0
+    
+    func create<T>(collectionId: String,
+                   documentId: String,
+                   entity: T) async throws where T : Entity {
+        createCallCount += 1
+    }
+    
+    func read(collectionId: String,
+              documentId: String) async throws -> UserUID {
+        readCallCount += 1
+        return UserUID.stub()
+    }
+    
+    func readDocuments(collectionId: String) async throws -> [UserUID] {
+        return [UserUID.stub()]
+    }
+    
+    func update<T>(collectionId: String,
+                   documentId: String,
+                   to entity: T) async throws where T : Entity {
+        //
+    }
+    
+    func delete(collectionId: String,
+                documentId: String) async throws {
+        //
+    }
+}
+
+final class MessageFirestoreServiceMock: FirestoreService {
+    typealias T = Message
+    var readCallCount = 0
+    var readDocumentsCallCount = 0
+    var createCallCount = 0
+    
+    func create<T>(collectionId: String,
+                   documentId: String,
+                   entity: T) async throws where T : Entity {
+        createCallCount += 1
+    }
+    
+    func read(collectionId: String,
+              documentId: String) async throws -> Message {
+        readCallCount += 1
+        return Message.stub()
+    }
+    
+    func readDocuments(collectionId: String) async throws -> [Message] {
+        readDocumentsCallCount += 1
+        return [Message.stub()]
+    }
+    
+    func update<T>(collectionId: String,
+                   documentId: String,
+                   to entity: T) async throws where T : Entity {
+        //
+    }
+    
+    func delete(collectionId: String,
+                documentId: String) async throws {
+        //
+    }
 }
