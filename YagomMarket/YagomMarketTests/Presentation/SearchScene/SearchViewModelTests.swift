@@ -99,27 +99,3 @@ final class SearchViewModelTests: XCTestCase {
         XCTAssertEqual(expectationGoToHomeTabCallCount, goToHomeTabCallCount)
     }
 }
-
-class SearchQueryUseCaseMock: SearchQueryUseCase {
-    
-    func execute(keyword: String) async throws -> [String] {
-        
-        if keyword == "invalid" {
-            throw APIError.unknown
-        } else {
-            return []
-        }
-    }
-}
-
-class SearchQueryResultsUseCaseMock: SearchQueryResultsUseCase {
-    
-    func execute(keyword: String) async throws -> ProductListResponseDTO {
-        
-        if keyword == "invalid" {
-            throw APIError.unknown
-        } else {
-            return ProductListResponseDTO.toMockData(hasNext: true)
-        }
-    }
-}

@@ -48,17 +48,3 @@ final class ProductListViewModelTests: XCTestCase {
         }
     }
 }
-
-class AddNextProductPageUseCaseMock: AddNextProductPageUseCase {
-    var hasNext: Bool = true
-
-    func execute() async throws -> [ProductCell] {
-        guard hasNext == true  else { throw ProductsRepositoryError.noNextPage }
-        
-        return [ProductCell.stub()]
-    }
-    
-    func resetToFirstPage() {
-        hasNext = true
-    }
-}

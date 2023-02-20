@@ -63,20 +63,3 @@ final class RegisterViewModelTests: XCTestCase {
         XCTAssertEqual(expectationEditCallCount, editProductUseCaseMock.callCount)
     }
 }
-
-class RegisterProductUseCaseMock: RegisterProductUseCase {
-    var callCount = 0
-    
-    func execute(with registerModel: RegisterModel) async throws {
-        callCount += 1
-    }
-}
-
-class EditProductUseCaseMock: EditProductUseCase {
-    var callCount = 0
-    
-    func execute(with requestDTO: ProductEditRequestDTO,
-                 productId: Int) async throws {
-        callCount += 1
-    }
-}

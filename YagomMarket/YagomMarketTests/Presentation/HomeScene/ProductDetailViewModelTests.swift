@@ -11,70 +11,55 @@ import XCTest
 final class ProductDetailViewModelTests: XCTestCase {
     
     var sut: ProductDetailViewModel!
+    var deleteProductUseCaseMock: DeleteProductUseCaseMock!
 
     override func setUpWithError() throws {
+        deleteProductUseCaseMock = DeleteProductUseCaseMock()
+        
         sut = DefaultProductDetailViewModel(
-            deleteProductUseCase: DeleteProductUseCaseMock(),
+            deleteProductUseCase: deleteProductUseCaseMock,
             fetchProductDetailUseCase: FetchProductDetailUseCaseMock(),
             searchUserProfileUseCase: SearchUserProfileUseCaseMock(),
             handleLikedProductUseCase: HandleLikedProductUseCaseMock(),
             handleChattingUseCase: HandleChattingUseCaseMock(),
             searchOthersUIDUseCase: SearchOthersUIDUseCaseMock(),
-            productId: 1
+            productId: 6
         )
     }
 
     override func tearDownWithError() throws {
+        deleteProductUseCaseMock = nil
         sut = nil
     }
     // TODO: 테스트 진행
-}
-
-class DeleteProductUseCaseMock: DeleteProductUseCase {
     
-    func execute(productId: Int) async throws {
-        //
-    }
-    
-}
-
-class FetchProductDetailUseCaseMock: FetchProductDetailUseCase {
-    
-    func execute(productId: Int) async throws -> ProductDetail {
-        if productId == 1 {
-            throw APIError.unknown
+    func test_fetchProduct메서드실행시_예상한반환값이나오는지() async throws {
+        // given
+        let expectation = ProductDetail.stub()
+        do {
+            // when
+            try await sut.fetchProduct()
+            
+            // then
+            XCTAssertEqual(expectation, sut.productDetail)
+        } catch let error as LocalizedError {
+            
+            print(error.errorDescription ?? "\(#function) error")
         }
-        return ProductDetail.stub()
-    }
-}
-
-class SearchUserProfileUseCaseMock: SearchUserProfileUseCase {
-    
-    func execute(othersUID: String?) async throws -> UserProfile {
-        
-        return UserProfile.stub(likedProductIds: [2,3,4,5])
-    }
-}
-
-class HandleLikedProductUseCaseMock: HandleLikedProductUseCase {
-    
-    func execute(with productId: Int, isAdd: Bool) async throws {
-        //
-    }
-}
-
-class HandleChattingUseCaseMock: HandleChattingUseCase {
-    func execute(chattingUUID: String, isAdded: Bool, othersUID: String?) async throws {
-        //
     }
     
-    
-}
-
-class SearchOthersUIDUseCaseMock: SearchOthersUIDUseCase {
-    func execute(with vendorName: String) async throws -> UserUID {
-        return UserUID(userUID: "")
+    func test_deleteProduct메서드실행시_DeleteProductUseCase를실행하는지() async throws {
+        // given
+        let expectationCallCount = 1
+        do {
+            // when
+            try await sut.deleteProduct()
+            
+            // then
+            XCTAssertEqual(expectationCallCount, deleteProductUseCaseMock.callCount)
+        } catch let error as LocalizedError {
+            
+            print(error.errorDescription ?? "\(#function) error")
+        }
     }
-    
-    
 }

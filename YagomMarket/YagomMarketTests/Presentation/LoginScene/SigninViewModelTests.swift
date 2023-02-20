@@ -85,29 +85,3 @@ final class SigninViewModelTests: XCTestCase {
         }
     }
 }
-
-class CreateUserUseCaseMock: CreateUserUseCase {
-    let firebaseAuthService: FirebaseAuthService
-    let firestoreService: any FirestoreService
-    
-    init(
-        firebaseAuthService: FirebaseAuthService,
-        firestoreService: any FirestoreService
-    ) {
-        self.firebaseAuthService = firebaseAuthService
-        self.firestoreService = firestoreService
-    }
-    
-    func execute(with loginInfo: LoginInfo) async throws {
-        if loginInfo.vendorName == "invalid" {
-            throw FirebaseAuthServiceError.failToCreateUser
-        }
-    }
-    
-}
-
-class RecordVendorNameUseCaseMock: RecordVendorNameUseCase {
-    func execute(with vendorName: String?) async throws {
-        //
-    }
-}

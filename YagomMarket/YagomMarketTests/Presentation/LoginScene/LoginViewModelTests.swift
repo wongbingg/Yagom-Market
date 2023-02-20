@@ -134,13 +134,3 @@ final class LoginViewModelTests: XCTestCase {
         }
     }
 }
-
-class LoginUseCaseMock: LoginUseCase {
-    
-    func execute(with loginInfo: YagomMarket.LoginInfo) async throws -> String? {
-        if loginInfo.vendorName == "invalid" {
-            throw FirebaseAuthServiceError.failToLogin
-        }
-        return "userUID"
-    }
-}
