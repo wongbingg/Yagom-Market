@@ -12,12 +12,13 @@ import UIKit
 
 struct LoginViewModelActions {
     let successLogin: (String, String, String, String) -> Void
-    let createUserButtonTapped: () -> Void
+    let createUserButtonTapped: (LoginInfo?) -> Void
 }
 
 protocol LoginViewModelInput {
     func loginButtonTapped(with loginInfo: LoginInfo) async throws
-    func createUserButtonTapped()
+    func createUserButtonTapped(with socialLoginInfo: LoginInfo?)
+    func kakaoLogoButtonTapped()
 }
 
 protocol LoginViewModelOutput {}
@@ -52,7 +53,23 @@ final class DefaultLoginViewModel: LoginViewModel {
         }
     }
     
-    func createUserButtonTapped() {
-        actions?.createUserButtonTapped()
+    func createUserButtonTapped(with socialLoginInfo: LoginInfo?) {
+        actions?.createUserButtonTapped(socialLoginInfo)
+    }
+    
+    func kakaoLogoButtonTapped() {
+        let kakaoService = DefaultKakaoService()
+        kakaoService.login { loginInfo in
+            Task {
+                do {
+                    _ = try await self.loginUseCase.execute(with: loginInfo)
+                    try await self.loginButtonTapped(with: loginInfo)
+                } catch {
+                    DispatchQueue.main.async {
+                        self.createUserButtonTapped(with: loginInfo)
+                    }
+                }
+            }
+        }
     }
 }
