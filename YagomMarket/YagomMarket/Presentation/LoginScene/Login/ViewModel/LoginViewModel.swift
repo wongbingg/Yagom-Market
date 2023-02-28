@@ -7,7 +7,7 @@
 
 import Foundation
 import FirebaseAuth
-//import FacebookCore
+import FacebookCore
 import UIKit
 
 struct LoginViewModelActions {
@@ -19,6 +19,7 @@ protocol LoginViewModelInput {
     func loginButtonTapped(with loginInfo: LoginInfo) async throws
     func createUserButtonTapped(with socialLoginInfo: LoginInfo?)
     func kakaoLogoButtonTapped()
+    func facebookButtonTapped(in viewController: UIViewController)
 }
 
 protocol LoginViewModelOutput {}
@@ -60,6 +61,22 @@ final class DefaultLoginViewModel: LoginViewModel {
     func kakaoLogoButtonTapped() {
         let kakaoService = DefaultKakaoService()
         kakaoService.login { loginInfo in
+            Task {
+                do {
+                    _ = try await self.loginUseCase.execute(with: loginInfo)
+                    try await self.loginButtonTapped(with: loginInfo)
+                } catch {
+                    DispatchQueue.main.async {
+                        self.createUserButtonTapped(with: loginInfo)
+                    }
+                }
+            }
+        }
+    }
+    
+    func facebookButtonTapped(in viewController: UIViewController) {
+        let facebookService = DefaultFacebookService()
+        facebookService.login(in: viewController) { loginInfo in
             Task {
                 do {
                     _ = try await self.loginUseCase.execute(with: loginInfo)

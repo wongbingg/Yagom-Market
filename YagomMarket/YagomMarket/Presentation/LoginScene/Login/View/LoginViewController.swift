@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-//import FacebookLogin
 
 final class LoginViewController: UIViewController {
     private let loginView = LoginView()
@@ -102,9 +101,7 @@ final class LoginViewController: UIViewController {
     }
 
     @objc private func facebookButtonTapped() {
-        DefaultAlertBuilder(title: .warning, message: "현재 사용할 수 없습니다")
-            .setButton()
-            .showAlert(on: self)
+        viewModel.facebookButtonTapped(in: self)
     }
     
     @objc private func appleButtonTapped() {
