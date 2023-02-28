@@ -56,23 +56,23 @@ final class LoginViewController: UIViewController {
             for: .touchUpInside
         )
         
-//        loginView.kakaoLogoImageButton.addTarget(
-//            self,
-//            action: #selector(kakaoButtonTapped),
-//            for: .touchUpInside
-//        )
-//
-//        loginView.facebookLogoImageButton.addTarget(
-//            self,
-//            action: #selector(facebookButtonTapped),
-//            for: .touchUpInside
-//        )
-//
-//        loginView.appleLogoImageButton.addTarget(
-//            self,
-//            action: #selector(appleButtonTapped),
-//            for: .touchUpInside
-//        )
+        loginView.kakaoLogoImageButton.addTarget(
+            self,
+            action: #selector(kakaoButtonTapped),
+            for: .touchUpInside
+        )
+
+        loginView.facebookLogoImageButton.addTarget(
+            self,
+            action: #selector(facebookButtonTapped),
+            for: .touchUpInside
+        )
+
+        loginView.appleLogoImageButton.addTarget(
+            self,
+            action: #selector(appleButtonTapped),
+            for: .touchUpInside
+        )
     }
     
     @objc private func loginButtonTapped() {
@@ -94,21 +94,23 @@ final class LoginViewController: UIViewController {
     }
     
     @objc private func signInButtonTapped() {
-        viewModel.createUserButtonTapped()
+        viewModel.createUserButtonTapped(with: nil)
     }
     
-//    @objc private func kakaoButtonTapped() {
-//        viewModel.kakaoLogoButtonTapped()
-//    }
-//
-//    @objc private func facebookButtonTapped() {
-//        viewModel.facebookLoginButtonTapped(in: self)
-//    }
-//
-//    @objc private func appleButtonTapped() {
-//        AlertBuilder(title: "경고", message: "현재 사용할 수 없습니다.", preferredStyle: .alert)
-//            .setButton(name: "확인", style: .default)
-//            .showAlert(on: self)
-//    }
+    @objc private func kakaoButtonTapped() {
+        viewModel.kakaoLogoButtonTapped()
+    }
+
+    @objc private func facebookButtonTapped() {
+        DefaultAlertBuilder(title: .warning, message: "현재 사용할 수 없습니다")
+            .setButton()
+            .showAlert(on: self)
+    }
+    
+    @objc private func appleButtonTapped() {
+        DefaultAlertBuilder(title: .warning, message: "현재 사용할 수 없습니다")
+            .setButton()
+            .showAlert(on: self)
+    }
 }
 
