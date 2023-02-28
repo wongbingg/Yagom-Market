@@ -25,16 +25,22 @@ final class LoginSceneDIContainer {
     }
     
     // MARK: - Signin
-    func makeSigninViewController(actions: SigninViewModelActions) -> SigninViewController {
-        let viewModel = makeSigninViewModel(actions: actions)
+    func makeSigninViewController(actions: SigninViewModelActions,
+                                  socialLoginInfo: LoginInfo?) -> SigninViewController {
+        let viewModel = makeSigninViewModel(
+            actions: actions,
+            socialLoginInfo: socialLoginInfo
+        )
         return SigninViewController(with: viewModel)
     }
     
-    func makeSigninViewModel(actions: SigninViewModelActions) -> SigninViewModel {
+    func makeSigninViewModel(actions: SigninViewModelActions,
+                             socialLoginInfo: LoginInfo?) -> SigninViewModel {
         return DefaultSigninViewModel(
             actions: actions,
             createUserUseCase: makeCreateUserUseCase(),
-            recordVendorNameUseCase: makeRecordVendorNameUseCase()
+            recordVendorNameUseCase: makeRecordVendorNameUseCase(),
+            socialLoginInfo: socialLoginInfo
         )
     }
     

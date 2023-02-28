@@ -23,7 +23,7 @@ final class SigninViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.text = "이메일과 비밀번호를 입력하여 계정을 등록하세요."
+        label.text = "정보를 입력하여 계정을 등록하세요."
         label.setContentHuggingPriority(UILayoutPriority(249), for: .vertical)
         return label
     }()
@@ -128,6 +128,11 @@ final class SigninViewController: UIViewController {
     
     private func setupInitialView() {
         view.backgroundColor = .systemBackground
+        
+        if let loginInfo = viewModel.passedSocialLoginInfo {
+            idTextField.text = loginInfo.id
+            passwordTextField.text = loginInfo.password
+        }
     }
     
     private func setupButton() {

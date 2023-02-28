@@ -10,7 +10,8 @@ import FirebaseAuth
 
 protocol LoginFlowCoordinatorDependencies: AnyObject {
     func makeLoginViewController(actions: LoginViewModelActions) -> LoginViewController
-    func makeSigninViewController(actions: SigninViewModelActions) -> SigninViewController
+    func makeSigninViewController(actions: SigninViewModelActions,
+                                  socialLoginInfo: LoginInfo?) -> SigninViewController
     func makeTabBarController(navigationController: UINavigationController,
                               userUID: String) -> TabBarController
 }
@@ -54,9 +55,12 @@ final class LoginFlowCoordinator {
         navigationController.pushViewController(tabBarController, animated: true)
     }
     
-    private func signinButtonTapped() {
+    private func signinButtonTapped(with socialLoginInfo: LoginInfo?) {
         let actions = SigninViewModelActions(backToLoginView: backToLoginView)
-        let signinVC = dependencies.makeSigninViewController(actions: actions)
+        let signinVC = dependencies.makeSigninViewController(
+            actions: actions,
+            socialLoginInfo: socialLoginInfo
+        )
         navigationController.pushViewController(signinVC, animated: true)
     }
     

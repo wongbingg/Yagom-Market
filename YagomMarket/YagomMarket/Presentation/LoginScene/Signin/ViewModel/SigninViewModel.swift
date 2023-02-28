@@ -12,23 +12,27 @@ struct SigninViewModelActions {
 protocol SigninViewModelInput {
     func registerButtonTapped(_ loginInfo: LoginInfo) async throws
 }
-protocol SigninViewModelOutput {}
+protocol SigninViewModelOutput {
+    var passedSocialLoginInfo: LoginInfo? { get }
+}
 protocol SigninViewModel: SigninViewModelInput, SigninViewModelOutput {}
 
 final class DefaultSigninViewModel: SigninViewModel {
     private let actions: SigninViewModelActions?
     private let createUserUseCase: CreateUserUseCase
     private let recordVendorNameUseCase: RecordVendorNameUseCase
+    var passedSocialLoginInfo: LoginInfo?
 
     init(
         actions: SigninViewModelActions? = nil,
         createUserUseCase: CreateUserUseCase,
-        recordVendorNameUseCase: RecordVendorNameUseCase
-
+        recordVendorNameUseCase: RecordVendorNameUseCase,
+        socialLoginInfo: LoginInfo? = nil
     ) {
         self.actions = actions
         self.createUserUseCase = createUserUseCase
         self.recordVendorNameUseCase = recordVendorNameUseCase
+        self.passedSocialLoginInfo = socialLoginInfo
     }
 
     func registerButtonTapped(_ loginInfo: LoginInfo) async throws {
