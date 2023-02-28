@@ -10,6 +10,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kakaobd6790e904ea4b506b5427791d3aff9f</string>
+                <string>fb515366260758339</string>
 			</array>
 		</dict>
 	</array>
@@ -30,5 +31,16 @@
 			</array>
 		</dict>
 	</dict>
+    <key>FacebookAppID</key>
+    <string>515366260758339</string>
+    <key>FacebookClientToken</key>
+    <string>807c133cbcd8579f2277ed32fa746a8b</string>
+    <key>FacebookDisplayName</key>
+    <string>YagomMarket</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-share-api</string>
+    </array>
 </dict>
 </plist>
