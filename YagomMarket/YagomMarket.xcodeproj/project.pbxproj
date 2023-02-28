@@ -37,6 +37,10 @@
 		AF06CEF4298905360004676C /* SearchUserProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06CEF3298905360004676C /* SearchUserProfileUseCase.swift */; };
 		AF0796992924A8E7002E876C /* SearchDeleteURIAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796982924A8E7002E876C /* SearchDeleteURIAPI.swift */; };
 		AF0796A12924BE62002E876C /* DeleteProductAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0796A02924BE62002E876C /* DeleteProductAPI.swift */; };
+		AF0E809129ADAA39003291AA /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = AF0E809029ADAA39003291AA /* FacebookCore */; };
+		AF0E809329ADAA39003291AA /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = AF0E809229ADAA39003291AA /* FacebookLogin */; };
+		AF0E809529ADAAFA003291AA /* FacebookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0E809429ADAAFA003291AA /* FacebookService.swift */; };
+		AF0E809729ADAB17003291AA /* DefaultFacebookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0E809629ADAB17003291AA /* DefaultFacebookService.swift */; };
 		AF11759129501A04002632D2 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF11759029501A04002632D2 /* MyPageViewController.swift */; };
 		AF13E5B52935C90E00F92C89 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13E5B42935C90E00F92C89 /* RegisterViewModel.swift */; };
 		AF13E5B72935C93B00F92C89 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13E5B62935C93B00F92C89 /* ProductDetailViewController.swift */; };
@@ -219,6 +223,8 @@
 		AF06CEF3298905360004676C /* SearchUserProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserProfileUseCase.swift; sourceTree = "<group>"; };
 		AF0796982924A8E7002E876C /* SearchDeleteURIAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDeleteURIAPI.swift; sourceTree = "<group>"; };
 		AF0796A02924BE62002E876C /* DeleteProductAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductAPI.swift; sourceTree = "<group>"; };
+		AF0E809429ADAAFA003291AA /* FacebookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookService.swift; sourceTree = "<group>"; };
+		AF0E809629ADAB17003291AA /* DefaultFacebookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFacebookService.swift; sourceTree = "<group>"; };
 		AF11759029501A04002632D2 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		AF13E5B42935C90E00F92C89 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		AF13E5B62935C93B00F92C89 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
@@ -360,8 +366,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF0E809329ADAA39003291AA /* FacebookLogin in Frameworks */,
 				AFB4C3F92980089C00D6749E /* FirebaseAuth in Frameworks */,
 				AFB4C3FB2980089C00D6749E /* FirebaseFirestore in Frameworks */,
+				AF0E809129ADAA39003291AA /* FacebookCore in Frameworks */,
 				AF58928529AD912000AFAF91 /* KakaoSDKUser in Frameworks */,
 				AF58927F29AD912000AFAF91 /* KakaoSDK in Frameworks */,
 				AF58928329AD912000AFAF91 /* KakaoSDKCommon in Frameworks */,
@@ -1092,6 +1100,7 @@
 				AFB7FFB6297FBB16003290EE /* FirestoreService.swift */,
 				AF4F32C5299A271B00BB740E /* FirestoreStream.swift */,
 				AF58928629AD916800AFAF91 /* KakaoService.swift */,
+				AF0E809429ADAAFA003291AA /* FacebookService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1112,6 +1121,7 @@
 				AFB7FFBC297FBE07003290EE /* DefaultFirestoreService.swift */,
 				AF4F32C3299A26F400BB740E /* DefaultFirestoreStream.swift */,
 				AF58928829AD919200AFAF91 /* DefaultKakaoService.swift */,
+				AF0E809629ADAB17003291AA /* DefaultFacebookService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1294,6 +1304,8 @@
 				AF58928029AD912000AFAF91 /* KakaoSDKAuth */,
 				AF58928229AD912000AFAF91 /* KakaoSDKCommon */,
 				AF58928429AD912000AFAF91 /* KakaoSDKUser */,
+				AF0E809029ADAA39003291AA /* FacebookCore */,
+				AF0E809229ADAA39003291AA /* FacebookLogin */,
 			);
 			productName = YagomMarket;
 			productReference = AF5BB773292210E20013BFC1 /* YagomMarket.app */;
@@ -1352,6 +1364,7 @@
 			packageReferences = (
 				AFB4C3F72980089C00D6749E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				AF58927D29AD912000AFAF91 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				AF0E808F29ADAA39003291AA /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = AF5BB774292210E20013BFC1 /* Products */;
 			projectDirPath = "";
@@ -1414,6 +1427,7 @@
 				AFE911D829517B7E004A1D1B /* ResultViewController.swift in Sources */,
 				AFB7FFB7297FBB16003290EE /* FirestoreService.swift in Sources */,
 				AF4F32C6299A271B00BB740E /* FirestoreStream.swift in Sources */,
+				AF0E809529ADAAFA003291AA /* FacebookService.swift in Sources */,
 				AF1520DB2926035F004957E7 /* Data+.swift in Sources */,
 				AFB0D8F72993929300A7AF8B /* HandleChattingUseCase.swift in Sources */,
 				AFB7FFC1297FC901003290EE /* CreateUserUseCase.swift in Sources */,
@@ -1493,6 +1507,7 @@
 				AFB0D9042994BE6900A7AF8B /* MessageCell.swift in Sources */,
 				AFB0D8FD29947BF900A7AF8B /* RecordVendorNameUseCase.swift in Sources */,
 				AFCD3DFD297A40E600DC0154 /* ProductEditRequestDTO.swift in Sources */,
+				AF0E809729ADAB17003291AA /* DefaultFacebookService.swift in Sources */,
 				AF471C43297E686300A3ACD6 /* DefaultProductsRepository.swift in Sources */,
 				AFD9AB4C2923101F009A67AB /* ProductDetailResponseDTO+Mapping.swift in Sources */,
 				AFB0D9012994BDA800A7AF8B /* ChattingDetailViewController.swift in Sources */,
@@ -1827,6 +1842,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		AF0E808F29ADAA39003291AA /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		AF58927D29AD912000AFAF91 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
@@ -1846,6 +1869,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AF0E809029ADAA39003291AA /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF0E808F29ADAA39003291AA /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
+		AF0E809229ADAA39003291AA /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF0E808F29ADAA39003291AA /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
 		AF58927E29AD912000AFAF91 /* KakaoSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AF58927D29AD912000AFAF91 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
