@@ -66,6 +66,7 @@ final class ChattingListViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationController?.navigationBar.topItem?.title = "Chat"
+        navigationController?.navigationBar.tintColor = .systemBrown
     }
     
     private func setupTabBar() {

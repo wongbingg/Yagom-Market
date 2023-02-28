@@ -14,7 +14,7 @@ final class MessageCell: UITableViewCell {
         stackView.axis = .horizontal
         stackView.spacing = 8
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 8, bottom: 10, right: 8)
         return stackView
     }()
     
@@ -53,6 +53,7 @@ final class MessageCell: UITableViewCell {
         imageView.image = UIImage(systemName: "person")
         imageView.setContentHuggingPriority(.required, for: .horizontal)
         imageView.transform = .init(scaleX: 1.5, y: 1.5)
+        imageView.tintColor = .systemBrown
         return imageView
     }()
     
