@@ -84,8 +84,8 @@ final class RegisterViewController: UIViewController {
         Task {
             do {
                 try await registerView.setupData(with: viewModel.model)
-            } catch let error as LocalizedError{
-                print(error.errorDescription ?? "\(#function) error")
+            } catch let error {
+                print("\(error.localizedDescription)")
             }
         }
     }
@@ -159,8 +159,11 @@ final class RegisterViewController: UIViewController {
         Task {
             do {
                 try await viewModel.registerButtonTapped(with: registerModel)
-            } catch let error as LocalizedError {
-                print(error.errorDescription ?? "\(#function) error")
+            } catch let error {
+                DefaultAlertBuilder(title: .warning,
+                                    message: "\(error.localizedDescription)")
+                    .setButton()
+                    .showAlert(on: self)
             }
         }
     }
