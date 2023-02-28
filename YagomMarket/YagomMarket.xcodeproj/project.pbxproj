@@ -56,6 +56,12 @@
 		AF4F32C4299A26F400BB740E /* DefaultFirestoreStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4F32C3299A26F400BB740E /* DefaultFirestoreStream.swift */; };
 		AF4F32C6299A271B00BB740E /* FirestoreStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4F32C5299A271B00BB740E /* FirestoreStream.swift */; };
 		AF56AB132998E2A60033CD3F /* SendMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF56AB122998E2A60033CD3F /* SendMessageUseCase.swift */; };
+		AF58927F29AD912000AFAF91 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = AF58927E29AD912000AFAF91 /* KakaoSDK */; };
+		AF58928129AD912000AFAF91 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AF58928029AD912000AFAF91 /* KakaoSDKAuth */; };
+		AF58928329AD912000AFAF91 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = AF58928229AD912000AFAF91 /* KakaoSDKCommon */; };
+		AF58928529AD912000AFAF91 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = AF58928429AD912000AFAF91 /* KakaoSDKUser */; };
+		AF58928729AD916800AFAF91 /* KakaoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF58928629AD916800AFAF91 /* KakaoService.swift */; };
+		AF58928929AD919200AFAF91 /* DefaultKakaoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF58928829AD919200AFAF91 /* DefaultKakaoService.swift */; };
 		AF598F0329929BE600BC4FD6 /* ChattingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF598F0229929BE600BC4FD6 /* ChattingListViewController.swift */; };
 		AF598F0529929BF800BC4FD6 /* ChattingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF598F0429929BF800BC4FD6 /* ChattingListViewModel.swift */; };
 		AF598F0729929C2200BC4FD6 /* ChattingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF598F0629929C2200BC4FD6 /* ChattingListView.swift */; };
@@ -232,6 +238,8 @@
 		AF4F32C3299A26F400BB740E /* DefaultFirestoreStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFirestoreStream.swift; sourceTree = "<group>"; };
 		AF4F32C5299A271B00BB740E /* FirestoreStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreStream.swift; sourceTree = "<group>"; };
 		AF56AB122998E2A60033CD3F /* SendMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageUseCase.swift; sourceTree = "<group>"; };
+		AF58928629AD916800AFAF91 /* KakaoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoService.swift; sourceTree = "<group>"; };
+		AF58928829AD919200AFAF91 /* DefaultKakaoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKakaoService.swift; sourceTree = "<group>"; };
 		AF598F0229929BE600BC4FD6 /* ChattingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChattingListViewController.swift; path = YagomMarket/Presentation/ChattingScene/ChatList/View/ChattingListViewController.swift; sourceTree = SOURCE_ROOT; };
 		AF598F0429929BF800BC4FD6 /* ChattingListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChattingListViewModel.swift; path = YagomMarket/Presentation/ChattingScene/ChatList/ViewModel/ChattingListViewModel.swift; sourceTree = SOURCE_ROOT; };
 		AF598F0629929C2200BC4FD6 /* ChattingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChattingListView.swift; path = YagomMarket/Presentation/ChattingScene/ChatList/View/ChattingListView.swift; sourceTree = SOURCE_ROOT; };
@@ -354,6 +362,10 @@
 			files = (
 				AFB4C3F92980089C00D6749E /* FirebaseAuth in Frameworks */,
 				AFB4C3FB2980089C00D6749E /* FirebaseFirestore in Frameworks */,
+				AF58928529AD912000AFAF91 /* KakaoSDKUser in Frameworks */,
+				AF58927F29AD912000AFAF91 /* KakaoSDK in Frameworks */,
+				AF58928329AD912000AFAF91 /* KakaoSDKCommon in Frameworks */,
+				AF58928129AD912000AFAF91 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1079,6 +1091,7 @@
 				AFB7FFB4297FBB06003290EE /* FirebaseAuthService.swift */,
 				AFB7FFB6297FBB16003290EE /* FirestoreService.swift */,
 				AF4F32C5299A271B00BB740E /* FirestoreStream.swift */,
+				AF58928629AD916800AFAF91 /* KakaoService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1098,6 +1111,7 @@
 				AFB7FFBA297FBDF8003290EE /* DefaultFirebaseAuthService.swift */,
 				AFB7FFBC297FBE07003290EE /* DefaultFirestoreService.swift */,
 				AF4F32C3299A26F400BB740E /* DefaultFirestoreStream.swift */,
+				AF58928829AD919200AFAF91 /* DefaultKakaoService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1276,6 +1290,10 @@
 			packageProductDependencies = (
 				AFB4C3F82980089C00D6749E /* FirebaseAuth */,
 				AFB4C3FA2980089C00D6749E /* FirebaseFirestore */,
+				AF58927E29AD912000AFAF91 /* KakaoSDK */,
+				AF58928029AD912000AFAF91 /* KakaoSDKAuth */,
+				AF58928229AD912000AFAF91 /* KakaoSDKCommon */,
+				AF58928429AD912000AFAF91 /* KakaoSDKUser */,
 			);
 			productName = YagomMarket;
 			productReference = AF5BB773292210E20013BFC1 /* YagomMarket.app */;
@@ -1333,6 +1351,7 @@
 			mainGroup = AF5BB76A292210E20013BFC1;
 			packageReferences = (
 				AFB4C3F72980089C00D6749E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				AF58927D29AD912000AFAF91 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = AF5BB774292210E20013BFC1 /* Products */;
 			projectDirPath = "";
@@ -1443,6 +1462,7 @@
 				AF717471292252000004FC02 /* ProductListResponseDTO+Mapping.swift in Sources */,
 				AF0166302976C2EA0083DDAD /* LoginCacheManager.swift in Sources */,
 				AF0166362976D9B20083DDAD /* SearchViewModel.swift in Sources */,
+				AF58928929AD919200AFAF91 /* DefaultKakaoService.swift in Sources */,
 				AFF96945292F05C5009AB014 /* BodyType.swift in Sources */,
 				AF4F32C4299A26F400BB740E /* DefaultFirestoreStream.swift in Sources */,
 				AFC44D512934975300B01142 /* ProductCollectionView.swift in Sources */,
@@ -1450,6 +1470,7 @@
 				AF71746829224A010004FC02 /* API.swift in Sources */,
 				AF471C49297E76DB00A3ACD6 /* DeleteProductUseCase.swift in Sources */,
 				AFB0D8EF2993508300A7AF8B /* SearchChattingUseCase.swift in Sources */,
+				AF58928729AD916800AFAF91 /* KakaoService.swift in Sources */,
 				AF06CEF4298905360004676C /* SearchUserProfileUseCase.swift in Sources */,
 				AFB0D8FB29947B2F00A7AF8B /* UserUID.swift in Sources */,
 				AF5EEC37297C042C00162DC9 /* MyPageViewModel.swift in Sources */,
@@ -1681,6 +1702,8 @@
 				DEVELOPMENT_TEAM = SWPBG3YXG5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YagomMarket/Resources/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow to use Camera";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1708,6 +1731,8 @@
 				DEVELOPMENT_TEAM = SWPBG3YXG5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YagomMarket/Resources/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow to use Camera";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1802,6 +1827,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		AF58927D29AD912000AFAF91 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		AFB4C3F72980089C00D6749E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1813,6 +1846,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AF58927E29AD912000AFAF91 /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF58927D29AD912000AFAF91 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
+		};
+		AF58928029AD912000AFAF91 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF58927D29AD912000AFAF91 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		AF58928229AD912000AFAF91 /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF58927D29AD912000AFAF91 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		AF58928429AD912000AFAF91 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF58927D29AD912000AFAF91 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
+		};
 		AFB4C3F82980089C00D6749E /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AFB4C3F72980089C00D6749E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
