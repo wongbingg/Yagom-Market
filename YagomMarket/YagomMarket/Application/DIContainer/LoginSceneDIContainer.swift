@@ -20,7 +20,9 @@ final class LoginSceneDIContainer {
         return DefaultLoginViewModel(
             actions: actions,
             loginUseCase: makeLoginUseCase(),
-            searchUserProfileUseCase: makeSearchUserProfileUseCase()
+            searchUserProfileUseCase: makeSearchUserProfileUseCase(),
+            kakaoLoginUseCase: makeKakaoLoginUseCase(),
+            facebookLoginUseCase: makeFacebookLoginUseCase()
         )
     }
     
@@ -110,6 +112,18 @@ final class LoginSceneDIContainer {
         )
     }
     
+    func makeKakaoLoginUseCase() -> KakaoLoginUseCase {
+        return DefaultKakaoLoginUseCase(
+            kakaoService: makeKakaoService()
+        )
+    }
+    
+    func makeFacebookLoginUseCase() -> FacebookLoginUseCase {
+        return DefaultFacebookLoginUseCase(
+            facebookService: makeFacebookService()
+        )
+    }
+    
     // MARK: - Services
     func makeFirebaseAuthService() -> FirebaseAuthService {
         return DefaultFirebaseAuthService()
@@ -121,6 +135,14 @@ final class LoginSceneDIContainer {
     
     func makeOtherUIDFirestoreService() -> DefaultFirestoreService<UserUID> {
         return DefaultFirestoreService<UserUID>()
+    }
+    
+    func makeKakaoService() -> KakaoService {
+        return DefaultKakaoService()
+    }
+    
+    func makeFacebookService() -> FacebookService {
+        return DefaultFacebookService()
     }
     
     // MARK: - Login Flow Coordinator

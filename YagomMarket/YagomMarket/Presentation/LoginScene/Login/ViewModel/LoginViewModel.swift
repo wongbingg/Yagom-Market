@@ -30,15 +30,21 @@ final class DefaultLoginViewModel: LoginViewModel {
     private let actions: LoginViewModelActions?
     private let loginUseCase: LoginUseCase
     private let searchUserProfileUseCase: SearchUserProfileUseCase
+    private let kakaoLoginUseCase: KakaoLoginUseCase
+    private let facebookLoginUseCase: FacebookLoginUseCase
     
     init(
         actions: LoginViewModelActions? = nil,
         loginUseCase: LoginUseCase,
-        searchUserProfileUseCase: SearchUserProfileUseCase
+        searchUserProfileUseCase: SearchUserProfileUseCase,
+        kakaoLoginUseCase: KakaoLoginUseCase,
+        facebookLoginUseCase: FacebookLoginUseCase
     ) {
         self.actions = actions
         self.loginUseCase = loginUseCase
         self.searchUserProfileUseCase = searchUserProfileUseCase
+        self.kakaoLoginUseCase = kakaoLoginUseCase
+        self.facebookLoginUseCase = facebookLoginUseCase
     }
     
     @MainActor
@@ -59,8 +65,7 @@ final class DefaultLoginViewModel: LoginViewModel {
     }
     
     func kakaoLogoButtonTapped() {
-        let kakaoService = DefaultKakaoService()
-        kakaoService.login { loginInfo in
+        kakaoLoginUseCase.execute { loginInfo in
             Task {
                 do {
                     _ = try await self.loginUseCase.execute(with: loginInfo)
@@ -75,8 +80,7 @@ final class DefaultLoginViewModel: LoginViewModel {
     }
     
     func facebookButtonTapped(in viewController: UIViewController) {
-        let facebookService = DefaultFacebookService()
-        facebookService.login(in: viewController) { loginInfo in
+        facebookLoginUseCase.execute(in: viewController) { loginInfo in
             Task {
                 do {
                     _ = try await self.loginUseCase.execute(with: loginInfo)
