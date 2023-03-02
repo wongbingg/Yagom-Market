@@ -42,6 +42,7 @@ final class RegisterViewModelTests: XCTestCase {
         XCTAssertEqual(expectationEditCallCount, editProductUseCaseMock.callCount)
     }
     
+    @MainActor
     func test_전달된모델이있을때_registerButton을탭하면_EditProductUseCase가실행되는지() async throws {
         // given
         let expectationRegisterCallCount = 0
