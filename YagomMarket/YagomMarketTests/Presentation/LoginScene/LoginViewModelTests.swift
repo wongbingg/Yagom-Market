@@ -28,15 +28,24 @@ final class LoginViewModelTests: XCTestCase {
             successLoginCallCount += 1
         }
         
-        func createUserButtonTapped() {
+        func createUserButtonTapped(_ loginInfo: LoginInfo?) {
             createUserButtonTappedCallCount += 1
         }
 
-        let useCase = LoginUseCaseMock()
+        let loginUseCase = LoginUseCaseMock()
+        let searchUserProfileUseCase = SearchUserProfileUseCaseMock()
+        let kakaoLoginUseCase = KakaoLoginUseCaseMock(
+            kakaoServie: KakaoServiceMock()
+        )
+        let facebookLoginUseCase = FacebookLoginUseCaseMock(
+            facebookService: FacebookServiceMock()
+        )
         sut = DefaultLoginViewModel(
             actions: viewModelActions,
-            loginUseCase: useCase,
-            searchUserProfileUseCase: SearchUserProfileUseCaseMock()
+            loginUseCase: loginUseCase,
+            searchUserProfileUseCase: searchUserProfileUseCase,
+            kakaoLoginUseCase: kakaoLoginUseCase,
+            facebookLoginUseCase: facebookLoginUseCase
         )
     }
     
@@ -108,7 +117,7 @@ final class LoginViewModelTests: XCTestCase {
         let expectationCreateUserButtonTappedCallCount = 1
         
         // when
-        sut.createUserButtonTapped()
+        sut.createUserButtonTapped(with: nil)
         
         // then
         XCTAssertEqual(expectationSuccessLoginCallCount, successLoginCallCount)
