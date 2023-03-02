@@ -99,6 +99,14 @@
 		AF879B6B298CDD1A00F7237A /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF879B6A298CDD1A00F7237A /* SearchViewModelTests.swift */; };
 		AF879B6D298CE68700F7237A /* ResultViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF879B6C298CE68700F7237A /* ResultViewModelTests.swift */; };
 		AF8ED162293040750070D55C /* URLRequest+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8ED161293040750070D55C /* URLRequest+.swift */; };
+		AF99AD7629B083690017B557 /* KakaoLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF99AD7529B083690017B557 /* KakaoLoginUseCase.swift */; };
+		AF99AD7829B0842D0017B557 /* FacebookLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF99AD7729B0842D0017B557 /* FacebookLoginUseCase.swift */; };
+		AF99AD7E29B08C740017B557 /* KakaoLoginUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF99AD7D29B08C740017B557 /* KakaoLoginUseCaseMock.swift */; };
+		AF99AD8029B08C7C0017B557 /* FacebookLoginUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF99AD7F29B08C7C0017B557 /* FacebookLoginUseCaseMock.swift */; };
+		AF99AD8429B08D830017B557 /* KakaoServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF99AD8329B08D830017B557 /* KakaoServiceMock.swift */; };
+		AF99AD8629B08D890017B557 /* FacebookServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF99AD8529B08D890017B557 /* FacebookServiceMock.swift */; };
+		AF99AD8829B092F40017B557 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AF99AD8729B092F40017B557 /* FirebaseFirestore */; };
+		AF99AD8A29B093470017B557 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = AF99AD8929B093470017B557 /* FacebookLogin */; };
 		AF9BCC0A2980FFC3003218D9 /* ImageViewerTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9BCC092980FFC3003218D9 /* ImageViewerTransitioningDelegate.swift */; };
 		AF9BCC0C2980FFED003218D9 /* ImageViewerPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9BCC0B2980FFED003218D9 /* ImageViewerPresentationController.swift */; };
 		AFA2FB23298BC4D4005C44D4 /* SearchQueryResultsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA2FB22298BC4D4005C44D4 /* SearchQueryResultsUseCaseTests.swift */; };
@@ -121,7 +129,6 @@
 		AFB4C3FB2980089C00D6749E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AFB4C3FA2980089C00D6749E /* FirebaseFirestore */; };
 		AFB4C3FD29800A5900D6749E /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB4C3FC29800A5900D6749E /* UserProfile.swift */; };
 		AFB4C402298023D700D6749E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AFB4C401298023D700D6749E /* FirebaseAuth */; };
-		AFB4C404298023D700D6749E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AFB4C403298023D700D6749E /* FirebaseFirestore */; };
 		AFB7FFAD297FB514003290EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AFB7FFAC297FB514003290EE /* GoogleService-Info.plist */; };
 		AFB7FFB5297FBB06003290EE /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB7FFB4297FBB06003290EE /* FirebaseAuthService.swift */; };
 		AFB7FFB7297FBB16003290EE /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB7FFB6297FBB16003290EE /* FirestoreService.swift */; };
@@ -282,6 +289,12 @@
 		AF879B6A298CDD1A00F7237A /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
 		AF879B6C298CE68700F7237A /* ResultViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModelTests.swift; sourceTree = "<group>"; };
 		AF8ED161293040750070D55C /* URLRequest+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+.swift"; sourceTree = "<group>"; };
+		AF99AD7529B083690017B557 /* KakaoLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginUseCase.swift; sourceTree = "<group>"; };
+		AF99AD7729B0842D0017B557 /* FacebookLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginUseCase.swift; sourceTree = "<group>"; };
+		AF99AD7D29B08C740017B557 /* KakaoLoginUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginUseCaseMock.swift; sourceTree = "<group>"; };
+		AF99AD7F29B08C7C0017B557 /* FacebookLoginUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginUseCaseMock.swift; sourceTree = "<group>"; };
+		AF99AD8329B08D830017B557 /* KakaoServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoServiceMock.swift; sourceTree = "<group>"; };
+		AF99AD8529B08D890017B557 /* FacebookServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookServiceMock.swift; sourceTree = "<group>"; };
 		AF9BCC092980FFC3003218D9 /* ImageViewerTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerTransitioningDelegate.swift; sourceTree = "<group>"; };
 		AF9BCC0B2980FFED003218D9 /* ImageViewerPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerPresentationController.swift; sourceTree = "<group>"; };
 		AFA2FB22298BC4D4005C44D4 /* SearchQueryResultsUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQueryResultsUseCaseTests.swift; sourceTree = "<group>"; };
@@ -382,7 +395,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFB4C402298023D700D6749E /* FirebaseAuth in Frameworks */,
-				AFB4C404298023D700D6749E /* FirebaseFirestore in Frameworks */,
+				AF99AD8829B092F40017B557 /* FirebaseFirestore in Frameworks */,
+				AF99AD8A29B093470017B557 /* FacebookLogin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,6 +545,8 @@
 				AF465E17298AA1730071A0F3 /* HandleLikedProductUseCase.swift */,
 				AFB0D8F62993929300A7AF8B /* HandleChattingUseCase.swift */,
 				AF56AB122998E2A60033CD3F /* SendMessageUseCase.swift */,
+				AF99AD7529B083690017B557 /* KakaoLoginUseCase.swift */,
+				AF99AD7729B0842D0017B557 /* FacebookLoginUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1057,6 +1073,8 @@
 				AFA2FB27298BE73E005C44D4 /* ProductsRepositoryMock.swift */,
 				AFA2FB29298C0099005C44D4 /* FirebaseAuthServiceMock.swift */,
 				AFA2FB2B298C0113005C44D4 /* FirestoreServiceMock.swift */,
+				AF99AD8329B08D830017B557 /* KakaoServiceMock.swift */,
+				AF99AD8529B08D890017B557 /* FacebookServiceMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1143,6 +1161,8 @@
 				AFCAFD8129A3662200BF153E /* SearchQueryResultsUseCaseMock.swift */,
 				AFCAFD8329A3664F00BF153E /* RegisterProductUseCaseMock.swift */,
 				AFCAFD8529A3666700BF153E /* EditProductUseCaseMock.swift */,
+				AF99AD7D29B08C740017B557 /* KakaoLoginUseCaseMock.swift */,
+				AF99AD7F29B08C7C0017B557 /* FacebookLoginUseCaseMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1327,7 +1347,8 @@
 			name = YagomMarketTests;
 			packageProductDependencies = (
 				AFB4C401298023D700D6749E /* FirebaseAuth */,
-				AFB4C403298023D700D6749E /* FirebaseFirestore */,
+				AF99AD8729B092F40017B557 /* FirebaseFirestore */,
+				AF99AD8929B093470017B557 /* FacebookLogin */,
 			);
 			productName = YagomMarketTests;
 			productReference = AF71747629227B9C0004FC02 /* YagomMarketTests.xctest */;
@@ -1462,6 +1483,7 @@
 				AF13E5B52935C90E00F92C89 /* RegisterViewModel.swift in Sources */,
 				AF0796A12924BE62002E876C /* DeleteProductAPI.swift in Sources */,
 				AFCD3DF4297A34D900DC0154 /* ImageRepository.swift in Sources */,
+				AF99AD7629B083690017B557 /* KakaoLoginUseCase.swift in Sources */,
 				AFE85D0F2977996B009CBB56 /* ProductDetail.swift in Sources */,
 				AFCD3E0C297AB54000DC0154 /* ResultViewModel.swift in Sources */,
 				AF160ECA2934EE0B0014C385 /* ProductListViewModel.swift in Sources */,
@@ -1490,6 +1512,7 @@
 				AF5EEC37297C042C00162DC9 /* MyPageViewModel.swift in Sources */,
 				AF738E25294771DC008F60CE /* ImageHandler.swift in Sources */,
 				AF01662E2976C2530083DDAD /* LoginViewModel.swift in Sources */,
+				AF99AD7829B0842D0017B557 /* FacebookLoginUseCase.swift in Sources */,
 				AF01660C2976BCBC0083DDAD /* LoginSceneDIContainer.swift in Sources */,
 				AF0166112976BEAF0083DDAD /* ProductCell.swift in Sources */,
 				AF738E23294751FC008F60CE /* CustomImageView.swift in Sources */,
@@ -1530,6 +1553,7 @@
 				AF879B61298C9A2C00F7237A /* LoginViewModelTests.swift in Sources */,
 				AFDE2445298B8462004F20DD /* SearchQueryUseCaseTests.swift in Sources */,
 				AFCAFD8A29A374B100BF153E /* RegisterProductUseCaseTests.swift in Sources */,
+				AF99AD8429B08D830017B557 /* KakaoServiceMock.swift in Sources */,
 				AFA2FB28298BE73E005C44D4 /* ProductsRepositoryMock.swift in Sources */,
 				AF01D37E2990EC2700ACACB1 /* RegisterViewModelTests.swift in Sources */,
 				AFCAFD7229A3651700BF153E /* AddNextProductPageUseCaseMock.swift in Sources */,
@@ -1542,6 +1566,8 @@
 				AFCAFD7429A3654A00BF153E /* DeleteProductUseCaseMock.swift in Sources */,
 				AFDE243B298B52B1004F20DD /* DeleteProductUseCaseTests.swift in Sources */,
 				AFDE2441298B5F0D004F20DD /* CreateUserUseCaseTests.swift in Sources */,
+				AF99AD8029B08C7C0017B557 /* FacebookLoginUseCaseMock.swift in Sources */,
+				AF99AD7E29B08C740017B557 /* KakaoLoginUseCaseMock.swift in Sources */,
 				AFCAFD7C29A365B600BF153E /* HandleChattingUseCaseMock.swift in Sources */,
 				AFA2FB23298BC4D4005C44D4 /* SearchQueryResultsUseCaseTests.swift in Sources */,
 				AFD9AB50292313BA009A67AB /* APIConfigurationTest.swift in Sources */,
@@ -1568,6 +1594,7 @@
 				AFA2FB2C298C0113005C44D4 /* FirestoreServiceMock.swift in Sources */,
 				AF879B6D298CE68700F7237A /* ResultViewModelTests.swift in Sources */,
 				AFCAFD6C29A3648F00BF153E /* LoginUseCaseMock.swift in Sources */,
+				AF99AD8629B08D890017B557 /* FacebookServiceMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1899,6 +1926,16 @@
 			package = AF58927D29AD912000AFAF91 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
 		};
+		AF99AD8729B092F40017B557 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFB4C3F72980089C00D6749E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		AF99AD8929B093470017B557 /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF0E808F29ADAA39003291AA /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
 		AFB4C3F82980089C00D6749E /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AFB4C3F72980089C00D6749E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -1913,11 +1950,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AFB4C3F72980089C00D6749E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
-		};
-		AFB4C403298023D700D6749E /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AFB4C3F72980089C00D6749E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
