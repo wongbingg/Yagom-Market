@@ -123,6 +123,7 @@ extension ChattingListViewController: UITableViewDataSource, UITableViewDelegate
             Task {
                 do {
                     try await viewModel.deleteChatting(index: indexPath.row)
+                    try await viewModel.fetchChattingList()
                     tableView.reloadData()
                 } catch let error as LocalizedError {
                     DefaultAlertBuilder(
