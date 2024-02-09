@@ -135,6 +135,10 @@ final class SigninViewController: UIViewController {
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     private func setupButton() {
         registerButton.addTarget(
             self,
