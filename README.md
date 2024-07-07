@@ -128,8 +128,6 @@
 
 ## 📱 실행화면
 
-<details>
-    <summary>펼쳐보기👀</summary>
 <table>
     <tr>
         <td valign="top" width="30%" align="center" border="1">
@@ -179,7 +177,6 @@
         </td>
     </tr>
 </table>
-</details>
 
 
 
